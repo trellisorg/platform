@@ -1,0 +1,12 @@
+{
+  "$schema": "../../node_modules/@angular-devkit/schematics/collection-schema.json",
+  "name": "convert-to-buildable",
+  "version": "0.0.1",
+  "schematics": {
+    "convert-to-buildable": {
+      "factory": "./src/schematics/convert-to-buildable/schematic",
+      "schema": "./src/schematics/convert-to-buildable/schema.json",
+      "description": "convert-to-buildable schematic"
+    }
+  }
+}
