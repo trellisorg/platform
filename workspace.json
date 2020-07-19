@@ -1,9 +1,9 @@
 {
   "version": 1,
   "projects": {
-    "convert-to-buildable": {
-      "root": "packages/convert-to-buildable",
-      "sourceRoot": "packages/convert-to-buildable/src",
+    "nx-realm": {
+      "root": "packages/nx-realm",
+      "sourceRoot": "packages/nx-realm/src",
       "projectType": "library",
       "schematics": {},
       "architect": {
@@ -12,44 +12,41 @@
           "options": {
             "linter": "eslint",
             "tsConfig": [
-              "packages/convert-to-buildable/tsconfig.lib.json",
-              "packages/convert-to-buildable/tsconfig.spec.json"
+              "packages/nx-realm/tsconfig.lib.json",
+              "packages/nx-realm/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!packages/convert-to-buildable/**/*"
-            ]
+            "exclude": ["**/node_modules/**", "!packages/nx-realm/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "packages/convert-to-buildable/jest.config.js",
-            "tsConfig": "packages/convert-to-buildable/tsconfig.spec.json",
+            "jestConfig": "packages/nx-realm/jest.config.js",
+            "tsConfig": "packages/nx-realm/tsconfig.spec.json",
             "passWithNoTests": true
           }
         },
         "build": {
           "builder": "@nrwl/node:package",
           "options": {
-            "outputPath": "dist/packages/convert-to-buildable",
-            "tsConfig": "packages/convert-to-buildable/tsconfig.lib.json",
-            "packageJson": "packages/convert-to-buildable/package.json",
-            "main": "packages/convert-to-buildable/src/index.ts",
+            "outputPath": "dist/packages/nx-realm",
+            "tsConfig": "packages/nx-realm/tsconfig.lib.json",
+            "packageJson": "packages/nx-realm/package.json",
+            "main": "packages/nx-realm/src/index.ts",
             "assets": [
-              "packages/convert-to-buildable/*.md",
+              "packages/nx-realm/*.md",
               {
-                "input": "./packages/convert-to-buildable/src",
+                "input": "./packages/nx-realm/src",
                 "glob": "**/*.!(ts)",
                 "output": "./src"
               },
               {
-                "input": "./packages/convert-to-buildable",
+                "input": "./packages/nx-realm",
                 "glob": "collection.json",
                 "output": "."
               },
               {
-                "input": "./packages/convert-to-buildable",
+                "input": "./packages/nx-realm",
                 "glob": "builders.json",
                 "output": "."
               }
@@ -58,26 +55,108 @@
         }
       }
     },
-    "convert-to-buildable-e2e": {
+    "nx-realm-e2e": {
       "projectType": "application",
-      "root": "e2e/convert-to-buildable-e2e",
-      "sourceRoot": "e2e/convert-to-buildable-e2e/src",
+      "root": "e2e/nx-realm-e2e",
+      "sourceRoot": "e2e/nx-realm-e2e/src",
       "architect": {
         "e2e": {
           "builder": "@nrwl/nx-plugin:e2e",
           "options": {
-            "target": "convert-to-buildable:build",
-            "npmPackageName": "@trellis/convert-to-buildable",
-            "pluginOutputPath": "dist/packages/convert-to-buildable",
-            "jestConfig": "e2e/convert-to-buildable-e2e/jest.config.js",
-            "tsSpecConfig": "e2e/convert-to-buildable-e2e/tsconfig.spec.json"
+            "target": "nx-realm:build",
+            "npmPackageName": "@trellis/nx-realm",
+            "pluginOutputPath": "dist/packages/nx-realm",
+            "jestConfig": "e2e/nx-realm-e2e/jest.config.js",
+            "tsSpecConfig": "e2e/nx-realm-e2e/tsconfig.spec.json"
+          }
+        }
+      }
+    },
+    "test8": {
+      "root": "apps/test8",
+      "sourceRoot": "apps/test8/src",
+      "projectType": "application",
+      "prefix": "test8",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "./dist/packages/nx-realm:build",
+          "options": {
+            "outputPath": "dist/apps/test8",
+            "main": "apps/test8/src/main.ts",
+            "tsConfig": "apps/test8/tsconfig.app.json",
+            "assets": [
+              "apps/test8/src/app/config.json",
+              {
+                "glob": "functions/**/*.json",
+                "input": "apps/test8/src/app/",
+                "output": "./app"
+              },
+              {
+                "glob": "services/**/*.json",
+                "input": "apps/test8/src/app/",
+                "output": "./app"
+              },
+              {
+                "glob": "triggers/**/*.json",
+                "input": "apps/test8/src/app/",
+                "output": "./app"
+              },
+              {
+                "glob": "hosting/**/*.json",
+                "input": "apps/test8/src/app/",
+                "output": "./app"
+              },
+              {
+                "glob": "values/**/*.json",
+                "input": "apps/test8/src/app/",
+                "output": "./app"
+              }
+            ]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/test8/src/environments/environment.ts",
+                  "with": "apps/test8/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "test8:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/test8/tsconfig.app.json",
+              "apps/test8/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/test8/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/test8/jest.config.js",
+            "tsConfig": "apps/test8/tsconfig.spec.json",
+            "passWithNoTests": true
           }
         }
       }
     }
   },
   "cli": {
-    "defaultCollection": "@nrwl/workspace"
+    "defaultCollection": "@nrwl/node"
   },
   "schematics": {
     "@nrwl/workspace": {
@@ -137,5 +216,6 @@
         "linter": "eslint"
       }
     }
-  }
+  },
+  "defaultProject": "sales1"
 }

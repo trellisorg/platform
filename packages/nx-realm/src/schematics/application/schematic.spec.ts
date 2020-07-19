@@ -3,14 +3,14 @@ import { SchematicTestRunner } from '@angular-devkit/schematics/testing';
 import { createEmptyWorkspace } from '@nrwl/workspace/testing';
 import { join } from 'path';
 
-import { ConvertToBuildableSchematicSchema } from './schema';
+import { NxRealmSchematicSchema } from './schema';
 
-describe('convert-to-buildable schematic', () => {
+describe('nx-realm schematic', () => {
   let appTree: Tree;
-  const options: ConvertToBuildableSchematicSchema = { name: 'test' };
+  const options: NxRealmSchematicSchema = { name: 'test' };
 
   const testRunner = new SchematicTestRunner(
-    '@trellis/convert-to-buildable',
+    '@trellis/nx-realm',
     join(__dirname, '../../../collection.json')
   );
 
@@ -20,9 +20,7 @@ describe('convert-to-buildable schematic', () => {
 
   it('should run successfully', async () => {
     await expect(
-      testRunner
-        .runSchematicAsync('convert-to-buildable', options, appTree)
-        .toPromise()
+      testRunner.runSchematicAsync('nx-realm', options, appTree).toPromise()
     ).resolves.not.toThrowError();
   });
 });

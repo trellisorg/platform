@@ -16,9 +16,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@trellis/convert-to-buildable": [
-        "packages/convert-to-buildable/src/index.ts"
-      ]
+      "@trellis/nx-realm": ["packages/nx-realm/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

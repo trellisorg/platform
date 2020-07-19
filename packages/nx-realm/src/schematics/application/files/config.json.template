@@ -1,0 +1,21 @@
+{
+  "app_id": "<%= appId %>",
+  "name": "<%= appName %>",
+  "security": {
+  },
+  "hosting": {
+    "enabled": false,
+    "custom_domain": "",
+    "app_default_domain": ""
+  },
+  "custom_user_data_config": {
+    "enabled": false
+    "mongo_service_id": "<MongoDB Service ID>",
+    "database_name": "<Database Name>",
+    "collection_name": "<Collection Name>",
+    "user_id_field": "<Field Name>"
+  }
+  "deployment_model": "<%= deploymentModel %>",
+  "location": "<%= cloudRegion %>",
+  "config_version": "<Version Number>"
+}

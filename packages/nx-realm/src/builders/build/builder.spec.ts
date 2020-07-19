@@ -25,7 +25,7 @@ describe('Command Runner Builder', () => {
   it('can run', async () => {
     // A "run" can have multiple outputs, and contains progress information.
     const run = await architect.scheduleBuilder(
-      '@trellis/convert-to-buildable:build',
+      '@trellis/nx-realm:build',
       options
     );
     // The "result" member (of type BuilderOutput) is the next output.
