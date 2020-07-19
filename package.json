@@ -1,6 +1,6 @@
 {
-  "name": "trellis",
-  "version": "0.0.0",
+  "name": "trellisorg",
+  "version": "0.0.1",
   "license": "MIT",
   "scripts": {
     "nx": "nx",
@@ -25,7 +25,7 @@
     "dep-graph": "nx dep-graph",
     "help": "nx help"
   },
-  "private": true,
+  "private": false,
   "dependencies": {
     "@angular-devkit/schematics": "^9.1.9",
     "@nrwl/angular": "^9.4.5",
