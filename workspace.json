@@ -85,6 +85,7 @@
             "outputPath": "dist/apps/test8",
             "main": "apps/test8/src/main.ts",
             "tsConfig": "apps/test8/tsconfig.app.json",
+            "externalDependencies": "all",
             "assets": [
               "apps/test8/src/app/config.json",
               {
@@ -149,6 +150,89 @@
           "options": {
             "jestConfig": "apps/test8/jest.config.js",
             "tsConfig": "apps/test8/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "test": {
+      "root": "apps/test",
+      "sourceRoot": "apps/test/src",
+      "projectType": "application",
+      "prefix": "test",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "./dist/packages/nx-realm:build",
+          "options": {
+            "outputPath": "dist/apps/test",
+            "main": "apps/test/src/main.ts",
+            "tsConfig": "apps/test/tsconfig.app.json",
+            "externalDependencies": "none",
+            "assets": [
+              "apps/test/src/app/config.json",
+              {
+                "glob": "functions/**/*.json",
+                "input": "apps/test/src/app/",
+                "output": "./app"
+              },
+              {
+                "glob": "services/**/*.json",
+                "input": "apps/test/src/app/",
+                "output": "./app"
+              },
+              {
+                "glob": "triggers/**/*.json",
+                "input": "apps/test/src/app/",
+                "output": "./app"
+              },
+              {
+                "glob": "hosting/**/*.json",
+                "input": "apps/test/src/app/",
+                "output": "./app"
+              },
+              {
+                "glob": "values/**/*.json",
+                "input": "apps/test/src/app/",
+                "output": "./app"
+              }
+            ]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/test/src/environments/environment.ts",
+                  "with": "apps/test/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "test:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/test/tsconfig.app.json",
+              "apps/test/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/test/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/test/jest.config.js",
+            "tsConfig": "apps/test/tsconfig.spec.json",
             "passWithNoTests": true
           }
         }

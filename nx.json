@@ -28,6 +28,9 @@
     },
     "test8": {
       "tags": []
+    },
+    "test": {
+      "tags": []
     }
   },
   "workspaceLayout": {

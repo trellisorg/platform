@@ -100,7 +100,8 @@ export default function (options: NxRealmSchematicSchema): Rule {
             output: './app',
           })),
         ];
-        project.architect.build.builder = './dist/packages/nx-realm:build';
+        project.architect.build.builder = '@trellisorg/nx-realm:build';
+        project.architect.build.options.externalDependencies = 'none';
 
         return json;
       }),
