@@ -25,12 +25,6 @@
     "nx-realm-e2e": {
       "tags": [],
       "implicitDependencies": ["nx-realm"]
-    },
-    "test8": {
-      "tags": []
-    },
-    "test": {
-      "tags": []
     }
   },
   "workspaceLayout": {
