@@ -30,8 +30,12 @@
   "dependencies": {
     "@angular-devkit/schematics": "^9.1.9",
     "@nrwl/angular": "^9.4.5",
+    "@rollup/plugin-node-resolve": "^8.4.0",
+    "@rollup/plugin-typescript": "^5.0.2",
     "@types/mongodb": "^3.5.25",
-    "rxjs": "^6.5.5"
+    "rollup": "^2.23.0",
+    "rxjs": "^6.5.5",
+    "tslib": "^2.0.0"
   },
   "devDependencies": {
     "@nrwl/eslint-plugin-nx": "9.4.5",
@@ -39,6 +43,7 @@
     "@nrwl/node": "9.4.5",
     "@nrwl/nx-plugin": "9.4.5",
     "@nrwl/workspace": "9.4.5",
+    "@trellisorg/nx-realm": "^0.0.3",
     "@types/jest": "25.1.4",
     "@types/node": "~8.9.4",
     "@typescript-eslint/eslint-plugin": "2.19.2",

@@ -8,7 +8,10 @@ import { BuildBuilderSchema } from './schema';
 import { map, switchMap } from 'rxjs/operators';
 import { readWorkspaceJson } from '@nrwl/workspace';
 import * as fs from 'fs';
-import { join, resolve } from 'path';
+import * as path from 'path';
+import { rollup } from 'rollup';
+import * as typescript from '@rollup/plugin-typescript';
+import resolve from '@rollup/plugin-node-resolve';
 
 export function runBuilder(
   options: BuildBuilderSchema,
@@ -32,46 +35,47 @@ export function runBuilder(
         ...[].concat(
           ...['functions'].map((directory) =>
             fs
-              .readdirSync(join(project.sourceRoot, 'app', directory))
+              .readdirSync(path.join(project.sourceRoot, 'app', directory))
               .filter((file) =>
                 fs
                   .statSync(
-                    resolve(join(project.sourceRoot, 'app', directory), file)
+                    path.resolve(
+                      path.join(project.sourceRoot, 'app', directory),
+                      file
+                    )
                   )
                   .isDirectory()
               )
               .map((buildable) => {
                 return from(
-                  context.scheduleBuilder(
-                    '@nrwl/node:build',
-                    {
-                      ...project.architect.build.options,
-                      main: `${project.sourceRoot}/app/${directory}/${buildable}/source.ts`,
-                      outputPath: `${outputPath}/app/${directory}/${buildable}`,
-                      assets: [],
-                    },
-                    { target: context.target }
-                  )
+                  rollup({
+                    input: `${project.sourceRoot}/app/${directory}/${buildable}/source.ts`,
+                    plugins: [
+                      resolve(),
+                      (typescript as any)({
+                        lib: ['es6'],
+                        target: 'es6',
+                        include: [
+                          `${project.sourceRoot}/app/${directory}/${buildable}/source.ts`,
+                        ],
+                        tsconfig: `${project.root}/tsconfig.app.json`,
+                      }),
+                    ],
+                  })
                 ).pipe(
-                  switchMap((builderRun) => builderRun.output),
-                  map((builderOutput) => {
-                    fs.renameSync(
-                      `${outputPath}/app/${directory}/${buildable}/main.js`,
-                      `${outputPath}/app/${directory}/${buildable}/source.js`
+                  switchMap((bundle) => {
+                    const outputOptions: {
+                      format: 'es';
+                      file: string;
+                      sourcemap: false;
+                    } = {
+                      format: 'es',
+                      file: `${outputPath}/app/${directory}/${buildable}/source.js`,
+                      sourcemap: false,
+                    };
+                    return from(bundle.generate(outputOptions)).pipe(
+                      switchMap((output) => bundle.write(outputOptions))
                     );
-
-                    if (
-                      fs.existsSync(
-                        `${outputPath}/app/${directory}/${buildable}/main.js.map`
-                      )
-                    ) {
-                      fs.renameSync(
-                        `${outputPath}/app/${directory}/${buildable}/main.js.map`,
-                        `${outputPath}/app/${directory}/${buildable}/source.js.map`
-                      );
-                    }
-
-                    return builderOutput;
                   })
                 );
               })
@@ -79,12 +83,9 @@ export function runBuilder(
         )
       )
     ),
-    map((results: BuilderOutput[]) => {
+    map(() => {
       return {
-        success: results.reduce<boolean>(
-          (prev, cur) => prev && cur.success,
-          true
-        ),
+        success: true,
       };
     })
   );
