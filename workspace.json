@@ -71,6 +71,77 @@
           }
         }
       }
+    },
+    "make-buildable": {
+      "root": "packages/make-buildable",
+      "sourceRoot": "packages/make-buildable/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "tsConfig": [
+              "packages/make-buildable/tsconfig.lib.json",
+              "packages/make-buildable/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!packages/make-buildable/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "packages/make-buildable/jest.config.js",
+            "tsConfig": "packages/make-buildable/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "builder": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/packages/make-buildable",
+            "tsConfig": "packages/make-buildable/tsconfig.lib.json",
+            "packageJson": "packages/make-buildable/package.json",
+            "main": "packages/make-buildable/src/index.ts",
+            "assets": [
+              "packages/make-buildable/*.md",
+              {
+                "input": "./packages/make-buildable/src",
+                "glob": "**/*.!(ts)",
+                "output": "./src"
+              },
+              {
+                "input": "./packages/make-buildable",
+                "glob": "collection.json",
+                "output": "."
+              },
+              {
+                "input": "./packages/make-buildable",
+                "glob": "builders.json",
+                "output": "."
+              }
+            ]
+          }
+        }
+      }
+    },
+    "make-buildable-e2e": {
+      "projectType": "application",
+      "root": "apps/make-buildable-e2e",
+      "sourceRoot": "apps/make-buildable-e2e/src",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/nx-plugin:e2e",
+          "options": {
+            "target": "make-buildable:build",
+            "npmPackageName": "@trellis/make-buildable",
+            "pluginOutputPath": "dist/packages/make-buildable",
+            "jestConfig": "apps/make-buildable-e2e/jest.config.js",
+            "tsSpecConfig": "apps/make-buildable-e2e/tsconfig.spec.json"
+          }
+        }
+      }
     }
   },
   "cli": {
