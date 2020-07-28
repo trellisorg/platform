@@ -25,6 +25,13 @@
     "nx-realm-e2e": {
       "tags": [],
       "implicitDependencies": ["nx-realm"]
+    },
+    "make-buildable": {
+      "tags": []
+    },
+    "make-buildable-e2e": {
+      "tags": [],
+      "implicitDependencies": ["make-buildable"]
     }
   },
   "workspaceLayout": {
