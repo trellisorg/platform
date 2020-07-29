@@ -1,4 +1,4 @@
 {
-  "name": "@trellis/<%= projectName &>",
+  "name": "@trellis/<%= projectName %>",
   "version": "0.0.1"
 }
