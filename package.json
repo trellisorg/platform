@@ -34,6 +34,7 @@
     "@rollup/plugin-node-resolve": "^8.4.0",
     "@rollup/plugin-typescript": "^5.0.2",
     "@types/mongodb": "^3.5.25",
+    "lodash.merge": "^4.6.2",
     "rollup": "^2.23.0",
     "rxjs": "^6.5.5",
     "tslib": "^2.0.0"

@@ -14,8 +14,11 @@ import { checkProjectExists } from '@nrwl/workspace/src/utils/rules/check-projec
 import {
   offsetFromRoot,
   readWorkspace,
+  updateJsonInTree,
   updateWorkspaceInTree,
 } from '@nrwl/workspace';
+
+import * as merge from 'lodash.merge';
 
 interface NormalizedSchema extends MakeBuildableSchematicSchema {
   projectName: string;
@@ -110,6 +113,49 @@ function updateWorkspace(schema: NormalizedSchema) {
   });
 }
 
+function updateLibTsConfigAngular(root: string): Rule {
+  return updateJsonInTree(`${root}/tsconfig.lib.json`, (json, context) => {
+    json = merge(
+      {
+        compilerOptions: {
+          target: 'es2015',
+          declaration: true,
+          inlineSources: true,
+          types: [],
+          lib: ['dom', 'es2018'],
+        },
+        angularCompilerOptions: {
+          skipTemplateCodegen: true,
+          strictMetadataEmit: true,
+          enableResourceInlining: true,
+        },
+        exclude: ['src/test-setup.ts', '**/*.spec.ts'],
+      },
+      json
+    );
+
+    return json;
+  });
+}
+
+function updateLibTsConfigNode(root: string): Rule {
+  return updateJsonInTree(`${root}/tsconfig.lib.json`, (json, context) => {
+    return merge(
+      {
+        compilerOptions: {
+          module: 'commonjs',
+          declaration: true,
+          rootDir: './src',
+          types: ['node'],
+        },
+        exclude: ['**/*.spec.ts'],
+        include: ['**/*.ts'],
+      },
+      json
+    );
+  });
+}
+
 export default function (options: MakeBuildableSchematicSchema): Rule {
   return (host: Tree, context: SchematicContext) => {
     const workspace = readWorkspace(host);
@@ -118,6 +164,9 @@ export default function (options: MakeBuildableSchematicSchema): Rule {
     return chain([
       checkProjectExists(options),
       addFiles(normalizedOptions),
+      normalizedOptions.isAngular
+        ? updateLibTsConfigAngular(normalizedOptions.projectRoot)
+        : updateLibTsConfigNode(normalizedOptions.projectRoot),
       updateWorkspace(normalizedOptions),
     ]);
   };
