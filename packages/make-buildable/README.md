@@ -1,7 +1,7 @@
-# make-buildable
+# Make an Nx library buildable
 
-This library was generated with [Nx](https://nx.dev).
+Currently only supports `Angular` and `Node` libraries.
 
-## Running unit tests
+Run `yarn nx g @trellisorg/make-buildable:migrate`
 
-Run `ng test make-buildable` to execute the unit tests via [Jest](https://jestjs.io).
+Enter in the project name and desired configurations
