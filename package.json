@@ -24,7 +24,8 @@
     "workspace-schematic": "nx workspace-schematic",
     "dep-graph": "nx dep-graph",
     "help": "nx help",
-    "publish:realm": "npm publish ./dist/packages/nx-realm"
+    "publish:realm": "npm publish ./dist/packages/nx-realm",
+    "publish:make-buildable": "npm publish ./dist/packages/make-buildable"
   },
   "private": false,
   "dependencies": {
@@ -45,11 +46,11 @@
     "@angular/compiler": "^10.0.6",
     "@angular/compiler-cli": "~9.1.11",
     "@angular/core": "^10.0.6",
-    "@nrwl/eslint-plugin-nx": "9.4.5",
-    "@nrwl/jest": "9.4.5",
-    "@nrwl/node": "9.4.5",
-    "@nrwl/nx-plugin": "9.4.5",
-    "@nrwl/workspace": "9.4.5",
+    "@nrwl/eslint-plugin-nx": "9.5.1",
+    "@nrwl/jest": "9.5.1",
+    "@nrwl/node": "9.5.1",
+    "@nrwl/nx-plugin": "9.5.1",
+    "@nrwl/workspace": "9.5.1",
     "@trellisorg/nx-realm": "^0.0.3",
     "@types/jest": "25.1.4",
     "@types/node": "~8.9.4",
@@ -62,7 +63,7 @@
     "jest-preset-angular": "8.1.2",
     "ng-packagr": "^9.0.0",
     "prettier": "2.0.4",
-    "ts-jest": "25.2.1",
+    "ts-jest": "^26.1.4",
     "ts-node": "~7.0.0",
     "tslint": "~6.0.0",
     "typescript": "~3.8.3"
