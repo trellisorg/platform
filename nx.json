@@ -32,6 +32,13 @@
     "make-buildable-e2e": {
       "tags": [],
       "implicitDependencies": ["make-buildable"]
+    },
+    "watch-and-build": {
+      "tags": []
+    },
+    "watch-and-build-e2e": {
+      "tags": [],
+      "implicitDependencies": ["watch-and-build"]
     }
   },
   "workspaceLayout": {

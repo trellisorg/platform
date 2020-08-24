@@ -142,6 +142,77 @@
           }
         }
       }
+    },
+    "watch-and-build": {
+      "root": "packages/watch-and-build",
+      "sourceRoot": "packages/watch-and-build/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "tsConfig": [
+              "packages/watch-and-build/tsconfig.lib.json",
+              "packages/watch-and-build/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!packages/watch-and-build/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "packages/watch-and-build/jest.config.js",
+            "tsConfig": "packages/watch-and-build/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "builder": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/packages/watch-and-build",
+            "tsConfig": "packages/watch-and-build/tsconfig.lib.json",
+            "packageJson": "packages/watch-and-build/package.json",
+            "main": "packages/watch-and-build/src/index.ts",
+            "assets": [
+              "packages/watch-and-build/*.md",
+              {
+                "input": "./packages/watch-and-build/src",
+                "glob": "**/*.!(ts)",
+                "output": "./src"
+              },
+              {
+                "input": "./packages/watch-and-build",
+                "glob": "collection.json",
+                "output": "."
+              },
+              {
+                "input": "./packages/watch-and-build",
+                "glob": "builders.json",
+                "output": "."
+              }
+            ]
+          }
+        }
+      }
+    },
+    "watch-and-build-e2e": {
+      "projectType": "application",
+      "root": "apps/watch-and-build-e2e",
+      "sourceRoot": "apps/watch-and-build-e2e/src",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/nx-plugin:e2e",
+          "options": {
+            "target": "watch-and-build:build",
+            "npmPackageName": "@trellis/watch-and-build",
+            "pluginOutputPath": "dist/packages/watch-and-build",
+            "jestConfig": "apps/watch-and-build-e2e/jest.config.js",
+            "tsSpecConfig": "apps/watch-and-build-e2e/tsconfig.spec.json"
+          }
+        }
+      }
     }
   },
   "cli": {

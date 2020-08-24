@@ -1,0 +1,10 @@
+{
+  "name": "@trellisorg/watch-and-build",
+  "version": "0.0.12",
+  "main": "src/index.js",
+  "schematics": "./collection.json",
+  "builders": "./builders.json",
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}

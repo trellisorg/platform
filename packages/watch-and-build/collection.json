@@ -1,0 +1,12 @@
+{
+  "$schema": "../../node_modules/@angular-devkit/schematics/collection-schema.json",
+  "name": "watch-and-build",
+  "version": "0.0.1",
+  "schematics": {
+    "watch": {
+      "factory": "./src/schematics/watch/watch",
+      "schema": "./src/schematics/watch/schema.json",
+      "description": "watch-and-build schematic"
+    }
+  }
+}
