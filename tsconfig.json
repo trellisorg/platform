@@ -17,7 +17,8 @@
     "baseUrl": ".",
     "paths": {
       "@trellis/nx-realm": ["packages/nx-realm/src/index.ts"],
-      "@trellis/make-buildable": ["packages/make-buildable/src/index.ts"]
+      "@trellis/make-buildable": ["packages/make-buildable/src/index.ts"],
+      "@trellis/angularfire-ngrx": ["packages/angularfire-ngrx/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

@@ -32,6 +32,9 @@
     "make-buildable-e2e": {
       "tags": [],
       "implicitDependencies": ["make-buildable"]
+    },
+    "angularfire-ngrx": {
+      "tags": []
     }
   },
   "workspaceLayout": {

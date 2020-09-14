@@ -142,6 +142,50 @@
           }
         }
       }
+    },
+    "angularfire-ngrx": {
+      "projectType": "library",
+      "root": "packages/angularfire-ngrx",
+      "sourceRoot": "packages/angularfire-ngrx/src",
+      "prefix": "trellis",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "packages/angularfire-ngrx/tsconfig.lib.json",
+            "project": "packages/angularfire-ngrx/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "packages/angularfire-ngrx/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "packages/angularfire-ngrx/tsconfig.lib.json",
+              "packages/angularfire-ngrx/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!packages/angularfire-ngrx/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "packages/angularfire-ngrx/jest.config.js",
+            "tsConfig": "packages/angularfire-ngrx/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "packages/angularfire-ngrx/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      }
     }
   },
   "cli": {
