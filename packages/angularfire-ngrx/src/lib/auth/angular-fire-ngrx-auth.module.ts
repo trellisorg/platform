@@ -5,4 +5,4 @@ import { AuthEffects } from './auth-effects';
 @NgModule({
     imports: [EffectsModule.forFeature([AuthEffects])],
 })
-export class AngularfireAuthModule {}
+export class AngularFireNgrxAuthModule {}

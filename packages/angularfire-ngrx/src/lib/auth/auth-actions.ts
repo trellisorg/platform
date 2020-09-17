@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
-import { User } from 'firebase';
 import * as firebase from 'firebase';
+import { User } from 'firebase';
 
 export const authStateChanged = createAction(
     '[@angularfire/auth-state] Auth State changed',

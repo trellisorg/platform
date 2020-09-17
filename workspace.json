@@ -191,6 +191,137 @@
                     "style": "scss"
                 }
             }
+        },
+        "angularfire-ngrx-demo": {
+            "projectType": "application",
+            "schematics": {
+                "@schematics/angular:component": {
+                    "style": "scss"
+                }
+            },
+            "root": "apps/angularfire-ngrx-demo",
+            "sourceRoot": "apps/angularfire-ngrx-demo/src",
+            "prefix": "trellis",
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:browser",
+                    "options": {
+                        "outputPath": "dist/apps/angularfire-ngrx-demo",
+                        "index": "apps/angularfire-ngrx-demo/src/index.html",
+                        "main": "apps/angularfire-ngrx-demo/src/main.ts",
+                        "polyfills": "apps/angularfire-ngrx-demo/src/polyfills.ts",
+                        "tsConfig": "apps/angularfire-ngrx-demo/tsconfig.app.json",
+                        "aot": true,
+                        "assets": [
+                            "apps/angularfire-ngrx-demo/src/favicon.ico",
+                            "apps/angularfire-ngrx-demo/src/assets"
+                        ],
+                        "styles": [
+                            "apps/angularfire-ngrx-demo/src/styles.scss"
+                        ],
+                        "scripts": []
+                    },
+                    "configurations": {
+                        "production": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "apps/angularfire-ngrx-demo/src/environments/environment.ts",
+                                    "with": "apps/angularfire-ngrx-demo/src/environments/environment.prod.ts"
+                                }
+                            ],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "extractCss": true,
+                            "namedChunks": false,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "budgets": [
+                                {
+                                    "type": "initial",
+                                    "maximumWarning": "2mb",
+                                    "maximumError": "5mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "6kb",
+                                    "maximumError": "10kb"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "serve": {
+                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "options": {
+                        "browserTarget": "angularfire-ngrx-demo:build"
+                    },
+                    "configurations": {
+                        "production": {
+                            "browserTarget": "angularfire-ngrx-demo:build:production"
+                        }
+                    }
+                },
+                "extract-i18n": {
+                    "builder": "@angular-devkit/build-angular:extract-i18n",
+                    "options": {
+                        "browserTarget": "angularfire-ngrx-demo:build"
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "apps/angularfire-ngrx-demo/tsconfig.app.json",
+                            "apps/angularfire-ngrx-demo/tsconfig.spec.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**",
+                            "!apps/angularfire-ngrx-demo/**/*"
+                        ]
+                    }
+                },
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "options": {
+                        "jestConfig": "apps/angularfire-ngrx-demo/jest.config.js",
+                        "passWithNoTests": true
+                    }
+                }
+            }
+        },
+        "angularfire-ngrx-demo-e2e": {
+            "root": "apps/angularfire-ngrx-demo-e2e",
+            "sourceRoot": "apps/angularfire-ngrx-demo-e2e/src",
+            "projectType": "application",
+            "architect": {
+                "e2e": {
+                    "builder": "@nrwl/cypress:cypress",
+                    "options": {
+                        "cypressConfig": "apps/angularfire-ngrx-demo-e2e/cypress.json",
+                        "tsConfig": "apps/angularfire-ngrx-demo-e2e/tsconfig.e2e.json",
+                        "devServerTarget": "angularfire-ngrx-demo:serve"
+                    },
+                    "configurations": {
+                        "production": {
+                            "devServerTarget": "angularfire-ngrx-demo:serve:production"
+                        }
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "apps/angularfire-ngrx-demo-e2e/tsconfig.e2e.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**",
+                            "!apps/angularfire-ngrx-demo-e2e/**/*"
+                        ]
+                    }
+                }
+            }
         }
     },
     "cli": {
@@ -253,6 +384,13 @@
             "library": {
                 "linter": "eslint"
             }
+        },
+        "@nrwl/angular:application": {
+            "unitTestRunner": "jest",
+            "e2eTestRunner": "cypress"
+        },
+        "@nrwl/angular:library": {
+            "unitTestRunner": "jest"
         }
     },
     "defaultProject": "sales1"

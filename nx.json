@@ -35,6 +35,13 @@
         },
         "angularfire-ngrx": {
             "tags": []
+        },
+        "angularfire-ngrx-demo": {
+            "tags": []
+        },
+        "angularfire-ngrx-demo-e2e": {
+            "tags": [],
+            "implicitDependencies": ["angularfire-ngrx-demo"]
         }
     },
     "workspaceLayout": {

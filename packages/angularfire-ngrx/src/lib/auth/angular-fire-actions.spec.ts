@@ -4,11 +4,11 @@ import { createServiceFactory, SpectatorService } from '@ngneat/spectator/jest';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase';
 import { BehaviorSubject } from 'rxjs';
-import { AngularFireAuthActions } from './angularfire-auth.actions';
+import { AngularFireNgrxAuthActions } from './angular-fire-ngrx-auth.actions';
 
 @Injectable()
 export class MockService {
-    constructor(public afActions: AngularFireAuthActions) {}
+    constructor(public afActions: AngularFireNgrxAuthActions) {}
 }
 
 describe('MockService', () => {
@@ -16,7 +16,7 @@ describe('MockService', () => {
     let service: MockService;
 
     let angularFireAuth: AngularFireAuth;
-    let angularFireAuthActions: AngularFireAuthActions;
+    let angularFireAuthActions: AngularFireNgrxAuthActions;
 
     const authState = new BehaviorSubject<firebase.User | null>(null);
     const idToken = new BehaviorSubject<string | null>(null);
@@ -46,7 +46,7 @@ describe('MockService', () => {
         service = spectator.service;
 
         angularFireAuth = spectator.inject(AngularFireAuth);
-        angularFireAuthActions = spectator.inject(AngularFireAuthActions);
+        angularFireAuthActions = spectator.inject(AngularFireNgrxAuthActions);
     });
 
     it('should create', () => {

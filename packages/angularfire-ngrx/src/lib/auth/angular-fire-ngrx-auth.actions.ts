@@ -1,4 +1,4 @@
-import { Inject, Injectable, Optional } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { merge, Observable, Operator } from 'rxjs';
 import { Action } from '@ngrx/store';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -7,7 +7,7 @@ import * as Actions from './auth-actions';
 import { AF_NGRX_CONFIG, AngularFireNgrxConfig } from '../config';
 
 @Injectable({ providedIn: 'root' })
-export class AngularFireAuthActions<V = Action> extends Observable<V> {
+export class AngularFireNgrxAuthActions<V = Action> extends Observable<V> {
     constructor(
         private angularFireAuth: AngularFireAuth,
         @Inject(AF_NGRX_CONFIG) private config: AngularFireNgrxConfig
@@ -37,7 +37,7 @@ export class AngularFireAuthActions<V = Action> extends Observable<V> {
     }
 
     lift<R>(operator: Operator<V, R>): Observable<R> {
-        const observable = new AngularFireAuthActions<R>(
+        const observable = new AngularFireNgrxAuthActions<R>(
             this.angularFireAuth,
             this.config
         );
