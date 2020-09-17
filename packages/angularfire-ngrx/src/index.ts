@@ -1,4 +1,2 @@
-export * from './lib/angular-fire-ngrx.module';
-export * from './lib/actions';
+export { AngularFireNgrxModule } from './lib/angular-fire-ngrx.module';
 export { AngularFireNgrxConfig } from './lib/config';
-export * from './lib/angular-fire-actions';
