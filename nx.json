@@ -6,9 +6,9 @@
             "dependencies": "*",
             "devDependencies": "*"
         },
-        "tsconfig.json": "*",
         "tslint.json": "*",
-        "nx.json": "*"
+        "nx.json": "*",
+        "tsconfig.base.json": "*"
     },
     "tasksRunnerOptions": {
         "default": {
@@ -40,5 +40,8 @@
     "workspaceLayout": {
         "appsDir": "apps",
         "libsDir": "packages"
+    },
+    "affected": {
+        "defaultBase": "master"
     }
 }

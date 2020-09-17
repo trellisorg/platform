@@ -25,7 +25,6 @@
                     "builder": "@nrwl/jest:jest",
                     "options": {
                         "jestConfig": "packages/nx-realm/jest.config.js",
-                        "tsConfig": "packages/nx-realm/tsconfig.spec.json",
                         "passWithNoTests": true
                     }
                 },
@@ -53,7 +52,8 @@
                                 "glob": "builders.json",
                                 "output": "."
                             }
-                        ]
+                        ],
+                        "srcRootForCompilationRoot": "packages/nx-realm"
                     }
                 }
             }
@@ -69,8 +69,7 @@
                         "target": "nx-realm:build",
                         "npmPackageName": "@trellis/nx-realm",
                         "pluginOutputPath": "dist/packages/nx-realm",
-                        "jestConfig": "e2e/nx-realm-e2e/jest.config.js",
-                        "tsSpecConfig": "e2e/nx-realm-e2e/tsconfig.spec.json"
+                        "jestConfig": "e2e/nx-realm-e2e/jest.config.js"
                     }
                 }
             }
@@ -99,7 +98,6 @@
                     "builder": "@nrwl/jest:jest",
                     "options": {
                         "jestConfig": "packages/make-buildable/jest.config.js",
-                        "tsConfig": "packages/make-buildable/tsconfig.spec.json",
                         "passWithNoTests": true
                     }
                 },
@@ -127,7 +125,8 @@
                                 "glob": "builders.json",
                                 "output": "."
                             }
-                        ]
+                        ],
+                        "srcRootForCompilationRoot": "packages/make-buildable"
                     }
                 }
             }
@@ -143,8 +142,7 @@
                         "target": "make-buildable:build",
                         "npmPackageName": "@trellis/make-buildable",
                         "pluginOutputPath": "dist/packages/make-buildable",
-                        "jestConfig": "apps/make-buildable-e2e/jest.config.js",
-                        "tsSpecConfig": "apps/make-buildable-e2e/tsconfig.spec.json"
+                        "jestConfig": "apps/make-buildable-e2e/jest.config.js"
                     }
                 }
             }
@@ -184,9 +182,7 @@
                     "builder": "@nrwl/jest:jest",
                     "options": {
                         "jestConfig": "packages/angularfire-ngrx/jest.config.js",
-                        "tsConfig": "packages/angularfire-ngrx/tsconfig.spec.json",
-                        "passWithNoTests": true,
-                        "setupFile": "packages/angularfire-ngrx/src/test-setup.ts"
+                        "passWithNoTests": true
                     }
                 }
             },
