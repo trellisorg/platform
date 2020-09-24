@@ -13,6 +13,14 @@
       },
       "x-prompt": "What project would you like to migrate"
     },
+    "libType": {
+      "enum": [
+        "node", "nest", "angular"
+      ],
+      "description": "Specify the type of library",
+      "default": "node",
+      "x-prompt": "What kind of library is this?"
+    },
     "configs": {
       "type": "string",
       "description": "csv list of configurations to make",

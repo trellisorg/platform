@@ -28,10 +28,6 @@ interface NormalizedSchema extends MakeBuildableSchematicSchema {
   configurations: string[];
 }
 
-function isAngularProject(project: { schematics: any }): boolean {
-  return Object.keys(project.schematics).length !== 0;
-}
-
 function createAngularBuildTarget(
   projectName: string,
   root: string,
@@ -77,7 +73,7 @@ function normalizeOptions(
     ...options,
     projectRoot,
     offsetFromRoot: offsetFromRoot(projectRoot),
-    isAngular: isAngularProject(project),
+    isAngular: options.libType === 'angular',
     configurations: (options.configs || '')
       .trim()
       .split(',')
@@ -98,7 +94,7 @@ function updateWorkspace(schema: NormalizedSchema) {
   return updateWorkspaceInTree((workspace) => {
     const project = workspace.projects[schema.projectName];
 
-    const isAngular = isAngularProject(project);
+    const isAngular = schema.libType === 'angular';
     const root = project.root;
 
     project.architect.build = isAngular
