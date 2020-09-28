@@ -1,4 +1,4 @@
 {
-  "name": "@trellis/<%= projectName %>",
+  "name": "@trellis/<%= pathInLibs %>",
   "version": "0.0.1"
 }

@@ -26,6 +26,7 @@ interface NormalizedSchema extends MakeBuildableSchematicSchema {
   offsetFromRoot: string;
   isAngular: boolean;
   configurations: string[];
+  pathInLibs: string;
 }
 
 function createAngularBuildTarget(
@@ -78,6 +79,7 @@ function normalizeOptions(
       .trim()
       .split(',')
       .map((config) => config.trim().toLowerCase()),
+    pathInLibs: options.projectName.replace(/-/g, '/'),
   };
 }
 

@@ -1,6 +1,6 @@
 {
   "$schema": "<%= offsetFromRoot %>node_modules/ng-packagr/ng-package.schema.json",
-  "dest": "<%= offsetFromRoot %>dist/libs/<%= projectName %>",
+  "dest": "<%= offsetFromRoot %>dist/libs/<%= pathInLibs %>",
   "lib": {
     "entryFile": "src/index.ts"
   }
