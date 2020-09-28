@@ -1,27 +1,33 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema",
-  "id": "MakeBuildable",
-  "title": "",
-  "type": "object",
-  "properties": {
-    "projectName": {
-      "type": "string",
-      "description": "",
-      "$default": {
-        "$source": "argv",
-        "index": 0
-      },
-      "x-prompt": "What project would you like to migrate"
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "id": "MakeBuildable",
+    "title": "",
+    "type": "object",
+    "properties": {
+        "projectName": {
+            "type": "string",
+            "description": "",
+            "$default": {
+                "$source": "argv",
+                "index": 0
+            },
+            "x-prompt": "What project would you like to migrate"
+        },
+        "libType": {
+            "enum": ["node", "nest", "angular"],
+            "description": "Specify the type of library",
+            "default": "node",
+            "x-prompt": "What kind of library is this?"
+        },
+        "configs": {
+            "type": "string",
+            "description": "csv list of configurations to make",
+            "$default": {
+                "$source": "argv",
+                "index": 1
+            },
+            "x-prompt": "If this is an Angular lib, what configurations would you like to create? (separated by a comma)"
+        }
     },
-    "configs": {
-      "type": "string",
-      "description": "csv list of configurations to make",
-      "$default": {
-        "$source": "argv",
-        "index": 1
-      },
-      "x-prompt": "If this is an Angular lib, what configurations would you like to create? (separated by a comma)"
-    }
-  },
-  "required": ["projectName"]
+    "required": ["projectName"]
 }

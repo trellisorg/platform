@@ -3,6 +3,10 @@
     "compilerOptions": {
         "types": ["node", "jest"]
     },
+    "angularCompilerOptions": {
+        "enableIvy": true,
+        "allowEmptyCodegenFiles": true
+    },
     "include": [],
     "files": [],
     "references": [

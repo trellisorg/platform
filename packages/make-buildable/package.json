@@ -1,10 +1,10 @@
 {
-  "name": "@trellisorg/make-buildable",
-  "version": "0.0.4",
-  "main": "src/index.js",
-  "schematics": "./collection.json",
-  "builders": "./builders.json",
-  "dependencies": {
-    "lodash.merge": "*"
-  }
+    "name": "@trellisorg/make-buildable",
+    "version": "0.0.6",
+    "main": "src/index.js",
+    "schematics": "./collection.json",
+    "builders": "./builders.json",
+    "dependencies": {
+        "lodash.merge": "*"
+    }
 }

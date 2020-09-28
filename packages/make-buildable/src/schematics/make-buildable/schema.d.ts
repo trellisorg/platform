@@ -1,4 +1,5 @@
 export interface MakeBuildableSchematicSchema {
-  projectName: string;
-  configs: string;
+    projectName: string;
+    configs: string;
+    libType: 'node' | 'angular' | 'nest';
 }
