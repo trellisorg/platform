@@ -9,9 +9,11 @@ parts of AngularFire.
 Note: This is an alpha version of this package and is subject to change at any time.
 
 Currently supported:
+
 1. Auth
 
 In the works:
+
 1. Cloud Messaging
 
 ## Including in your application
@@ -42,6 +44,7 @@ The `.forRoot()` method takes the following config:
 ## Actions
 
 ### AngularFireAuth Actions
+
 ```
 export const authStateChanged = createAction(
     '[@angularfire/auth-state] Auth State changed',

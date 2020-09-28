@@ -1,20 +1,20 @@
 {
     "extends": "../../tsconfig.base.json",
-  "compilerOptions": {
-    "types": ["node", "jest"]
-  },
-  "angularCompilerOptions": {
-    "enableIvy": true,
-    "allowEmptyCodegenFiles": true
+    "compilerOptions": {
+        "types": ["node", "jest"]
+    },
+    "angularCompilerOptions": {
+        "enableIvy": true,
+        "allowEmptyCodegenFiles": true
     },
     "include": [],
-  "files": [],
-  "references": [
-    {
-      "path": "./tsconfig.lib.json"
-    },
-    {
-      "path": "./tsconfig.spec.json"
-    }
-  ]
+    "files": [],
+    "references": [
+        {
+            "path": "./tsconfig.lib.json"
+        },
+        {
+            "path": "./tsconfig.spec.json"
+        }
+    ]
 }

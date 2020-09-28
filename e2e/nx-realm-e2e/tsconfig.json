@@ -4,10 +4,10 @@
         "types": ["node", "jest"]
     },
     "include": [],
-  "files": [],
-  "references": [
-    {
-      "path": "./tsconfig.spec.json"
-    }
-  ]
+    "files": [],
+    "references": [
+        {
+            "path": "./tsconfig.spec.json"
+        }
+    ]
 }
