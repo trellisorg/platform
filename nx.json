@@ -1,41 +1,54 @@
 {
-  "npmScope": "trellis",
-  "implicitDependencies": {
-    "workspace.json": "*",
-    "package.json": {
-      "dependencies": "*",
-      "devDependencies": "*"
+    "npmScope": "trellis",
+    "implicitDependencies": {
+        "workspace.json": "*",
+        "package.json": {
+            "dependencies": "*",
+            "devDependencies": "*"
+        },
+        "tslint.json": "*",
+        "nx.json": "*",
+        "tsconfig.base.json": "*"
     },
-    "tsconfig.json": "*",
-    "tslint.json": "*",
-    "nx.json": "*"
-  },
-  "tasksRunnerOptions": {
-    "default": {
-      "runner": "@nrwl/workspace/tasks-runners/default",
-      "options": {
-        "cacheableOperations": ["lint", "test", "e2e"]
-      }
+    "tasksRunnerOptions": {
+        "default": {
+            "runner": "@nrwl/workspace/tasks-runners/default",
+            "options": {
+                "cacheableOperations": ["lint", "test", "e2e"]
+            }
+        }
+    },
+    "projects": {
+        "nx-realm": {
+            "tags": []
+        },
+        "nx-realm-e2e": {
+            "tags": [],
+            "implicitDependencies": ["nx-realm"]
+        },
+        "make-buildable": {
+            "tags": []
+        },
+        "make-buildable-e2e": {
+            "tags": [],
+            "implicitDependencies": ["make-buildable"]
+        },
+        "angularfire-ngrx": {
+            "tags": []
+        },
+        "angularfire-ngrx-demo": {
+            "tags": []
+        },
+        "angularfire-ngrx-demo-e2e": {
+            "tags": [],
+            "implicitDependencies": ["angularfire-ngrx-demo"]
+        }
+    },
+    "workspaceLayout": {
+        "appsDir": "apps",
+        "libsDir": "packages"
+    },
+    "affected": {
+        "defaultBase": "master"
     }
-  },
-  "projects": {
-    "nx-realm": {
-      "tags": []
-    },
-    "nx-realm-e2e": {
-      "tags": [],
-      "implicitDependencies": ["nx-realm"]
-    },
-    "make-buildable": {
-      "tags": []
-    },
-    "make-buildable-e2e": {
-      "tags": [],
-      "implicitDependencies": ["make-buildable"]
-    }
-  },
-  "workspaceLayout": {
-    "appsDir": "apps",
-    "libsDir": "packages"
-  }
 }
