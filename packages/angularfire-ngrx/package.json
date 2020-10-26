@@ -1,6 +1,6 @@
 {
     "name": "@trellisorg/angularfire-ngrx",
-    "version": "0.0.2",
+    "version": "0.0.5",
     "peerDependencies": {
         "@angular/common": "^9.1.12",
         "@angular/core": "^9.1.12",

@@ -40,13 +40,15 @@ function createAngularBuildTarget(
             tsConfig: `${root}/tsconfig.lib.json`,
             project: `${root}/ng-package.json`,
         },
-        configurations: configurations.reduce(
-            (prev, cur) => ({
-                ...prev,
-                [cur]: { tsConfig: `${root}/tsconfig.lib.prod.json` },
-            }),
-            {}
-        ),
+        configurations: configurations
+            .filter((path) => !!path)
+            .reduce(
+                (prev, cur) => ({
+                    ...prev,
+                    [cur]: { tsConfig: `${root}/tsconfig.lib.prod.json` },
+                }),
+                {}
+            ),
     };
 }
 
@@ -79,7 +81,7 @@ function normalizeOptions(
             .trim()
             .split(',')
             .map((config) => config.trim().toLowerCase()),
-        pathInLibs: options.projectName.replace(/-/g, '/'),
+        pathInLibs: projectRoot.replace('libs/', ''),
     };
 }
 
