@@ -42,6 +42,9 @@
         "angularfire-ngrx-demo-e2e": {
             "tags": [],
             "implicitDependencies": ["angularfire-ngrx-demo"]
+        },
+        "ngrx-data-websocket": {
+            "tags": []
         }
     },
     "workspaceLayout": {

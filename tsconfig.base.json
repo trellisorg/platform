@@ -7,6 +7,7 @@
         "moduleResolution": "node",
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
+        "allowSyntheticDefaultImports": true,
         "importHelpers": true,
         "target": "es2015",
         "module": "esnext",
@@ -20,6 +21,9 @@
             "@trellis/make-buildable": ["packages/make-buildable/src/index.ts"],
             "@trellis/angularfire-ngrx": [
                 "packages/angularfire-ngrx/src/index.ts"
+            ],
+            "@trellisorg/ngrx-data-websocket": [
+                "packages/ngrx-data-websocket/src/index.ts"
             ]
         }
     },

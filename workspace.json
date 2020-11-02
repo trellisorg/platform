@@ -1,398 +1,439 @@
 {
-  "version": 1,
-  "projects": {
-    "nx-realm": {
-      "root": "packages/nx-realm",
-      "sourceRoot": "packages/nx-realm/src",
-      "projectType": "library",
-      "schematics": {},
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:lint",
-          "options": {
-            "linter": "eslint",
-            "tsConfig": [
-              "packages/nx-realm/tsconfig.lib.json",
-              "packages/nx-realm/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!packages/nx-realm/**/*"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "packages/nx-realm/jest.config.js",
-            "passWithNoTests": true
-          }
-        },
-        "build": {
-          "builder": "@nrwl/node:package",
-          "options": {
-            "outputPath": "dist/packages/nx-realm",
-            "tsConfig": "packages/nx-realm/tsconfig.lib.json",
-            "packageJson": "packages/nx-realm/package.json",
-            "main": "packages/nx-realm/src/index.ts",
-            "assets": [
-              "packages/nx-realm/*.md",
-              {
-                "input": "./packages/nx-realm/src",
-                "glob": "**/*.!(ts)",
-                "output": "./src"
-              },
-              {
-                "input": "./packages/nx-realm",
-                "glob": "collection.json",
-                "output": "."
-              },
-              {
-                "input": "./packages/nx-realm",
-                "glob": "builders.json",
-                "output": "."
-              }
-            ],
-            "srcRootForCompilationRoot": "packages/nx-realm"
-          }
-        }
-      }
-    },
-    "nx-realm-e2e": {
-      "projectType": "application",
-      "root": "e2e/nx-realm-e2e",
-      "sourceRoot": "e2e/nx-realm-e2e/src",
-      "architect": {
-        "e2e": {
-          "builder": "@nrwl/nx-plugin:e2e",
-          "options": {
-            "target": "nx-realm:build",
-            "npmPackageName": "@trellis/nx-realm",
-            "pluginOutputPath": "dist/packages/nx-realm",
-            "jestConfig": "e2e/nx-realm-e2e/jest.config.js"
-          }
-        }
-      }
-    },
-    "make-buildable": {
-      "root": "packages/make-buildable",
-      "sourceRoot": "packages/make-buildable/src",
-      "projectType": "library",
-      "schematics": {},
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:lint",
-          "options": {
-            "linter": "eslint",
-            "tsConfig": [
-              "packages/make-buildable/tsconfig.lib.json",
-              "packages/make-buildable/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!packages/make-buildable/**/*"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "packages/make-buildable/jest.config.js",
-            "passWithNoTests": true
-          }
-        },
-        "build": {
-          "builder": "@nrwl/node:package",
-          "options": {
-            "outputPath": "dist/packages/make-buildable",
-            "tsConfig": "packages/make-buildable/tsconfig.lib.json",
-            "packageJson": "packages/make-buildable/package.json",
-            "main": "packages/make-buildable/src/index.ts",
-            "assets": [
-              "packages/make-buildable/*.md",
-              {
-                "input": "./packages/make-buildable/src",
-                "glob": "**/*.!(ts)",
-                "output": "./src"
-              },
-              {
-                "input": "./packages/make-buildable",
-                "glob": "collection.json",
-                "output": "."
-              },
-              {
-                "input": "./packages/make-buildable",
-                "glob": "builders.json",
-                "output": "."
-              }
-            ],
-            "srcRootForCompilationRoot": "packages/make-buildable"
-          }
-        }
-      }
-    },
-    "make-buildable-e2e": {
-      "projectType": "application",
-      "root": "apps/make-buildable-e2e",
-      "sourceRoot": "apps/make-buildable-e2e/src",
-      "architect": {
-        "e2e": {
-          "builder": "@nrwl/nx-plugin:e2e",
-          "options": {
-            "target": "make-buildable:build",
-            "npmPackageName": "@trellis/make-buildable",
-            "pluginOutputPath": "dist/packages/make-buildable",
-            "jestConfig": "apps/make-buildable-e2e/jest.config.js"
-          }
-        }
-      }
-    },
-    "angularfire-ngrx": {
-      "projectType": "library",
-      "root": "packages/angularfire-ngrx",
-      "sourceRoot": "packages/angularfire-ngrx/src",
-      "prefix": "trellis",
-      "architect": {
-        "build": {
-          "builder": "@nrwl/angular:package",
-          "options": {
-            "tsConfig": "packages/angularfire-ngrx/tsconfig.lib.json",
-            "project": "packages/angularfire-ngrx/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "packages/angularfire-ngrx/tsconfig.lib.prod.json"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "packages/angularfire-ngrx/tsconfig.lib.json",
-              "packages/angularfire-ngrx/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!packages/angularfire-ngrx/**/*"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "packages/angularfire-ngrx/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      },
-      "schematics": {
-        "@nrwl/angular:component": {
-          "style": "scss"
-        }
-      }
-    },
-    "angularfire-ngrx-demo": {
-      "projectType": "application",
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        }
-      },
-      "root": "apps/angularfire-ngrx-demo",
-      "sourceRoot": "apps/angularfire-ngrx-demo/src",
-      "prefix": "trellis",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:browser",
-          "options": {
-            "outputPath": "dist/apps/angularfire-ngrx-demo",
-            "index": "apps/angularfire-ngrx-demo/src/index.html",
-            "main": "apps/angularfire-ngrx-demo/src/main.ts",
-            "polyfills": "apps/angularfire-ngrx-demo/src/polyfills.ts",
-            "tsConfig": "apps/angularfire-ngrx-demo/tsconfig.app.json",
-            "aot": true,
-            "assets": [
-              "apps/angularfire-ngrx-demo/src/favicon.ico",
-              "apps/angularfire-ngrx-demo/src/assets"
-            ],
-            "styles": [
-              "apps/angularfire-ngrx-demo/src/styles.scss"
-            ],
-            "scripts": []
-          },
-          "configurations": {
-            "production": {
-              "fileReplacements": [
-                {
-                  "replace": "apps/angularfire-ngrx-demo/src/environments/environment.ts",
-                  "with": "apps/angularfire-ngrx-demo/src/environments/environment.prod.ts"
-                }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
+    "version": 1,
+    "projects": {
+        "nx-realm": {
+            "root": "packages/nx-realm",
+            "sourceRoot": "packages/nx-realm/src",
+            "projectType": "library",
+            "schematics": {},
+            "architect": {
+                "lint": {
+                    "builder": "@nrwl/linter:lint",
+                    "options": {
+                        "linter": "eslint",
+                        "tsConfig": [
+                            "packages/nx-realm/tsconfig.lib.json",
+                            "packages/nx-realm/tsconfig.spec.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**",
+                            "!packages/nx-realm/**/*"
+                        ]
+                    }
                 },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "10kb"
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "options": {
+                        "jestConfig": "packages/nx-realm/jest.config.js",
+                        "passWithNoTests": true
+                    }
+                },
+                "build": {
+                    "builder": "@nrwl/node:package",
+                    "options": {
+                        "outputPath": "dist/packages/nx-realm",
+                        "tsConfig": "packages/nx-realm/tsconfig.lib.json",
+                        "packageJson": "packages/nx-realm/package.json",
+                        "main": "packages/nx-realm/src/index.ts",
+                        "assets": [
+                            "packages/nx-realm/*.md",
+                            {
+                                "input": "./packages/nx-realm/src",
+                                "glob": "**/*.!(ts)",
+                                "output": "./src"
+                            },
+                            {
+                                "input": "./packages/nx-realm",
+                                "glob": "collection.json",
+                                "output": "."
+                            },
+                            {
+                                "input": "./packages/nx-realm",
+                                "glob": "builders.json",
+                                "output": "."
+                            }
+                        ],
+                        "srcRootForCompilationRoot": "packages/nx-realm"
+                    }
                 }
-              ]
             }
-          }
         },
-        "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "angularfire-ngrx-demo:build"
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "angularfire-ngrx-demo:build:production"
+        "nx-realm-e2e": {
+            "projectType": "application",
+            "root": "e2e/nx-realm-e2e",
+            "sourceRoot": "e2e/nx-realm-e2e/src",
+            "architect": {
+                "e2e": {
+                    "builder": "@nrwl/nx-plugin:e2e",
+                    "options": {
+                        "target": "nx-realm:build",
+                        "npmPackageName": "@trellis/nx-realm",
+                        "pluginOutputPath": "dist/packages/nx-realm",
+                        "jestConfig": "e2e/nx-realm-e2e/jest.config.js"
+                    }
+                }
             }
-          }
         },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "browserTarget": "angularfire-ngrx-demo:build"
-          }
+        "make-buildable": {
+            "root": "packages/make-buildable",
+            "sourceRoot": "packages/make-buildable/src",
+            "projectType": "library",
+            "schematics": {},
+            "architect": {
+                "lint": {
+                    "builder": "@nrwl/linter:lint",
+                    "options": {
+                        "linter": "eslint",
+                        "tsConfig": [
+                            "packages/make-buildable/tsconfig.lib.json",
+                            "packages/make-buildable/tsconfig.spec.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**",
+                            "!packages/make-buildable/**/*"
+                        ]
+                    }
+                },
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "options": {
+                        "jestConfig": "packages/make-buildable/jest.config.js",
+                        "passWithNoTests": true
+                    }
+                },
+                "build": {
+                    "builder": "@nrwl/node:package",
+                    "options": {
+                        "outputPath": "dist/packages/make-buildable",
+                        "tsConfig": "packages/make-buildable/tsconfig.lib.json",
+                        "packageJson": "packages/make-buildable/package.json",
+                        "main": "packages/make-buildable/src/index.ts",
+                        "assets": [
+                            "packages/make-buildable/*.md",
+                            {
+                                "input": "./packages/make-buildable/src",
+                                "glob": "**/*.!(ts)",
+                                "output": "./src"
+                            },
+                            {
+                                "input": "./packages/make-buildable",
+                                "glob": "collection.json",
+                                "output": "."
+                            },
+                            {
+                                "input": "./packages/make-buildable",
+                                "glob": "builders.json",
+                                "output": "."
+                            }
+                        ],
+                        "srcRootForCompilationRoot": "packages/make-buildable"
+                    }
+                }
+            }
         },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "apps/angularfire-ngrx-demo/tsconfig.app.json",
-              "apps/angularfire-ngrx-demo/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/angularfire-ngrx-demo/**/*"
-            ]
-          }
+        "make-buildable-e2e": {
+            "projectType": "application",
+            "root": "apps/make-buildable-e2e",
+            "sourceRoot": "apps/make-buildable-e2e/src",
+            "architect": {
+                "e2e": {
+                    "builder": "@nrwl/nx-plugin:e2e",
+                    "options": {
+                        "target": "make-buildable:build",
+                        "npmPackageName": "@trellis/make-buildable",
+                        "pluginOutputPath": "dist/packages/make-buildable",
+                        "jestConfig": "apps/make-buildable-e2e/jest.config.js"
+                    }
+                }
+            }
         },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "apps/angularfire-ngrx-demo/jest.config.js",
-            "passWithNoTests": true
-          }
+        "angularfire-ngrx": {
+            "projectType": "library",
+            "root": "packages/angularfire-ngrx",
+            "sourceRoot": "packages/angularfire-ngrx/src",
+            "prefix": "trellis",
+            "architect": {
+                "build": {
+                    "builder": "@nrwl/angular:package",
+                    "options": {
+                        "tsConfig": "packages/angularfire-ngrx/tsconfig.lib.json",
+                        "project": "packages/angularfire-ngrx/ng-package.json"
+                    },
+                    "configurations": {
+                        "production": {
+                            "tsConfig": "packages/angularfire-ngrx/tsconfig.lib.prod.json"
+                        }
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "packages/angularfire-ngrx/tsconfig.lib.json",
+                            "packages/angularfire-ngrx/tsconfig.spec.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**",
+                            "!packages/angularfire-ngrx/**/*"
+                        ]
+                    }
+                },
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "options": {
+                        "jestConfig": "packages/angularfire-ngrx/jest.config.js",
+                        "passWithNoTests": true
+                    }
+                }
+            },
+            "schematics": {
+                "@nrwl/angular:component": {
+                    "style": "scss"
+                }
+            }
+        },
+        "angularfire-ngrx-demo": {
+            "projectType": "application",
+            "schematics": {
+                "@schematics/angular:component": {
+                    "style": "scss"
+                }
+            },
+            "root": "apps/angularfire-ngrx-demo",
+            "sourceRoot": "apps/angularfire-ngrx-demo/src",
+            "prefix": "trellis",
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:browser",
+                    "options": {
+                        "outputPath": "dist/apps/angularfire-ngrx-demo",
+                        "index": "apps/angularfire-ngrx-demo/src/index.html",
+                        "main": "apps/angularfire-ngrx-demo/src/main.ts",
+                        "polyfills": "apps/angularfire-ngrx-demo/src/polyfills.ts",
+                        "tsConfig": "apps/angularfire-ngrx-demo/tsconfig.app.json",
+                        "aot": true,
+                        "assets": [
+                            "apps/angularfire-ngrx-demo/src/favicon.ico",
+                            "apps/angularfire-ngrx-demo/src/assets"
+                        ],
+                        "styles": [
+                            "apps/angularfire-ngrx-demo/src/styles.scss"
+                        ],
+                        "scripts": []
+                    },
+                    "configurations": {
+                        "production": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "apps/angularfire-ngrx-demo/src/environments/environment.ts",
+                                    "with": "apps/angularfire-ngrx-demo/src/environments/environment.prod.ts"
+                                }
+                            ],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "extractCss": true,
+                            "namedChunks": false,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "budgets": [
+                                {
+                                    "type": "initial",
+                                    "maximumWarning": "2mb",
+                                    "maximumError": "5mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "6kb",
+                                    "maximumError": "10kb"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "serve": {
+                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "options": {
+                        "browserTarget": "angularfire-ngrx-demo:build"
+                    },
+                    "configurations": {
+                        "production": {
+                            "browserTarget": "angularfire-ngrx-demo:build:production"
+                        }
+                    }
+                },
+                "extract-i18n": {
+                    "builder": "@angular-devkit/build-angular:extract-i18n",
+                    "options": {
+                        "browserTarget": "angularfire-ngrx-demo:build"
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "apps/angularfire-ngrx-demo/tsconfig.app.json",
+                            "apps/angularfire-ngrx-demo/tsconfig.spec.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**",
+                            "!apps/angularfire-ngrx-demo/**/*"
+                        ]
+                    }
+                },
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "options": {
+                        "jestConfig": "apps/angularfire-ngrx-demo/jest.config.js",
+                        "passWithNoTests": true
+                    }
+                }
+            }
+        },
+        "angularfire-ngrx-demo-e2e": {
+            "root": "apps/angularfire-ngrx-demo-e2e",
+            "sourceRoot": "apps/angularfire-ngrx-demo-e2e/src",
+            "projectType": "application",
+            "architect": {
+                "e2e": {
+                    "builder": "@nrwl/cypress:cypress",
+                    "options": {
+                        "cypressConfig": "apps/angularfire-ngrx-demo-e2e/cypress.json",
+                        "tsConfig": "apps/angularfire-ngrx-demo-e2e/tsconfig.e2e.json",
+                        "devServerTarget": "angularfire-ngrx-demo:serve"
+                    },
+                    "configurations": {
+                        "production": {
+                            "devServerTarget": "angularfire-ngrx-demo:serve:production"
+                        }
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "apps/angularfire-ngrx-demo-e2e/tsconfig.e2e.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**",
+                            "!apps/angularfire-ngrx-demo-e2e/**/*"
+                        ]
+                    }
+                }
+            }
+        },
+        "ngrx-data-websocket": {
+            "projectType": "library",
+            "root": "packages/ngrx-data-websocket",
+            "sourceRoot": "packages/ngrx-data-websocket/src",
+            "prefix": "trellis",
+            "architect": {
+                "build": {
+                    "builder": "@nrwl/angular:package",
+                    "options": {
+                        "tsConfig": "packages/ngrx-data-websocket/tsconfig.lib.json",
+                        "project": "packages/ngrx-data-websocket/ng-package.json"
+                    },
+                    "configurations": {
+                        "production": {
+                            "tsConfig": "packages/ngrx-data-websocket/tsconfig.lib.prod.json"
+                        }
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "packages/ngrx-data-websocket/tsconfig.lib.json",
+                            "packages/ngrx-data-websocket/tsconfig.spec.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**",
+                            "!packages/ngrx-data-websocket/**/*"
+                        ]
+                    }
+                },
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "options": {
+                        "jestConfig": "packages/ngrx-data-websocket/jest.config.js",
+                        "passWithNoTests": true
+                    }
+                }
+            },
+            "schematics": {}
         }
-      }
     },
-    "angularfire-ngrx-demo-e2e": {
-      "root": "apps/angularfire-ngrx-demo-e2e",
-      "sourceRoot": "apps/angularfire-ngrx-demo-e2e/src",
-      "projectType": "application",
-      "architect": {
-        "e2e": {
-          "builder": "@nrwl/cypress:cypress",
-          "options": {
-            "cypressConfig": "apps/angularfire-ngrx-demo-e2e/cypress.json",
-            "tsConfig": "apps/angularfire-ngrx-demo-e2e/tsconfig.e2e.json",
-            "devServerTarget": "angularfire-ngrx-demo:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "angularfire-ngrx-demo:serve:production"
+    "cli": {
+        "defaultCollection": "@nrwl/node",
+        "analytics": false
+    },
+    "schematics": {
+        "@nrwl/workspace": {
+            "library": {
+                "linter": "eslint"
             }
-          }
         },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "apps/angularfire-ngrx-demo-e2e/tsconfig.e2e.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/angularfire-ngrx-demo-e2e/**/*"
-            ]
-          }
+        "@nrwl/cypress": {
+            "cypress-project": {
+                "linter": "eslint"
+            }
+        },
+        "@nrwl/react": {
+            "application": {
+                "linter": "eslint"
+            },
+            "library": {
+                "linter": "eslint"
+            },
+            "storybook-configuration": {
+                "linter": "eslint"
+            }
+        },
+        "@nrwl/next": {
+            "application": {
+                "linter": "eslint"
+            }
+        },
+        "@nrwl/web": {
+            "application": {
+                "linter": "eslint"
+            }
+        },
+        "@nrwl/node": {
+            "application": {
+                "linter": "eslint"
+            },
+            "library": {
+                "linter": "eslint"
+            }
+        },
+        "@nrwl/nx-plugin": {
+            "plugin": {
+                "linter": "eslint"
+            }
+        },
+        "@nrwl/nest": {
+            "application": {
+                "linter": "eslint"
+            }
+        },
+        "@nrwl/express": {
+            "application": {
+                "linter": "eslint"
+            },
+            "library": {
+                "linter": "eslint"
+            }
+        },
+        "@nrwl/angular:application": {
+            "unitTestRunner": "jest",
+            "e2eTestRunner": "cypress"
+        },
+        "@nrwl/angular:library": {
+            "unitTestRunner": "jest"
         }
-      }
-    }
-  },
-  "cli": {
-    "defaultCollection": "@nrwl/node",
-    "analytics": false
-  },
-  "schematics": {
-    "@nrwl/workspace": {
-      "library": {
-        "linter": "eslint"
-      }
     },
-    "@nrwl/cypress": {
-      "cypress-project": {
-        "linter": "eslint"
-      }
-    },
-    "@nrwl/react": {
-      "application": {
-        "linter": "eslint"
-      },
-      "library": {
-        "linter": "eslint"
-      },
-      "storybook-configuration": {
-        "linter": "eslint"
-      }
-    },
-    "@nrwl/next": {
-      "application": {
-        "linter": "eslint"
-      }
-    },
-    "@nrwl/web": {
-      "application": {
-        "linter": "eslint"
-      }
-    },
-    "@nrwl/node": {
-      "application": {
-        "linter": "eslint"
-      },
-      "library": {
-        "linter": "eslint"
-      }
-    },
-    "@nrwl/nx-plugin": {
-      "plugin": {
-        "linter": "eslint"
-      }
-    },
-    "@nrwl/nest": {
-      "application": {
-        "linter": "eslint"
-      }
-    },
-    "@nrwl/express": {
-      "application": {
-        "linter": "eslint"
-      },
-      "library": {
-        "linter": "eslint"
-      }
-    },
-    "@nrwl/angular:application": {
-      "unitTestRunner": "jest",
-      "e2eTestRunner": "cypress"
-    },
-    "@nrwl/angular:library": {
-      "unitTestRunner": "jest"
-    }
-  },
-  "defaultProject": "sales1"
+    "defaultProject": "sales1"
 }

@@ -1,16 +1,45 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { Injectable, NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
 import { AngularFireModule } from '@angular/fire';
-import { AngularFireNgrxModule } from '@trellisorg/angularfire-ngrx';
-import { AngularFireNgrxAuthModule } from '@trellisorg/angularfire-ngrx';
+import {
+    AngularFireNgrxAuthModule,
+    AngularFireNgrxModule,
+} from '@trellisorg/angularfire-ngrx';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import {
+    EntityCollectionServiceElementsFactory,
+    EntityDataModule,
+    EntityDataService,
+} from '@ngrx/data';
+import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
+import {
+    NgrxDataWebsocketModule,
+    SocketCollectionServiceBase,
+    SocketDataServiceFactory,
+    SocketServiceElementsFactory,
+} from '@trellisorg/ngrx-data-websocket';
+
+class Product {
+    name: string;
+    id: string;
+}
+
+@Injectable()
+export class ProductDataService extends SocketCollectionServiceBase<Product> {
+    constructor(
+        serviceElementsFactory: EntityCollectionServiceElementsFactory,
+        socketServiceElementsFactory: SocketServiceElementsFactory
+    ) {
+        super('Product', serviceElementsFactory, socketServiceElementsFactory);
+    }
+}
 
 @NgModule({
     declarations: [AppComponent],
@@ -21,11 +50,30 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
         AngularFireAuthModule,
         StoreModule.forRoot({}),
         EffectsModule.forRoot([]),
+        EntityDataModule.forRoot({
+            entityMetadata: {
+                Product: {
+                    entityName: 'Product',
+                },
+            },
+        }),
         StoreDevtoolsModule.instrument({}),
         AngularFireNgrxModule.forRoot({ replay: false }),
         AngularFireNgrxAuthModule,
+        HttpClientModule,
+        HttpClientJsonpModule,
+        NgrxDataWebsocketModule,
     ],
-    providers: [],
+    providers: [ProductDataService],
     bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+    constructor(
+        private entityDataService: EntityDataService,
+        private productDataService: ProductDataService
+    ) {
+        this.productDataService.connect({});
+
+        this.productDataService.add({ id: '1', name: 'dfhjsk' });
+    }
+}
