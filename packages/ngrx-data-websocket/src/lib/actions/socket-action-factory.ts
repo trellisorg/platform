@@ -1,9 +1,13 @@
 import { Injectable } from '@angular/core';
 import { SocketOp } from './socket-op';
 import { SocketAction, SocketActionOptions } from './socket-action-options';
+import { EntityAction, EntityActionFactory, EntityOp } from '@ngrx/data';
+import { createActionType } from '../utils/create-action-type';
 
 @Injectable()
 export class SocketActionFactory {
+    constructor(private entityActionFactory: EntityActionFactory) {}
+
     create<P = any>(
         entityName: string,
         socketOp: SocketOp,
@@ -11,7 +15,7 @@ export class SocketActionFactory {
         options?: SocketActionOptions
     ): SocketAction {
         return {
-            type: `[${socketOp}] ${entityName}`,
+            type: createActionType(entityName, socketOp),
             payload: {
                 entityName,
                 socketOp,
@@ -19,5 +23,18 @@ export class SocketActionFactory {
                 ...options,
             },
         };
+    }
+
+    convertToDataAction<P = any>(
+        socketAction: SocketAction<P>
+    ): EntityAction<P> {
+        return this.entityActionFactory.create(
+            socketAction.payload.entityName,
+            socketAction.payload.socketOp.replace(
+                'ngrx-data-websocket',
+                '@ngrx/data'
+            ) as EntityOp,
+            socketAction.payload.data
+        );
     }
 }

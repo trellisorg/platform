@@ -45,6 +45,9 @@
         },
         "ngrx-data-websocket": {
             "tags": []
+        },
+        "api": {
+            "tags": []
         }
     },
     "workspaceLayout": {

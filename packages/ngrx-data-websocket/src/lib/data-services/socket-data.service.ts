@@ -1,9 +1,7 @@
 import { EntityCollectionDataService, QueryParams } from '@ngrx/data';
 import { Observable } from 'rxjs';
 import { SocketDispatcherBase } from '../dispatchers/socket-dispatcher-base';
-import { Injectable } from '@angular/core';
 import { UpdateStr } from '@ngrx/entity/src/models';
-import { SocketServiceElementsFactory } from '../socket-services/socket-service-elements.factory';
 
 export class SocketDataService<T> implements EntityCollectionDataService<T> {
     readonly name: string;
@@ -13,35 +11,31 @@ export class SocketDataService<T> implements EntityCollectionDataService<T> {
         private socketDispatcher: SocketDispatcherBase<T>
     ) {}
 
-    connect(params: any): Observable<void> {
-        return this.socketDispatcher.connect();
-    }
-
     add(entity: T): Observable<T> {
         return this.socketDispatcher.add(entity);
     }
 
     delete(id: number | string): Observable<number | string> {
-        return undefined;
+        return this.socketDispatcher.delete(id);
     }
 
     getAll(): Observable<T[]> {
-        return undefined;
+        return this.socketDispatcher.getAll();
     }
 
-    getById(id: any): Observable<T> {
-        return undefined;
+    getById(id: number | string): Observable<T> {
+        return this.socketDispatcher.getById(id);
     }
 
     getWithQuery(params: QueryParams | string): Observable<T[]> {
-        return undefined;
+        return this.socketDispatcher.getWithQuery(params);
     }
 
     update(update: UpdateStr<T>): Observable<T> {
-        return undefined;
+        return this.socketDispatcher.update(update);
     }
 
     upsert(entity: T): Observable<T> {
-        return undefined;
+        return this.socketDispatcher.upsert(entity);
     }
 }

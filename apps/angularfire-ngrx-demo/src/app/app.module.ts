@@ -22,24 +22,8 @@ import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
 import {
     NgrxDataWebsocketModule,
     SocketCollectionServiceBase,
-    SocketDataServiceFactory,
     SocketServiceElementsFactory,
 } from '@trellisorg/ngrx-data-websocket';
-
-class Product {
-    name: string;
-    id: string;
-}
-
-@Injectable()
-export class ProductDataService extends SocketCollectionServiceBase<Product> {
-    constructor(
-        serviceElementsFactory: EntityCollectionServiceElementsFactory,
-        socketServiceElementsFactory: SocketServiceElementsFactory
-    ) {
-        super('Product', serviceElementsFactory, socketServiceElementsFactory);
-    }
-}
 
 @NgModule({
     declarations: [AppComponent],
@@ -62,18 +46,13 @@ export class ProductDataService extends SocketCollectionServiceBase<Product> {
         AngularFireNgrxAuthModule,
         HttpClientModule,
         HttpClientJsonpModule,
-        NgrxDataWebsocketModule,
+        NgrxDataWebsocketModule.forRoot({
+            host: 'http://localhost:80',
+        }),
     ],
-    providers: [ProductDataService],
+    providers: [],
     bootstrap: [AppComponent],
 })
 export class AppModule {
-    constructor(
-        private entityDataService: EntityDataService,
-        private productDataService: ProductDataService
-    ) {
-        this.productDataService.connect({});
-
-        this.productDataService.add({ id: '1', name: 'dfhjsk' });
-    }
+    constructor(private entityDataService: EntityDataService) {}
 }

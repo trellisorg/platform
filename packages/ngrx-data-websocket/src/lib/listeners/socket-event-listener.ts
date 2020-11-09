@@ -3,7 +3,8 @@ import { SocketActionFactory } from '../actions/socket-action-factory';
 import { listeners, SocketOp } from '../actions/socket-op';
 import { Store } from '@ngrx/store';
 import { SocketActionPayload } from '../actions/socket-action-options';
-import { bindCallback, Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { NgrxDataWebsocketConfig } from '../utils/tokens';
 
 export class SocketEventListener<T> {
     private _socket: any;
@@ -59,18 +60,37 @@ export class SocketEventListener<T> {
         );
     }
 
+    emit(event: SocketOp, crid: string, data: any): void {
+        this._socket.emit(event, {
+            correlationId: crid,
+            data,
+        });
+    }
+
     disconnect(): void {
         this._socket.disconnect();
     }
 
-    connect(params: any): Observable<void> {
-        this._socket = socketIo(this._entityName, {
+    connect(config: NgrxDataWebsocketConfig, params: any): Observable<boolean> {
+        const connected = new BehaviorSubject<boolean>(false);
+        const host = config.host ? `${config.host}/` : '';
+
+        this._socket = socketIo(`${host}${this._entityName.toLowerCase()}`, {
             transports: ['websocket', 'polling'],
         });
 
         this.setupReservedEvents();
 
-        const connected = bindCallback<void>(this._socket.on('connect'));
+        this._socket.on('connect', () => {
+            this.store.dispatch(
+                this.socketActionFactory.create<void>(
+                    this._entityName,
+                    SocketOp.CONNECT
+                )
+            );
+            connected.next(true);
+            connected.complete();
+        });
 
         listeners.forEach((event) => {
             this._socket.on(
@@ -94,6 +114,6 @@ export class SocketEventListener<T> {
             );
         });
 
-        return connected();
+        return connected.asObservable();
     }
 }

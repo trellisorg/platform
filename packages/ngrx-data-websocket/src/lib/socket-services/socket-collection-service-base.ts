@@ -13,20 +13,32 @@ export class SocketCollectionServiceBase<
 > extends EntityCollectionServiceBase<T, S$> {
     private readonly listener: SocketEventListener<T>;
 
+    readonly connected$: Observable<boolean>;
+
+    readonly connecting$: Observable<boolean>;
+
     constructor(
         entityName: string,
         serviceElementsFactory: EntityCollectionServiceElementsFactory,
-        socketServiceElementsFactory: SocketServiceElementsFactory
+        protected socketServiceElementsFactory: SocketServiceElementsFactory<T>
     ) {
         super(entityName, serviceElementsFactory);
 
-        const { listener } = socketServiceElementsFactory.create(entityName);
+        const { listener, selectors$ } = socketServiceElementsFactory.create(
+            entityName
+        );
+
+        this.connected$ = selectors$.connected$;
+        this.connecting$ = selectors$.connecting$;
 
         this.listener = listener;
     }
 
-    connect(params: any): Observable<void> {
-        return this.listener.connect(params);
+    connect(params: any): Observable<boolean> {
+        return this.listener.connect(
+            this.socketServiceElementsFactory.config,
+            params
+        );
     }
 
     disconnect(): void {

@@ -1,4 +1,9 @@
-import { CorrelationIdGenerator, OP_ERROR, OP_SUCCESS } from '@ngrx/data';
+import {
+    CorrelationIdGenerator,
+    OP_ERROR,
+    OP_SUCCESS,
+    QueryParams,
+} from '@ngrx/data';
 import { SocketActionFactory } from '../actions/socket-action-factory';
 import { SocketOp } from '../actions/socket-op';
 import {
@@ -7,7 +12,8 @@ import {
 } from '../actions/socket-action-options';
 import { Observable, of, throwError } from 'rxjs';
 import { Action, Store } from '@ngrx/store';
-import { filter, mergeMap, take } from 'rxjs/operators';
+import { filter, mergeMap, take, timeout } from 'rxjs/operators';
+import { UpdateStr } from '@ngrx/entity/src/models';
 
 export class SocketDispatcherBase<T> {
     constructor(
@@ -15,7 +21,8 @@ export class SocketDispatcherBase<T> {
         private correlationIdGenerator: CorrelationIdGenerator,
         private socketActionFactory: SocketActionFactory,
         private reducedActions$: Observable<Action>,
-        private store: Store
+        private store: Store,
+        private socketTimeout: number
     ) {}
 
     createSocketAction<P = any>(
@@ -31,27 +38,64 @@ export class SocketDispatcherBase<T> {
         );
     }
 
-    dispatch(action: Action): Action {
+    private dispatch(action: Action): Action {
         this.store.dispatch(action);
         return action;
     }
 
     add(entity: T): Observable<T> {
+        return this.processEvent(SocketOp.SAVE_ADD_ONE, entity);
+    }
+
+    delete(id: number | string): Observable<number | string> {
+        return this.processEvent<number | string, number | string>(
+            SocketOp.SAVE_DELETE_ONE,
+            id
+        );
+    }
+
+    getAll(): Observable<T[]> {
+        return this.processEvent<null, T[]>(SocketOp.QUERY_ALL);
+    }
+
+    getById(id: number | string): Observable<T> {
+        return this.processEvent<number | string, T>(SocketOp.QUERY_BY_KEY, id);
+    }
+
+    getWithQuery(params: QueryParams | string): Observable<T[]> {
+        return this.processEvent<QueryParams | string, T[]>(
+            SocketOp.QUERY_MANY,
+            params
+        );
+    }
+
+    update(update: UpdateStr<T>): Observable<T> {
+        return this.processEvent<UpdateStr<T>, T>(
+            SocketOp.SAVE_UPDATE_ONE,
+            update
+        );
+    }
+
+    upsert(entity: T): Observable<T> {
+        return this.processEvent<T, T>(SocketOp.SAVE_UPSERT_ONE, entity);
+    }
+
+    private processEvent<P, K>(event: SocketOp, data?: P): Observable<K> {
         const correlationId = this.correlationIdGenerator.next();
 
-        const action = this.socketActionFactory.create(
+        const action = this.socketActionFactory.create<P>(
             this.entityName,
-            SocketOp.SAVE_ADD_ONE,
-            entity,
+            event,
+            data,
             { correlationId }
         );
 
         this.dispatch(action);
 
-        return this.getResponseEventData$(correlationId);
+        return this.getResponseEventData$<K>(correlationId);
     }
 
-    getResponseEventData$<D = any>(crid: string): Observable<D> {
+    private getResponseEventData$<D = any>(crid: string): Observable<D> {
         return this.reducedActions$.pipe(
             filter((act: any) => !!act.payload),
             filter((act: SocketAction) => {
@@ -63,6 +107,7 @@ export class SocketDispatcherBase<T> {
                         socketOp.endsWith(OP_ERROR))
                 );
             }),
+            timeout(this.socketTimeout),
             take(1),
             mergeMap((act) => {
                 const { socketOp } = act.payload;

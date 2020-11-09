@@ -5,6 +5,11 @@ import { shareReplay } from 'rxjs/operators';
 import { SocketDispatcherBase } from './socket-dispatcher-base';
 import { CorrelationIdGenerator } from '@ngrx/data';
 import { SocketActionFactory } from '../actions/socket-action-factory';
+import {
+    defaultNgrxDataWebsocketConfig,
+    NGRX_DATA_WEBSOCKET_CONFIG,
+    NgrxDataWebsocketConfig,
+} from '../utils/tokens';
 
 @Injectable()
 export class SocketDispatcherFactory implements OnDestroy {
@@ -17,6 +22,8 @@ export class SocketDispatcherFactory implements OnDestroy {
 
     constructor(
         @Inject(ScannedActionsSubject) scannedActions$: Observable<Action>,
+        @Inject(NGRX_DATA_WEBSOCKET_CONFIG)
+        private config: NgrxDataWebsocketConfig,
         private correlationIdGenerator: CorrelationIdGenerator,
         private socketActionFactory: SocketActionFactory,
         private store: Store
@@ -31,7 +38,10 @@ export class SocketDispatcherFactory implements OnDestroy {
             this.correlationIdGenerator,
             this.socketActionFactory,
             this.reducedActions$,
-            this.store
+            this.store,
+            isNaN(this.config.timeout)
+                ? defaultNgrxDataWebsocketConfig.timeout
+                : this.config.timeout
         );
     }
 
