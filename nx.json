@@ -1,54 +1,64 @@
 {
-    "npmScope": "trellis",
-    "implicitDependencies": {
-        "workspace.json": "*",
-        "package.json": {
-            "dependencies": "*",
-            "devDependencies": "*"
-        },
-        "tslint.json": "*",
-        "nx.json": "*",
-        "tsconfig.base.json": "*"
+  "npmScope": "trellisorg",
+  "workspaceLayout": {
+    "appsDir": "apps",
+    "libsDir": "packages"
+  },
+  "affected": {
+    "defaultBase": "master"
+  },
+  "implicitDependencies": {
+    "workspace.json": "*",
+    "package.json": {
+      "dependencies": "*",
+      "devDependencies": "*"
     },
-    "tasksRunnerOptions": {
-        "default": {
-            "runner": "@nrwl/workspace/tasks-runners/default",
-            "options": {
-                "cacheableOperations": ["lint", "test", "e2e"]
-            }
-        }
-    },
-    "projects": {
-        "nx-realm": {
-            "tags": []
-        },
-        "nx-realm-e2e": {
-            "tags": [],
-            "implicitDependencies": ["nx-realm"]
-        },
-        "make-buildable": {
-            "tags": []
-        },
-        "make-buildable-e2e": {
-            "tags": [],
-            "implicitDependencies": ["make-buildable"]
-        },
-        "angularfire-ngrx": {
-            "tags": []
-        },
-        "angularfire-ngrx-demo": {
-            "tags": []
-        },
-        "angularfire-ngrx-demo-e2e": {
-            "tags": [],
-            "implicitDependencies": ["angularfire-ngrx-demo"]
-        }
-    },
-    "workspaceLayout": {
-        "appsDir": "apps",
-        "libsDir": "packages"
-    },
-    "affected": {
-        "defaultBase": "master"
+    "tsconfig.base.json": "*",
+    "tslint.json": "*",
+    ".eslintrc.json": "*",
+    "nx.json": "*"
+  },
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "@nrwl/nx-cloud",
+      "options": {
+        "accessToken": "YzBiN2UxOWUtNmM3ZC00ZTRjLThlMzQtYjE0N2VjMTQxMTNlfHJlYWQtd3JpdGU=",
+        "cacheableOperations": ["build", "test", "lint", "e2e"],
+        "canTrackAnalytics": false,
+        "showUsageWarnings": true
+      }
     }
+  },
+  "projects": {
+    "nx-realm": {
+      "tags": []
+    },
+    "nx-realm-e2e": {
+      "tags": [],
+      "implicitDependencies": ["nx-realm"]
+    },
+    "make-buildable": {
+      "tags": []
+    },
+    "make-buildable-e2e": {
+      "tags": [],
+      "implicitDependencies": ["make-buildable"]
+    },
+    "angularfire-ngrx": {
+      "tags": []
+    },
+    "angularfire-ngrx-demo": {
+      "tags": []
+    },
+    "angularfire-ngrx-demo-e2e": {
+      "tags": [],
+      "implicitDependencies": ["angularfire-ngrx-demo"]
+    },
+    "ngrx-data-websocket": {
+      "tags": []
+    },
+    "api": {
+      "tags": []
+    }
+  }
 }

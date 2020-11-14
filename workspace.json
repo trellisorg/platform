@@ -15,10 +15,7 @@
               "packages/nx-realm/tsconfig.lib.json",
               "packages/nx-realm/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!packages/nx-realm/**/*"
-            ]
+            "exclude": ["**/node_modules/**", "!packages/nx-realm/**/*"]
           }
         },
         "test": {
@@ -88,10 +85,7 @@
               "packages/make-buildable/tsconfig.lib.json",
               "packages/make-buildable/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!packages/make-buildable/**/*"
-            ]
+            "exclude": ["**/node_modules/**", "!packages/make-buildable/**/*"]
           }
         },
         "test": {
@@ -172,10 +166,7 @@
               "packages/angularfire-ngrx/tsconfig.lib.json",
               "packages/angularfire-ngrx/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!packages/angularfire-ngrx/**/*"
-            ]
+            "exclude": ["**/node_modules/**", "!packages/angularfire-ngrx/**/*"]
           }
         },
         "test": {
@@ -216,9 +207,7 @@
               "apps/angularfire-ngrx-demo/src/favicon.ico",
               "apps/angularfire-ngrx-demo/src/assets"
             ],
-            "styles": [
-              "apps/angularfire-ngrx-demo/src/styles.scss"
-            ],
+            "styles": ["apps/angularfire-ngrx-demo/src/styles.scss"],
             "scripts": []
           },
           "configurations": {
@@ -312,9 +301,7 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "apps/angularfire-ngrx-demo-e2e/tsconfig.e2e.json"
-            ],
+            "tsConfig": ["apps/angularfire-ngrx-demo-e2e/tsconfig.e2e.json"],
             "exclude": [
               "**/node_modules/**",
               "!apps/angularfire-ngrx-demo-e2e/**/*"
@@ -322,77 +309,100 @@
           }
         }
       }
+    },
+    "ngrx-data-websocket": {
+      "projectType": "library",
+      "root": "packages/ngrx-data-websocket",
+      "sourceRoot": "packages/ngrx-data-websocket/src",
+      "prefix": "trellis",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "packages/ngrx-data-websocket/tsconfig.lib.json",
+            "project": "packages/ngrx-data-websocket/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "packages/ngrx-data-websocket/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "packages/ngrx-data-websocket/tsconfig.lib.json",
+              "packages/ngrx-data-websocket/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!packages/ngrx-data-websocket/**/*"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "packages/ngrx-data-websocket/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "schematics": {}
+    },
+    "api": {
+      "root": "apps/api",
+      "sourceRoot": "apps/api/src",
+      "projectType": "application",
+      "prefix": "api",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "options": {
+            "outputPath": "dist/apps/api",
+            "main": "apps/api/src/main.ts",
+            "tsConfig": "apps/api/tsconfig.app.json",
+            "assets": ["apps/api/src/assets"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/api/src/environments/environment.ts",
+                  "with": "apps/api/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "api:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/api/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/api/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   },
   "cli": {
-    "defaultCollection": "@nrwl/node",
-    "analytics": false
-  },
-  "schematics": {
-    "@nrwl/workspace": {
-      "library": {
-        "linter": "eslint"
-      }
-    },
-    "@nrwl/cypress": {
-      "cypress-project": {
-        "linter": "eslint"
-      }
-    },
-    "@nrwl/react": {
-      "application": {
-        "linter": "eslint"
-      },
-      "library": {
-        "linter": "eslint"
-      },
-      "storybook-configuration": {
-        "linter": "eslint"
-      }
-    },
-    "@nrwl/next": {
-      "application": {
-        "linter": "eslint"
-      }
-    },
-    "@nrwl/web": {
-      "application": {
-        "linter": "eslint"
-      }
-    },
-    "@nrwl/node": {
-      "application": {
-        "linter": "eslint"
-      },
-      "library": {
-        "linter": "eslint"
-      }
-    },
-    "@nrwl/nx-plugin": {
-      "plugin": {
-        "linter": "eslint"
-      }
-    },
-    "@nrwl/nest": {
-      "application": {
-        "linter": "eslint"
-      }
-    },
-    "@nrwl/express": {
-      "application": {
-        "linter": "eslint"
-      },
-      "library": {
-        "linter": "eslint"
-      }
-    },
-    "@nrwl/angular:application": {
-      "unitTestRunner": "jest",
-      "e2eTestRunner": "cypress"
-    },
-    "@nrwl/angular:library": {
-      "unitTestRunner": "jest"
-    }
-  },
-  "defaultProject": "sales1"
+    "defaultCollection": "@nrwl/workspace"
+  }
 }
