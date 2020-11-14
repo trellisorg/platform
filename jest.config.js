@@ -1,10 +1,9 @@
 module.exports = {
-    testMatch: ['**/+(*.)+(spec|test).+(ts|js)?(x)'],
-    transform: {
-        '^.+\\.(ts|js|html)$': 'ts-jest',
-    },
-    resolver: '@nrwl/jest/plugins/resolver',
-    moduleFileExtensions: ['ts', 'js', 'html'],
-    coverageReporters: ['html'],
-    projects: '<rootDir>/apps/api',
+    projects: [
+        '<rootDir>/apps/api',
+        '<rootDir>/packages/nx-realm',
+        '<rootDir>/packages/angularfire-ngrx',
+        '<rootDir>/packages/make-buildable',
+        '<rootDir>/packages/ngrx-data-websocket',
+    ],
 };
