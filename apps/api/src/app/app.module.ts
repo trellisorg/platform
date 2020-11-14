@@ -5,8 +5,8 @@ import { AppService } from './app.service';
 import { ProductGateway } from './product.gateway';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService, ProductGateway],
+    imports: [],
+    controllers: [AppController],
+    providers: [AppService, ProductGateway],
 })
 export class AppModule {}

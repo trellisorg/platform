@@ -4,10 +4,10 @@ import { SocketDataService } from './socket-data.service';
 
 @Injectable()
 export class SocketDataServiceFactory {
-  create<T>(
-    entityName: string,
-    dispatcher: SocketDispatcherBase<T>
-  ): SocketDataService<T> {
-    return new SocketDataService<T>(entityName, dispatcher);
-  }
+    create<T>(
+        entityName: string,
+        dispatcher: SocketDispatcherBase<T>
+    ): SocketDataService<T> {
+        return new SocketDataService<T>(entityName, dispatcher);
+    }
 }
