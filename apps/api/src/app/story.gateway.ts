@@ -77,7 +77,7 @@ export class StoryGateway
             ...this.initialData[index],
             ...body.data.changes,
         };
-        this.server
+        client
             .to('stories')
             .emit('ngrx-data-websocket/save/update-one/success', {
                 data: {
@@ -114,7 +114,7 @@ export class StoryGateway
             data: story,
         };
 
-        this.server.to('stories').emit(SocketOp.SAVE_ADD_ONE_SUCCESS, data);
+        client.to('stories').emit(SocketOp.SAVE_ADD_ONE_SUCCESS, data);
 
         return {
             event: SocketOp.SAVE_ADD_ONE_SUCCESS,
@@ -144,7 +144,6 @@ export class StoryGateway
         @MessageBody() body: SocketEventBody<Record<string, string>>,
         @ConnectedSocket() client: SocketIO.Socket
     ): SocketEventReturn<SocketOp.QUERY_MANY_SUCCESS, Story[]> {
-        console.log(body.data);
         return {
             event: SocketOp.QUERY_MANY_SUCCESS,
             data: {
@@ -205,7 +204,7 @@ export class StoryGateway
             (story) => story.id !== body.data
         );
 
-        this.server
+        client
             .to('stories')
             .emit(SocketOp.SAVE_DELETE_ONE_SUCCESS, { data: body.data });
 
