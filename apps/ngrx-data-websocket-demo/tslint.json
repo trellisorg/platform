@@ -1,0 +1,10 @@
+{
+    "extends": "../../tslint.json",
+    "rules": {
+        "directive-selector": [true, "attribute", "trellisorg", "camelCase"],
+        "component-selector": [true, "element", "trellisorg", "kebab-case"]
+    },
+    "linterOptions": {
+        "exclude": ["!**/*"]
+    }
+}

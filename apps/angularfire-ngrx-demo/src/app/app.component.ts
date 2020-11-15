@@ -4,7 +4,7 @@ import * as firebase from 'firebase';
 import {
     SocketCollectionServiceBase,
     SocketServiceElementsFactory,
-} from '@trellisorg/ngrx-data-websocket';
+} from '@trellisorg/ngrx-data-websocket/client';
 import { EntityCollectionServiceElementsFactory } from '@ngrx/data';
 
 class Product {

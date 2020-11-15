@@ -54,10 +54,29 @@
             "tags": [],
             "implicitDependencies": ["angularfire-ngrx-demo"]
         },
-        "ngrx-data-websocket": {
+        "api": {
             "tags": []
         },
-        "api": {
+        "ngrx-data-websocket-demo": {
+            "tags": []
+        },
+        "ngrx-data-websocket-demo-e2e": {
+            "tags": [],
+            "implicitDependencies": ["ngrx-data-websocket-demo"]
+        },
+        "ngrx-data-websocket-client": {
+            "tags": []
+        },
+        "core1": {
+            "tags": []
+        },
+        "ngrx-data-websocket-core": {
+            "tags": []
+        },
+        "server1": {
+            "tags": []
+        },
+        "ngrx-data-websocket-server": {
             "tags": []
         }
     }

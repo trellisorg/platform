@@ -1,0 +1,26 @@
+<div cdkDropListGroup>
+    <div
+        class="example-container"
+        *ngFor="let storyColumn of stories$ | async; let i = index"
+    >
+        <h2>Column {{ i }}</h2>
+
+        <div
+            id="{{ i }}"
+            #column
+            cdkDropList
+            [cdkDropListData]="storyColumn"
+            class="example-list"
+            (cdkDropListDropped)="drop($event, i)"
+        >
+            <div
+                class="example-box"
+                *ngFor="let story of storyColumn"
+                [cdkDragData]="story"
+                cdkDrag
+            >
+                {{ story.title }}
+            </div>
+        </div>
+    </div>
+</div>
