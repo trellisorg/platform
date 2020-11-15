@@ -1,20 +1,31 @@
 {
-    "npmScope": "trellis",
+    "npmScope": "trellisorg",
+    "workspaceLayout": {
+        "appsDir": "apps",
+        "libsDir": "packages"
+    },
+    "affected": {
+        "defaultBase": "master"
+    },
     "implicitDependencies": {
         "workspace.json": "*",
         "package.json": {
             "dependencies": "*",
             "devDependencies": "*"
         },
+        "tsconfig.base.json": "*",
         "tslint.json": "*",
-        "nx.json": "*",
-        "tsconfig.base.json": "*"
+        ".eslintrc.json": "*",
+        "nx.json": "*"
     },
     "tasksRunnerOptions": {
         "default": {
-            "runner": "@nrwl/workspace/tasks-runners/default",
+            "runner": "@nrwl/nx-cloud",
             "options": {
-                "cacheableOperations": ["lint", "test", "e2e"]
+                "accessToken": "YzBiN2UxOWUtNmM3ZC00ZTRjLThlMzQtYjE0N2VjMTQxMTNlfHJlYWQtd3JpdGU=",
+                "cacheableOperations": ["build", "test", "lint", "e2e"],
+                "canTrackAnalytics": false,
+                "showUsageWarnings": true
             }
         }
     },
@@ -42,13 +53,12 @@
         "angularfire-ngrx-demo-e2e": {
             "tags": [],
             "implicitDependencies": ["angularfire-ngrx-demo"]
+        },
+        "ngrx-data-websocket": {
+            "tags": []
+        },
+        "api": {
+            "tags": []
         }
-    },
-    "workspaceLayout": {
-        "appsDir": "apps",
-        "libsDir": "packages"
-    },
-    "affected": {
-        "defaultBase": "master"
     }
 }
