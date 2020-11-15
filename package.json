@@ -25,7 +25,8 @@
         "dep-graph": "nx dep-graph",
         "help": "nx help",
         "postinstall": "ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points",
-        "build:all": "yarn affected:build --all"
+        "build:all": "./tools/build-packages.sh",
+        "setup": "chmod -R +x ./tools/setup.sh && ./tools/setup.sh"
     },
     "private": true,
     "dependencies": {

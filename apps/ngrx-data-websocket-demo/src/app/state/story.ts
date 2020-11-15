@@ -7,7 +7,7 @@ import { EntityCollectionServiceElementsFactory } from '@ngrx/data';
 import { createSelector, select } from '@ngrx/store';
 
 export class Story {
-    id: string;
+    id?: string;
     order: number;
     column: number;
     title: string;

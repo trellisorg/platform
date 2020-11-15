@@ -105,24 +105,30 @@ export class StoryGateway
         @MessageBody() body: SocketEventBody<Story>,
         @ConnectedSocket() client: Socket
     ): SocketEventReturn<SocketOp.SAVE_ADD_ONE_SUCCESS, Story> {
-        setTimeout(
-            () =>
-                client.emit('ngrx-data-websocket/save/add-one/success', {
-                    data: { name: 'Hello New Name Here', id: body.data.id },
-                }),
-            5000
-        );
+        const story: Story = {
+            ...body.data,
+            id: (this.initialData.length + 1).toString(),
+        };
+
+        const data = {
+            data: story,
+        };
+
+        this.server.to('stories').emit(SocketOp.SAVE_ADD_ONE_SUCCESS, data);
 
         return {
             event: SocketOp.SAVE_ADD_ONE_SUCCESS,
-            data: body,
+            data: {
+                ...data,
+                correlationId: body.correlationId,
+            },
         };
     }
 
     @SubscribeMessage(SocketOp.QUERY_BY_KEY)
     queryByKey(
-        body: SocketEventBody<string | number>,
-        client: SocketIO.Socket
+        @MessageBody() body: SocketEventBody<string | number>,
+        @ConnectedSocket() client: SocketIO.Socket
     ): SocketEventReturn<SocketOp.QUERY_BY_KEY_SUCCESS, Story> {
         return {
             event: SocketOp.QUERY_BY_KEY_SUCCESS,
@@ -135,22 +141,27 @@ export class StoryGateway
 
     @SubscribeMessage(SocketOp.QUERY_MANY)
     queryMany(
-        body: SocketEventBody<Record<string, string>>,
-        client: SocketIO.Socket
+        @MessageBody() body: SocketEventBody<Record<string, string>>,
+        @ConnectedSocket() client: SocketIO.Socket
     ): SocketEventReturn<SocketOp.QUERY_MANY_SUCCESS, Story[]> {
+        console.log(body.data);
         return {
             event: SocketOp.QUERY_MANY_SUCCESS,
             data: {
                 correlationId: body.correlationId,
-                data: this.initialData,
+                data: this.initialData.filter((item) =>
+                    Object.keys(body.data).some(
+                        (key) => body.data[key] === item[key]
+                    )
+                ),
             },
         };
     }
 
     @SubscribeMessage(SocketOp.SAVE_ADD_MANY)
     saveAddMany(
-        body: SocketEventBody<Story[]>,
-        client: SocketIO.Socket
+        @MessageBody() body: SocketEventBody<Story[]>,
+        @ConnectedSocket() client: SocketIO.Socket
     ): SocketEventReturn<SocketOp.SAVE_ADD_MANY_SUCCESS, Story[]> {
         this.initialData.push(...body.data);
         return {
@@ -164,8 +175,8 @@ export class StoryGateway
 
     @SubscribeMessage(SocketOp.SAVE_UPSERT_ONE)
     upsertOne(
-        body: SocketEventBody<Story>,
-        client: SocketIO.Socket
+        @MessageBody() body: SocketEventBody<Story>,
+        @ConnectedSocket() client: SocketIO.Socket
     ): SocketEventReturn<SocketOp.SAVE_UPSERT_ONE_SUCCESS, Story> {
         const index = this.initialData.findIndex(
             (item) => item.id === body.data.id
@@ -187,9 +198,23 @@ export class StoryGateway
 
     @SubscribeMessage(SocketOp.SAVE_DELETE_ONE)
     deleteOne(
-        body: SocketEventBody<string | number>,
-        client: SocketIO.Socket
+        @MessageBody() body: SocketEventBody<string | number>,
+        @ConnectedSocket() client: SocketIO.Socket
     ): SocketEventReturn<SocketOp.SAVE_DELETE_ONE_SUCCESS, string | number> {
-        return undefined;
+        this.initialData = this.initialData.filter(
+            (story) => story.id !== body.data
+        );
+
+        this.server
+            .to('stories')
+            .emit(SocketOp.SAVE_DELETE_ONE_SUCCESS, { data: body.data });
+
+        return {
+            event: SocketOp.SAVE_DELETE_ONE_SUCCESS,
+            data: {
+                correlationId: body.correlationId,
+                data: body.data,
+            },
+        };
     }
 }

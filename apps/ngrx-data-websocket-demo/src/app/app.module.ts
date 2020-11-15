@@ -10,6 +10,10 @@ import { EntityDataModule } from '@ngrx/data';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
 import { NgrxDataWebsocketClientModule } from '@trellisorg/ngrx-data-websocket-client';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
     declarations: [AppComponent],
@@ -33,6 +37,10 @@ import { NgrxDataWebsocketClientModule } from '@trellisorg/ngrx-data-websocket-c
         NgrxDataWebsocketClientModule.forRoot({
             host: 'http://localhost:80',
         }),
+        FormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        BrowserAnimationsModule,
     ],
     providers: [],
     bootstrap: [AppComponent],
