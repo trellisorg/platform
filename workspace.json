@@ -8,17 +8,9 @@
             "schematics": {},
             "architect": {
                 "lint": {
-                    "builder": "@nrwl/linter:lint",
+                    "builder": "@nrwl/linter:eslint",
                     "options": {
-                        "linter": "eslint",
-                        "tsConfig": [
-                            "packages/nx-realm/tsconfig.lib.json",
-                            "packages/nx-realm/tsconfig.spec.json"
-                        ],
-                        "exclude": [
-                            "**/node_modules/**",
-                            "!packages/nx-realm/**/*"
-                        ]
+                        "lintFilePatterns": ["packages/nx-realm/**/*.ts"]
                     }
                 },
                 "test": {
@@ -81,17 +73,9 @@
             "schematics": {},
             "architect": {
                 "lint": {
-                    "builder": "@nrwl/linter:lint",
+                    "builder": "@nrwl/linter:eslint",
                     "options": {
-                        "linter": "eslint",
-                        "tsConfig": [
-                            "packages/make-buildable/tsconfig.lib.json",
-                            "packages/make-buildable/tsconfig.spec.json"
-                        ],
-                        "exclude": [
-                            "**/node_modules/**",
-                            "!packages/make-buildable/**/*"
-                        ]
+                        "lintFilePatterns": ["packages/make-buildable/**/*.ts"]
                     }
                 },
                 "test": {
@@ -166,15 +150,10 @@
                     }
                 },
                 "lint": {
-                    "builder": "@angular-devkit/build-angular:tslint",
+                    "builder": "@nrwl/linter:eslint",
                     "options": {
-                        "tsConfig": [
-                            "packages/angularfire-ngrx/tsconfig.lib.json",
-                            "packages/angularfire-ngrx/tsconfig.spec.json"
-                        ],
-                        "exclude": [
-                            "**/node_modules/**",
-                            "!packages/angularfire-ngrx/**/*"
+                        "lintFilePatterns": [
+                            "packages/angularfire-ngrx/**/*.ts"
                         ]
                     }
                 },
@@ -270,15 +249,10 @@
                     }
                 },
                 "lint": {
-                    "builder": "@angular-devkit/build-angular:tslint",
+                    "builder": "@nrwl/linter:eslint",
                     "options": {
-                        "tsConfig": [
-                            "apps/angularfire-ngrx-demo/tsconfig.app.json",
-                            "apps/angularfire-ngrx-demo/tsconfig.spec.json"
-                        ],
-                        "exclude": [
-                            "**/node_modules/**",
-                            "!apps/angularfire-ngrx-demo/**/*"
+                        "lintFilePatterns": [
+                            "apps/angularfire-ngrx-demo/**/*.ts"
                         ]
                     }
                 },
@@ -310,14 +284,10 @@
                     }
                 },
                 "lint": {
-                    "builder": "@angular-devkit/build-angular:tslint",
+                    "builder": "@nrwl/linter:eslint",
                     "options": {
-                        "tsConfig": [
-                            "apps/angularfire-ngrx-demo-e2e/tsconfig.e2e.json"
-                        ],
-                        "exclude": [
-                            "**/node_modules/**",
-                            "!apps/angularfire-ngrx-demo-e2e/**/*"
+                        "lintFilePatterns": [
+                            "apps/angularfire-ngrx-demo-e2e/**/*.ts"
                         ]
                     }
                 }
@@ -342,15 +312,10 @@
                     }
                 },
                 "lint": {
-                    "builder": "@angular-devkit/build-angular:tslint",
+                    "builder": "@nrwl/linter:eslint",
                     "options": {
-                        "tsConfig": [
-                            "packages/ngrx-data-websocket/tsconfig.lib.json",
-                            "packages/ngrx-data-websocket/tsconfig.spec.json"
-                        ],
-                        "exclude": [
-                            "**/node_modules/**",
-                            "!packages/ngrx-data-websocket/**/*"
+                        "lintFilePatterns": [
+                            "packages/ngrx-data-websocket/**/*.ts"
                         ]
                     }
                 },
@@ -417,5 +382,71 @@
     },
     "cli": {
         "defaultCollection": "@nrwl/workspace"
+    },
+    "schematics": {
+        "@nrwl/workspace": {
+            "library": {
+                "linter": "eslint"
+            }
+        },
+        "@nrwl/cypress": {
+            "cypress-project": {
+                "linter": "eslint"
+            }
+        },
+        "@nrwl/react": {
+            "application": {
+                "linter": "eslint"
+            },
+            "library": {
+                "linter": "eslint"
+            },
+            "storybook-configuration": {
+                "linter": "eslint"
+            }
+        },
+        "@nrwl/next": {
+            "application": {
+                "linter": "eslint"
+            }
+        },
+        "@nrwl/web": {
+            "application": {
+                "linter": "eslint"
+            }
+        },
+        "@nrwl/node": {
+            "application": {
+                "linter": "eslint"
+            },
+            "library": {
+                "linter": "eslint"
+            }
+        },
+        "@nrwl/nx-plugin": {
+            "plugin": {
+                "linter": "eslint"
+            }
+        },
+        "@nrwl/nest": {
+            "application": {
+                "linter": "eslint"
+            }
+        },
+        "@nrwl/express": {
+            "application": {
+                "linter": "eslint"
+            },
+            "library": {
+                "linter": "eslint"
+            }
+        },
+        "@nrwl/angular:application": {
+            "unitTestRunner": "jest",
+            "e2eTestRunner": "cypress"
+        },
+        "@nrwl/angular:library": {
+            "unitTestRunner": "jest"
+        }
     }
 }
