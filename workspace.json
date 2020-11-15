@@ -424,10 +424,11 @@
                     "builder": "@nrwl/linter:eslint",
                     "options": {
                         "lintFilePatterns": [
-                            "packages/ngrx-data-websocket/**/*.ts"
+                            "apps/ngrx-data-websocket-demo/**/*.ts"
                         ]
                     }
                 },
+
                 "test": {
                     "builder": "@nrwl/jest:jest",
                     "options": {
