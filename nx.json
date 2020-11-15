@@ -67,13 +67,7 @@
         "ngrx-data-websocket-client": {
             "tags": []
         },
-        "core1": {
-            "tags": []
-        },
         "ngrx-data-websocket-core": {
-            "tags": []
-        },
-        "server1": {
             "tags": []
         },
         "ngrx-data-websocket-server": {

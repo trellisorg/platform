@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { Injectable, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
@@ -13,17 +13,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { AngularFireAuthModule } from '@angular/fire/auth';
-import {
-    EntityCollectionServiceElementsFactory,
-    EntityDataModule,
-    EntityDataService,
-} from '@ngrx/data';
+import { EntityDataModule, EntityDataService } from '@ngrx/data';
 import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
-import {
-    NgrxDataWebsocketClientModule,
-    SocketCollectionServiceBase,
-    SocketServiceElementsFactory,
-} from '@trellisorg/ngrx-data-websocket/client';
 
 @NgModule({
     declarations: [AppComponent],
@@ -46,9 +37,6 @@ import {
         AngularFireNgrxAuthModule,
         HttpClientModule,
         HttpClientJsonpModule,
-        NgrxDataWebsocketClientModule.forRoot({
-            host: 'http://localhost:80',
-        }),
     ],
     providers: [],
     bootstrap: [AppComponent],

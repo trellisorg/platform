@@ -48,7 +48,7 @@ export class StoryGateway
         socket.join('stories');
     }
 
-    @SubscribeMessage('ngrx-data-websocket/query-all')
+    @SubscribeMessage(SocketOp.QUERY_ALL)
     queryAll(
         @MessageBody() body: SocketEventBody<void>,
         @ConnectedSocket() client: Socket
@@ -62,7 +62,7 @@ export class StoryGateway
         };
     }
 
-    @SubscribeMessage('ngrx-data-websocket/save/update-one')
+    @SubscribeMessage(SocketOp.SAVE_UPDATE_ONE)
     updateOne(
         @MessageBody() body: SocketEventBody<SocketUpdateRequestPayload<Story>>,
         @ConnectedSocket() client: Socket
@@ -70,7 +70,6 @@ export class StoryGateway
         SocketOp.SAVE_UPDATE_ONE_SUCCESS,
         SocketUpdateResponsePayload<Story>
     > {
-        console.log(body);
         const index = this.initialData.findIndex(
             (item) => item.id === body.data.id
         );
@@ -101,7 +100,7 @@ export class StoryGateway
         };
     }
 
-    @SubscribeMessage('ngrx-data-websocket/save/add-one')
+    @SubscribeMessage(SocketOp.SAVE_ADD_ONE)
     addOne(
         @MessageBody() body: SocketEventBody<Story>,
         @ConnectedSocket() client: Socket
@@ -120,6 +119,7 @@ export class StoryGateway
         };
     }
 
+    @SubscribeMessage(SocketOp.QUERY_BY_KEY)
     queryByKey(
         body: SocketEventBody<string | number>,
         client: SocketIO.Socket
@@ -133,6 +133,7 @@ export class StoryGateway
         };
     }
 
+    @SubscribeMessage(SocketOp.QUERY_MANY)
     queryMany(
         body: SocketEventBody<Record<string, string>>,
         client: SocketIO.Socket
@@ -146,6 +147,7 @@ export class StoryGateway
         };
     }
 
+    @SubscribeMessage(SocketOp.SAVE_ADD_MANY)
     saveAddMany(
         body: SocketEventBody<Story[]>,
         client: SocketIO.Socket
@@ -160,6 +162,7 @@ export class StoryGateway
         };
     }
 
+    @SubscribeMessage(SocketOp.SAVE_UPSERT_ONE)
     upsertOne(
         body: SocketEventBody<Story>,
         client: SocketIO.Socket
@@ -180,5 +183,13 @@ export class StoryGateway
                 data: body.data,
             },
         };
+    }
+
+    @SubscribeMessage(SocketOp.SAVE_DELETE_ONE)
+    deleteOne(
+        body: SocketEventBody<string | number>,
+        client: SocketIO.Socket
+    ): SocketEventReturn<SocketOp.SAVE_DELETE_ONE_SUCCESS, string | number> {
+        return undefined;
     }
 }
