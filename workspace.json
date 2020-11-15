@@ -421,16 +421,10 @@
                     }
                 },
                 "lint": {
-                    "builder": "@angular-devkit/build-angular:tslint",
+                    "builder": "@nrwl/linter:eslint",
                     "options": {
-                        "tsConfig": [
-                            "apps/ngrx-data-websocket-demo/tsconfig.app.json",
-                            "apps/ngrx-data-websocket-demo/tsconfig.spec.json",
-                            "apps/ngrx-data-websocket-demo/tsconfig.editor.json"
-                        ],
-                        "exclude": [
-                            "**/node_modules/**",
-                            "!apps/ngrx-data-websocket-demo/**/*"
+                        "lintFilePatterns": [
+                            "packages/ngrx-data-websocket/**/*.ts"
                         ]
                     }
                 },
@@ -462,14 +456,10 @@
                     }
                 },
                 "lint": {
-                    "builder": "@angular-devkit/build-angular:tslint",
+                    "builder": "@nrwl/linter:eslint",
                     "options": {
-                        "tsConfig": [
-                            "apps/ngrx-data-websocket-demo-e2e/tsconfig.e2e.json"
-                        ],
-                        "exclude": [
-                            "**/node_modules/**",
-                            "!apps/ngrx-data-websocket-demo-e2e/**/*"
+                        "lintFilePatterns": [
+                            "apps/ngrx-data-websocket-demo-e2e/**/*.ts"
                         ]
                     }
                 }
