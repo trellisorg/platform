@@ -74,13 +74,21 @@ export class SocketEventListener<T> {
         this._socket.disconnect();
     }
 
-    connect(config: NgrxDataWebsocketConfig, params: any): Observable<boolean> {
+    connect(
+        config: NgrxDataWebsocketConfig,
+        params: Record<string, string>
+    ): Observable<boolean> {
         const connected = new BehaviorSubject<boolean>(false);
         const host = config.host ? `${config.host}/` : '';
 
-        this._socket = socketIo(`${host}${this._entityName.toLowerCase()}`, {
-            transports: ['websocket', 'polling'],
-        });
+        const connectParams = new URLSearchParams(params).toString();
+
+        this._socket = socketIo(
+            `${host}${this._entityName.toLowerCase()}?${connectParams}`,
+            {
+                transports: ['websocket', 'polling'],
+            }
+        );
 
         this.setupReservedEvents();
 
