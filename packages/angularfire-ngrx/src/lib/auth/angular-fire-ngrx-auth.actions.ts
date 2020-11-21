@@ -16,7 +16,11 @@ export class AngularFireNgrxAuthActions<V = Action> extends Observable<V> {
 
         this.source = merge(
             this.angularFireAuth.authState.pipe(
-                map((authState) => Actions.authStateChanged({ authState })),
+                map((authState) =>
+                    Actions.authStateChanged({
+                        authState: authState?.toJSON() || null,
+                    })
+                ),
                 shareReplay(this.config?.replay ? 1 : 0)
             ),
             this.angularFireAuth.idToken.pipe(
@@ -30,7 +34,9 @@ export class AngularFireNgrxAuthActions<V = Action> extends Observable<V> {
                 shareReplay(this.config.replay ? 1 : 0)
             ),
             this.angularFireAuth.user.pipe(
-                map((user) => Actions.userChanged({ user })),
+                map((user) =>
+                    Actions.userChanged({ user: user?.toJSON() || null })
+                ),
                 shareReplay(this.config.replay ? 1 : 0)
             )
         );

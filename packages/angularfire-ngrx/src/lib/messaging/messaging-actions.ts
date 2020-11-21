@@ -42,7 +42,7 @@ export const requestTokenSuccess = createAction(
 );
 
 export const requestTokenFailed = createAction(
-    '[@angularfire-ngrx/messaging/request-token-success] Request Token for Messaging Successful',
+    '[@angularfire-ngrx/messaging/request-token-success] Request Token for Messaging Failed',
     props<{ error: any }>()
 );
 

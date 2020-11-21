@@ -1,10 +1,12 @@
 import { createAction, props } from '@ngrx/store';
 import * as firebase from 'firebase';
-import { User } from 'firebase';
 
+/**
+ * authState is a JSON representation of the Firebase user
+ */
 export const authStateChanged = createAction(
     '[@angularfire-ngrx/auth/auth-state] Auth State changed',
-    props<{ authState: User | null }>()
+    props<{ authState: Object | null }>()
 );
 
 export const idTokenChanged = createAction(
@@ -12,9 +14,12 @@ export const idTokenChanged = createAction(
     props<{ idToken: string | null }>()
 );
 
+/**
+ * user is a JSON representation of the Firebase user
+ */
 export const userChanged = createAction(
     '[@angularfire-ngrx/auth/user] User',
-    props<{ user: User | null }>()
+    props<{ user: Object | null }>()
 );
 
 export const idTokenResultChanged = createAction(
