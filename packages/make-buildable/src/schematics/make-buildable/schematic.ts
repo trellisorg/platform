@@ -13,7 +13,9 @@ import { MakeBuildableSchematicSchema } from './schema';
 import { checkProjectExists } from '@nrwl/workspace/src/utils/rules/check-project-exists';
 import {
     offsetFromRoot,
+    readJsonInTree,
     readWorkspace,
+    readNxJson,
     updateJsonInTree,
     updateWorkspaceInTree,
 } from '@nrwl/workspace';
@@ -27,15 +29,48 @@ interface NormalizedSchema extends MakeBuildableSchematicSchema {
     isAngular: boolean;
     configurations: string[];
     pathInLibs: string;
+    angularVersion?: string;
+    tsLibVersion?: string;
+    npmScope: string;
+}
+
+interface Versions {
+    nx: number;
+    angular?: string;
+    tsLib?: string;
+}
+
+const parseVersionRegex = /\d+\.\d+\.\d+/;
+
+function getVersions(host: Tree): Versions {
+    const packageJson = readJsonInTree(host, 'package.json');
+    const nrwlWorkspace = packageJson.devDependencies['@nrwl/workspace'].match(
+        parseVersionRegex
+    )[0];
+    const angular = packageJson.dependencies['@angular/core']?.match(
+        parseVersionRegex
+    )[0];
+    const tsLib = packageJson.dependencies['tslib']?.match(
+        parseVersionRegex
+    )[0];
+    return {
+        angular,
+        tsLib,
+        nx: parseInt(nrwlWorkspace.split('.')[0]),
+    };
 }
 
 function createAngularBuildTarget(
     projectName: string,
     root: string,
-    configurations: string[]
+    configurations: string[],
+    nxVersion: number
 ): any {
     return {
-        builder: '@nrwl/angular:package',
+        builder:
+            nxVersion >= 11
+                ? '@nrwl/angular:ng-packagr-lite'
+                : '@nrwl/angular:package',
         options: {
             tsConfig: `${root}/tsconfig.lib.json`,
             project: `${root}/ng-package.json`,
@@ -65,7 +100,9 @@ function createNodeBuildTarget(projectName: string, root: string): any {
 
 function normalizeOptions(
     options: MakeBuildableSchematicSchema,
-    workspace: any
+    workspace: any,
+    versions: Versions,
+    npmScope: string
 ): NormalizedSchema {
     const project = workspace.projects[options.projectName];
     const projectRoot = project.root;
@@ -80,6 +117,9 @@ function normalizeOptions(
             .split(',')
             .map((config) => config.trim().toLowerCase()),
         pathInLibs: options.projectName.replace(/-/g, '/'),
+        angularVersion: versions.angular,
+        tsLibVersion: versions.tsLib,
+        npmScope,
     };
 }
 
@@ -92,7 +132,7 @@ function addFiles(options: NormalizedSchema): Rule {
     );
 }
 
-function updateWorkspace(schema: NormalizedSchema) {
+function updateWorkspace(schema: NormalizedSchema, nxVersion: number) {
     return updateWorkspaceInTree((workspace) => {
         const project = workspace.projects[schema.projectName];
 
@@ -103,7 +143,8 @@ function updateWorkspace(schema: NormalizedSchema) {
             ? createAngularBuildTarget(
                   schema.projectName,
                   root,
-                  schema.configurations
+                  schema.configurations,
+                  nxVersion
               )
             : createNodeBuildTarget(schema.projectName, root);
 
@@ -118,6 +159,7 @@ function updateLibTsConfigAngular(root: string): Rule {
                 compilerOptions: {
                     target: 'es2015',
                     declaration: true,
+                    declarationMap: true,
                     inlineSources: true,
                     types: [],
                     lib: ['dom', 'es2018'],
@@ -128,6 +170,7 @@ function updateLibTsConfigAngular(root: string): Rule {
                     enableResourceInlining: true,
                 },
                 exclude: ['src/test-setup.ts', '**/*.spec.ts'],
+                include: ['**/*.ts'],
             },
             json
         );
@@ -143,7 +186,6 @@ function updateLibTsConfigNode(root: string): Rule {
                 compilerOptions: {
                     module: 'commonjs',
                     declaration: true,
-                    rootDir: './src',
                     types: ['node'],
                 },
                 exclude: ['**/*.spec.ts'],
@@ -157,7 +199,14 @@ function updateLibTsConfigNode(root: string): Rule {
 export default function (options: MakeBuildableSchematicSchema): Rule {
     return (host: Tree, context: SchematicContext) => {
         const workspace = readWorkspace(host);
-        const normalizedOptions = normalizeOptions(options, workspace);
+        const versions = getVersions(host);
+        const npmScope = readNxJson().npmScope;
+        const normalizedOptions = normalizeOptions(
+            options,
+            workspace,
+            versions,
+            npmScope
+        );
 
         return chain([
             checkProjectExists(options),
@@ -165,7 +214,7 @@ export default function (options: MakeBuildableSchematicSchema): Rule {
             normalizedOptions.isAngular
                 ? updateLibTsConfigAngular(normalizedOptions.projectRoot)
                 : updateLibTsConfigNode(normalizedOptions.projectRoot),
-            updateWorkspace(normalizedOptions),
+            updateWorkspace(normalizedOptions, versions.nx),
         ]);
     };
 }
