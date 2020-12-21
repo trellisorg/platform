@@ -1,4 +1,4 @@
 {
-  "name": "@trellis/<%= pathInLibs %>",
+  "name": "@<%= npmScope %>/<%= pathInLibs %>",
   "version": "0.0.1"
 }

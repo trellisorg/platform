@@ -1,11 +1,11 @@
 {
-  "name": "@trellis/<%= pathInLibs %>",
+  "name": "@<%= npmScope %>/<%= pathInLibs %>",
   "version": "0.0.1",
   "peerDependencies": {
-    "@angular/common": "^11.0.4",
-    "@angular/core": "^11.0.4"
+    "@angular/common": "^<%= angularVersion %>",
+    "@angular/core": "^<%= angularVersion %>"
   },
   "dependencies": {
-    "tslib": "^2.0.0"
+    "tslib": "^<%= tsLibVersion %>"
   }
 }
