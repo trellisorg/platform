@@ -2,10 +2,10 @@
   "name": "@trellis/<%= pathInLibs %>",
   "version": "0.0.1",
   "peerDependencies": {
-    "@angular/common": "^9.1.11",
-    "@angular/core": "^9.1.11"
+    "@angular/common": "^11.0.4",
+    "@angular/core": "^11.0.4"
   },
   "dependencies": {
-    "tslib": "^1.10.0"
+    "tslib": "^2.0.0"
   }
 }

@@ -35,7 +35,7 @@ function createAngularBuildTarget(
     configurations: string[]
 ): any {
     return {
-        builder: '@nrwl/angular:package',
+        builder: '@nrwl/angular:ng-packagr-lite',
         options: {
             tsConfig: `${root}/tsconfig.lib.json`,
             project: `${root}/ng-package.json`,
@@ -118,6 +118,7 @@ function updateLibTsConfigAngular(root: string): Rule {
                 compilerOptions: {
                     target: 'es2015',
                     declaration: true,
+                    declarationMap: true,
                     inlineSources: true,
                     types: [],
                     lib: ['dom', 'es2018'],
@@ -128,6 +129,7 @@ function updateLibTsConfigAngular(root: string): Rule {
                     enableResourceInlining: true,
                 },
                 exclude: ['src/test-setup.ts', '**/*.spec.ts'],
+                include: ["**/*.ts"],
             },
             json
         );
@@ -143,7 +145,6 @@ function updateLibTsConfigNode(root: string): Rule {
                 compilerOptions: {
                     module: 'commonjs',
                     declaration: true,
-                    rootDir: './src',
                     types: ['node'],
                 },
                 exclude: ['**/*.spec.ts'],
