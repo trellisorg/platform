@@ -6,5 +6,9 @@
     "builders": "./builders.json",
     "dependencies": {
         "lodash.merge": "*"
+    },
+    "peerDependencies": {
+        "@angular-devkit/schematics": ">=9",
+        "@nrwl/workspace": ">=9"
     }
 }

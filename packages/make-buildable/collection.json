@@ -1,12 +1,12 @@
 {
-  "$schema": "../../node_modules/@angular-devkit/schematics/collection-schema.json",
-  "name": "make-buildable",
-  "version": "0.0.1",
-  "schematics": {
-    "migrate": {
-      "factory": "./src/schematics/make-buildable/schematic",
-      "schema": "./src/schematics/make-buildable/schema.json",
-      "description": "make-buildable schematic"
+    "$schema": "../../node_modules/@angular-devkit/schematics/collection-schema.json",
+    "name": "make-buildable",
+    "version": "0.0.9",
+    "schematics": {
+        "migrate": {
+            "factory": "./src/schematics/make-buildable/schematic",
+            "schema": "./src/schematics/make-buildable/schema.json",
+            "description": "make-buildable schematic"
+        }
     }
-  }
 }
