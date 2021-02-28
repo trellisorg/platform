@@ -1,18 +1,10 @@
 {
     "npmScope": "trellisorg",
-    "workspaceLayout": {
-        "appsDir": "apps",
-        "libsDir": "packages"
-    },
-    "affected": {
-        "defaultBase": "master"
-    },
+    "workspaceLayout": { "appsDir": "apps", "libsDir": "packages" },
+    "affected": { "defaultBase": "master" },
     "implicitDependencies": {
         "workspace.json": "*",
-        "package.json": {
-            "dependencies": "*",
-            "devDependencies": "*"
-        },
+        "package.json": { "dependencies": "*", "devDependencies": "*" },
         "tsconfig.base.json": "*",
         "tslint.json": "*",
         ".eslintrc.json": "*",
@@ -30,48 +22,29 @@
         }
     },
     "projects": {
-        "nx-realm": {
-            "tags": []
-        },
-        "nx-realm-e2e": {
-            "tags": [],
-            "implicitDependencies": ["nx-realm"]
-        },
-        "make-buildable": {
-            "tags": []
-        },
+        "nx-realm": { "tags": [] },
+        "nx-realm-e2e": { "tags": [], "implicitDependencies": ["nx-realm"] },
+        "make-buildable": { "tags": [] },
         "make-buildable-e2e": {
             "tags": [],
             "implicitDependencies": ["make-buildable"]
         },
-        "angularfire-ngrx": {
-            "tags": []
-        },
-        "angularfire-ngrx-demo": {
-            "tags": []
-        },
+        "angularfire-ngrx": { "tags": [] },
+        "angularfire-ngrx-demo": { "tags": [] },
         "angularfire-ngrx-demo-e2e": {
             "tags": [],
             "implicitDependencies": ["angularfire-ngrx-demo"]
         },
-        "api": {
-            "tags": []
-        },
-        "ngrx-data-websocket-demo": {
-            "tags": []
-        },
+        "api": { "tags": [] },
+        "ngrx-data-websocket-demo": { "tags": [] },
         "ngrx-data-websocket-demo-e2e": {
             "tags": [],
             "implicitDependencies": ["ngrx-data-websocket-demo"]
         },
-        "ngrx-data-websocket-client": {
-            "tags": []
-        },
-        "ngrx-data-websocket-core": {
-            "tags": []
-        },
-        "ngrx-data-websocket-server": {
-            "tags": []
-        }
+        "ngrx-data-websocket-client": { "tags": [] },
+        "ngrx-data-websocket-core": { "tags": [] },
+        "ngrx-data-websocket-server": { "tags": [] },
+        "ngrx-universal-rehydrate": { "tags": [] },
+        "ngrx-universal-rehydrate-demo": { "tags": [] }
     }
 }

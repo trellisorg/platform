@@ -8,5 +8,8 @@ module.exports = {
         '<rootDir>/packages/ngrx-data-websocket/client',
         '<rootDir>/packages/ngrx-data-websocket/server',
         '<rootDir>/packages/ngrx-data-websocket/core',
+        '<rootDir>/packages/ngrx-universal-rehydrate',
+        '<rootDir>/apps/ngrx-universal-rehydrate-demo',
+        '<rootDir>/packages/ngrx-universal-rehydrate-server',
     ],
 };
