@@ -23,7 +23,10 @@
         "update": "nx migrate latest",
         "workspace-schematic": "nx workspace-schematic",
         "dep-graph": "nx dep-graph",
-        "help": "nx help"
+        "help": "nx help",
+        "postinstall": "ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points",
+        "build:all": "./tools/build-packages.sh",
+        "setup": "chmod -R +x ./tools/setup.sh && ./tools/setup.sh"
     },
     "private": true,
     "dependencies": {
@@ -32,6 +35,7 @@
         "@angular-devkit/core": "10.1.7",
         "@angular-devkit/schematics": "10.1.7",
         "@angular/animations": "^10.1.2",
+        "@angular/cdk": "^11.0.0",
         "@angular/cli": "^10.1.3",
         "@angular/common": "^10.0.0",
         "@angular/compiler": "^10.0.0",
@@ -40,6 +44,7 @@
         "@angular/fire": "^6.0.2",
         "@angular/forms": "^10.0.0",
         "@angular/language-service": "^10.0.0",
+        "@angular/material": "^10.1.7",
         "@angular/platform-browser": "^10.1.2",
         "@angular/platform-browser-dynamic": "^10.1.2",
         "@angular/router": "^10.1.2",
@@ -58,9 +63,7 @@
         "@ngrx/store-devtools": "^10.0.0",
         "@nrwl/angular": "^10.3.1",
         "@nrwl/cli": "^10.3.3",
-        "@nrwl/cypress": "^10.3.1",
         "@nrwl/eslint-plugin-nx": "^10.3.1",
-        "@nrwl/jest": "^10.3.1",
         "@nrwl/nest": "^10.3.2",
         "@nrwl/node": "^10.3.1",
         "@nrwl/nx-cloud": "latest",
@@ -97,5 +100,10 @@
         "typescript": "~4.0.3",
         "zone.js": "^0.11.1"
     },
-    "devDependencies": {}
+    "devDependencies": {
+        "@nrwl/cypress": "10.3.3",
+        "@nrwl/jest": "10.3.3",
+        "codelyzer": "~5.0.1",
+        "cypress": "^4.1.0"
+    }
 }

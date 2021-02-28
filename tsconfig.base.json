@@ -5,12 +5,13 @@
         "sourceMap": true,
         "declaration": false,
         "moduleResolution": "node",
+        "allowSyntheticDefaultImports": true,
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "importHelpers": true,
         "target": "es2015",
         "module": "esnext",
-        "typeRoots": ["node_modules/@types"],
+        "typeRoots": ["node_modules/@types", "dist/"],
         "lib": ["es2017", "dom"],
         "skipLibCheck": true,
         "skipDefaultLibCheck": true,
@@ -18,11 +19,15 @@
         "paths": {
             "@trellis/nx-realm": ["packages/nx-realm/src/index.ts"],
             "@trellis/make-buildable": ["packages/make-buildable/src/index.ts"],
-            "@trellis/angularfire-ngrx": [
-                "packages/angularfire-ngrx/src/index.ts"
+            "@trellisorg/angularfire-ngrx": ["dist/packages/angularfire-ngrx"],
+            "@trellisorg/ngrx-data-websocket-client": [
+                "dist/packages/ngrx-data-websocket/client"
             ],
-            "@trellisorg/ngrx-data-websocket": [
-                "packages/ngrx-data-websocket/src/index.ts"
+            "@trellisorg/ngrx-data-websocket-core": [
+                "dist/packages/ngrx-data-websocket/core/src"
+            ],
+            "@trellisorg/ngrx-data-websocket-server": [
+                "dist/packages/ngrx-data-websocket/server/src"
             ]
         }
     },

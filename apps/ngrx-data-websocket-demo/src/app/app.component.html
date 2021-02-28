@@ -1,0 +1,49 @@
+<mat-form-field appearance="outline">
+    <input matInput (keyup)="queryMany($event)" />
+</mat-form-field>
+<div style="cursor: pointer;" (click)="loadAll()">
+    Load All
+</div>
+<div cdkDropListGroup>
+    <div
+        class="example-container"
+        *ngFor="let storyColumn of stories$ | async; let i = index"
+    >
+        <h2>Column {{ i }}</h2>
+
+        <a
+            style="cursor: pointer; text-decoration: #0094ba;"
+            (click)="add(i, storyColumn)"
+            >Add New</a
+        >
+
+        <div
+            id="{{ i }}"
+            #column
+            cdkDropList
+            [cdkDropListData]="storyColumn"
+            class="example-list"
+            (cdkDropListDropped)="drop($event, i)"
+        >
+            <div
+                class="example-box"
+                *ngFor="let story of storyColumn"
+                [cdkDragData]="story"
+                cdkDrag
+            >
+                <mat-form-field appearance="outline">
+                    <input
+                        matInput
+                        #storyTitle
+                        [ngModel]="story.title"
+                        (blur)="update(story, storyTitle.value)"
+                    />
+                </mat-form-field>
+                -
+                <span style="cursor: pointer;" (click)="delete(story)"
+                    >Delete</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
