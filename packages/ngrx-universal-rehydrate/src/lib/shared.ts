@@ -27,7 +27,11 @@ export function createTransferStateKey<T>(
     config: NgrxUniversalHydrateConfig
 ): StateKey<T> {
     return makeStateKey<T>(
-        `ngrx-${config.stores.sort().join('-') || 'full-store'}-rehydration`
+        `ngrx-${
+            config.stores?.length > 0
+                ? config.stores.sort().join('-')
+                : 'full-store'
+        }-rehydration`
     );
 }
 

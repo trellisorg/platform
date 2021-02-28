@@ -36,13 +36,17 @@ export function rehydrateMetaReducer(
                 /**
                  * Only persist state for store slices that are configured
                  */
-                ngrxUniversalHydrationService.state = config.stores.reduce(
-                    (prev, cur) => ({
-                        ...prev,
-                        [cur]: newState[cur],
-                    }),
-                    {}
-                );
+                if (config.stores?.length > 0) {
+                    ngrxUniversalHydrationService.state = config.stores.reduce(
+                        (prev, cur) => ({
+                            ...prev,
+                            [cur]: newState[cur],
+                        }),
+                        {}
+                    );
+                } else {
+                    ngrxUniversalHydrationService.state = newState;
+                }
 
                 return newState;
             }
