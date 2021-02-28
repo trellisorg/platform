@@ -20,7 +20,10 @@ import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
     declarations: [AppComponent],
     imports: [
         BrowserModule,
-        RouterModule.forRoot([], { initialNavigation: 'enabled' }),
+        RouterModule.forRoot([], {
+            initialNavigation: 'enabled',
+            relativeLinkResolution: 'legacy',
+        }),
         AngularFireModule.initializeApp(environment.firebase),
         AngularFireAuthModule,
         StoreModule.forRoot({}),

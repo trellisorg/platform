@@ -19,7 +19,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     declarations: [AppComponent],
     imports: [
         BrowserModule,
-        RouterModule.forRoot([], { initialNavigation: 'enabled' }),
+        RouterModule.forRoot([], {
+            initialNavigation: 'enabled',
+            relativeLinkResolution: 'legacy',
+        }),
         DragDropModule,
         StoreModule.forRoot({}),
         EffectsModule.forRoot([]),

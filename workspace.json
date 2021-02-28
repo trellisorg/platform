@@ -18,7 +18,8 @@
                     "options": {
                         "jestConfig": "packages/nx-realm/jest.config.js",
                         "passWithNoTests": true
-                    }
+                    },
+                    "outputs": ["coverage/packages/nx-realm"]
                 },
                 "build": {
                     "builder": "@nrwl/node:package",
@@ -46,7 +47,8 @@
                             }
                         ],
                         "srcRootForCompilationRoot": "packages/nx-realm"
-                    }
+                    },
+                    "outputs": ["{options.outputPath}"]
                 }
             }
         },
@@ -83,7 +85,8 @@
                     "options": {
                         "jestConfig": "packages/make-buildable/jest.config.js",
                         "passWithNoTests": true
-                    }
+                    },
+                    "outputs": ["coverage/packages/make-buildable"]
                 },
                 "build": {
                     "builder": "@nrwl/node:package",
@@ -111,7 +114,8 @@
                             }
                         ],
                         "srcRootForCompilationRoot": "packages/make-buildable"
-                    }
+                    },
+                    "outputs": ["{options.outputPath}"]
                 }
             }
         },
@@ -153,7 +157,8 @@
                     "builder": "@nrwl/linter:eslint",
                     "options": {
                         "lintFilePatterns": [
-                            "packages/angularfire-ngrx/**/*.ts"
+                            "packages/angularfire-ngrx/**/*.ts",
+                            "packages/angularfire-ngrx/src/**/*.html"
                         ]
                     }
                 },
@@ -162,7 +167,8 @@
                     "options": {
                         "jestConfig": "packages/angularfire-ngrx/jest.config.js",
                         "passWithNoTests": true
-                    }
+                    },
+                    "outputs": ["coverage/packages/angularfire-ngrx"]
                 }
             },
             "schematics": {
@@ -211,7 +217,6 @@
                             "optimization": true,
                             "outputHashing": "all",
                             "sourceMap": false,
-                            "extractCss": true,
                             "namedChunks": false,
                             "extractLicenses": true,
                             "vendorChunk": false,
@@ -229,7 +234,8 @@
                                 }
                             ]
                         }
-                    }
+                    },
+                    "outputs": ["{options.outputPath}"]
                 },
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
@@ -252,7 +258,8 @@
                     "builder": "@nrwl/linter:eslint",
                     "options": {
                         "lintFilePatterns": [
-                            "apps/angularfire-ngrx-demo/**/*.ts"
+                            "apps/angularfire-ngrx-demo/**/*.ts",
+                            "apps/angularfire-ngrx-demo/src/**/*.html"
                         ]
                     }
                 },
@@ -261,7 +268,8 @@
                     "options": {
                         "jestConfig": "apps/angularfire-ngrx-demo/jest.config.js",
                         "passWithNoTests": true
-                    }
+                    },
+                    "outputs": ["coverage/apps/angularfire-ngrx-demo"]
                 }
             }
         },
@@ -320,7 +328,8 @@
                                 }
                             ]
                         }
-                    }
+                    },
+                    "outputs": ["{options.outputPath}"]
                 },
                 "serve": {
                     "builder": "@nrwl/node:execute",
@@ -339,7 +348,8 @@
                     "options": {
                         "jestConfig": "apps/api/jest.config.js",
                         "passWithNoTests": true
-                    }
+                    },
+                    "outputs": ["coverage/apps/api"]
                 }
             }
         },
@@ -383,7 +393,6 @@
                             "optimization": true,
                             "outputHashing": "all",
                             "sourceMap": false,
-                            "extractCss": true,
                             "namedChunks": false,
                             "extractLicenses": true,
                             "vendorChunk": false,
@@ -401,7 +410,8 @@
                                 }
                             ]
                         }
-                    }
+                    },
+                    "outputs": ["{options.outputPath}"]
                 },
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
@@ -424,17 +434,18 @@
                     "builder": "@nrwl/linter:eslint",
                     "options": {
                         "lintFilePatterns": [
-                            "apps/ngrx-data-websocket-demo/**/*.ts"
+                            "apps/ngrx-data-websocket-demo/**/*.ts",
+                            "apps/ngrx-data-websocket-demo/src/**/*.html"
                         ]
                     }
                 },
-
                 "test": {
                     "builder": "@nrwl/jest:jest",
                     "options": {
                         "jestConfig": "apps/ngrx-data-websocket-demo/jest.config.js",
                         "passWithNoTests": true
-                    }
+                    },
+                    "outputs": ["coverage/apps/ngrx-data-websocket-demo"]
                 }
             }
         },
@@ -488,7 +499,8 @@
                     "builder": "@nrwl/linter:eslint",
                     "options": {
                         "lintFilePatterns": [
-                            "packages/ngrx-data-websocket/client/**/*.ts"
+                            "packages/ngrx-data-websocket/client/**/*.ts",
+                            "packages/ngrx-data-websocket/client/src/**/*.html"
                         ]
                     }
                 },
@@ -497,7 +509,8 @@
                     "options": {
                         "jestConfig": "packages/ngrx-data-websocket/client/jest.config.js",
                         "passWithNoTests": true
-                    }
+                    },
+                    "outputs": ["coverage/packages/ngrx-data-websocket/client"]
                 }
             },
             "schematics": {}
@@ -521,7 +534,8 @@
                     "options": {
                         "jestConfig": "packages/ngrx-data-websocket/core/jest.config.js",
                         "passWithNoTests": true
-                    }
+                    },
+                    "outputs": ["coverage/packages/ngrx-data-websocket/core"]
                 },
                 "build": {
                     "builder": "@nrwl/node:package",
@@ -531,7 +545,8 @@
                         "packageJson": "packages/ngrx-data-websocket/core/package.json",
                         "main": "packages/ngrx-data-websocket/core/src/index.ts",
                         "assets": ["packages/ngrx-data-websocket/core/*.md"]
-                    }
+                    },
+                    "outputs": ["{options.outputPath}"]
                 }
             }
         },
@@ -554,7 +569,8 @@
                     "options": {
                         "jestConfig": "packages/ngrx-data-websocket/server/jest.config.js",
                         "passWithNoTests": true
-                    }
+                    },
+                    "outputs": ["coverage/packages/ngrx-data-websocket/server"]
                 },
                 "build": {
                     "builder": "@nrwl/node:package",
@@ -564,7 +580,8 @@
                         "packageJson": "packages/ngrx-data-websocket/server/package.json",
                         "main": "packages/ngrx-data-websocket/server/src/index.ts",
                         "assets": ["packages/ngrx-data-websocket/server/*.md"]
-                    }
+                    },
+                    "outputs": ["{options.outputPath}"]
                 }
             }
         }
