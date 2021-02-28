@@ -1,2 +1,2 @@
-export { NgrxUniversalRehydrateBrowserModule } from './lib/ngrx-universal-rehydrate-browser.module';
+export { NgrxUniversalRehydrateModule } from './lib/ngrx-universal-rehydrate.module';
 export { NgrxUniversalHydrateConfig } from './lib/shared';
