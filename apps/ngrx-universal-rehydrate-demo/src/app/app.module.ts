@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 import { Store, StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { isPlatformBrowser } from '@angular/common';
-import { NgrxUniversalRehydrateBrowserModule } from '@trellisorg/ngrx-universal-rehydrate';
+import { NgrxUniversalRehydrateModule } from '@trellisorg/ngrx-universal-rehydrate';
 import { setServer, titleReducer } from './store';
 
 @NgModule({
@@ -16,7 +16,7 @@ import { setServer, titleReducer } from './store';
     imports: [
         BrowserModule.withServerTransition({ appId: 'serverApp' }),
         StoreModule.forRoot({ titleState: titleReducer }),
-        NgrxUniversalRehydrateBrowserModule.forRoot({ stores: ['titleState'] }),
+        NgrxUniversalRehydrateModule.forRoot({ stores: ['titleState'] }),
         StoreDevtoolsModule.instrument({}),
         BrowserTransferStateModule,
     ],

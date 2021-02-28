@@ -3,6 +3,7 @@ import { INIT, META_REDUCERS, MetaReducer } from '@ngrx/store';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import {
     defaultNgrxUniversalHydrateConfig,
+    mergeStates,
     NGRX_TRANSFER_HYDRATE_CONFIG,
     NgrxUniversalHydrateConfig,
 } from './shared';
@@ -10,7 +11,6 @@ import { NgrxUniversalHydrationService } from './ngrx-universal-hydration.servic
 
 export function rehydrateMetaReducer(
     platformId: Object,
-    doc: Document,
     config: NgrxUniversalHydrateConfig,
     ngrxUniversalHydrationService: NgrxUniversalHydrationService
 ): MetaReducer<unknown> {
@@ -22,10 +22,11 @@ export function rehydrateMetaReducer(
              * Rehydrate default state based on transferred data from the server
              */
             return reducer(
-                {
-                    ...state,
-                    ...ngrxUniversalHydrationService.readState(),
-                },
+                mergeStates(
+                    state,
+                    ngrxUniversalHydrationService.readState(),
+                    config.mergeStrategy
+                ),
                 action
             );
         } else if (!isBrowser) {
@@ -35,13 +36,17 @@ export function rehydrateMetaReducer(
                 /**
                  * Only persist state for store slices that are configured
                  */
-                ngrxUniversalHydrationService.state = config.stores.reduce(
-                    (prev, cur) => ({
-                        ...prev,
-                        [cur]: newState[cur],
-                    }),
-                    {}
-                );
+                if (config.stores?.length > 0) {
+                    ngrxUniversalHydrationService.state = config.stores.reduce(
+                        (prev, cur) => ({
+                            ...prev,
+                            [cur]: newState[cur],
+                        }),
+                        {}
+                    );
+                } else {
+                    ngrxUniversalHydrationService.state = newState;
+                }
 
                 return newState;
             }
@@ -52,12 +57,12 @@ export function rehydrateMetaReducer(
 }
 
 @NgModule({})
-export class NgrxUniversalRehydrateBrowserModule {
+export class NgrxUniversalRehydrateModule {
     static forRoot(
         config: Partial<NgrxUniversalHydrateConfig>
-    ): ModuleWithProviders<NgrxUniversalRehydrateBrowserModule> {
+    ): ModuleWithProviders<NgrxUniversalRehydrateModule> {
         return {
-            ngModule: NgrxUniversalRehydrateBrowserModule,
+            ngModule: NgrxUniversalRehydrateModule,
             providers: [
                 {
                     provide: NGRX_TRANSFER_HYDRATE_CONFIG,
@@ -71,7 +76,6 @@ export class NgrxUniversalRehydrateBrowserModule {
                     provide: META_REDUCERS,
                     deps: [
                         PLATFORM_ID,
-                        DOCUMENT,
                         NGRX_TRANSFER_HYDRATE_CONFIG,
                         NgrxUniversalHydrationService,
                     ],
