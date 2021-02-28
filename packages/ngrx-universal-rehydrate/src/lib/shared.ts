@@ -1,16 +1,22 @@
 import { InjectionToken } from '@angular/core';
 import { makeStateKey, StateKey } from '@angular/platform-browser';
 
-export interface NgrxTransferHydrateConfig {
-    stores: string[];
+export const defaultNgrxUniversalHydrateConfig: NgrxUniversalHydrateConfig = {
+    stores: undefined,
+    disableWarnings: false,
+};
+
+export interface NgrxUniversalHydrateConfig {
+    stores: string[] | undefined;
+    disableWarnings: boolean;
 }
 
-export const NGRX_TRANSFER_HYDRATE_CONFIG = new InjectionToken<NgrxTransferHydrateConfig>(
-    'ngrxTransferHydrateConfig'
+export const NGRX_TRANSFER_HYDRATE_CONFIG = new InjectionToken<NgrxUniversalHydrateConfig>(
+    'ngrxUniversalHydrateConfig'
 );
 
 export function createTransferStateKey<T>(
-    config: NgrxTransferHydrateConfig
+    config: NgrxUniversalHydrateConfig
 ): StateKey<T> {
     return makeStateKey<T>(
         `ngrx-${config.stores.sort().join('-') || 'full-store'}-rehydration`

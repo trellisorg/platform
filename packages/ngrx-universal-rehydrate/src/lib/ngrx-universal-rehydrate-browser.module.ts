@@ -2,15 +2,16 @@ import { ModuleWithProviders, NgModule, PLATFORM_ID } from '@angular/core';
 import { INIT, META_REDUCERS, MetaReducer } from '@ngrx/store';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import {
+    defaultNgrxUniversalHydrateConfig,
     NGRX_TRANSFER_HYDRATE_CONFIG,
-    NgrxTransferHydrateConfig,
+    NgrxUniversalHydrateConfig,
 } from './shared';
 import { NgrxUniversalHydrationService } from './ngrx-universal-hydration.service';
 
 export function rehydrateMetaReducer(
     platformId: Object,
     doc: Document,
-    config: NgrxTransferHydrateConfig,
+    config: NgrxUniversalHydrateConfig,
     ngrxUniversalHydrationService: NgrxUniversalHydrationService
 ): MetaReducer<unknown> {
     return (reducer) => (state: any, action) => {
@@ -53,14 +54,17 @@ export function rehydrateMetaReducer(
 @NgModule({})
 export class NgrxUniversalRehydrateBrowserModule {
     static forRoot(
-        config: NgrxTransferHydrateConfig
+        config: Partial<NgrxUniversalHydrateConfig>
     ): ModuleWithProviders<NgrxUniversalRehydrateBrowserModule> {
         return {
             ngModule: NgrxUniversalRehydrateBrowserModule,
             providers: [
                 {
                     provide: NGRX_TRANSFER_HYDRATE_CONFIG,
-                    useValue: config,
+                    useValue: {
+                        ...defaultNgrxUniversalHydrateConfig,
+                        ...config,
+                    },
                 },
                 NgrxUniversalHydrationService,
                 {
