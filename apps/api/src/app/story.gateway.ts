@@ -49,10 +49,10 @@ export class StoryGateway
     }
 
     @SubscribeMessage(SocketOp.QUERY_ALL)
-    queryAll(
+    async queryAll(
         @MessageBody() body: SocketEventBody<void>,
         @ConnectedSocket() client: Socket
-    ): SocketEventReturn<SocketOp.QUERY_ALL_SUCCESS, Story[]> {
+    ): Promise<SocketEventReturn<SocketOp.QUERY_ALL_SUCCESS, Story[]>> {
         return {
             event: SocketOp.QUERY_ALL_SUCCESS,
             data: {

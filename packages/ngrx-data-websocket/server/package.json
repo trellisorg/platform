@@ -1,6 +1,6 @@
 {
     "name": "@trellisorg/ngrx-data-websocket-server",
-    "version": "0.0.1",
+    "version": "0.0.3",
     "peerDependencies": {
         "@nestjs/platform-socket.io": "*",
         "@trellisorg/ngrx-data-websocket-core": "*"
