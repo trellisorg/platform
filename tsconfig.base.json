@@ -21,13 +21,16 @@
             "@trellis/make-buildable": ["packages/make-buildable/src/index.ts"],
             "@trellisorg/angularfire-ngrx": ["dist/packages/angularfire-ngrx"],
             "@trellisorg/ngrx-data-websocket-client": [
-                "dist/packages/ngrx-data-websocket/client"
+                "packages/ngrx-data-websocket/client/src/index.ts"
             ],
             "@trellisorg/ngrx-data-websocket-core": [
-                "dist/packages/ngrx-data-websocket/core/src"
+                "packages/ngrx-data-websocket/core/src/index.ts"
             ],
             "@trellisorg/ngrx-data-websocket-server": [
-                "dist/packages/ngrx-data-websocket/server/src"
+                "packages/ngrx-data-websocket/server/src/index.ts"
+            ],
+            "@trellisorg/ngrx-universal-rehydrate": [
+                "packages/ngrx-universal-rehydrate/src/index.ts"
             ]
         }
     },

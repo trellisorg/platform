@@ -584,6 +584,167 @@
                     "outputs": ["{options.outputPath}"]
                 }
             }
+        },
+        "ngrx-universal-rehydrate": {
+            "projectType": "library",
+            "root": "packages/ngrx-universal-rehydrate",
+            "sourceRoot": "packages/ngrx-universal-rehydrate/src",
+            "prefix": "trellisorg",
+            "architect": {
+                "build": {
+                    "builder": "@nrwl/angular:package",
+                    "options": {
+                        "tsConfig": "packages/ngrx-universal-rehydrate/tsconfig.lib.json",
+                        "project": "packages/ngrx-universal-rehydrate/ng-package.json"
+                    },
+                    "configurations": {
+                        "production": {
+                            "tsConfig": "packages/ngrx-universal-rehydrate/tsconfig.lib.prod.json"
+                        }
+                    }
+                },
+                "lint": {
+                    "builder": "@nrwl/linter:eslint",
+                    "options": {
+                        "lintFilePatterns": [
+                            "packages/ngrx-universal-rehydrate/src/**/*.ts",
+                            "packages/ngrx-universal-rehydrate/src/**/*.html"
+                        ]
+                    }
+                },
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "outputs": ["coverage/packages/ngrx-universal-rehydrate"],
+                    "options": {
+                        "jestConfig": "packages/ngrx-universal-rehydrate/jest.config.js",
+                        "passWithNoTests": true
+                    }
+                }
+            }
+        },
+        "ngrx-universal-rehydrate-demo": {
+            "projectType": "application",
+            "root": "apps/ngrx-universal-rehydrate-demo",
+            "sourceRoot": "apps/ngrx-universal-rehydrate-demo/src",
+            "prefix": "trellisorg",
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:browser",
+                    "options": {
+                        "outputPath": "dist/apps/ngrx-universal-rehydrate-demo/browser",
+                        "index": "apps/ngrx-universal-rehydrate-demo/src/index.html",
+                        "main": "apps/ngrx-universal-rehydrate-demo/src/main.ts",
+                        "polyfills": "apps/ngrx-universal-rehydrate-demo/src/polyfills.ts",
+                        "tsConfig": "apps/ngrx-universal-rehydrate-demo/tsconfig.app.json",
+                        "aot": true,
+                        "assets": [
+                            "apps/ngrx-universal-rehydrate-demo/src/favicon.ico",
+                            "apps/ngrx-universal-rehydrate-demo/src/assets"
+                        ],
+                        "styles": [
+                            "apps/ngrx-universal-rehydrate-demo/src/styles.scss"
+                        ],
+                        "scripts": []
+                    },
+                    "configurations": {
+                        "production": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "apps/ngrx-universal-rehydrate-demo/src/environments/environment.ts",
+                                    "with": "apps/ngrx-universal-rehydrate-demo/src/environments/environment.prod.ts"
+                                }
+                            ],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "namedChunks": false,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "budgets": [
+                                {
+                                    "type": "initial",
+                                    "maximumWarning": "2mb",
+                                    "maximumError": "5mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "6kb",
+                                    "maximumError": "10kb"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "serve": {
+                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "options": {
+                        "browserTarget": "ngrx-universal-rehydrate-demo:build"
+                    },
+                    "configurations": {
+                        "production": {
+                            "browserTarget": "ngrx-universal-rehydrate-demo:build:production"
+                        }
+                    }
+                },
+                "extract-i18n": {
+                    "builder": "@angular-devkit/build-angular:extract-i18n",
+                    "options": {
+                        "browserTarget": "ngrx-universal-rehydrate-demo:build"
+                    }
+                },
+                "lint": {
+                    "builder": "@nrwl/linter:eslint",
+                    "options": {
+                        "lintFilePatterns": [
+                            "apps/ngrx-universal-rehydrate-demo/src/**/*.ts",
+                            "apps/ngrx-universal-rehydrate-demo/src/**/*.html"
+                        ]
+                    }
+                },
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "outputs": ["coverage/apps/ngrx-universal-rehydrate-demo"],
+                    "options": {
+                        "jestConfig": "apps/ngrx-universal-rehydrate-demo/jest.config.js",
+                        "passWithNoTests": true
+                    }
+                },
+                "server": {
+                    "builder": "@angular-devkit/build-angular:server",
+                    "options": {
+                        "outputPath": "dist/apps/ngrx-universal-rehydrate-demo/server",
+                        "main": "apps/ngrx-universal-rehydrate-demo/server.ts",
+                        "tsConfig": "apps/ngrx-universal-rehydrate-demo/tsconfig.server.json"
+                    },
+                    "configurations": {
+                        "production": {
+                            "outputHashing": "media",
+                            "fileReplacements": [
+                                {
+                                    "replace": "apps/ngrx-universal-rehydrate-demo/src/environments/environment.ts",
+                                    "with": "apps/ngrx-universal-rehydrate-demo/src/environments/environment.prod.ts"
+                                }
+                            ],
+                            "sourceMap": false,
+                            "optimization": true
+                        }
+                    }
+                },
+                "serve-ssr": {
+                    "builder": "@nguniversal/builders:ssr-dev-server",
+                    "options": {
+                        "browserTarget": "ngrx-universal-rehydrate-demo:build",
+                        "serverTarget": "ngrx-universal-rehydrate-demo:server"
+                    },
+                    "configurations": {
+                        "production": {
+                            "browserTarget": "ngrx-universal-rehydrate-demo:build:production",
+                            "serverTarget": "ngrx-universal-rehydrate-demo:server:production"
+                        }
+                    }
+                }
+            }
         }
     },
     "cli": {
@@ -648,11 +809,18 @@
             }
         },
         "@nrwl/angular:application": {
+            "style": "scss",
+            "linter": "eslint",
             "unitTestRunner": "jest",
             "e2eTestRunner": "cypress"
         },
         "@nrwl/angular:library": {
+            "style": "scss",
+            "linter": "eslint",
             "unitTestRunner": "jest"
+        },
+        "@nrwl/angular:component": {
+            "style": "scss"
         }
     }
 }
