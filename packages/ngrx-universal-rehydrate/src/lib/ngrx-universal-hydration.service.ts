@@ -9,8 +9,7 @@ import {
     NGRX_TRANSFER_HYDRATE_CONFIG,
     NgrxUniversalHydrateConfig,
 } from './shared';
-import { _USER_RUNTIME_CHECKS } from '@ngrx/store/src/tokens';
-import { RuntimeChecks } from '@ngrx/store';
+import { RuntimeChecks, USER_RUNTIME_CHECKS } from '@ngrx/store';
 
 @Injectable()
 export class NgrxUniversalHydrationService {
@@ -20,7 +19,7 @@ export class NgrxUniversalHydrationService {
         private transferState: TransferState,
         @Inject(NGRX_TRANSFER_HYDRATE_CONFIG)
         private config: NgrxUniversalHydrateConfig,
-        @Inject(_USER_RUNTIME_CHECKS)
+        @Inject(USER_RUNTIME_CHECKS)
         private runtimeChecks: Partial<RuntimeChecks>
     ) {
         if (
@@ -34,15 +33,11 @@ export class NgrxUniversalHydrationService {
         this.stateKey = makeStateKey(createTransferStateKey(config));
     }
 
+    private _state: any;
+
     set state(state: any) {
         this._state = state;
         this.persistState(state);
-    }
-
-    private _state: any;
-
-    private persistState(data: any): void {
-        this.transferState.set(this.stateKey, data);
     }
 
     readState(): any {
@@ -51,5 +46,9 @@ export class NgrxUniversalHydrationService {
 
     clear(): void {
         this.transferState.remove(this.stateKey);
+    }
+
+    private persistState(data: any): void {
+        this.transferState.set(this.stateKey, data);
     }
 }
