@@ -1,6 +1,6 @@
 import { ModuleWithProviders, NgModule, PLATFORM_ID } from '@angular/core';
 import { INIT, META_REDUCERS, MetaReducer } from '@ngrx/store';
-import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import {
     defaultNgrxUniversalHydrateConfig,
     mergeStates,

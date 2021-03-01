@@ -1,9 +1,12 @@
 {
-    "name": "@trellisorg/ngrx-universal-rehydrate-browser",
+    "name": "@trellisorg/ngrx-universal-rehydrate",
     "version": "0.0.1",
     "peerDependencies": {
-        "@angular/common": "^11.2.3",
-        "@angular/core": "^11.2.3"
+        "@angular/common": "^9",
+        "@angular/core": "^9",
+        "@angular/platform-browser": "^9",
+        "@angular/platform-server": "^9",
+        "@ngrx/store": "^9"
     },
     "dependencies": {
         "tslib": "^2.0.0"
