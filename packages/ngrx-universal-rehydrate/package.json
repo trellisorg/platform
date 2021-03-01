@@ -1,6 +1,6 @@
 {
     "name": "@trellisorg/ngrx-universal-rehydrate",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "repository": {
         "url": "https://github.com/trellisorg/platform/tree/master/packages/ngrx-universal-rehydrate"
     },
