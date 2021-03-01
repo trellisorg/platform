@@ -1,6 +1,10 @@
 {
     "name": "@trellisorg/ngrx-universal-rehydrate",
-    "version": "0.0.1",
+    "version": "0.0.3",
+    "repository": {
+        "url": "https://github.com/trellisorg/platform/tree/master/packages/ngrx-universal-rehydrate"
+    },
+    "license": "MIT",
     "peerDependencies": {
         "@angular/common": "^9",
         "@angular/core": "^9",
@@ -10,5 +14,13 @@
     },
     "dependencies": {
         "tslib": "^2.0.0"
-    }
+    },
+    "homepage": "https://github.com/trellisorg/platform/tree/master/packages/ngrx-universal-rehydrate",
+    "author": "Jay Bell <jay@trellis.org>",
+    "keywords": [
+        "ngrx",
+        "angular",
+        "universal",
+        "ng"
+    ]
 }

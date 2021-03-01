@@ -23,7 +23,7 @@ export class NgrxUniversalHydrationService {
         private runtimeChecks: Partial<RuntimeChecks>
     ) {
         if (
-            !this.runtimeChecks.strictStateSerializability &&
+            !this.runtimeChecks?.strictStateSerializability &&
             !this.config.disableWarnings
         ) {
             console.warn(

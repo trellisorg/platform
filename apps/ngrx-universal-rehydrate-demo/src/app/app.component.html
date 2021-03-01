@@ -1,1 +1,8 @@
-{{ title$ | async }}
+<div *ngFor="let item of data$ | async">
+    <div>
+        {{ item.title }}
+    </div>
+    <div>
+        {{ item.description }}
+    </div>
+</div>

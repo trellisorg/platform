@@ -1,7 +1,5 @@
 # ngrx-universal-rehydrate
 
-This library was generated with [Nx](https://nx.dev).
+Check out the demo app [here](https://github.com/trellisorg/platform/tree/master/apps/ngrx-universal-rehydrate-demo)
 
-## Running unit tests
-
-Run `nx test ngrx-universal-rehydrate` to execute the unit tests.
+Documentation coming soon.

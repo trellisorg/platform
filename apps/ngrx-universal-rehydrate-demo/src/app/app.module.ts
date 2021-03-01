@@ -7,18 +7,31 @@ import {
 import { AppComponent } from './app.component';
 import { Store, StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { isPlatformBrowser } from '@angular/common';
 import { NgrxUniversalRehydrateModule } from '@trellisorg/ngrx-universal-rehydrate';
-import { setServer, titleReducer } from './store';
+import { loadData, titleReducer } from './store';
+import { EffectsModule } from '@ngrx/effects';
+import { Effects } from './effects';
+import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
+import { isPlatformBrowser } from '@angular/common';
 
 @NgModule({
     declarations: [AppComponent],
     imports: [
         BrowserModule.withServerTransition({ appId: 'serverApp' }),
-        StoreModule.forRoot({ titleState: titleReducer }),
-        NgrxUniversalRehydrateModule.forRoot({ stores: ['titleState'] }),
+        StoreModule.forRoot(
+            { titleState: titleReducer },
+            {
+                runtimeChecks: {
+                    strictStateSerializability: true,
+                },
+            }
+        ),
+        EffectsModule.forRoot([Effects]),
+        NgrxUniversalRehydrateModule.forRoot({ stores: [] }),
         StoreDevtoolsModule.instrument({}),
         BrowserTransferStateModule,
+        HttpClientModule,
+        HttpClientJsonpModule,
     ],
     providers: [],
     bootstrap: [AppComponent],
@@ -28,14 +41,6 @@ export class AppModule {
         @Inject(PLATFORM_ID) private platformId: Object,
         private _store: Store
     ) {
-        if (!isPlatformBrowser(this.platformId))
-            this._store.dispatch(
-                setServer({
-                    data: {
-                        title:
-                            'this data was saved to the store in universal, no action is dispatched while in browser',
-                    },
-                })
-            );
+        if (!isPlatformBrowser(platformId)) this._store.dispatch(loadData());
     }
 }

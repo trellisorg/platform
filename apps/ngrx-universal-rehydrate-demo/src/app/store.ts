@@ -8,18 +8,25 @@ import {
     State,
 } from '@ngrx/store';
 
-export const setServer = createAction('server action', props<{ data: any }>());
+export interface Item {
+    title: string;
+    description: string;
+}
+
+export const loadData = createAction('load data');
+
+export const setData = createAction('set data', props<{ data: Item[] }>());
 
 const reducer = createReducer(
     {},
-    on(setServer, (state, payload) => ({ ...state, ...payload.data }))
+    on(setData, (state, payload) => ({ ...state, items: payload.data }))
 );
 
 export function titleReducer(state: State<any> | undefined, action: Action) {
     return reducer(state, action);
 }
 
-export const selectTitle = createSelector(
-    (state: any) => state.titleState,
-    (title) => title?.title
+export const selectData = createSelector(
+    (state: { titleState: { items: Item[] } }) => state.titleState,
+    (state) => state.items
 );
