@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 
 @Component({
-    selector: 'tr-dynamic-outlet',
+    selector: 'rx-dynamic-outlet',
     templateUrl: './dynamic-outlet.component.html',
     styleUrls: ['./dynamic-outlet.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
