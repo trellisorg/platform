@@ -14,13 +14,14 @@ import {
     DYNAMIC_COMPONENT,
     DYNAMIC_COMPONENT_CONFIG,
     DYNAMIC_MANIFEST_MAP,
-} from './rx-dynamic-component-manifest';
+    ManifestMap,
+} from './rx-dynamic-component.manifest';
 
 @Injectable()
 export class RxDynamicComponentService {
     constructor(
         @Inject(DYNAMIC_MANIFEST_MAP)
-        private manifests: Map<string, DynamicComponentManifest>,
+        private manifests: ManifestMap,
         private _compiler: Compiler,
         private _injector: Injector,
         @Inject(DYNAMIC_COMPONENT_CONFIG)

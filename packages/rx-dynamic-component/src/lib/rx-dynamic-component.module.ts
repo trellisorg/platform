@@ -11,12 +11,13 @@ import {
     DYNAMIC_COMPONENT_CONFIG,
     DYNAMIC_MANIFEST_MAP,
     _FEATURE_DYNAMIC_COMPONENT_MANIFESTS,
-} from './rx-dynamic-component-manifest';
+    ManifestMap,
+} from './rx-dynamic-component.manifest';
 import { RxDynamicComponentService } from './rx-dynamic-component.service';
 
 function _initialManifestMap(
     manifests: DynamicComponentManifest[]
-): Map<string, DynamicComponentManifest> {
+): ManifestMap {
     return new Map<string, DynamicComponentManifest>(
         manifests.map((manifest) => [manifest.componentId, manifest])
     );
@@ -27,7 +28,7 @@ export class RxDynamicComponentRootModule {
     constructor(
         rxDynamicComponentService: RxDynamicComponentService,
         @Inject(DYNAMIC_COMPONENT_CONFIG) config: DynamicComponentRootConfig,
-        @Inject(DYNAMIC_MANIFEST_MAP) map: Map<string, DynamicComponentManifest>
+        @Inject(DYNAMIC_MANIFEST_MAP) map: ManifestMap
     ) {}
 }
 
@@ -37,7 +38,7 @@ export class RxDynamicComponentFeatureModule implements OnDestroy {
         @Inject(_FEATURE_DYNAMIC_COMPONENT_MANIFESTS)
         private manifests: DynamicComponentManifest[],
         @Inject(DYNAMIC_MANIFEST_MAP)
-        private manifestMap: Map<string, DynamicComponentManifest>
+        private manifestMap: ManifestMap
     ) {
         /**
          * Register each of the feature manifests with the root map
