@@ -802,6 +802,43 @@
                     }
                 }
             }
+        },
+        "rx-dynamic-component": {
+            "projectType": "library",
+            "root": "packages/rx-dynamic-component",
+            "sourceRoot": "packages/rx-dynamic-component/src",
+            "prefix": "trellisorg",
+            "architect": {
+                "build": {
+                    "builder": "@nrwl/angular:package",
+                    "options": {
+                        "tsConfig": "packages/rx-dynamic-component/tsconfig.lib.json",
+                        "project": "packages/rx-dynamic-component/ng-package.json"
+                    },
+                    "configurations": {
+                        "production": {
+                            "tsConfig": "packages/rx-dynamic-component/tsconfig.lib.prod.json"
+                        }
+                    }
+                },
+                "lint": {
+                    "builder": "@nrwl/linter:eslint",
+                    "options": {
+                        "lintFilePatterns": [
+                            "packages/rx-dynamic-component/src/**/*.ts",
+                            "packages/rx-dynamic-component/src/**/*.html"
+                        ]
+                    }
+                },
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "outputs": ["coverage/packages/rx-dynamic-component"],
+                    "options": {
+                        "jestConfig": "packages/rx-dynamic-component/jest.config.js",
+                        "passWithNoTests": true
+                    }
+                }
+            }
         }
     },
     "cli": {
