@@ -18,6 +18,10 @@ import {
 export class DynamicOutletComponent implements OnInit, AfterViewInit {
     @ViewChild('outlet', { read: ViewContainerRef }) outlet: ViewContainerRef;
 
+    constructor() {}
+
+    private _factory: ComponentFactory<any>;
+
     @Input() set factory(factory: ComponentFactory<any>) {
         if (this.outlet) {
             this.loadOutlet(factory);
@@ -25,10 +29,6 @@ export class DynamicOutletComponent implements OnInit, AfterViewInit {
 
         this._factory = factory;
     }
-
-    private _factory: ComponentFactory<any>;
-
-    constructor() {}
 
     ngOnInit(): void {}
 

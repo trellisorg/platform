@@ -9,11 +9,10 @@ import {
 import { from, Observable, of, throwError } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 import {
-    DynamicComponentManifest,
-    DynamicComponentRootConfig,
     DYNAMIC_COMPONENT,
     DYNAMIC_COMPONENT_CONFIG,
     DYNAMIC_MANIFEST_MAP,
+    DynamicComponentRootConfig,
     ManifestMap,
 } from './rx-dynamic-component.manifest';
 

@@ -4,18 +4,18 @@ import {
     Spectator,
 } from '@ngneat/spectator/jest';
 import { Component, ComponentFactory, NgModule } from '@angular/core';
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import {
     DYNAMIC_COMPONENT,
     DynamicOutletModule,
     RxDynamicComponentModule,
     RxDynamicComponentService,
 } from '@trellisorg/rx-dynamic-component';
-import { catchError, switchMap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
     selector: 'container',
-    template: `<rx-dynamic-outlet
+    template: ` <rx-dynamic-outlet
         [factory]="factory$ | async"
     ></rx-dynamic-outlet>`,
     styles: [''],
@@ -34,7 +34,7 @@ class ContainerComponent {
 
 @Component({
     selector: 'lazy-child1',
-    template: `<div data-testid="lazyChildDiv">lazyChildDiv</div>`,
+    template: ` <div data-testid="lazyChildDiv">lazyChildDiv</div>`,
     styles: [''],
 })
 class LazyChild1Component {
