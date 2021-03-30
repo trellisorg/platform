@@ -95,7 +95,7 @@ export class RxDynamicComponentModule {
      */
     static forFeature(
         manifests: DynamicComponentManifest[]
-    ): ModuleWithProviders<RxDynamicComponentModule> {
+    ): ModuleWithProviders<RxDynamicComponentFeatureModule> {
         return {
             ngModule: RxDynamicComponentFeatureModule,
             providers: [

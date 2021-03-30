@@ -5,5 +5,9 @@ export {
     DynamicComponentRootConfig,
     DYNAMIC_COMPONENT,
 } from './lib/rx-dynamic-component.manifest';
-export { RxDynamicComponentModule } from './lib/rx-dynamic-component.module';
+export {
+    RxDynamicComponentModule,
+    RxDynamicComponentFeatureModule,
+    RxDynamicComponentRootModule,
+} from './lib/rx-dynamic-component.module';
 export * from './lib/rx-dynamic-component.service';
