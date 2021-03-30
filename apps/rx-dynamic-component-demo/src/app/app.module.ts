@@ -16,6 +16,9 @@ import { RouterModule } from '@angular/router';
         RxDynamicComponentModule.forRoot({
             devMode: true,
             manifests: [
+                /**
+                 * Can be used with dynamic import like lazy loaded routes
+                 */
                 {
                     componentId: 'query1',
                     loadChildren: () =>
@@ -23,6 +26,9 @@ import { RouterModule } from '@angular/router';
                             (m) => m.QueryParam1Module
                         ),
                 },
+                /**
+                 * Or can be used to refernce the module directly
+                 */
                 {
                     componentId: 'query2',
                     loadChildren: () => QueryParam2Module,
