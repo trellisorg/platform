@@ -1,0 +1,14 @@
+<div class="query-container">
+    <div>
+        <label for="querySelect">Select a Query Param</label>
+        <select id="querySelect" (change)="changeQueryParams($event)">
+            <option value="query1">query1</option>
+            <option value="query2">query2</option>
+        </select>
+    </div>
+    <div>
+        <rx-dynamic-outlet
+            [factory]="queryParamComponent$ | async"
+        ></rx-dynamic-outlet>
+    </div>
+</div>

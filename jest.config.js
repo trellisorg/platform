@@ -12,5 +12,7 @@ module.exports = {
         '<rootDir>/apps/ngrx-universal-rehydrate-demo',
         '<rootDir>/packages/ngrx-universal-rehydrate-server',
         '<rootDir>/apps/ngrx-universal-rehydrate-demo-api',
+        '<rootDir>/packages/rx-dynamic-component',
+        '<rootDir>/apps/rx-dynamic-component-demo',
     ],
 };

@@ -46,6 +46,8 @@
         "ngrx-data-websocket-server": { "tags": [] },
         "ngrx-universal-rehydrate": { "tags": [] },
         "ngrx-universal-rehydrate-demo": { "tags": [] },
-        "ngrx-universal-rehydrate-demo-api": { "tags": [] }
+        "ngrx-universal-rehydrate-demo-api": { "tags": [] },
+        "rx-dynamic-component": { "tags": [] },
+        "rx-dynamic-component-demo": { "tags": [] }
     }
 }
