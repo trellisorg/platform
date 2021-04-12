@@ -14,7 +14,7 @@ import {
 import { switchMap } from 'rxjs/operators';
 
 @Component({
-    selector: 'container',
+    selector: 'trellisorg-container',
     template: ` <rx-dynamic-outlet
         [factory]="factory$ | async"
     ></rx-dynamic-outlet>`,
@@ -33,13 +33,11 @@ class ContainerComponent {
 }
 
 @Component({
-    selector: 'lazy-child1',
+    selector: 'trellisorg-lazy-child1',
     template: ` <div data-testid="lazyChildDiv">lazyChildDiv</div>`,
     styles: [''],
 })
-class LazyChild1Component {
-    constructor() {}
-}
+class LazyChild1Component {}
 
 @NgModule({
     declarations: [LazyChild1Component],

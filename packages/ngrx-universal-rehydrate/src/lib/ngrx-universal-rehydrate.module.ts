@@ -10,7 +10,7 @@ import {
 import { NgrxUniversalHydrationService } from './ngrx-universal-hydration.service';
 
 export function rehydrateMetaReducer(
-    platformId: Object,
+    platformId: Record<string, any>,
     config: NgrxUniversalHydrateConfig,
     ngrxUniversalHydrationService: NgrxUniversalHydrationService
 ): MetaReducer<unknown> {

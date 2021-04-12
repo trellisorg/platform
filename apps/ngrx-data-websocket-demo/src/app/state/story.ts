@@ -15,20 +15,6 @@ export class Story {
 
 export type Stories = Story[];
 
-@Injectable({
-    providedIn: 'root',
-})
-export class StoryDataService extends SocketCollectionServiceBase<Story> {
-    constructor(
-        serviceElementsFactory: EntityCollectionServiceElementsFactory,
-        socketServiceElementsFactory: SocketServiceElementsFactory<Story>
-    ) {
-        super('Story', serviceElementsFactory, socketServiceElementsFactory);
-    }
-
-    groupedStories$ = this.entities$.pipe(select(selectStories));
-}
-
 export const selectStories = createSelector(
     (stories) => stories,
     (stories: Stories) =>
@@ -43,3 +29,17 @@ export const selectStories = createSelector(
             [[], [], [], []]
         )
 );
+
+@Injectable({
+    providedIn: 'root',
+})
+export class StoryDataService extends SocketCollectionServiceBase<Story> {
+    constructor(
+        serviceElementsFactory: EntityCollectionServiceElementsFactory,
+        socketServiceElementsFactory: SocketServiceElementsFactory<Story>
+    ) {
+        super('Story', serviceElementsFactory, socketServiceElementsFactory);
+    }
+
+    groupedStories$ = this.entities$.pipe(select(selectStories));
+}

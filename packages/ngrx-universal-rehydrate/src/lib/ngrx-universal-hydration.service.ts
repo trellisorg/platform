@@ -27,7 +27,9 @@ export class NgrxUniversalHydrationService {
             !this.config.disableWarnings
         ) {
             console.warn(
-                `NgRx Store is not configured to use 'strictStateSerializability', without this your stores may not be serializable. This could cause Universal to not serialize the TransferState correctly.`
+                `NgRx Store is not configured to use 'strictStateSerializability',
+                without this your stores may not be serializable.
+                This could cause Universal to not serialize the TransferState correctly.`
             );
         }
         this.stateKey = makeStateKey(createTransferStateKey(config));

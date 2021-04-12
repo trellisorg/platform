@@ -38,7 +38,7 @@ import { isPlatformBrowser } from '@angular/common';
 })
 export class AppModule {
     constructor(
-        @Inject(PLATFORM_ID) private platformId: Object,
+        @Inject(PLATFORM_ID) private platformId: Record<string, any>,
         private _store: Store
     ) {
         if (!isPlatformBrowser(platformId)) this._store.dispatch(loadData());

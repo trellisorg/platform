@@ -11,24 +11,7 @@
             "parserOptions": {
                 "project": ["packages/rx-dynamic-component/tsconfig.*?.json"]
             },
-            "rules": {
-                "@angular-eslint/directive-selector": [
-                    "error",
-                    {
-                        "type": "attribute",
-                        "prefix": "trellisorg",
-                        "style": "camelCase"
-                    }
-                ],
-                "@angular-eslint/component-selector": [
-                    "error",
-                    {
-                        "type": "element",
-                        "prefix": "trellisorg",
-                        "style": "kebab-case"
-                    }
-                ]
-            }
+            "rules": {}
         },
         {
             "files": ["*.html"],

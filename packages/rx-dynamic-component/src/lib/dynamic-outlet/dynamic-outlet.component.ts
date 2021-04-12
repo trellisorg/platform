@@ -15,10 +15,8 @@ import {
     styleUrls: ['./dynamic-outlet.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DynamicOutletComponent implements OnInit, AfterViewInit {
+export class DynamicOutletComponent implements AfterViewInit {
     @ViewChild('outlet', { read: ViewContainerRef }) outlet: ViewContainerRef;
-
-    constructor() {}
 
     private _factory: ComponentFactory<any>;
 
@@ -29,8 +27,6 @@ export class DynamicOutletComponent implements OnInit, AfterViewInit {
 
         this._factory = factory;
     }
-
-    ngOnInit(): void {}
 
     ngAfterViewInit(): void {
         if (this._factory) {
