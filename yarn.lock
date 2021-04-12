@@ -1938,17 +1938,7 @@
     socket.io "3.1.0"
     tslib "2.1.0"
 
-"@nestjs/schematics@^7.0.0":
-  version "7.2.8"
-  resolved "https://registry.yarnpkg.com/@nestjs/schematics/-/schematics-7.2.8.tgz#58f195afb9446fb83874c286b4640d6632b63fdc"
-  integrity sha512-cxs76Ia1SHTp18jXTusZtUucNjAmorlTzSaeKUH+71fri2pA0JOS4RJlfta5znDuA26gboolanPE6U0ZzaLM3A==
-  dependencies:
-    "@angular-devkit/core" "11.2.0"
-    "@angular-devkit/schematics" "11.2.0"
-    fs-extra "9.1.0"
-    pluralize "8.0.0"
-
-"@nestjs/schematics@^8.0.0-alpha.3":
+"@nestjs/schematics@7.3.1":
   version "7.3.1"
   resolved "https://registry.yarnpkg.com/@nestjs/schematics/-/schematics-7.3.1.tgz#68b559d2e6a8a9ecf6c984f87eaa7d4e37a910be"
   integrity sha512-eyBjJstAjecpdzRuBLiqnwomwXIAEV3+kPkpaphOieRUM6nBhjnXCCl3Qf8Dul2QUQK4NOVPd8FFxWtGP5XNlg==
@@ -1957,6 +1947,16 @@
     "@angular-devkit/schematics" "11.2.4"
     fs-extra "9.1.0"
     jsonc-parser "3.0.0"
+    pluralize "8.0.0"
+
+"@nestjs/schematics@^7.0.0":
+  version "7.2.8"
+  resolved "https://registry.yarnpkg.com/@nestjs/schematics/-/schematics-7.2.8.tgz#58f195afb9446fb83874c286b4640d6632b63fdc"
+  integrity sha512-cxs76Ia1SHTp18jXTusZtUucNjAmorlTzSaeKUH+71fri2pA0JOS4RJlfta5znDuA26gboolanPE6U0ZzaLM3A==
+  dependencies:
+    "@angular-devkit/core" "11.2.0"
+    "@angular-devkit/schematics" "11.2.0"
+    fs-extra "9.1.0"
     pluralize "8.0.0"
 
 "@nestjs/testing@^8.0.0-alpha.3":
