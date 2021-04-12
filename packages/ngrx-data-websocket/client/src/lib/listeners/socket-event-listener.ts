@@ -1,4 +1,8 @@
-import socketIo from 'socket.io-client';
+import socketIo, {
+    ManagerOptions,
+    Socket,
+    SocketOptions,
+} from 'socket.io-client';
 import { SocketActionFactory } from '../actions/socket-action-factory';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -10,7 +14,7 @@ import {
 } from '@trellisorg/ngrx-data-websocket-core';
 
 export class SocketEventListener<T> {
-    private _socket: any;
+    private _socket: Socket;
 
     private readonly _entityName: string;
 
@@ -76,19 +80,15 @@ export class SocketEventListener<T> {
 
     connect(
         config: NgrxDataWebsocketConfig,
-        params: Record<string, string>
+        connectOpts: Partial<ManagerOptions & SocketOptions>
     ): Observable<boolean> {
         const connected = new BehaviorSubject<boolean>(false);
         const host = config.host ? `${config.host}/` : '';
 
-        const connectParams = new URLSearchParams(params).toString();
-
-        this._socket = socketIo(
-            `${host}${this._entityName.toLowerCase()}?${connectParams}`,
-            {
-                transports: ['websocket', 'polling'],
-            }
-        );
+        this._socket = socketIo(`${host}${this._entityName.toLowerCase()}`, {
+            transports: ['websocket', 'polling'],
+            ...connectOpts,
+        });
 
         this.setupReservedEvents();
 

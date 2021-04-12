@@ -6,16 +6,15 @@ import { SocketEventListener } from '../listeners/socket-event-listener';
 import { SocketServiceElementsFactory } from './socket-service-elements.factory';
 import { Observable } from 'rxjs';
 import { EntitySelectors$ } from '@ngrx/data/src/selectors/entity-selectors$';
+import { ManagerOptions, SocketOptions } from 'socket.io-client';
 
 export class SocketCollectionServiceBase<
     T,
     S$ extends EntitySelectors$<T> = EntitySelectors$<T>
 > extends EntityCollectionServiceBase<T, S$> {
-    private readonly listener: SocketEventListener<T>;
-
     readonly connected$: Observable<boolean>;
-
     readonly connecting$: Observable<boolean>;
+    private readonly listener: SocketEventListener<T>;
 
     constructor(
         entityName: string,
@@ -34,10 +33,12 @@ export class SocketCollectionServiceBase<
         this.listener = listener;
     }
 
-    connect(params: any): Observable<boolean> {
+    connect(
+        connectOpts: Partial<ManagerOptions & SocketOptions>
+    ): Observable<boolean> {
         return this.listener.connect(
             this.socketServiceElementsFactory.config,
-            params
+            connectOpts
         );
     }
 
