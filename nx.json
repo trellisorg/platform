@@ -16,31 +16,18 @@
             "options": {
                 "accessToken": "YzBiN2UxOWUtNmM3ZC00ZTRjLThlMzQtYjE0N2VjMTQxMTNlfHJlYWQtd3JpdGU=",
                 "cacheableOperations": ["build", "test", "lint", "e2e"],
-                "canTrackAnalytics": false,
+                "canTrackAnalytics": true,
                 "showUsageWarnings": true
             }
         }
     },
     "projects": {
         "nx-realm": { "tags": [] },
-        "nx-realm-e2e": { "tags": [], "implicitDependencies": ["nx-realm"] },
         "make-buildable": { "tags": [] },
-        "make-buildable-e2e": {
-            "tags": [],
-            "implicitDependencies": ["make-buildable"]
-        },
         "angularfire-ngrx": { "tags": [] },
         "angularfire-ngrx-demo": { "tags": [] },
-        "angularfire-ngrx-demo-e2e": {
-            "tags": [],
-            "implicitDependencies": ["angularfire-ngrx-demo"]
-        },
         "api": { "tags": [] },
         "ngrx-data-websocket-demo": { "tags": [] },
-        "ngrx-data-websocket-demo-e2e": {
-            "tags": [],
-            "implicitDependencies": ["ngrx-data-websocket-demo"]
-        },
         "ngrx-data-websocket-client": { "tags": [] },
         "ngrx-data-websocket-core": { "tags": [] },
         "ngrx-data-websocket-server": { "tags": [] },
