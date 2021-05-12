@@ -8,6 +8,7 @@ import {
 } from '@trellisorg/rx-dynamic-component';
 import { QueryParam2Module } from './query-param2/query-param2.module';
 import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
     declarations: [AppComponent],
@@ -27,7 +28,7 @@ import { RouterModule } from '@angular/router';
                         ),
                 },
                 /**
-                 * Or can be used to refernce the module directly
+                 * Or can be used to reference the module directly
                  */
                 {
                     componentId: 'query2',
@@ -37,6 +38,7 @@ import { RouterModule } from '@angular/router';
         }),
         DynamicOutletModule,
         RouterModule.forRoot([]),
+        FormsModule,
     ],
     providers: [],
     bootstrap: [AppComponent],

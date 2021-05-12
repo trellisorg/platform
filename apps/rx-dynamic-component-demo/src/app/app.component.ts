@@ -12,6 +12,8 @@ import { filter, switchMap } from 'rxjs/operators';
 export class AppComponent {
     queryParamComponent$: Observable<ComponentFactory<any>>;
 
+    selected: string;
+
     constructor(
         private _route: ActivatedRoute,
         private rxDynamicComponentService: RxDynamicComponentService,
