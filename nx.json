@@ -71,6 +71,7 @@
         },
         "nxls": {
             "tags": []
-        }
+        },
+        "nest-spectator": { "tags": [] }
     }
 }

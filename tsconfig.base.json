@@ -37,6 +37,9 @@
             "@trellisorg/rx-dynamic-component": [
                 "packages/rx-dynamic-component/src/index.ts"
             ],
+            "@trellisorg/nest-spectator": [
+                "packages/nest-spectator/src/index.ts"
+            ],
             "@trellisorg/nxls": ["packages/nxls/src/index.ts"]
         }
     },

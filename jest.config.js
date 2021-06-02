@@ -14,6 +14,7 @@ module.exports = {
         '<rootDir>/apps/ngrx-universal-rehydrate-demo-api',
         '<rootDir>/packages/rx-dynamic-component',
         '<rootDir>/apps/rx-dynamic-component-demo',
+        '<rootDir>/packages/nest-spectator',
         '<rootDir>/packages/nxls',
     ],
 };

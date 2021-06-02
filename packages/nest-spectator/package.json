@@ -1,0 +1,23 @@
+{
+    "name": "@trellisorg/nest-spectator",
+    "version": "0.0.13",
+    "description": "Auto-mocking for Nestjs providers",
+    "author": "Jay Bell <jay@trellis.org>",
+    "homepage": "https://www.npmjs.com/package/nest-spectator",
+    "license": "MIT",
+    "main": "src/index.js",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/trellisorg/platform"
+    },
+    "bugs": {
+        "url": "https://github.com/trellisorg/platform"
+    },
+    "keywords": [
+        "nestjs",
+        "nest",
+        "typescript",
+        "testing",
+        "jest"
+    ]
+}
