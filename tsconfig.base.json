@@ -12,7 +12,7 @@
         "target": "es2015",
         "module": "esnext",
         "typeRoots": ["node_modules/@types", "dist/"],
-        "lib": ["es2017", "dom"],
+        "lib": ["es2017", "dom", "esnext"],
         "skipLibCheck": true,
         "skipDefaultLibCheck": true,
         "baseUrl": ".",
@@ -34,7 +34,8 @@
             ],
             "@trellisorg/rx-dynamic-component": [
                 "packages/rx-dynamic-component/src/index.ts"
-            ]
+            ],
+            "@trellisorg/nxls": ["packages/nxls/src/index.ts"]
         }
     },
     "exclude": ["node_modules", "tmp"]
