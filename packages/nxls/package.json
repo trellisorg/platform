@@ -1,11 +1,12 @@
 {
     "name": "@trellisorg/nxls",
     "repository": {
+        "type": "git",
         "url": "https://github.com/trellisorg/platform",
         "directory": "packages/nxls"
     },
     "readme": "https://github.com/trellisorg/platform/tree/master/packages/nxls",
-    "version": "0.0.5",
+    "version": "0.0.7",
     "license": "MIT",
     "bin": {
         "nxls": "bin/nxls.js"
@@ -15,5 +16,11 @@
         "@nrwl/workspace": "11.4.0",
         "tslib": "^2.0.0",
         "yargs": "^17.0.1"
+    },
+    "description": "Nrwl Nx plugin for listing information about your repository. Find unused libraries, circular dependencies and query your dep graph.",
+    "homepage": "https://github.com/trellisorg/platform/tree/master/packages/nxls",
+    "author": {
+        "name": "Jay Bell",
+        "email": "jay@trellis.org"
     }
 }
