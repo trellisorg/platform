@@ -118,10 +118,23 @@ yargs
                 demandOption: false,
                 default: [],
             },
+            countDependents: {
+                alias: 'n',
+                type: 'boolean',
+                demandOption: false,
+                default: false,
+            },
         },
         (args) => {
             const projects = listProjects(args);
-            console.log(projects);
+            projects.forEach((project) => {
+                console.log(
+                    `${project.name}`,
+                    args.countDependents
+                        ? ` used ${project.numDependents} times.`
+                        : ''
+                );
+            });
         }
     )
     .command(

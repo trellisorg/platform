@@ -12,7 +12,7 @@ All flags are options
 
 Each flag is AND'd together
 
-`nxls list --projectType (-p) app|lib --frameworks (-f) angular|react|node|gatsby|next|web --buildable (-b) true|false`
+`nxls list --projectType (-p) app|lib --frameworks (-f) angular|react|node|gatsby|next|web --buildable (-b) true|false --countDependents (-n) true|false`
 
 #### Examples:
 

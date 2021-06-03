@@ -6,7 +6,7 @@
         "directory": "packages/nxls"
     },
     "readme": "https://github.com/trellisorg/platform/tree/master/packages/nxls",
-    "version": "0.0.11",
+    "version": "0.0.12",
     "license": "MIT",
     "bin": {
         "nxls": "bin/nxls.js"

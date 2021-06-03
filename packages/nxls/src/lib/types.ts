@@ -28,4 +28,5 @@ export interface ListProjects {
     buildable?: boolean;
     projectType?: 'app' | 'lib';
     frameworks?: Framework[];
+    countDependents: boolean;
 }
