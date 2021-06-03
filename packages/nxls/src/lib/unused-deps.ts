@@ -1,9 +1,9 @@
 import { Dependencies } from './types';
-import { ProjectConfiguration } from '@nrwl/tao/src/shared/workspace';
+import { WorkspaceJsonConfiguration } from '@nrwl/tao/src/shared/workspace';
 
 export function findUnusedDependencies(
     dependencies: Dependencies,
-    projects: Record<string, ProjectConfiguration>,
+    projects: WorkspaceJsonConfiguration,
     excludeExternal: boolean
 ): string[] {
     const usedDeps = new Set<string>();

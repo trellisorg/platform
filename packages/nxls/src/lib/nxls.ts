@@ -3,11 +3,42 @@ import { readWorkspaceJson } from '@nrwl/workspace';
 import { readOrGenerateDepFile } from './util';
 import { findUnusedDependencies } from './unused-deps';
 import { findCircularDependencies } from './circular-deps';
+import { listProjects } from './list';
 
 yargs
     .command(
+        'list',
+        'List projects in workspace, flags are interpreted as AND conditions',
+        {
+            buildable: {
+                alias: 'b',
+                type: 'boolean',
+                demandOption: false,
+                default: undefined,
+            },
+            projectType: {
+                alias: 'p',
+                choices: ['app', 'lib'],
+                demandOption: false,
+                default: undefined,
+            },
+            frameworks: {
+                alias: 'f',
+                type: 'array',
+                choices: ['angular', 'node', 'react'],
+                demandOption: false,
+                default: [],
+            },
+        },
+        (args) => {
+            const projects = listProjects(args);
+
+            console.log(projects);
+        }
+    )
+    .command(
         'unused',
-        'List projects in the nx workspace',
+        'List unused dependencies',
         {
             excludeExternal: {
                 type: 'boolean',

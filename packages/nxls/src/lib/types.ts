@@ -15,3 +15,11 @@ export interface NxDepGraph {
 export interface NxDepsJson {
     dependencies: Dependencies;
 }
+
+export type Framework = 'angular' | 'react' | 'node';
+
+export interface ListProjects {
+    buildable?: boolean;
+    projectType?: 'app' | 'lib';
+    frameworks?: Framework[];
+}
