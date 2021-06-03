@@ -36,6 +36,26 @@ function checkDependency(
     return chains;
 }
 
+export function findDependencies(
+    target: string,
+    dependencies: Dependencies
+): string[] {
+    return Object.values(dependencies[target]).map((dep) => dep.target);
+}
+
+export function findDependents(
+    target: string,
+    dependencies: Dependencies
+): string[] {
+    return Object.entries(dependencies).reduce((prev, [project, deps]) => {
+        if (deps.find((dep) => dep.target === target)) {
+            return [project, ...prev];
+        }
+
+        return prev;
+    }, []);
+}
+
 export function findAllDependencyChains(
     sources: string[],
     target: string,

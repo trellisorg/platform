@@ -52,13 +52,16 @@ Each flag is AND'd together
 
 ### find dependency chains between source projects and a target
 
-`nxls chain --source (-s) ...<project name> --target (-t) <project name>`
+`nxls chain --source (-s) ...<project name> --target (-t) <project name> --dependents (-d) true|false --dependencies (-c) true|false`
+
+`--dependents` and `--dependencies` cannot be used with each other or with `--source`. They are meant for displaying just the
+dependents or dependencies of the target.
 
 #### Examples
 
 1. Find all chains between app1 and lib2 as well as app2 and lib2
 
-`nxls chain -s app1 app2 -t lib2
+`nxls chain -s app1 app2 -t lib2`
 
 ### find the % overlap between two libraries dependencies
 

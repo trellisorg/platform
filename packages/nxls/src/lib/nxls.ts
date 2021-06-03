@@ -4,7 +4,11 @@ import { readOrGenerateDepFile } from './util';
 import { findUnusedDependencies } from './unused-deps';
 import { findCircularDependencies } from './circular-deps';
 import { listProjects } from './list';
-import { findAllDependencyChains } from './find-dep-chain';
+import {
+    findAllDependencyChains,
+    findDependencies,
+    findDependents,
+} from './find-dep-chain';
 import { calculateSubsetPercent } from './calculate-subset-percent';
 
 yargs
@@ -32,7 +36,6 @@ yargs
             source: {
                 alias: 's',
                 type: 'array',
-                demandOption: true,
                 default: [],
             },
             target: {
@@ -40,20 +43,56 @@ yargs
                 type: 'string',
                 demandOption: true,
             },
+            dependents: {
+                alias: 'd',
+                type: 'boolean',
+                demandOption: false,
+            },
+            dependencies: {
+                alias: 'c',
+                type: 'boolean',
+                demandOptions: false,
+            },
         },
         (args) => {
-            const nxDepsFile = readOrGenerateDepFile();
-            const chains = findAllDependencyChains(
-                args.source,
-                args.target,
-                nxDepsFile.dependencies
-            );
+            if (
+                args.source?.length &&
+                (args.dependencies != null || args.dependents != null)
+            ) {
+                // TODO: use chalk to display an error
+                console.error(
+                    '--source cannot be used with --dependencies or --dependencies'
+                );
+                return;
+            }
 
-            chains
-                .map((chain) => chain.join(' -> '))
-                .forEach((chain) => {
-                    console.log(chain);
-                });
+            if (args.dependencies != null && args.dependents != null) {
+                // TODO: use chalk to display an error
+                console.error(
+                    'Please either either `--dependants or `--dependencies but not both.'
+                );
+                return;
+            }
+
+            let chains: string[] = [];
+
+            const nxDepsFile = readOrGenerateDepFile();
+
+            if (args.dependencies != null) {
+                chains = findDependencies(args.target, nxDepsFile.dependencies);
+            } else if (args.dependents) {
+                chains = findDependents(args.target, nxDepsFile.dependencies);
+            } else {
+                chains = findAllDependencyChains(
+                    args.source,
+                    args.target,
+                    nxDepsFile.dependencies
+                ).map((chain) => chain.join(' -> '));
+            }
+
+            chains.forEach((chain) => {
+                console.log(chain);
+            });
         }
     )
     .command(
