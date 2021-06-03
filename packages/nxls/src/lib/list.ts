@@ -13,7 +13,9 @@ export function listProjects(args: ListProjects): string[] {
     let filtered = Object.entries(workspaceJson.projects);
 
     if (args.buildable != null) {
-        filtered = filtered.filter(([, config]) => !!config.targets['build']);
+        filtered = filtered.filter(
+            ([, config]) => !!config.targets['build'] === args.buildable
+        );
     }
 
     if (args.projectType != null) {
