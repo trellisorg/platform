@@ -25,14 +25,13 @@ yargs
             frameworks: {
                 alias: 'f',
                 type: 'array',
-                choices: ['angular', 'node', 'react'],
+                choices: ['angular', 'node', 'react', 'gatsby', 'next', 'web'],
                 demandOption: false,
                 default: [],
             },
         },
         (args) => {
             const projects = listProjects(args);
-
             console.log(projects);
         }
     )

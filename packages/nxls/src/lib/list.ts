@@ -23,7 +23,7 @@ export function listProjects(args: ListProjects): string[] {
         );
     }
 
-    if (args.frameworks) {
+    if (args.frameworks?.length) {
         filtered = filtered.filter(
             ([, config]) =>
                 config.targets['build'] &&

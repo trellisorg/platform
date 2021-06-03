@@ -16,7 +16,13 @@ export interface NxDepsJson {
     dependencies: Dependencies;
 }
 
-export type Framework = 'angular' | 'react' | 'node';
+export type Framework =
+    | 'angular'
+    | 'react'
+    | 'node'
+    | 'gatsby'
+    | 'next'
+    | 'web';
 
 export interface ListProjects {
     buildable?: boolean;
