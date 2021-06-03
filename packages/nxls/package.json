@@ -1,0 +1,14 @@
+{
+    "name": "@trellisorg/nxls",
+    "version": "0.0.4",
+    "license": "MIT",
+    "bin": {
+        "nxls": "bin/nxls.js"
+    },
+    "main": "src/index.js",
+    "dependencies": {
+        "@nrwl/workspace": "11.4.0",
+        "tslib": "^2.0.0",
+        "yargs": "^17.0.1"
+    }
+}

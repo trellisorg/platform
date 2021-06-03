@@ -72,7 +72,6 @@
         "@rollup/plugin-node-resolve": "^8.4.0",
         "@rollup/plugin-typescript": "^5.0.2",
         "@trellisorg/nx-realm": "^0.0.3",
-        "@types/jest": "^26.0.8",
         "@types/mongodb": "^3.5.25",
         "@types/node": "12.12.38",
         "@types/socket.io": "^2.1.11",
@@ -85,7 +84,6 @@
         "eslint-config-prettier": "6.0.0",
         "firebase": "^7.20.0",
         "jasmine-marbles": "^0.6.0",
-        "jest": "^26.2.2",
         "jest-preset-angular": "8.3.2",
         "lodash.merge": "^4.6.2",
         "ng-packagr": "11.2.4",
@@ -94,10 +92,9 @@
         "rollup": "^2.23.0",
         "rxjs": "6.5.5",
         "socket.io-client": "^2.3.1",
-        "ts-jest": "26.1.4",
         "ts-node": "9.1.1",
         "tslib": "^2.0.0",
-        "typescript": "~4.0.3",
+        "yargs": "^17.0.1",
         "zone.js": "^0.11.1"
     },
     "devDependencies": {
