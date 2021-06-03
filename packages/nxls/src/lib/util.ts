@@ -37,3 +37,22 @@ export function readOrGenerateDepFile(): NxDepsJson {
 
     return readNxDepsFile();
 }
+
+/**
+ * Calculates how many deps the outer array has from the inner array
+ * assumes outer is larger than inner
+ * @param outerDeps
+ * @param innerDeps
+ */
+export function percentSubSet(
+    outerDeps: string[],
+    innerDeps: string[]
+): number {
+    let count = 0;
+
+    innerDeps.forEach((dep) => {
+        if (outerDeps.includes(dep)) count++;
+    });
+
+    return count / outerDeps.length;
+}

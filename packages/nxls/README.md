@@ -58,7 +58,19 @@ Each flag is AND'd together
 
 1. Find all chains between app1 and lib2 as well as app2 and lib2
 
-`nxls chain -s app1 app2 -t lib2`
+`nxls chain -s app1 app2 -t lib2
+
+### find the % overlap between two libraries dependencies
+
+`nxls overlap --threshold <number>`
+
+1. Passing in a threshold will show only the overlaps whos % is higher than the threshold
+
+#### Examples
+
+1. Find all overlaps with a greater than 90%
+
+`nxls overlap --threshold 90`
 
 ### TODO
 

@@ -5,8 +5,26 @@ import { findUnusedDependencies } from './unused-deps';
 import { findCircularDependencies } from './circular-deps';
 import { listProjects } from './list';
 import { findAllDependencyChains } from './find-dep-chain';
+import { calculateSubsetPercent } from './calculate-subset-percent';
 
 yargs
+    .command(
+        'overlap',
+        'Find the percentage overlap between all libraries dependencies',
+        {
+            threshold: {
+                type: 'number',
+                demandOption: false,
+                default: 0,
+            },
+        },
+        (args) => {
+            calculateSubsetPercent(
+                readOrGenerateDepFile().dependencies,
+                args.threshold
+            );
+        }
+    )
     .command(
         'chain',
         'Find the dependency chain between sources and a target lib',
