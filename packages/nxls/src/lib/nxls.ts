@@ -40,6 +40,7 @@ yargs
         'List unused dependencies',
         {
             excludeExternal: {
+                alias: 'e',
                 type: 'boolean',
                 demandOption: false,
                 default: true,

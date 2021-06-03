@@ -1,6 +1,11 @@
 {
     "name": "@trellisorg/nxls",
-    "version": "0.0.4",
+    "repository": {
+        "url": "https://github.com/trellisorg/platform",
+        "directory": "packages/nxls"
+    },
+    "readme": "https://github.com/trellisorg/platform/tree/master/packages/nxls",
+    "version": "0.0.5",
     "license": "MIT",
     "bin": {
         "nxls": "bin/nxls.js"
