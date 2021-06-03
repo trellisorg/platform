@@ -4,8 +4,40 @@ import { readOrGenerateDepFile } from './util';
 import { findUnusedDependencies } from './unused-deps';
 import { findCircularDependencies } from './circular-deps';
 import { listProjects } from './list';
+import { findAllDependencyChains } from './find-dep-chain';
 
 yargs
+    .command(
+        'chain',
+        'Find the dependency chain between sources and a target lib',
+        {
+            source: {
+                alias: 's',
+                type: 'array',
+                demandOption: true,
+                default: [],
+            },
+            target: {
+                alias: 't',
+                type: 'string',
+                demandOption: true,
+            },
+        },
+        (args) => {
+            const nxDepsFile = readOrGenerateDepFile();
+            const chains = findAllDependencyChains(
+                args.source,
+                args.target,
+                nxDepsFile.dependencies
+            );
+
+            chains
+                .map((chain) => chain.join(' -> '))
+                .forEach((chain) => {
+                    console.log(chain);
+                });
+        }
+    )
     .command(
         'list',
         'List projects in workspace, flags are interpreted as AND conditions',
