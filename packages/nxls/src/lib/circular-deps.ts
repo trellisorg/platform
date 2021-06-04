@@ -1,5 +1,5 @@
 import { Dep, Dependencies } from './types';
-import { readOrGenerateDepFile } from './util';
+import { readOrGenerateDepFile, uniqueArray } from './util';
 
 function buildKey(path: string[]): string {
     return path.join(' -> ');
@@ -55,7 +55,7 @@ function processDependency(
 
 export function _findCircularDependencies(
     dependencies: Dependencies
-): string[] {
+): { path: string[]; key: string }[] {
     const allDependencies: [string, Dep[]][] = Object.entries(dependencies);
 
     const circularDeps: { path: string[]; key: string }[] = [];
@@ -64,7 +64,7 @@ export function _findCircularDependencies(
         circularDeps.push(...processDependency([], name, dependencies));
     });
 
-    return [...new Set<string>(circularDeps.map((dep) => dep.key))];
+    return uniqueArray(circularDeps, (item) => item.key);
 }
 
 /**
@@ -75,7 +75,7 @@ export function _findCircularDependencies(
  * If app1 imports lib1 and lib1 imports lib2 and lib2 imports lib1 only
  * lib1 -> lib2 -> lib1 will be printed, app1 will be left out as it is not part of the circular dependency
  */
-export function findCircularDependencies(): string[] {
+export function findCircularDependencies(): { path: string[]; key: string }[] {
     const dependencies = readOrGenerateDepFile().dependencies;
     return _findCircularDependencies(dependencies);
 }

@@ -51,9 +51,9 @@ describe('Circular Deps', () => {
         };
 
         expect(_findCircularDependencies(dependencies)).toEqual([
-            [lib1, lib2, lib1],
-            [lib2, lib1, lib2],
-            [lib3, lib3],
+            { path: [lib1, lib2, lib1], key: `${lib1} -> ${lib2} -> ${lib1}` },
+            { path: [lib2, lib1, lib2], key: `${lib2} -> ${lib1} -> ${lib2}` },
+            { path: [lib3, lib3], key: `${lib3} -> ${lib3}` },
         ]);
     });
 });
