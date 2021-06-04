@@ -1,10 +1,16 @@
+import { ProjectConfiguration } from '@nrwl/tao/src/shared/workspace';
+import { readWorkspaceJson } from '@nrwl/workspace';
 import { Dependencies } from './types';
-import { WorkspaceJsonConfiguration } from '@nrwl/tao/src/shared/workspace';
+import { readOrGenerateDepFile } from './util';
 
-export function findUnusedDependencies(
+export interface FindUnusedConfig {
+    excludeExternal?: boolean;
+}
+
+export function _findUnusedDependencies(
     dependencies: Dependencies,
-    projects: WorkspaceJsonConfiguration,
-    excludeExternal: boolean
+    projects: Record<string, ProjectConfiguration>,
+    { excludeExternal }: FindUnusedConfig
 ): string[] {
     const usedDeps = new Set<string>();
 
@@ -30,4 +36,16 @@ export function findUnusedDependencies(
         });
 
     return [...unusedDeps];
+}
+
+export function findUnusedDependencies(config: FindUnusedConfig): string[] {
+    const nxDepsFile = readOrGenerateDepFile();
+
+    const workspaceJson = readWorkspaceJson();
+
+    return _findUnusedDependencies(
+        nxDepsFile.dependencies,
+        workspaceJson.projects,
+        config
+    );
 }

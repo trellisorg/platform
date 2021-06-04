@@ -1,9 +1,28 @@
 import { Dependencies } from './types';
-import { percentSubSet } from './util';
+import { percentSubSet, readOrGenerateDepFile } from './util';
 
-export function calculateSubsetPercent(
-    dependencies: Dependencies,
-    threshold: number
+export interface DependencyOverlapConfig {
+    threshold: number;
+}
+
+/**
+ * Calculate the % overlap of all libraries with other libraries.
+ */
+export function calcDependencyOverlap(
+    config: DependencyOverlapConfig
+): {
+    outerDep: string;
+    innerDep: string;
+    percent: number;
+}[] {
+    const dependencies = readOrGenerateDepFile().dependencies;
+
+    return _calcDependencyOverlap(config, dependencies);
+}
+
+export function _calcDependencyOverlap(
+    { threshold }: DependencyOverlapConfig,
+    dependencies: Dependencies
 ): {
     outerDep: string;
     innerDep: string;
@@ -38,12 +57,6 @@ export function calculateSubsetPercent(
                 };
                 if (record.percent > threshold) {
                     subsetPercents.push(record);
-
-                    console.log(
-                        `${outerKey} shares ${
-                            Math.round(record.percent * 100 * 100) / 100
-                        }% of it's deps with ${innerKey}`
-                    );
                 }
             }
         });

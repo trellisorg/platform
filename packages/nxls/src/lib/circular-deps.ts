@@ -1,4 +1,5 @@
-import { Dep, Dependencies, NxDepGraph } from './types';
+import { Dep, Dependencies } from './types';
+import { readOrGenerateDepFile } from './util';
 
 function buildKey(path: string[]): string {
     return path.join(' -> ');
@@ -52,7 +53,9 @@ function processDependency(
     return circularDeps;
 }
 
-export function findCircularDependencies(dependencies: Dependencies): string[] {
+export function _findCircularDependencies(
+    dependencies: Dependencies
+): string[] {
     const allDependencies: [string, Dep[]][] = Object.entries(dependencies);
 
     const circularDeps: { path: string[]; key: string }[] = [];
@@ -62,4 +65,17 @@ export function findCircularDependencies(dependencies: Dependencies): string[] {
     });
 
     return [...new Set<string>(circularDeps.map((dep) => dep.key))];
+}
+
+/**
+ * Find all of the circular dependencies in the repo and print the shortest dependency chain between them.
+ *
+ * Example:
+ *
+ * If app1 imports lib1 and lib1 imports lib2 and lib2 imports lib1 only
+ * lib1 -> lib2 -> lib1 will be printed, app1 will be left out as it is not part of the circular dependency
+ */
+export function findCircularDependencies(): string[] {
+    const dependencies = readOrGenerateDepFile().dependencies;
+    return _findCircularDependencies(dependencies);
 }

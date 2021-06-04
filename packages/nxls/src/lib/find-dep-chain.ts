@@ -1,4 +1,13 @@
 import { Dependencies, NxDepsJson } from './types';
+import { readOrGenerateDepFile } from './util';
+
+export interface FindDependencyConfig {
+    target: string;
+}
+
+export interface FindDependencyChainConfig extends FindDependencyConfig {
+    source: string[];
+}
 
 function checkDependency(
     depTree: NxDepsJson['dependencies'],
@@ -36,17 +45,13 @@ function checkDependency(
     return chains;
 }
 
-export function findDependencies(
-    target: string,
-    dependencies: Dependencies
-): string[] {
+export function findDependencies({ target }: FindDependencyConfig): string[] {
+    const dependencies = readOrGenerateDepFile().dependencies;
     return Object.values(dependencies[target]).map((dep) => dep.target);
 }
 
-export function findDependents(
-    target: string,
-    dependencies: Dependencies
-): string[] {
+export function findDependents({ target }: FindDependencyConfig): string[] {
+    const dependencies = readOrGenerateDepFile().dependencies;
     return Object.entries(dependencies).reduce((prev, [project, deps]) => {
         if (deps.find((dep) => dep.target === target)) {
             return [project, ...prev];
@@ -56,12 +61,19 @@ export function findDependents(
     }, []);
 }
 
-export function findAllDependencyChains(
-    sources: string[],
-    target: string,
+export function findAllDependencyChains({
+    source,
+    target,
+}: FindDependencyChainConfig): string[][] {
+    const dependencies = readOrGenerateDepFile().dependencies;
+    return _findAllDependencyChains({ source, target }, dependencies);
+}
+
+export function _findAllDependencyChains(
+    { source, target }: FindDependencyChainConfig,
     dependencies: Dependencies
 ): string[][] {
-    return sources
+    return source
         .map((source) => checkDependency(dependencies, source, target, []))
         .flat();
 }
