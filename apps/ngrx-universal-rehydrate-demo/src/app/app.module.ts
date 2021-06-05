@@ -1,18 +1,17 @@
+import { isPlatformBrowser } from '@angular/common';
+import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
 import { Inject, NgModule, PLATFORM_ID } from '@angular/core';
 import {
     BrowserModule,
     BrowserTransferStateModule,
 } from '@angular/platform-browser';
-
-import { AppComponent } from './app.component';
+import { EffectsModule } from '@ngrx/effects';
 import { Store, StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { NgrxUniversalRehydrateModule } from '@trellisorg/ngrx-universal-rehydrate';
-import { loadData, titleReducer } from './store';
-import { EffectsModule } from '@ngrx/effects';
+import { AppComponent } from './app.component';
 import { Effects } from './effects';
-import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
-import { isPlatformBrowser } from '@angular/common';
+import { loadData, titleReducer } from './store';
 
 @NgModule({
     declarations: [AppComponent],

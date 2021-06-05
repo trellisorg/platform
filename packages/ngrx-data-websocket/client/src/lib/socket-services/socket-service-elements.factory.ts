@@ -1,20 +1,20 @@
 import { Inject, Injectable } from '@angular/core';
-import { SocketDispatcherBase } from '../dispatchers/socket-dispatcher-base';
-import { SocketDispatcherFactory } from '../dispatchers/socket-dispatcher-factory';
-import { SocketEventListenerFactory } from '../listeners/socket-event-listener-factory';
-import { SocketEventListener } from '../listeners/socket-event-listener';
-import { SocketDataService } from '../data-services/socket-data.service';
 import { EntityDataService } from '@ngrx/data';
 import { SocketDataServiceFactory } from '../data-services/socket-data-service-factory';
+import type { SocketDataService } from '../data-services/socket-data.service';
+import type { SocketDispatcherBase } from '../dispatchers/socket-dispatcher-base';
+import { SocketDispatcherFactory } from '../dispatchers/socket-dispatcher-factory';
+import type { SocketEventListener } from '../listeners/socket-event-listener';
 import { SocketEventListenerCollectionService } from '../listeners/socket-event-listener-collection.service';
-import {
-    NGRX_DATA_WEBSOCKET_CONFIG,
-    NgrxDataWebsocketConfig,
-} from '../utils/tokens';
+import { SocketEventListenerFactory } from '../listeners/socket-event-listener-factory';
 import {
     SocketSelectors$,
     SocketSelectors$Factory,
 } from '../selectors/socket-selectors$';
+import {
+    NgrxDataWebsocketConfig,
+    NGRX_DATA_WEBSOCKET_CONFIG,
+} from '../utils/tokens';
 
 export interface SocketServiceElements<T> {
     readonly dispatcher: SocketDispatcherBase<T>;

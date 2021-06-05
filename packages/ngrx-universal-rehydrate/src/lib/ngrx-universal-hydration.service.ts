@@ -4,12 +4,12 @@ import {
     StateKey,
     TransferState,
 } from '@angular/platform-browser';
+import { RuntimeChecks, USER_RUNTIME_CHECKS } from '@ngrx/store';
 import {
     createTransferStateKey,
-    NGRX_TRANSFER_HYDRATE_CONFIG,
     NgrxUniversalHydrateConfig,
+    NGRX_TRANSFER_HYDRATE_CONFIG,
 } from './shared';
-import { RuntimeChecks, USER_RUNTIME_CHECKS } from '@ngrx/store';
 
 @Injectable()
 export class NgrxUniversalHydrationService {

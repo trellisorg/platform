@@ -1,4 +1,4 @@
-import { Dependencies } from './types';
+import type { Dependencies } from './types';
 import { percentSubSet, readOrGenerateDepFile } from './util';
 
 export interface DependencyOverlapConfig {

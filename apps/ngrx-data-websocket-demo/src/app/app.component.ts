@@ -1,3 +1,4 @@
+import type { CdkDragDrop } from '@angular/cdk/drag-drop';
 import {
     ChangeDetectionStrategy,
     Component,
@@ -5,7 +6,6 @@ import {
     ViewChildren,
 } from '@angular/core';
 import { Stories, Story, StoryDataService } from './state/story';
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
 
 @Component({
     selector: 'trellisorg-root',

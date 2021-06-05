@@ -1,6 +1,6 @@
-import { ProjectConfiguration } from '@nrwl/tao/src/shared/workspace';
+import type { ProjectConfiguration } from '@nrwl/tao/src/shared/workspace';
 import { readWorkspaceJson } from '@nrwl/workspace';
-import { Dependencies } from './types';
+import type { Dependencies } from './types';
 import { readOrGenerateDepFile } from './util';
 
 export interface FindUnusedConfig {

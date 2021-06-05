@@ -1,5 +1,5 @@
 import { InjectionToken } from '@angular/core';
-import { LoadChildrenCallback } from '@angular/router';
+import type { LoadChildrenCallback } from '@angular/router';
 
 export type ManifestMap = Map<string, DynamicComponentManifest>;
 

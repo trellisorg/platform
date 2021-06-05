@@ -1,5 +1,5 @@
-import { Action } from '@ngrx/store';
-import { SocketOp } from './socket-op';
+import type { Action } from '@ngrx/store';
+import type { SocketOp } from './socket-op';
 
 export interface SocketAction<P = any> extends Action {
     readonly type: string;

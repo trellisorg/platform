@@ -10,6 +10,6 @@ export const defaultNgrxDataWebsocketConfig: NgrxDataWebsocketConfig = {
     host: '',
 };
 
-export const NGRX_DATA_WEBSOCKET_CONFIG = new InjectionToken<
-    NgrxDataWebsocketConfig
->('ngrx-websocket-config');
+export const NGRX_DATA_WEBSOCKET_CONFIG = new InjectionToken<NgrxDataWebsocketConfig>(
+    'ngrx-websocket-config'
+);

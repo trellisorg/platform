@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
+import { EntityCollectionServiceElementsFactory } from '@ngrx/data';
+import { createSelector, select } from '@ngrx/store';
 import {
     SocketCollectionServiceBase,
     SocketServiceElementsFactory,
 } from '@trellisorg/ngrx-data-websocket-client';
-import { EntityCollectionServiceElementsFactory } from '@ngrx/data';
-import { createSelector, select } from '@ngrx/store';
 
 export class Story {
     id?: string;

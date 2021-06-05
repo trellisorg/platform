@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { SocketEventListener } from './socket-event-listener';
-import { SocketActionFactory } from '../actions/socket-action-factory';
 import { Store } from '@ngrx/store';
+import { SocketActionFactory } from '../actions/socket-action-factory';
+import { SocketEventListener } from './socket-event-listener';
 
 @Injectable()
 export class SocketEventListenerFactory {

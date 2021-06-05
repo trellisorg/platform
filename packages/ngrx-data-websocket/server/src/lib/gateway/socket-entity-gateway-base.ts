@@ -1,10 +1,13 @@
-import { Socket } from 'socket.io';
-import { SocketEventBody, SocketEventReturn } from '../types/socket-events';
-import {
+import type {
     SocketOp,
-    SocketUpdateResponsePayload,
     SocketUpdateRequestPayload,
+    SocketUpdateResponsePayload,
 } from '@trellisorg/ngrx-data-websocket-core';
+import type { Socket } from 'socket.io';
+import type {
+    SocketEventBody,
+    SocketEventReturn,
+} from '../types/socket-events';
 
 export interface SocketEntityGatewayBase<T> {
     queryAll(

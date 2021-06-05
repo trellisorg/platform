@@ -1,16 +1,16 @@
+import { Component, ComponentFactory, NgModule } from '@angular/core';
 import {
     byText,
     createComponentFactory,
     Spectator,
 } from '@ngneat/spectator/jest';
-import { Component, ComponentFactory, NgModule } from '@angular/core';
-import { Observable, of } from 'rxjs';
 import {
-    DYNAMIC_COMPONENT,
     DynamicOutletModule,
+    DYNAMIC_COMPONENT,
     RxDynamicComponentModule,
     RxDynamicComponentService,
 } from '@trellisorg/rx-dynamic-component';
+import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 @Component({

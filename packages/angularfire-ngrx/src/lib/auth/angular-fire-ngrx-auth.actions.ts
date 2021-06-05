@@ -1,10 +1,10 @@
 import { Inject, Injectable } from '@angular/core';
-import { merge, Observable, Operator } from 'rxjs';
-import { Action } from '@ngrx/store';
 import { AngularFireAuth } from '@angular/fire/auth';
+import type { Action } from '@ngrx/store';
+import { merge, Observable, Operator } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-import * as Actions from './auth-actions';
 import { AF_NGRX_CONFIG, AngularFireNgrxConfig } from '../config';
+import * as Actions from './auth-actions';
 
 @Injectable({ providedIn: 'root' })
 export class AngularFireNgrxAuthActions<V = Action> extends Observable<V> {

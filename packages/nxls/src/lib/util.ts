@@ -1,6 +1,6 @@
 import { execSync } from 'child_process';
 import { readFileSync } from 'fs';
-import { NxDepGraph, NxDepsJson } from './types';
+import type { NxDepGraph, NxDepsJson } from './types';
 
 const DEP_GRAPH_FILE = './tmp/dep-graph.json';
 const NX_DEP_FILE = './node_modules/.cache/nx/nxdeps.json';

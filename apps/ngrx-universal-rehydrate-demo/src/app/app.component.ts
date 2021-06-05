@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store';
+import type { Observable } from 'rxjs';
 import { Item, selectData } from './store';
 
 @Component({

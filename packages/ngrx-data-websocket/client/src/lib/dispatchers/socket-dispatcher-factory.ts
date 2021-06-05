@@ -1,15 +1,15 @@
 import { Inject, Injectable, OnDestroy } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
-import { Action, ScannedActionsSubject, Store } from '@ngrx/store';
-import { shareReplay } from 'rxjs/operators';
-import { SocketDispatcherBase } from './socket-dispatcher-base';
 import { CorrelationIdGenerator } from '@ngrx/data';
+import { Action, ScannedActionsSubject, Store } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
+import { shareReplay } from 'rxjs/operators';
 import { SocketActionFactory } from '../actions/socket-action-factory';
 import {
     defaultNgrxDataWebsocketConfig,
-    NGRX_DATA_WEBSOCKET_CONFIG,
     NgrxDataWebsocketConfig,
+    NGRX_DATA_WEBSOCKET_CONFIG,
 } from '../utils/tokens';
+import { SocketDispatcherBase } from './socket-dispatcher-base';
 
 @Injectable()
 export class SocketDispatcherFactory implements OnDestroy {

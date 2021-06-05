@@ -1,4 +1,4 @@
-import { Dep, Dependencies } from './types';
+import type { Dep, Dependencies } from './types';
 import { readOrGenerateDepFile, uniqueArray } from './util';
 
 function buildKey(path: string[]): string {

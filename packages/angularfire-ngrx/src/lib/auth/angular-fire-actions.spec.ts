@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { AngularFireNgrxModule } from '@trellis/angularfire-ngrx';
-import { createServiceFactory, SpectatorService } from '@ngneat/spectator/jest';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { createServiceFactory, SpectatorService } from '@ngneat/spectator/jest';
 import * as firebase from 'firebase';
 import { BehaviorSubject } from 'rxjs';
+import { AngularFireNgrxModule } from '../angular-fire-ngrx.module';
 import { AngularFireNgrxAuthActions } from './angular-fire-ngrx-auth.actions';
 
 @Injectable()

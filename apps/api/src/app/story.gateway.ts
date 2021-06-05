@@ -6,18 +6,18 @@ import {
     WebSocketGateway,
     WebSocketServer,
 } from '@nestjs/websockets';
-import * as SocketIO from 'socket.io';
-import { Socket } from 'socket.io';
-import {
-    SocketEntityGatewayBase,
-    SocketEventBody,
-    SocketEventReturn,
-} from '@trellisorg/ngrx-data-websocket-server';
 import {
     SocketOp,
     SocketUpdateRequestPayload,
     SocketUpdateResponsePayload,
 } from '@trellisorg/ngrx-data-websocket-core';
+import type {
+    SocketEntityGatewayBase,
+    SocketEventBody,
+    SocketEventReturn,
+} from '@trellisorg/ngrx-data-websocket-server';
+import type { Socket } from 'socket.io';
+import * as SocketIO from 'socket.io';
 
 export class Story {
     id: string;

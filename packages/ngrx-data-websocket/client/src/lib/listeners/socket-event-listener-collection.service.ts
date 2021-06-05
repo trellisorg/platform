@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SocketEventListener } from './socket-event-listener';
+import type { SocketEventListener } from './socket-event-listener';
 
 @Injectable()
 export class SocketEventListenerCollectionService {

@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { filter, map, tap } from 'rxjs/operators';
-import { SocketEventListenerCollectionService } from '../listeners/socket-event-listener-collection.service';
-import { SocketActionFactory } from '../actions/socket-action-factory';
-import { ofSocketType } from '../utils/of_socket_type';
+import { Actions, createEffect } from '@ngrx/effects';
 import {
     dispatchEvents,
     listeners,
     SocketAction,
     SocketActionPayload,
 } from '@trellisorg/ngrx-data-websocket-core';
+import { filter, map } from 'rxjs/operators';
+import { SocketActionFactory } from '../actions/socket-action-factory';
+import { SocketEventListenerCollectionService } from '../listeners/socket-event-listener-collection.service';
+import { ofSocketType } from '../utils/of_socket_type';
 
 @Injectable()
 export class SocketDispatcherEffects {

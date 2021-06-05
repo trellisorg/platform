@@ -1,14 +1,14 @@
-import { merge, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { Store } from '@ngrx/store';
 import { Actions, ofType } from '@ngrx/effects';
-import { map, shareReplay, startWith } from 'rxjs/operators';
-import { createActionType } from '../utils/create-action-type';
+import { Store } from '@ngrx/store';
 import {
     reservedEvents,
     SocketAction,
     SocketOp,
 } from '@trellisorg/ngrx-data-websocket-core';
+import { merge, Observable } from 'rxjs';
+import { map, shareReplay, startWith } from 'rxjs/operators';
+import { createActionType } from '../utils/create-action-type';
 
 export interface SocketSelectors$<T> {
     readonly connected$: Observable<boolean>;

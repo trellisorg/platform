@@ -1,6 +1,6 @@
-import { WorkspaceJsonConfiguration } from '@nrwl/tao/src/shared/workspace';
+import type { WorkspaceJsonConfiguration } from '@nrwl/tao/src/shared/workspace';
 import { readWorkspaceJson } from '@nrwl/workspace';
-import { Framework } from './types';
+import type { Framework } from './types';
 import { readOrGenerateDepFile } from './util';
 
 const projectTypeMap = {

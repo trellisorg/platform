@@ -1,4 +1,4 @@
-import { SocketOp } from '@trellisorg/ngrx-data-websocket-core';
+import type { SocketOp } from '@trellisorg/ngrx-data-websocket-core';
 
 export interface SocketEventReturn<op extends SocketOp, T> {
     event: op;

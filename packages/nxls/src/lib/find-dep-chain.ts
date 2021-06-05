@@ -1,4 +1,4 @@
-import { Dependencies, NxDepsJson } from './types';
+import type { Dependencies, NxDepsJson } from './types';
 import { readOrGenerateDepFile } from './util';
 
 export interface FindDependencyConfig {
