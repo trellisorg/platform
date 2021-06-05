@@ -21,7 +21,7 @@ describe('Circular Deps', () => {
             [lib3]: [],
         };
 
-        expect(_findCircularDependencies(dependencies)).toEqual([]);
+        expect(_findCircularDependencies(dependencies, {})).toEqual([]);
     });
 
     it('should find the shorted circular dep path', () => {
@@ -50,7 +50,7 @@ describe('Circular Deps', () => {
             ],
         };
 
-        expect(_findCircularDependencies(dependencies)).toEqual([
+        expect(_findCircularDependencies(dependencies, {})).toEqual([
             { path: [lib1, lib2, lib1], key: `${lib1} -> ${lib2} -> ${lib1}` },
             { path: [lib3, lib3], key: `${lib3} -> ${lib3}` },
         ]);

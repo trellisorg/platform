@@ -1,5 +1,10 @@
-import type { Dep, Dependencies } from './types';
-import { readOrGenerateDepFile, uniqueArray } from './util';
+import type { Dep, Dependencies, FilterableCommand } from './types';
+import {
+    filterDependencyGraph,
+    filterProjects,
+    readOrGenerateDepFile,
+    uniqueArray,
+} from './util';
 
 function buildKey(path: string[]): string {
     return path.join(' -> ');
@@ -24,7 +29,7 @@ function processDependency(
             const index = depsInPath.findIndex((v) => v === dep.target);
             const values = depsInPath.slice(index);
             const path = [...values, dep.target];
-            const key = path.join(' -> ');
+            const key = buildKey(path);
             if (!circularDeps.has(key))
                 console.log('Found a new circular dep, ', key);
             circularDeps.set(key, { path, key });
@@ -43,9 +48,12 @@ function processDependency(
 }
 
 export function _findCircularDependencies(
-    dependencies: Dependencies
+    dependencies: Dependencies,
+    config: FilterableCommand
 ): { path: string[]; key: string }[] {
-    const allDependencies: [string, Dep[]][] = Object.entries(dependencies);
+    const allDependencies: [string, Dep[]][] = Object.entries(
+        filterDependencyGraph(dependencies, filterProjects(config))
+    );
 
     const circularDeps = new Map<string, { key: string; path: string[] }>();
 
@@ -86,7 +94,9 @@ export function _findCircularDependencies(
  * If app1 imports lib1 and lib1 imports lib2 and lib2 imports lib1 only
  * lib1 -> lib2 -> lib1 will be printed, app1 will be left out as it is not part of the circular dependency
  */
-export function findCircularDependencies(): { path: string[]; key: string }[] {
+export function findCircularDependencies(
+    config: FilterableCommand
+): { path: string[]; key: string }[] {
     const dependencies = readOrGenerateDepFile().dependencies;
-    return _findCircularDependencies(dependencies);
+    return _findCircularDependencies(dependencies, config);
 }

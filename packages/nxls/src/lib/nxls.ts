@@ -19,6 +19,25 @@ yargs
                 demandOption: false,
                 default: 0,
             },
+            buildable: {
+                alias: 'b',
+                type: 'boolean',
+                demandOption: false,
+                default: undefined,
+            },
+            projectType: {
+                alias: 'p',
+                choices: ['app', 'lib'],
+                demandOption: false,
+                default: undefined,
+            },
+            frameworks: {
+                alias: 'f',
+                type: 'array',
+                choices: ['angular', 'node', 'react', 'gatsby', 'next', 'web'],
+                demandOption: false,
+                default: [],
+            },
         },
         (args) => {
             const records = calcDependencyOverlap(args);
@@ -98,6 +117,12 @@ yargs
         'list',
         'List projects in workspace, flags are interpreted as AND conditions',
         {
+            countDependents: {
+                alias: 'n',
+                type: 'boolean',
+                demandOption: false,
+                default: false,
+            },
             buildable: {
                 alias: 'b',
                 type: 'boolean',
@@ -116,12 +141,6 @@ yargs
                 choices: ['angular', 'node', 'react', 'gatsby', 'next', 'web'],
                 demandOption: false,
                 default: [],
-            },
-            countDependents: {
-                alias: 'n',
-                type: 'boolean',
-                demandOption: false,
-                default: false,
             },
         },
         (args) => {
@@ -146,6 +165,25 @@ yargs
                 demandOption: false,
                 default: true,
             },
+            buildable: {
+                alias: 'b',
+                type: 'boolean',
+                demandOption: false,
+                default: undefined,
+            },
+            projectType: {
+                alias: 'p',
+                choices: ['app', 'lib'],
+                demandOption: false,
+                default: undefined,
+            },
+            frameworks: {
+                alias: 'f',
+                type: 'array',
+                choices: ['angular', 'node', 'react', 'gatsby', 'next', 'web'],
+                demandOption: false,
+                default: [],
+            },
         },
         (args) => {
             const unusedDeps = findUnusedDependencies(args);
@@ -156,9 +194,29 @@ yargs
     .command(
         'circular',
         'Find all circular dependencies in your repo',
-        {},
-        () => {
-            const circularDeps = findCircularDependencies();
+        {
+            buildable: {
+                alias: 'b',
+                type: 'boolean',
+                demandOption: false,
+                default: undefined,
+            },
+            projectType: {
+                alias: 'p',
+                choices: ['app', 'lib'],
+                demandOption: false,
+                default: undefined,
+            },
+            frameworks: {
+                alias: 'f',
+                type: 'array',
+                choices: ['angular', 'node', 'react', 'gatsby', 'next', 'web'],
+                demandOption: false,
+                default: [],
+            },
+        },
+        (args) => {
+            const circularDeps = findCircularDependencies(args);
 
             circularDeps.forEach((value) => {
                 console.log(value.key);

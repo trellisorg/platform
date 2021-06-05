@@ -1,53 +1,16 @@
-import type { WorkspaceJsonConfiguration } from '@nrwl/tao/src/shared/workspace';
-import { readWorkspaceJson } from '@nrwl/workspace';
-import type { Framework } from './types';
-import { readOrGenerateDepFile } from './util';
+import type { FilterableCommand } from './types';
+import { filterProjects, readOrGenerateDepFile } from './util';
 
-const projectTypeMap = {
-    app: 'application',
-    lib: 'library',
-};
-
-export interface ListProjects {
-    buildable?: boolean;
-    projectType?: 'app' | 'lib';
-    frameworks?: Framework[];
+export interface ListProjects extends FilterableCommand {
     countDependents: boolean;
 }
 
-export function listProjects({
-    buildable,
-    projectType,
-    frameworks,
-    countDependents,
-}: ListProjects): { name: string; numDependents?: number }[] {
-    const workspaceJson: WorkspaceJsonConfiguration = readWorkspaceJson();
+export function listProjects(
+    list: ListProjects
+): { name: string; numDependents?: number }[] {
+    const filtered = filterProjects(list);
 
-    let filtered = Object.entries(workspaceJson.projects);
-
-    if (buildable != null) {
-        filtered = filtered.filter(
-            ([, config]) => !!config.targets['build'] === buildable
-        );
-    }
-
-    if (projectType != null) {
-        filtered = filtered.filter(
-            ([, config]) => config.projectType === projectTypeMap[projectType]
-        );
-    }
-
-    if (frameworks?.length) {
-        filtered = filtered.filter(
-            ([, config]) =>
-                config.targets['build'] &&
-                frameworks.some((framework) =>
-                    new RegExp(framework).test(config.targets['build'].executor)
-                )
-        );
-    }
-
-    if (countDependents) {
+    if (list.countDependents) {
         const nxDepsFile = readOrGenerateDepFile();
 
         const totals: Record<string, number> = {};

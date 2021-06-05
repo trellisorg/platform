@@ -16,6 +16,12 @@ export interface NxDepsJson {
     dependencies: Dependencies;
 }
 
+export interface FilterableCommand {
+    buildable?: boolean;
+    projectType?: 'app' | 'lib';
+    frameworks?: Framework[];
+}
+
 export type Framework =
     | 'angular'
     | 'react'
@@ -23,3 +29,8 @@ export type Framework =
     | 'gatsby'
     | 'next'
     | 'web';
+
+export const projectTypeMap = {
+    app: 'application',
+    lib: 'library',
+};

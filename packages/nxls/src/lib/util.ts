@@ -1,6 +1,9 @@
+import type { ProjectConfiguration } from '@nrwl/tao/src/shared/workspace';
+import { readWorkspaceJson } from '@nrwl/workspace';
 import { execSync } from 'child_process';
 import { readFileSync } from 'fs';
-import type { NxDepGraph, NxDepsJson } from './types';
+import type { Dependencies, Framework, NxDepGraph, NxDepsJson } from './types';
+import { projectTypeMap } from './types';
 
 const DEP_GRAPH_FILE = './tmp/dep-graph.json';
 const NX_DEP_FILE = './node_modules/.cache/nx/nxdeps.json';
@@ -57,4 +60,60 @@ export function uniqueArray<T>(arr: T[], checker: (item: T) => string): T[] {
 
         return true;
     });
+}
+
+export function filterProjects(
+    {
+        buildable,
+        projectType,
+        frameworks,
+    }: {
+        buildable?: boolean;
+        projectType?: 'app' | 'lib';
+        frameworks?: Framework[];
+    },
+    projectJson?: Record<string, ProjectConfiguration>
+): string[] {
+    const projects: Record<string, ProjectConfiguration> = projectJson
+        ? projectJson
+        : readWorkspaceJson().projects;
+
+    let filtered = Object.entries(projects);
+
+    if (buildable != null) {
+        filtered = filtered.filter(
+            ([, config]) => !!config.targets['build'] === buildable
+        );
+    }
+
+    if (projectType != null) {
+        filtered = filtered.filter(
+            ([, config]) => config.projectType === projectTypeMap[projectType]
+        );
+    }
+
+    if (frameworks?.length) {
+        filtered = filtered.filter(
+            ([, config]) =>
+                config.targets['build'] &&
+                frameworks.some((framework) =>
+                    new RegExp(framework).test(config.targets['build'].executor)
+                )
+        );
+    }
+
+    return filtered.map(([name]) => name);
+}
+
+export function filterDependencyGraph(
+    dependencies: Dependencies,
+    projects: string[]
+): Dependencies {
+    return projects.reduce(
+        (prev, cur) => ({
+            ...prev,
+            [cur]: dependencies[cur],
+        }),
+        {}
+    );
 }
