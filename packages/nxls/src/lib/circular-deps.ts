@@ -9,44 +9,37 @@ function processDependency(
     depsInPath: string[],
     currentTarget: string,
     deps: Dependencies,
-    keyTracker: Set<string> = new Set<string>()
-): { path: string[]; key: string }[] {
-    const targetDeps = deps[currentTarget];
+    circularDeps: Map<string, { path: string[]; key: string }>,
+    nodesVisited: Set<string>
+): void {
+    const root = deps[currentTarget];
 
-    if (targetDeps.length === 0) {
-        return [];
+    if (root.length === 0) {
+        return;
     }
 
-    for (const dep of targetDeps) {
+    for (const dep of root) {
         // if the dep already exists in the path don't add it and add path to circular deps
-        if (dep.target === currentTarget) {
-            const path = [currentTarget, dep.target];
-            const key = buildKey(path);
-
-            if (!keyTracker.has(key)) {
-                keyTracker.add(key);
-            }
-        } else if (depsInPath.includes(dep.target)) {
-            const index: number = depsInPath.findIndex((v) => v === dep.target);
-            const values: string[] = depsInPath.slice(index);
-            const circularPath: string[] = [...values, dep.target];
-
-            // Add circular dep into the tracked circular deps array
-            const key = buildKey(circularPath);
-            if (!keyTracker.has(key)) {
-                keyTracker.add(key);
-            }
+        if (depsInPath.includes(dep.target)) {
+            const index = depsInPath.findIndex((v) => v === dep.target);
+            const values = depsInPath.slice(index);
+            const path = [...values, dep.target];
+            const key = path.join(' -> ');
+            if (!circularDeps.has(key))
+                console.log('Found a new circular dep, ', key);
+            circularDeps.set(key, { path, key });
         } else {
             processDependency(
                 [...depsInPath, dep.target],
                 dep.target,
                 deps,
-                keyTracker
+                circularDeps,
+                nodesVisited
             );
         }
-    }
 
-    return [];
+        nodesVisited.add(dep.target);
+    }
 }
 
 export function _findCircularDependencies(
@@ -54,15 +47,35 @@ export function _findCircularDependencies(
 ): { path: string[]; key: string }[] {
     const allDependencies: [string, Dep[]][] = Object.entries(dependencies);
 
-    const circularDeps: { path: string[]; key: string }[] = [];
+    const circularDeps = new Map<string, { key: string; path: string[] }>();
+
+    const nodesVisited = new Set<string>();
 
     allDependencies
         .filter(([dep]) => !dep.startsWith('npm:'))
-        .forEach(([name, dependency]) => {
-            processDependency([name], name, dependencies);
+        .forEach(([name, dependency], index) => {
+            if (!nodesVisited.has(name)) {
+                console.log(
+                    `Processing top level dep number ${index} - ${name}`
+                );
+                processDependency(
+                    [name],
+                    name,
+                    dependencies,
+                    circularDeps,
+                    nodesVisited
+                );
+            } else {
+                console.log(
+                    `Top level dep ${name} already visited, no need to step into.`
+                );
+            }
         });
 
-    return uniqueArray(circularDeps, (item) => item.key);
+    return uniqueArray(
+        Array.from(circularDeps.entries()).map(([key, value]) => value),
+        (item) => item.key
+    );
 }
 
 /**

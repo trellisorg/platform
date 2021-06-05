@@ -160,6 +160,8 @@ yargs
         () => {
             const circularDeps = findCircularDependencies();
 
-            console.log(circularDeps);
+            circularDeps.forEach((value) => {
+                console.log(value.key);
+            });
         }
     ).argv;
