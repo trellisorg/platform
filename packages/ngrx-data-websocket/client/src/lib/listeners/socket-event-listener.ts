@@ -1,13 +1,13 @@
-import socketIo from 'socket.io-client';
-import { SocketActionFactory } from '../actions/socket-action-factory';
-import { Store } from '@ngrx/store';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { NgrxDataWebsocketConfig } from '../utils/tokens';
+import type { Store } from '@ngrx/store';
 import {
     listeners,
     SocketActionPayload,
     SocketOp,
 } from '@trellisorg/ngrx-data-websocket-core';
+import { BehaviorSubject, Observable } from 'rxjs';
+import socketIo from 'socket.io-client';
+import type { SocketActionFactory } from '../actions/socket-action-factory';
+import type { NgrxDataWebsocketConfig } from '../utils/tokens';
 
 export class SocketEventListener<T> {
     private _socket: any;

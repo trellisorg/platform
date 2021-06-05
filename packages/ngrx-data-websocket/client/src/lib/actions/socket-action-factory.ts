@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { EntityAction, EntityActionFactory, EntityOp } from '@ngrx/data';
-import { createActionType } from '../utils/create-action-type';
-import {
+import type {
     SocketAction,
     SocketActionOptions,
     SocketOp,
 } from '@trellisorg/ngrx-data-websocket-core';
+import { createActionType } from '../utils/create-action-type';
 
 @Injectable()
 export class SocketActionFactory {

@@ -1,7 +1,7 @@
-import { EntityCollectionDataService, QueryParams } from '@ngrx/data';
-import { Observable } from 'rxjs';
-import { SocketDispatcherBase } from '../dispatchers/socket-dispatcher-base';
-import { UpdateStr } from '@ngrx/entity/src/models';
+import type { EntityCollectionDataService, QueryParams } from '@ngrx/data';
+import type { UpdateStr } from '@ngrx/entity/src/models';
+import type { Observable } from 'rxjs';
+import type { SocketDispatcherBase } from '../dispatchers/socket-dispatcher-base';
 
 export class SocketDataService<T> implements EntityCollectionDataService<T> {
     readonly name: string;

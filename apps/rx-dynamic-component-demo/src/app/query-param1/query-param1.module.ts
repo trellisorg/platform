@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { QueryParam1Component } from './query-param1.component';
+import { NgModule } from '@angular/core';
 import { DYNAMIC_COMPONENT } from '@trellisorg/rx-dynamic-component';
+import { QueryParam1Component } from './query-param1.component';
 
 @NgModule({
     declarations: [QueryParam1Component],

@@ -1,6 +1,4 @@
-import { ProjectConfiguration } from '@nrwl/tao/src/shared/workspace';
-import { NxDepGraph } from './types';
-import { findAllDependencyChains } from './find-dep-chain';
+import { _findAllDependencyChains } from './find-dep-chain';
 
 describe('FindDepChain', () => {
     const app1 = 'app1';
@@ -22,7 +20,12 @@ describe('FindDepChain', () => {
             [lib3]: [],
         };
 
-        expect(findAllDependencyChains([app1], lib3, dependencies)).toEqual([]);
+        expect(
+            _findAllDependencyChains(
+                { source: [app1], target: lib3 },
+                dependencies
+            )
+        ).toEqual([]);
     });
 
     it('should find a chain between app1 and lib3', () => {
@@ -51,8 +54,11 @@ describe('FindDepChain', () => {
             [lib3]: [],
         };
 
-        expect(findAllDependencyChains([app1], lib3, dependencies)).toEqual([
-            [app1, lib1, lib2, lib3],
-        ]);
+        expect(
+            _findAllDependencyChains(
+                { source: [app1], target: lib3 },
+                dependencies
+            )
+        ).toEqual([[app1, lib1, lib2, lib3]]);
     });
 });

@@ -1,6 +1,6 @@
-import { ListProjects } from './types';
+import type { WorkspaceJsonConfiguration } from '@nrwl/tao/src/shared/workspace';
 import { readWorkspaceJson } from '@nrwl/workspace';
-import { WorkspaceJsonConfiguration } from '@nrwl/tao/src/shared/workspace';
+import type { Framework } from './types';
 import { readOrGenerateDepFile } from './util';
 
 const projectTypeMap = {
@@ -8,37 +8,46 @@ const projectTypeMap = {
     lib: 'library',
 };
 
-export function listProjects(
-    args: ListProjects
-): { name: string; numDependents?: number }[] {
+export interface ListProjects {
+    buildable?: boolean;
+    projectType?: 'app' | 'lib';
+    frameworks?: Framework[];
+    countDependents: boolean;
+}
+
+export function listProjects({
+    buildable,
+    projectType,
+    frameworks,
+    countDependents,
+}: ListProjects): { name: string; numDependents?: number }[] {
     const workspaceJson: WorkspaceJsonConfiguration = readWorkspaceJson();
 
     let filtered = Object.entries(workspaceJson.projects);
 
-    if (args.buildable != null) {
+    if (buildable != null) {
         filtered = filtered.filter(
-            ([, config]) => !!config.targets['build'] === args.buildable
+            ([, config]) => !!config.targets['build'] === buildable
         );
     }
 
-    if (args.projectType != null) {
+    if (projectType != null) {
         filtered = filtered.filter(
-            ([, config]) =>
-                config.projectType === projectTypeMap[args.projectType]
+            ([, config]) => config.projectType === projectTypeMap[projectType]
         );
     }
 
-    if (args.frameworks?.length) {
+    if (frameworks?.length) {
         filtered = filtered.filter(
             ([, config]) =>
                 config.targets['build'] &&
-                args.frameworks.some((framework) =>
+                frameworks.some((framework) =>
                     new RegExp(framework).test(config.targets['build'].executor)
                 )
         );
     }
 
-    if (args.countDependents) {
+    if (countDependents) {
         const nxDepsFile = readOrGenerateDepFile();
 
         const totals: Record<string, number> = {};

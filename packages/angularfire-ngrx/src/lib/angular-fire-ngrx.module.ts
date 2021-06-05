@@ -1,10 +1,10 @@
+import { CommonModule } from '@angular/common';
 import {
     ModuleWithProviders,
     NgModule,
     Optional,
     SkipSelf,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { AF_NGRX_CONFIG, AngularFireNgrxConfig, defaultConfig } from './config';
 
 // @dynamic

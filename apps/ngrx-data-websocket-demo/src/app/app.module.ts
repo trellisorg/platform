@@ -1,19 +1,18 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-
-import { AppComponent } from './app.component';
-import { RouterModule } from '@angular/router';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
-import { EntityDataModule } from '@ngrx/data';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
-import { NgrxDataWebsocketClientModule } from '@trellisorg/ngrx-data-websocket-client';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule } from '@angular/router';
+import { EntityDataModule } from '@ngrx/data';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { NgrxDataWebsocketClientModule } from '@trellisorg/ngrx-data-websocket-client';
+import { AppComponent } from './app.component';
 
 @NgModule({
     declarations: [AppComponent],

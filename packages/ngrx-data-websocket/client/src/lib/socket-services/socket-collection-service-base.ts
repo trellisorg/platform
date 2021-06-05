@@ -2,10 +2,10 @@ import {
     EntityCollectionServiceBase,
     EntityCollectionServiceElementsFactory,
 } from '@ngrx/data';
-import { SocketEventListener } from '../listeners/socket-event-listener';
-import { SocketServiceElementsFactory } from './socket-service-elements.factory';
-import { Observable } from 'rxjs';
-import { EntitySelectors$ } from '@ngrx/data/src/selectors/entity-selectors$';
+import type { EntitySelectors$ } from '@ngrx/data/src/selectors/entity-selectors$';
+import type { Observable } from 'rxjs';
+import type { SocketEventListener } from '../listeners/socket-event-listener';
+import type { SocketServiceElementsFactory } from './socket-service-elements.factory';
 
 export class SocketCollectionServiceBase<
     T,

@@ -5,13 +5,13 @@ import {
     OnDestroy,
 } from '@angular/core';
 import {
-    _FEATURE_DYNAMIC_COMPONENT_MANIFESTS,
     defaultRootConfig,
-    DYNAMIC_COMPONENT_CONFIG,
-    DYNAMIC_MANIFEST_MAP,
     DynamicComponentManifest,
     DynamicComponentRootConfig,
+    DYNAMIC_COMPONENT_CONFIG,
+    DYNAMIC_MANIFEST_MAP,
     ManifestMap,
+    _FEATURE_DYNAMIC_COMPONENT_MANIFESTS,
 } from './rx-dynamic-component.manifest';
 import { RxDynamicComponentService } from './rx-dynamic-component.service';
 

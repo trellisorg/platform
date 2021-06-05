@@ -1,15 +1,13 @@
 import * as yargs from 'yargs';
-import { readWorkspaceJson } from '@nrwl/workspace';
-import { readOrGenerateDepFile } from './util';
-import { findUnusedDependencies } from './unused-deps';
+import { calcDependencyOverlap } from './calc-dependency-overlap';
 import { findCircularDependencies } from './circular-deps';
-import { listProjects } from './list';
 import {
     findAllDependencyChains,
     findDependencies,
     findDependents,
 } from './find-dep-chain';
-import { calculateSubsetPercent } from './calculate-subset-percent';
+import { listProjects } from './list';
+import { findUnusedDependencies } from './unused-deps';
 
 yargs
     .command(
@@ -23,10 +21,15 @@ yargs
             },
         },
         (args) => {
-            calculateSubsetPercent(
-                readOrGenerateDepFile().dependencies,
-                args.threshold
-            );
+            const records = calcDependencyOverlap(args);
+
+            records.forEach(({ outerDep, innerDep, percent }) => {
+                console.log(
+                    `${outerDep} shares ${
+                        Math.round(percent * 100 * 100) / 100
+                    }% of it's deps with ${innerDep}`
+                );
+            });
         }
     )
     .command(
@@ -76,18 +79,14 @@ yargs
 
             let chains: string[] = [];
 
-            const nxDepsFile = readOrGenerateDepFile();
-
             if (args.dependencies != null) {
-                chains = findDependencies(args.target, nxDepsFile.dependencies);
+                chains = findDependencies(args);
             } else if (args.dependents) {
-                chains = findDependents(args.target, nxDepsFile.dependencies);
+                chains = findDependents(args);
             } else {
-                chains = findAllDependencyChains(
-                    args.source,
-                    args.target,
-                    nxDepsFile.dependencies
-                ).map((chain) => chain.join(' -> '));
+                chains = findAllDependencyChains(args).map((chain) =>
+                    chain.join(' -> ')
+                );
             }
 
             chains.forEach((chain) => {
@@ -149,15 +148,7 @@ yargs
             },
         },
         (args) => {
-            const nxDepsFile = readOrGenerateDepFile();
-
-            const workspaceJson = readWorkspaceJson();
-
-            const unusedDeps = findUnusedDependencies(
-                nxDepsFile.dependencies,
-                workspaceJson.projects,
-                args.excludeExternal
-            );
+            const unusedDeps = findUnusedDependencies(args);
 
             console.log('Unused Deps', unusedDeps);
         }
@@ -167,12 +158,10 @@ yargs
         'Find all circular dependencies in your repo',
         {},
         () => {
-            const nxDepsFile = readOrGenerateDepFile();
+            const circularDeps = findCircularDependencies();
 
-            const circularDeps = findCircularDependencies(
-                nxDepsFile.dependencies
-            );
-
-            console.log(circularDeps);
+            circularDeps.forEach((value) => {
+                console.log(value.key);
+            });
         }
     ).argv;

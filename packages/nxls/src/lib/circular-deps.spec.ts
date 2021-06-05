@@ -1,5 +1,5 @@
-import { findCircularDependencies } from './circular-deps';
-import { Dependencies } from './types';
+import { _findCircularDependencies } from './circular-deps';
+import type { Dependencies } from './types';
 
 describe('Circular Deps', () => {
     const app1 = 'app1';
@@ -21,7 +21,7 @@ describe('Circular Deps', () => {
             [lib3]: [],
         };
 
-        expect(findCircularDependencies(dependencies)).toEqual([]);
+        expect(_findCircularDependencies(dependencies)).toEqual([]);
     });
 
     it('should find the shorted circular dep path', () => {
@@ -50,10 +50,9 @@ describe('Circular Deps', () => {
             ],
         };
 
-        expect(findCircularDependencies(dependencies)).toEqual([
-            [lib1, lib2, lib1],
-            [lib2, lib1, lib2],
-            [lib3, lib3],
+        expect(_findCircularDependencies(dependencies)).toEqual([
+            { path: [lib1, lib2, lib1], key: `${lib1} -> ${lib2} -> ${lib1}` },
+            { path: [lib3, lib3], key: `${lib3} -> ${lib3}` },
         ]);
     });
 });

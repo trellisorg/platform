@@ -1,0 +1,24 @@
+version: 2.1
+
+orbs:
+    node: circleci/node@4.1
+
+jobs:
+    build-and-test:
+        docker:
+            - image: cimg/node:12.20
+        steps:
+            - checkout
+            - node/install-packages:
+                  pkg-manager: yarn
+            - run:
+                  name: Run tests
+                  command: yarn nx affected:test --parallel
+            - run:
+                  name: Build
+                  command: yarn nx affected:build --parallel
+
+workflows:
+    run:
+        jobs:
+            - build-and-test

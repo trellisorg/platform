@@ -9,18 +9,17 @@ import {
     Tree,
     url,
 } from '@angular-devkit/schematics';
-import { MakeBuildableSchematicSchema } from './schema';
-import { checkProjectExists } from '@nrwl/workspace/src/utils/rules/check-project-exists';
 import {
     offsetFromRoot,
     readJsonInTree,
-    readWorkspace,
     readNxJson,
+    readWorkspace,
     updateJsonInTree,
     updateWorkspaceInTree,
 } from '@nrwl/workspace';
-
+import { checkProjectExists } from '@nrwl/workspace/src/utils/rules/check-project-exists';
 import * as merge from 'lodash.merge';
+import type { MakeBuildableSchematicSchema } from './schema';
 
 interface NormalizedSchema extends MakeBuildableSchematicSchema {
     projectName: string;

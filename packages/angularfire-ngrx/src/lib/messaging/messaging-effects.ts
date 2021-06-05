@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { AngularFireNgrxMessagingActions } from './angular-fire-ngrx-messaging.actions';
+import { AngularFireMessaging } from '@angular/fire/messaging';
 import { createEffect, ofType } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
+import { of } from 'rxjs';
+import { catchError, map, switchMap } from 'rxjs/operators';
+import { AngularFireNgrxMessagingActions } from './angular-fire-ngrx-messaging.actions';
 import {
     deleteToken,
     getToken,
@@ -14,9 +17,6 @@ import {
     requestTokenSuccess,
     tokenDeleted,
 } from './messaging-actions';
-import { catchError, map, switchMap } from 'rxjs/operators';
-import { AngularFireMessaging } from '@angular/fire/messaging';
-import { of } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class MessagingEffects {

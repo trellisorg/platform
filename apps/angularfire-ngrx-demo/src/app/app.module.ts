@@ -1,20 +1,19 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-
-import { AppComponent } from './app.component';
-import { RouterModule } from '@angular/router';
 import { AngularFireModule } from '@angular/fire';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
+import { EntityDataModule, EntityDataService } from '@ngrx/data';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import {
     AngularFireNgrxAuthModule,
     AngularFireNgrxModule,
 } from '@trellisorg/angularfire-ngrx';
-import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
-import { AngularFireAuthModule } from '@angular/fire/auth';
-import { EntityDataModule, EntityDataService } from '@ngrx/data';
-import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
+import { AppComponent } from './app.component';
 
 @NgModule({
     declarations: [AppComponent],

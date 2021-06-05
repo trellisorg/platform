@@ -4,16 +4,16 @@ import {
     OP_SUCCESS,
     QueryParams,
 } from '@ngrx/data';
-import { SocketActionFactory } from '../actions/socket-action-factory';
-import { Observable, of, throwError } from 'rxjs';
-import { Action, Store } from '@ngrx/store';
-import { filter, mergeMap, take, timeout } from 'rxjs/operators';
-import { UpdateStr } from '@ngrx/entity/src/models';
+import type { UpdateStr } from '@ngrx/entity/src/models';
+import type { Action, Store } from '@ngrx/store';
 import {
     SocketAction,
     SocketActionOptions,
     SocketOp,
 } from '@trellisorg/ngrx-data-websocket-core';
+import { Observable, of, throwError } from 'rxjs';
+import { filter, mergeMap, take, timeout } from 'rxjs/operators';
+import type { SocketActionFactory } from '../actions/socket-action-factory';
 
 export class SocketDispatcherBase<T> {
     constructor(

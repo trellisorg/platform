@@ -1,6 +1,6 @@
 module.exports = {
     name: 'angularfire-ngrx-demo',
-    preset: '../../jest.config.js',
+    preset: '../../jest.preset.js',
     setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
     globals: {
         'ts-jest': {

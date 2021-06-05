@@ -1,2 +1,2 @@
-export * from './auth-actions';
 export * from './angular-fire-ngrx-auth.module';
+export * from './auth-actions';

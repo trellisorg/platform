@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SocketDispatcherBase } from '../dispatchers/socket-dispatcher-base';
+import type { SocketDispatcherBase } from '../dispatchers/socket-dispatcher-base';
 import { SocketDataService } from './socket-data.service';
 
 @Injectable()

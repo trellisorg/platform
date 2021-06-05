@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { Item, loadData, setData } from './store';
 import { map, switchMap } from 'rxjs/operators';
+import { Item, loadData, setData } from './store';
 
 @Injectable()
 export class Effects {

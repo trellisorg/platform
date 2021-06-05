@@ -1,6 +1,6 @@
 module.exports = {
     name: 'angularfire-ngrx',
-    preset: '../../jest.config.js',
+    preset: '../../jest.preset.js',
     coverageDirectory: '../../coverage/packages/angularfire-ngrx',
     snapshotSerializers: [
         'jest-preset-angular/build/AngularNoNgAttributesSnapshotSerializer.js',

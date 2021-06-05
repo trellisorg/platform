@@ -1,10 +1,10 @@
-import { OperatorFunction } from 'rxjs';
-import { filter } from 'rxjs/operators';
 import {
     ROOT_ACTION_VALUE,
     SocketAction,
     SocketOp,
 } from '@trellisorg/ngrx-data-websocket-core';
+import type { OperatorFunction } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 export function ofSocketType<V extends SocketAction>(
     ...allowedActions: Array<SocketOp>

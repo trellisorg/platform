@@ -23,10 +23,3 @@ export type Framework =
     | 'gatsby'
     | 'next'
     | 'web';
-
-export interface ListProjects {
-    buildable?: boolean;
-    projectType?: 'app' | 'lib';
-    frameworks?: Framework[];
-    countDependents: boolean;
-}

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { AngularFireNgrxAuthActions } from './angular-fire-ngrx-auth.actions';
 import { createEffect } from '@ngrx/effects';
+import { AngularFireNgrxAuthActions } from './angular-fire-ngrx-auth.actions';
 
 @Injectable({ providedIn: 'root' })
 export class AuthEffects {

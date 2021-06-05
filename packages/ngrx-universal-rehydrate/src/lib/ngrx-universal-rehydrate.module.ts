@@ -1,13 +1,13 @@
-import { ModuleWithProviders, NgModule, PLATFORM_ID } from '@angular/core';
-import { INIT, META_REDUCERS, MetaReducer } from '@ngrx/store';
 import { isPlatformBrowser } from '@angular/common';
+import { ModuleWithProviders, NgModule, PLATFORM_ID } from '@angular/core';
+import { INIT, MetaReducer, META_REDUCERS } from '@ngrx/store';
+import { NgrxUniversalHydrationService } from './ngrx-universal-hydration.service';
 import {
     defaultNgrxUniversalHydrateConfig,
     mergeStates,
-    NGRX_TRANSFER_HYDRATE_CONFIG,
     NgrxUniversalHydrateConfig,
+    NGRX_TRANSFER_HYDRATE_CONFIG,
 } from './shared';
-import { NgrxUniversalHydrationService } from './ngrx-universal-hydration.service';
 
 export function rehydrateMetaReducer(
     platformId: Object,

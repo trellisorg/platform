@@ -1,14 +1,13 @@
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-
-import { AppComponent } from './app.component';
+import { RouterModule } from '@angular/router';
 import {
     DynamicOutletModule,
     RxDynamicComponentModule,
 } from '@trellisorg/rx-dynamic-component';
+import { AppComponent } from './app.component';
 import { QueryParam2Module } from './query-param2/query-param2.module';
-import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
 
 @NgModule({
     declarations: [AppComponent],

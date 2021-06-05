@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
+import { AngularFireMessaging } from '@angular/fire/messaging';
 import { Action } from '@ngrx/store';
 import { merge, Observable, Operator } from 'rxjs';
-import { AngularFireMessaging } from '@angular/fire/messaging';
 import { map } from 'rxjs/operators';
 import { afMessage, tokenChanges } from './messaging-actions';
 

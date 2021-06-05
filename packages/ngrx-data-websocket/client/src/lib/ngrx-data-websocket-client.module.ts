@@ -1,18 +1,18 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { SocketServiceElementsFactory } from './socket-services/socket-service-elements.factory';
-import { SocketDispatcherFactory } from './dispatchers/socket-dispatcher-factory';
-import { SocketActionFactory } from './actions/socket-action-factory';
-import { SocketEventListenerFactory } from './listeners/socket-event-listener-factory';
-import { SocketDataServiceFactory } from './data-services/socket-data-service-factory';
-import { SocketEventListenerCollectionService } from './listeners/socket-event-listener-collection.service';
 import { EffectsModule, EffectSources } from '@ngrx/effects';
+import { SocketActionFactory } from './actions/socket-action-factory';
+import { SocketDataServiceFactory } from './data-services/socket-data-service-factory';
+import { SocketDispatcherFactory } from './dispatchers/socket-dispatcher-factory';
 import { SocketDispatcherEffects } from './effects/socket-dispatcher-effects.service';
+import { SocketEventListenerCollectionService } from './listeners/socket-event-listener-collection.service';
+import { SocketEventListenerFactory } from './listeners/socket-event-listener-factory';
+import { SocketSelectors$Factory } from './selectors/socket-selectors$';
+import { SocketServiceElementsFactory } from './socket-services/socket-service-elements.factory';
 import {
     defaultNgrxDataWebsocketConfig,
-    NGRX_DATA_WEBSOCKET_CONFIG,
     NgrxDataWebsocketConfig,
+    NGRX_DATA_WEBSOCKET_CONFIG,
 } from './utils/tokens';
-import { SocketSelectors$Factory } from './selectors/socket-selectors$';
 
 @NgModule({
     imports: [EffectsModule],

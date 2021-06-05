@@ -1,7 +1,7 @@
 import { Component, ComponentFactory } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
 import { RxDynamicComponentService } from '@trellisorg/rx-dynamic-component';
+import type { Observable } from 'rxjs';
 import { filter, switchMap } from 'rxjs/operators';
 
 @Component({
