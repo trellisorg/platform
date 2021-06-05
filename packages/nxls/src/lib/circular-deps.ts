@@ -1,3 +1,5 @@
+import type { ProjectConfiguration } from '@nrwl/tao/src/shared/workspace';
+import { readWorkspaceJson } from '@nrwl/workspace';
 import type { Dep, Dependencies, FilterableCommand } from './types';
 import {
     filterDependencyGraph,
@@ -49,10 +51,11 @@ function processDependency(
 
 export function _findCircularDependencies(
     dependencies: Dependencies,
-    config: FilterableCommand
+    config: FilterableCommand,
+    projects: Record<string, ProjectConfiguration>
 ): { path: string[]; key: string }[] {
     const allDependencies: [string, Dep[]][] = Object.entries(
-        filterDependencyGraph(dependencies, filterProjects(config))
+        filterDependencyGraph(dependencies, filterProjects(config, projects))
     );
 
     const circularDeps = new Map<string, { key: string; path: string[] }>();
@@ -98,5 +101,10 @@ export function findCircularDependencies(
     config: FilterableCommand
 ): { path: string[]; key: string }[] {
     const dependencies = readOrGenerateDepFile().dependencies;
-    return _findCircularDependencies(dependencies, config);
+    const workspaceJson = readWorkspaceJson();
+    return _findCircularDependencies(
+        dependencies,
+        config,
+        workspaceJson.projects
+    );
 }

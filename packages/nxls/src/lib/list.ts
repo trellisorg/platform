@@ -1,3 +1,4 @@
+import type { ProjectConfiguration } from '@nrwl/tao/src/shared/workspace';
 import type { FilterableCommand } from './types';
 import { filterProjects, readOrGenerateDepFile } from './util';
 
@@ -6,9 +7,10 @@ export interface ListProjects extends FilterableCommand {
 }
 
 export function listProjects(
-    list: ListProjects
+    list: ListProjects,
+    projects: Record<string, ProjectConfiguration>
 ): { name: string; numDependents?: number }[] {
-    const filtered = filterProjects(list);
+    const filtered: string[] = filterProjects(list, projects);
 
     if (list.countDependents) {
         const nxDepsFile = readOrGenerateDepFile();
@@ -31,5 +33,5 @@ export function listProjects(
         }));
     }
 
-    return filtered.map(([project]) => ({ name: project }));
+    return filtered.map((project) => ({ name: project }));
 }

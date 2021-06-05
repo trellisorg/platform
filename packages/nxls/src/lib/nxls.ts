@@ -1,3 +1,4 @@
+import { readWorkspaceJson } from '@nrwl/workspace';
 import * as yargs from 'yargs';
 import { calcDependencyOverlap } from './calc-dependency-overlap';
 import { findCircularDependencies } from './circular-deps';
@@ -144,7 +145,7 @@ yargs
             },
         },
         (args) => {
-            const projects = listProjects(args);
+            const projects = listProjects(args, readWorkspaceJson().projects);
             projects.forEach((project) => {
                 console.log(
                     `${project.name}`,
@@ -218,8 +219,12 @@ yargs
         (args) => {
             const circularDeps = findCircularDependencies(args);
 
-            circularDeps.forEach((value) => {
-                console.log(value.key);
-            });
+            if (circularDeps.length)
+                circularDeps.forEach((value) => {
+                    console.log(value.key);
+                });
+            else {
+                console.log('No circular dependencies found.');
+            }
         }
     ).argv;

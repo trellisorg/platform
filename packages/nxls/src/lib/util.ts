@@ -1,5 +1,4 @@
 import type { ProjectConfiguration } from '@nrwl/tao/src/shared/workspace';
-import { readWorkspaceJson } from '@nrwl/workspace';
 import { execSync } from 'child_process';
 import { readFileSync } from 'fs';
 import type { Dependencies, Framework, NxDepGraph, NxDepsJson } from './types';
@@ -72,12 +71,8 @@ export function filterProjects(
         projectType?: 'app' | 'lib';
         frameworks?: Framework[];
     },
-    projectJson?: Record<string, ProjectConfiguration>
+    projects: Record<string, ProjectConfiguration>
 ): string[] {
-    const projects: Record<string, ProjectConfiguration> = projectJson
-        ? projectJson
-        : readWorkspaceJson().projects;
-
     let filtered = Object.entries(projects);
 
     if (buildable != null) {

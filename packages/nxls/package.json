@@ -13,7 +13,7 @@
     },
     "main": "src/index.js",
     "dependencies": {
-        "@nrwl/workspace": "11.4.0",
+        "@nrwl/workspace": "12.3.6",
         "tslib": "^2.0.0",
         "yargs": "^17.0.1"
     },

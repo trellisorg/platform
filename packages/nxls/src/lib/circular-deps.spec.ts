@@ -7,6 +7,25 @@ describe('Circular Deps', () => {
     const lib2 = 'lib2';
     const lib3 = 'lib3';
 
+    const projects = {
+        [app1]: {
+            targets: {},
+            root: `apps/${app1}/src`,
+        },
+        [lib1]: {
+            targets: {},
+            root: `packages/${lib1}/src`,
+        },
+        [lib2]: {
+            targets: {},
+            root: `packages/${lib2}/src`,
+        },
+        [lib3]: {
+            targets: {},
+            root: `packages/${lib3}/src`,
+        },
+    };
+
     it('should have no circular dependencies', () => {
         const dependencies = {
             [app1]: [
@@ -21,7 +40,9 @@ describe('Circular Deps', () => {
             [lib3]: [],
         };
 
-        expect(_findCircularDependencies(dependencies, {})).toEqual([]);
+        expect(_findCircularDependencies(dependencies, {}, projects)).toEqual(
+            []
+        );
     });
 
     it('should find the shorted circular dep path', () => {
@@ -50,7 +71,7 @@ describe('Circular Deps', () => {
             ],
         };
 
-        expect(_findCircularDependencies(dependencies, {})).toEqual([
+        expect(_findCircularDependencies(dependencies, {}, projects)).toEqual([
             { path: [lib1, lib2, lib1], key: `${lib1} -> ${lib2} -> ${lib1}` },
             { path: [lib3, lib3], key: `${lib3} -> ${lib3}` },
         ]);
