@@ -5,6 +5,7 @@ import {
     Injectable,
     Injector,
     NgModuleFactory,
+    Optional,
 } from '@angular/core';
 import { from, Observable, of, throwError } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
@@ -21,7 +22,7 @@ export class RxDynamicComponentService {
     constructor(
         @Inject(DYNAMIC_MANIFEST_MAP)
         private manifests: ManifestMap,
-        private _compiler: Compiler,
+        @Optional() private _compiler: Compiler,
         private _injector: Injector,
         @Inject(DYNAMIC_COMPONENT_CONFIG)
         private config: DynamicComponentRootConfig
@@ -71,9 +72,13 @@ export class RxDynamicComponentService {
                  */
                 if (moduleOrFactory instanceof NgModuleFactory) {
                     return of(moduleOrFactory);
-                } else {
+                } else if (this._compiler) {
                     return from(
                         this._compiler.compileModuleAsync(moduleOrFactory)
+                    );
+                } else {
+                    console.error(
+                        `Looks like you have AOT disabled but your NgModule is not compiled into an NgModuleFactory.`
                     );
                 }
             }),
