@@ -6,51 +6,47 @@ function buildKey(path: string[]): string {
 }
 
 function processDependency(
-    pathTillNow: string[],
-    currentDepName: string,
-    deps: Dependencies
+    depsInPath: string[],
+    currentTarget: string,
+    deps: Dependencies,
+    keyTracker: Set<string> = new Set<string>()
 ): { path: string[]; key: string }[] {
-    const circularDeps: { path: string[]; key: string }[] = [];
+    const targetDeps = deps[currentTarget];
 
-    const currentDep = deps[currentDepName];
-
-    if (currentDep.length === 0) {
+    if (targetDeps.length === 0) {
         return [];
     }
 
-    for (const dep of currentDep) {
+    for (const dep of targetDeps) {
         // if the dep already exists in the path don't add it and add path to circular deps
-        if (dep.target === currentDepName) {
-            const path = [currentDepName, dep.target];
-            circularDeps.push({ path, key: buildKey(path) });
-        } else if (pathTillNow.includes(dep.target)) {
-            const index: number = pathTillNow.findIndex(
-                (v) => v === dep.target
-            );
-            const values: string[] = pathTillNow.slice(index);
-            const circularPath: string[] = [
-                ...values,
-                currentDepName,
-                dep.target,
-            ];
+        if (dep.target === currentTarget) {
+            const path = [currentTarget, dep.target];
+            const key = buildKey(path);
+
+            if (!keyTracker.has(key)) {
+                keyTracker.add(key);
+            }
+        } else if (depsInPath.includes(dep.target)) {
+            const index: number = depsInPath.findIndex((v) => v === dep.target);
+            const values: string[] = depsInPath.slice(index);
+            const circularPath: string[] = [...values, dep.target];
 
             // Add circular dep into the tracked circular deps array
-            circularDeps.push({
-                path: circularPath,
-                key: buildKey(circularPath),
-            });
+            const key = buildKey(circularPath);
+            if (!keyTracker.has(key)) {
+                keyTracker.add(key);
+            }
         } else {
-            circularDeps.push(
-                ...processDependency(
-                    [...pathTillNow, currentDepName],
-                    dep.target,
-                    deps
-                )
+            processDependency(
+                [...depsInPath, dep.target],
+                dep.target,
+                deps,
+                keyTracker
             );
         }
     }
 
-    return circularDeps;
+    return [];
 }
 
 export function _findCircularDependencies(
@@ -60,9 +56,11 @@ export function _findCircularDependencies(
 
     const circularDeps: { path: string[]; key: string }[] = [];
 
-    allDependencies.forEach(([name, dependency]) => {
-        circularDeps.push(...processDependency([], name, dependencies));
-    });
+    allDependencies
+        .filter(([dep]) => !dep.startsWith('npm:'))
+        .forEach(([name, dependency]) => {
+            processDependency([name], name, dependencies);
+        });
 
     return uniqueArray(circularDeps, (item) => item.key);
 }

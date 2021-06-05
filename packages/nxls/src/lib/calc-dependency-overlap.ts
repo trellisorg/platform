@@ -55,7 +55,7 @@ export function _calcDependencyOverlap(
                     innerDep: innerKey,
                     percent: percentSubSet(deps[outerKey], deps[innerKey]),
                 };
-                if (record.percent > threshold) {
+                if (record.percent > threshold / 100) {
                     subsetPercents.push(record);
                 }
             }
