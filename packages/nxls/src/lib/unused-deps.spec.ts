@@ -1,4 +1,4 @@
-import { ProjectConfiguration } from '@nrwl/tao/src/shared/workspace';
+import type { ProjectConfiguration } from '@nrwl/tao/src/shared/workspace';
 import { _findUnusedDependencies } from './unused-deps';
 
 describe('Unused Deps', () => {

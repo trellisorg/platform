@@ -1,5 +1,5 @@
 import { _findCircularDependencies } from './circular-deps';
-import { Dependencies } from './types';
+import type { Dependencies } from './types';
 
 describe('Circular Deps', () => {
     const app1 = 'app1';
