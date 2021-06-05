@@ -1,10 +1,18 @@
 {
     "npmScope": "trellisorg",
-    "workspaceLayout": { "appsDir": "apps", "libsDir": "packages" },
-    "affected": { "defaultBase": "master" },
+    "workspaceLayout": {
+        "appsDir": "apps",
+        "libsDir": "packages"
+    },
+    "affected": {
+        "defaultBase": "master"
+    },
     "implicitDependencies": {
         "workspace.json": "*",
-        "package.json": { "dependencies": "*", "devDependencies": "*" },
+        "package.json": {
+            "dependencies": "*",
+            "devDependencies": "*"
+        },
         "tsconfig.base.json": "*",
         "tslint.json": "*",
         ".eslintrc.json": "*",
@@ -22,19 +30,47 @@
         }
     },
     "projects": {
-        "make-buildable": { "tags": [] },
-        "angularfire-ngrx": { "tags": [] },
-        "angularfire-ngrx-demo": { "tags": [] },
-        "api": { "tags": [] },
-        "ngrx-data-websocket-demo": { "tags": [] },
-        "ngrx-data-websocket-client": { "tags": [] },
-        "ngrx-data-websocket-core": { "tags": [] },
-        "ngrx-data-websocket-server": { "tags": [] },
-        "ngrx-universal-rehydrate": { "tags": [] },
-        "ngrx-universal-rehydrate-demo": { "tags": [] },
-        "ngrx-universal-rehydrate-demo-api": { "tags": [] },
-        "rx-dynamic-component": { "tags": [] },
-        "rx-dynamic-component-demo": { "tags": [] },
-        "nxls": { "tags": [] }
+        "make-buildable": {
+            "tags": []
+        },
+        "angularfire-ngrx": {
+            "tags": []
+        },
+        "angularfire-ngrx-demo": {
+            "tags": []
+        },
+        "api": {
+            "tags": []
+        },
+        "ngrx-data-websocket-demo": {
+            "tags": []
+        },
+        "ngrx-data-websocket-client": {
+            "tags": []
+        },
+        "ngrx-data-websocket-core": {
+            "tags": []
+        },
+        "ngrx-data-websocket-server": {
+            "tags": []
+        },
+        "ngrx-universal-rehydrate": {
+            "tags": []
+        },
+        "ngrx-universal-rehydrate-demo": {
+            "tags": []
+        },
+        "ngrx-universal-rehydrate-demo-api": {
+            "tags": []
+        },
+        "rx-dynamic-component": {
+            "tags": []
+        },
+        "rx-dynamic-component-demo": {
+            "tags": []
+        },
+        "nxls": {
+            "tags": []
+        }
     }
 }

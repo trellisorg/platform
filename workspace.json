@@ -113,7 +113,6 @@
                         "main": "apps/angularfire-ngrx-demo/src/main.ts",
                         "polyfills": "apps/angularfire-ngrx-demo/src/polyfills.ts",
                         "tsConfig": "apps/angularfire-ngrx-demo/tsconfig.app.json",
-                        "aot": true,
                         "assets": [
                             "apps/angularfire-ngrx-demo/src/favicon.ico",
                             "apps/angularfire-ngrx-demo/src/assets"
@@ -121,7 +120,13 @@
                         "styles": [
                             "apps/angularfire-ngrx-demo/src/styles.scss"
                         ],
-                        "scripts": []
+                        "scripts": [],
+                        "vendorChunk": true,
+                        "extractLicenses": false,
+                        "buildOptimizer": false,
+                        "sourceMap": true,
+                        "optimization": false,
+                        "namedChunks": true
                     },
                     "configurations": {
                         "production": {
@@ -152,7 +157,8 @@
                             ]
                         }
                     },
-                    "outputs": ["{options.outputPath}"]
+                    "outputs": ["{options.outputPath}"],
+                    "defaultConfiguration": ""
                 },
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
@@ -261,7 +267,6 @@
                         "main": "apps/ngrx-data-websocket-demo/src/main.ts",
                         "polyfills": "apps/ngrx-data-websocket-demo/src/polyfills.ts",
                         "tsConfig": "apps/ngrx-data-websocket-demo/tsconfig.app.json",
-                        "aot": true,
                         "assets": [
                             "apps/ngrx-data-websocket-demo/src/favicon.ico",
                             "apps/ngrx-data-websocket-demo/src/assets"
@@ -269,7 +274,13 @@
                         "styles": [
                             "apps/ngrx-data-websocket-demo/src/styles.scss"
                         ],
-                        "scripts": []
+                        "scripts": [],
+                        "vendorChunk": true,
+                        "extractLicenses": false,
+                        "buildOptimizer": false,
+                        "sourceMap": true,
+                        "optimization": false,
+                        "namedChunks": true
                     },
                     "configurations": {
                         "production": {
@@ -300,7 +311,8 @@
                             ]
                         }
                     },
-                    "outputs": ["{options.outputPath}"]
+                    "outputs": ["{options.outputPath}"],
+                    "defaultConfiguration": ""
                 },
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
@@ -497,7 +509,6 @@
                         "main": "apps/ngrx-universal-rehydrate-demo/src/main.ts",
                         "polyfills": "apps/ngrx-universal-rehydrate-demo/src/polyfills.ts",
                         "tsConfig": "apps/ngrx-universal-rehydrate-demo/tsconfig.app.json",
-                        "aot": true,
                         "assets": [
                             "apps/ngrx-universal-rehydrate-demo/src/favicon.ico",
                             "apps/ngrx-universal-rehydrate-demo/src/assets"
@@ -505,7 +516,13 @@
                         "styles": [
                             "apps/ngrx-universal-rehydrate-demo/src/styles.scss"
                         ],
-                        "scripts": []
+                        "scripts": [],
+                        "vendorChunk": true,
+                        "extractLicenses": false,
+                        "buildOptimizer": false,
+                        "sourceMap": true,
+                        "optimization": false,
+                        "namedChunks": true
                     },
                     "configurations": {
                         "production": {
@@ -535,7 +552,8 @@
                                 }
                             ]
                         }
-                    }
+                    },
+                    "defaultConfiguration": ""
                 },
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
@@ -576,7 +594,9 @@
                     "options": {
                         "outputPath": "dist/apps/ngrx-universal-rehydrate-demo/server",
                         "main": "apps/ngrx-universal-rehydrate-demo/server.ts",
-                        "tsConfig": "apps/ngrx-universal-rehydrate-demo/tsconfig.server.json"
+                        "tsConfig": "apps/ngrx-universal-rehydrate-demo/tsconfig.server.json",
+                        "sourceMap": true,
+                        "optimization": false
                     },
                     "configurations": {
                         "production": {
@@ -590,7 +610,8 @@
                             "sourceMap": false,
                             "optimization": true
                         }
-                    }
+                    },
+                    "defaultConfiguration": ""
                 },
                 "serve-ssr": {
                     "builder": "@nguniversal/builders:ssr-dev-server",
@@ -715,7 +736,6 @@
                         "main": "apps/rx-dynamic-component-demo/src/main.ts",
                         "polyfills": "apps/rx-dynamic-component-demo/src/polyfills.ts",
                         "tsConfig": "apps/rx-dynamic-component-demo/tsconfig.app.json",
-                        "aot": true,
                         "assets": [
                             "apps/rx-dynamic-component-demo/src/favicon.ico",
                             "apps/rx-dynamic-component-demo/src/assets"
@@ -723,7 +743,13 @@
                         "styles": [
                             "apps/rx-dynamic-component-demo/src/styles.scss"
                         ],
-                        "scripts": []
+                        "scripts": [],
+                        "vendorChunk": true,
+                        "extractLicenses": false,
+                        "buildOptimizer": false,
+                        "sourceMap": true,
+                        "optimization": false,
+                        "namedChunks": true
                     },
                     "configurations": {
                         "production": {
@@ -753,7 +779,8 @@
                                 }
                             ]
                         }
-                    }
+                    },
+                    "defaultConfiguration": ""
                 },
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
