@@ -20,6 +20,7 @@ export interface FilterableCommand {
     buildable?: boolean;
     projectType?: 'app' | 'lib';
     frameworks?: Framework[];
+    projects?: string[];
 }
 
 export type Framework =

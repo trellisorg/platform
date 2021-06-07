@@ -66,14 +66,21 @@ export function filterProjects(
         buildable,
         projectType,
         frameworks,
+        projects,
     }: {
         buildable?: boolean;
         projectType?: 'app' | 'lib';
         frameworks?: Framework[];
+        projects?: string[];
     },
-    projects: Record<string, ProjectConfiguration>
+    projectConfigurations: Record<string, ProjectConfiguration>
 ): string[] {
-    let filtered = Object.entries(projects);
+    let filtered: [string, ProjectConfiguration][] = projects?.length
+        ? projects.map<[string, ProjectConfiguration]>((project) => [
+              project,
+              projectConfigurations[project],
+          ])
+        : Object.entries(projectConfigurations);
 
     if (buildable != null) {
         filtered = filtered.filter(

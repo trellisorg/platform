@@ -1,7 +1,13 @@
-import type { Dependencies } from './types';
-import { percentSubSet, readOrGenerateDepFile } from './util';
+import { readWorkspaceJson } from '@nrwl/workspace';
+import type { Dependencies, FilterableCommand } from './types';
+import {
+    filterDependencyGraph,
+    filterProjects,
+    percentSubSet,
+    readOrGenerateDepFile,
+} from './util';
 
-export interface DependencyOverlapConfig {
+export interface DependencyOverlapConfig extends FilterableCommand {
     threshold: number;
 }
 
@@ -15,7 +21,10 @@ export function calcDependencyOverlap(
     innerDep: string;
     percent: number;
 }[] {
-    const dependencies = readOrGenerateDepFile().dependencies;
+    const dependencies = filterDependencyGraph(
+        readOrGenerateDepFile().dependencies,
+        filterProjects(config, readWorkspaceJson().projects)
+    );
 
     return _calcDependencyOverlap(config, dependencies);
 }

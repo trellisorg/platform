@@ -27,7 +27,7 @@ yargs
                 default: undefined,
             },
             projectType: {
-                alias: 'p',
+                alias: 't',
                 choices: ['app', 'lib'],
                 demandOption: false,
                 default: undefined,
@@ -39,17 +39,24 @@ yargs
                 demandOption: false,
                 default: [],
             },
+            projects: {
+                alias: 'p',
+                type: 'array',
+                demandOption: false,
+                default: [],
+            },
         },
         (args) => {
             const records = calcDependencyOverlap(args);
 
-            records.forEach(({ outerDep, innerDep, percent }) => {
-                console.log(
-                    `${outerDep} shares ${
-                        Math.round(percent * 100 * 100) / 100
-                    }% of it's deps with ${innerDep}`
-                );
-            });
+            if (records.length)
+                records.forEach(({ outerDep, innerDep, percent }) => {
+                    console.log(
+                        `${outerDep} shares ${
+                            Math.round(percent * 100 * 100) / 100
+                        }% of it's deps with ${innerDep}`
+                    );
+                });
         }
     )
     .command(
@@ -131,7 +138,7 @@ yargs
                 default: undefined,
             },
             projectType: {
-                alias: 'p',
+                alias: 't',
                 choices: ['app', 'lib'],
                 demandOption: false,
                 default: undefined,
@@ -140,6 +147,12 @@ yargs
                 alias: 'f',
                 type: 'array',
                 choices: ['angular', 'node', 'react', 'gatsby', 'next', 'web'],
+                demandOption: false,
+                default: [],
+            },
+            projects: {
+                alias: 'p',
+                type: 'array',
                 demandOption: false,
                 default: [],
             },
@@ -173,7 +186,7 @@ yargs
                 default: undefined,
             },
             projectType: {
-                alias: 'p',
+                alias: 't',
                 choices: ['app', 'lib'],
                 demandOption: false,
                 default: undefined,
@@ -182,6 +195,12 @@ yargs
                 alias: 'f',
                 type: 'array',
                 choices: ['angular', 'node', 'react', 'gatsby', 'next', 'web'],
+                demandOption: false,
+                default: [],
+            },
+            projects: {
+                alias: 'p',
+                type: 'array',
                 demandOption: false,
                 default: [],
             },
@@ -212,6 +231,12 @@ yargs
                 alias: 'f',
                 type: 'array',
                 choices: ['angular', 'node', 'react', 'gatsby', 'next', 'web'],
+                demandOption: false,
+                default: [],
+            },
+            projects: {
+                alias: 'p',
+                type: 'array',
                 demandOption: false,
                 default: [],
             },
