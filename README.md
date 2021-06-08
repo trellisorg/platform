@@ -7,6 +7,8 @@
 🔎 **The Trellis Open Source Repo contains projects and tools, some of which
 Trellis uses internally but has opened sourced for the community to use.**
 
+[![CircleCI](https://circleci.com/gh/trellisorg/platform.svg?style=svg)](https://app.circleci.com/pipelines/github/trellisorg/platform)
+
 [Check out our npm organization here](https://www.npmjs.com/settings/trellisorg/packages)
 
 ## Projects available
@@ -36,6 +38,9 @@ Trellis uses internally but has opened sourced for the community to use.**
 -   [rx-dynamic-component](https://github.com/trellisorg/platform/tree/master/packages/rx-dynamic-component)
     -   `yarn add @trellisorg/rx-dynamic-component`
     -   [npm](https://www.npmjs.com/package/@trellisorg/rx-dynamic-component)
+-   [nest-spectator](https://github.com/trellisorg/platform/tree/master/packages/nest-spectator)
+    -   `yarn add @trellisorg/nest-spectator`
+    -   [npm](https://www.npmjs.com/package/@trellisorg/nest-spectator)
 
 ## Build
 
