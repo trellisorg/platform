@@ -5,8 +5,8 @@
     "scripts": {
         "nx": "nx",
         "start": "nx serve",
-        "build": "nx build",
-        "test": "nx test",
+        "build": "yarn affected:build --all --parallel",
+        "test": "yarn affected:test --all --parallel",
         "lint": "nx workspace-lint && nx lint",
         "e2e": "nx e2e",
         "affected:apps": "nx affected:apps",
@@ -24,7 +24,6 @@
         "dep-graph": "nx dep-graph",
         "help": "nx help",
         "postinstall": "ngcc --properties es2015 browser module main",
-        "build:all": "./tools/build-packages.sh",
         "setup": "chmod -R +x ./tools/setup.sh && ./tools/setup.sh",
         "workspace-generator": "nx workspace-generator"
     },
