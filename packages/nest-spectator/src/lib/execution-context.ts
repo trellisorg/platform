@@ -1,10 +1,10 @@
-import { ContextType, ExecutionContext } from '@nestjs/common';
-import {
+import type { ExecutionContext } from '@nestjs/common';
+import type {
     HttpArgumentsHost,
     Type,
     WsArgumentsHost,
 } from '@nestjs/common/interfaces';
-import { RpcArgumentsHost } from '@nestjs/common/interfaces/features/arguments-host.interface';
+import type { RpcArgumentsHost } from '@nestjs/common/interfaces/features/arguments-host.interface';
 import { createSpyObject, SpyObject } from './mock';
 
 /**

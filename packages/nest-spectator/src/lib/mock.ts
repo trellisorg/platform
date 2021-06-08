@@ -1,8 +1,8 @@
 /** Credit to: Valentin Buryakov
  * @ngneat/spectator - https://github.com/ngneat/spectator
  */
-import { Provider, Type } from '@nestjs/common';
-import { FactoryProvider } from '@nestjs/common/interfaces';
+import type { Type } from '@nestjs/common';
+import type { FactoryProvider } from '@nestjs/common/interfaces';
 
 type Writable<T> = { -readonly [P in keyof T]: T[P] };
 

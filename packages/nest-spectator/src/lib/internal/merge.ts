@@ -1,4 +1,4 @@
-import { OptionalsRequired } from '../types';
+import type { OptionalsRequired } from '../types';
 
 /**
  * @internal

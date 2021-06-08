@@ -1,11 +1,11 @@
-import { ModuleMetadata } from '@nestjs/common/interfaces';
+import type { ModuleMetadata } from '@nestjs/common/interfaces';
+import { Test } from '@nestjs/testing';
+import type { TestingModuleBuilder } from '@nestjs/testing/testing-module.builder';
+import { mockProvider } from './mock';
 import {
     BaseSpectatorModuleMetadata,
     getSpectatorDefaultOptions,
 } from './options';
-import { TestingModuleBuilder } from '@nestjs/testing/testing-module.builder';
-import { mockProvider } from './mock';
-import { Test } from '@nestjs/testing';
 
 export function createTestingModuleFactory(
     metadata: BaseSpectatorModuleMetadata
