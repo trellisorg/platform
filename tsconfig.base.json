@@ -22,6 +22,9 @@
             "@trellisorg/angularfire-ngrx": [
                 "packages/angularfire-ngrx/src/index.ts"
             ],
+            "@trellisorg/nest-spectator": [
+                "packages/nest-spectator/src/index.ts"
+            ],
             "@trellisorg/ngrx-data-websocket-client": [
                 "packages/ngrx-data-websocket/client/src/index.ts"
             ],
@@ -34,13 +37,10 @@
             "@trellisorg/ngrx-universal-rehydrate": [
                 "packages/ngrx-universal-rehydrate/src/index.ts"
             ],
+            "@trellisorg/nxls": ["packages/nxls/src/index.ts"],
             "@trellisorg/rx-dynamic-component": [
                 "packages/rx-dynamic-component/src/index.ts"
-            ],
-            "@trellisorg/nest-spectator": [
-                "packages/nest-spectator/src/index.ts"
-            ],
-            "@trellisorg/nxls": ["packages/nxls/src/index.ts"]
+            ]
         }
     },
     "exclude": ["node_modules", "tmp"]

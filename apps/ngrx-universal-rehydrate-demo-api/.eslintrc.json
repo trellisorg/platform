@@ -5,11 +5,6 @@
     "overrides": [
         {
             "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
-            "parserOptions": {
-                "project": [
-                    "apps/ngrx-universal-rehydrate-demo-api/tsconfig.*?.json"
-                ]
-            },
             "rules": {}
         },
         {

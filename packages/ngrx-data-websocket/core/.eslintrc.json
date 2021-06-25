@@ -5,11 +5,6 @@
     "overrides": [
         {
             "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
-            "parserOptions": {
-                "project": [
-                    "packages/ngrx-data-websocket/core/tsconfig.*?.json"
-                ]
-            },
             "rules": {}
         },
         {

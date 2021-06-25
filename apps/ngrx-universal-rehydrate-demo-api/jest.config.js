@@ -9,4 +9,5 @@ module.exports = {
     },
     moduleFileExtensions: ['ts', 'js', 'html'],
     coverageDirectory: '../../coverage/apps/ngrx-universal-rehydrate-demo-api',
+    testEnvironment: 'node',
 };

@@ -1,57 +1,6 @@
 {
     "version": 1,
     "projects": {
-        "make-buildable": {
-            "root": "packages/make-buildable",
-            "sourceRoot": "packages/make-buildable/src",
-            "projectType": "library",
-            "schematics": {},
-            "architect": {
-                "lint": {
-                    "builder": "@nrwl/linter:eslint",
-                    "options": {
-                        "lintFilePatterns": ["packages/make-buildable/**/*.ts"]
-                    }
-                },
-                "test": {
-                    "builder": "@nrwl/jest:jest",
-                    "options": {
-                        "jestConfig": "packages/make-buildable/jest.config.js",
-                        "passWithNoTests": true
-                    },
-                    "outputs": ["coverage/packages/make-buildable"]
-                },
-                "build": {
-                    "builder": "@nrwl/node:package",
-                    "options": {
-                        "outputPath": "dist/packages/make-buildable",
-                        "tsConfig": "packages/make-buildable/tsconfig.lib.json",
-                        "packageJson": "packages/make-buildable/package.json",
-                        "main": "packages/make-buildable/src/index.ts",
-                        "assets": [
-                            "packages/make-buildable/*.md",
-                            {
-                                "input": "./packages/make-buildable/src",
-                                "glob": "**/*.!(ts)",
-                                "output": "./src"
-                            },
-                            {
-                                "input": "./packages/make-buildable",
-                                "glob": "collection.json",
-                                "output": "."
-                            },
-                            {
-                                "input": "./packages/make-buildable",
-                                "glob": "builders.json",
-                                "output": "."
-                            }
-                        ],
-                        "srcRootForCompilationRoot": "packages/make-buildable"
-                    },
-                    "outputs": ["{options.outputPath}"]
-                }
-            }
-        },
         "angularfire-ngrx": {
             "projectType": "library",
             "root": "packages/angularfire-ngrx",
@@ -248,6 +197,162 @@
                 }
             }
         },
+        "make-buildable": {
+            "root": "packages/make-buildable",
+            "sourceRoot": "packages/make-buildable/src",
+            "projectType": "library",
+            "schematics": {},
+            "architect": {
+                "lint": {
+                    "builder": "@nrwl/linter:eslint",
+                    "options": {
+                        "lintFilePatterns": ["packages/make-buildable/**/*.ts"]
+                    }
+                },
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "options": {
+                        "jestConfig": "packages/make-buildable/jest.config.js",
+                        "passWithNoTests": true
+                    },
+                    "outputs": ["coverage/packages/make-buildable"]
+                },
+                "build": {
+                    "builder": "@nrwl/node:package",
+                    "options": {
+                        "outputPath": "dist/packages/make-buildable",
+                        "tsConfig": "packages/make-buildable/tsconfig.lib.json",
+                        "packageJson": "packages/make-buildable/package.json",
+                        "main": "packages/make-buildable/src/index.ts",
+                        "assets": [
+                            "packages/make-buildable/*.md",
+                            {
+                                "input": "./packages/make-buildable/src",
+                                "glob": "**/*.!(ts)",
+                                "output": "./src"
+                            },
+                            {
+                                "input": "./packages/make-buildable",
+                                "glob": "collection.json",
+                                "output": "."
+                            },
+                            {
+                                "input": "./packages/make-buildable",
+                                "glob": "builders.json",
+                                "output": "."
+                            }
+                        ],
+                        "srcRootForCompilationRoot": "packages/make-buildable"
+                    },
+                    "outputs": ["{options.outputPath}"]
+                }
+            }
+        },
+        "nest-spectator": {
+            "root": "packages/nest-spectator",
+            "sourceRoot": "packages/nest-spectator/src",
+            "projectType": "library",
+            "architect": {
+                "lint": {
+                    "builder": "@nrwl/linter:eslint",
+                    "options": {
+                        "lintFilePatterns": ["packages/nest-spectator/**/*.ts"]
+                    }
+                },
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "outputs": ["coverage/packages/nest-spectator"],
+                    "options": {
+                        "jestConfig": "packages/nest-spectator/jest.config.js",
+                        "passWithNoTests": true
+                    }
+                },
+                "build": {
+                    "builder": "@nrwl/node:package",
+                    "outputs": ["{options.outputPath}"],
+                    "options": {
+                        "outputPath": "dist/packages/nest-spectator",
+                        "tsConfig": "packages/nest-spectator/tsconfig.lib.json",
+                        "packageJson": "packages/nest-spectator/package.json",
+                        "main": "packages/nest-spectator/src/index.ts",
+                        "assets": ["packages/nest-spectator/*.md"]
+                    }
+                }
+            }
+        },
+        "ngrx-data-websocket-client": {
+            "projectType": "library",
+            "root": "packages/ngrx-data-websocket/client",
+            "sourceRoot": "packages/ngrx-data-websocket/client/src",
+            "prefix": "trellis",
+            "architect": {
+                "build": {
+                    "builder": "@nrwl/angular:package",
+                    "options": {
+                        "tsConfig": "packages/ngrx-data-websocket/client/tsconfig.lib.json",
+                        "project": "packages/ngrx-data-websocket/client/ng-package.json"
+                    },
+                    "configurations": {
+                        "production": {
+                            "tsConfig": "packages/ngrx-data-websocket/client/tsconfig.lib.prod.json"
+                        }
+                    }
+                },
+                "lint": {
+                    "builder": "@nrwl/linter:eslint",
+                    "options": {
+                        "lintFilePatterns": [
+                            "packages/ngrx-data-websocket/client/**/*.ts",
+                            "packages/ngrx-data-websocket/client/src/**/*.html"
+                        ]
+                    }
+                },
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "options": {
+                        "jestConfig": "packages/ngrx-data-websocket/client/jest.config.js",
+                        "passWithNoTests": true
+                    },
+                    "outputs": ["coverage/packages/ngrx-data-websocket/client"]
+                }
+            },
+            "schematics": {}
+        },
+        "ngrx-data-websocket-core": {
+            "root": "packages/ngrx-data-websocket/core",
+            "sourceRoot": "packages/ngrx-data-websocket/core/src",
+            "projectType": "library",
+            "schematics": {},
+            "architect": {
+                "lint": {
+                    "builder": "@nrwl/linter:eslint",
+                    "options": {
+                        "lintFilePatterns": [
+                            "packages/ngrx-data-websocket/core/**/*.ts"
+                        ]
+                    }
+                },
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "options": {
+                        "jestConfig": "packages/ngrx-data-websocket/core/jest.config.js",
+                        "passWithNoTests": true
+                    },
+                    "outputs": ["coverage/packages/ngrx-data-websocket/core"]
+                },
+                "build": {
+                    "builder": "@nrwl/node:package",
+                    "options": {
+                        "outputPath": "dist/packages/ngrx-data-websocket/core",
+                        "tsConfig": "packages/ngrx-data-websocket/core/tsconfig.lib.json",
+                        "packageJson": "packages/ngrx-data-websocket/core/package.json",
+                        "main": "packages/ngrx-data-websocket/core/src/index.ts",
+                        "assets": ["packages/ngrx-data-websocket/core/*.md"]
+                    },
+                    "outputs": ["{options.outputPath}"]
+                }
+            }
+        },
         "ngrx-data-websocket-demo": {
             "projectType": "application",
             "schematics": {
@@ -347,79 +452,6 @@
                         "passWithNoTests": true
                     },
                     "outputs": ["coverage/apps/ngrx-data-websocket-demo"]
-                }
-            }
-        },
-        "ngrx-data-websocket-client": {
-            "projectType": "library",
-            "root": "packages/ngrx-data-websocket/client",
-            "sourceRoot": "packages/ngrx-data-websocket/client/src",
-            "prefix": "trellis",
-            "architect": {
-                "build": {
-                    "builder": "@nrwl/angular:package",
-                    "options": {
-                        "tsConfig": "packages/ngrx-data-websocket/client/tsconfig.lib.json",
-                        "project": "packages/ngrx-data-websocket/client/ng-package.json"
-                    },
-                    "configurations": {
-                        "production": {
-                            "tsConfig": "packages/ngrx-data-websocket/client/tsconfig.lib.prod.json"
-                        }
-                    }
-                },
-                "lint": {
-                    "builder": "@nrwl/linter:eslint",
-                    "options": {
-                        "lintFilePatterns": [
-                            "packages/ngrx-data-websocket/client/**/*.ts",
-                            "packages/ngrx-data-websocket/client/src/**/*.html"
-                        ]
-                    }
-                },
-                "test": {
-                    "builder": "@nrwl/jest:jest",
-                    "options": {
-                        "jestConfig": "packages/ngrx-data-websocket/client/jest.config.js",
-                        "passWithNoTests": true
-                    },
-                    "outputs": ["coverage/packages/ngrx-data-websocket/client"]
-                }
-            },
-            "schematics": {}
-        },
-        "ngrx-data-websocket-core": {
-            "root": "packages/ngrx-data-websocket/core",
-            "sourceRoot": "packages/ngrx-data-websocket/core/src",
-            "projectType": "library",
-            "schematics": {},
-            "architect": {
-                "lint": {
-                    "builder": "@nrwl/linter:eslint",
-                    "options": {
-                        "lintFilePatterns": [
-                            "packages/ngrx-data-websocket/core/**/*.ts"
-                        ]
-                    }
-                },
-                "test": {
-                    "builder": "@nrwl/jest:jest",
-                    "options": {
-                        "jestConfig": "packages/ngrx-data-websocket/core/jest.config.js",
-                        "passWithNoTests": true
-                    },
-                    "outputs": ["coverage/packages/ngrx-data-websocket/core"]
-                },
-                "build": {
-                    "builder": "@nrwl/node:package",
-                    "options": {
-                        "outputPath": "dist/packages/ngrx-data-websocket/core",
-                        "tsConfig": "packages/ngrx-data-websocket/core/tsconfig.lib.json",
-                        "packageJson": "packages/ngrx-data-websocket/core/package.json",
-                        "main": "packages/ngrx-data-websocket/core/src/index.ts",
-                        "assets": ["packages/ngrx-data-websocket/core/*.md"]
-                    },
-                    "outputs": ["{options.outputPath}"]
                 }
             }
         },
@@ -685,6 +717,61 @@
                 }
             }
         },
+        "nxls": {
+            "root": "packages/nxls",
+            "sourceRoot": "packages/nxls/src",
+            "projectType": "library",
+            "architect": {
+                "lint": {
+                    "builder": "@nrwl/linter:eslint",
+                    "options": {
+                        "lintFilePatterns": ["packages/nxls/**/*.ts"]
+                    }
+                },
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "outputs": ["coverage/packages/nxls"],
+                    "options": {
+                        "jestConfig": "packages/nxls/jest.config.js",
+                        "passWithNoTests": true
+                    }
+                },
+                "build": {
+                    "builder": "@nrwl/node:package",
+                    "outputs": ["{options.outputPath}"],
+                    "options": {
+                        "outputPath": "dist/packages/nxls",
+                        "tsConfig": "packages/nxls/tsconfig.lib.json",
+                        "packageJson": "packages/nxls/package.json",
+                        "main": "packages/nxls/src/index.ts",
+                        "assets": [
+                            "packages/nxls/*.md",
+                            {
+                                "input": "packages/nxls",
+                                "glob": "**/files/**",
+                                "output": "/"
+                            },
+                            {
+                                "input": "packages/nxls",
+                                "glob": "**/files/**/.gitkeep",
+                                "output": "/"
+                            },
+                            {
+                                "input": "packages/nxls",
+                                "glob": "**/*.json",
+                                "output": "/"
+                            },
+                            {
+                                "input": "packages/nxls",
+                                "glob": "**/*.js",
+                                "output": "/"
+                            },
+                            "LICENSE"
+                        ]
+                    }
+                }
+            }
+        },
         "rx-dynamic-component": {
             "projectType": "library",
             "root": "packages/rx-dynamic-component",
@@ -812,93 +899,6 @@
                     "options": {
                         "jestConfig": "apps/rx-dynamic-component-demo/jest.config.js",
                         "passWithNoTests": true
-                    }
-                }
-            }
-        },
-        "nxls": {
-            "root": "packages/nxls",
-            "sourceRoot": "packages/nxls/src",
-            "projectType": "library",
-            "architect": {
-                "lint": {
-                    "builder": "@nrwl/linter:eslint",
-                    "options": {
-                        "lintFilePatterns": ["packages/nxls/**/*.ts"]
-                    }
-                },
-                "test": {
-                    "builder": "@nrwl/jest:jest",
-                    "outputs": ["coverage/packages/nxls"],
-                    "options": {
-                        "jestConfig": "packages/nxls/jest.config.js",
-                        "passWithNoTests": true
-                    }
-                },
-                "build": {
-                    "builder": "@nrwl/node:package",
-                    "outputs": ["{options.outputPath}"],
-                    "options": {
-                        "outputPath": "dist/packages/nxls",
-                        "tsConfig": "packages/nxls/tsconfig.lib.json",
-                        "packageJson": "packages/nxls/package.json",
-                        "main": "packages/nxls/src/index.ts",
-                        "assets": [
-                            "packages/nxls/*.md",
-                            {
-                                "input": "packages/nxls",
-                                "glob": "**/files/**",
-                                "output": "/"
-                            },
-                            {
-                                "input": "packages/nxls",
-                                "glob": "**/files/**/.gitkeep",
-                                "output": "/"
-                            },
-                            {
-                                "input": "packages/nxls",
-                                "glob": "**/*.json",
-                                "output": "/"
-                            },
-                            {
-                                "input": "packages/nxls",
-                                "glob": "**/*.js",
-                                "output": "/"
-                            },
-                            "LICENSE"
-                        ]
-                    }
-                }
-            }
-        },
-        "nest-spectator": {
-            "root": "packages/nest-spectator",
-            "sourceRoot": "packages/nest-spectator/src",
-            "projectType": "library",
-            "architect": {
-                "lint": {
-                    "builder": "@nrwl/linter:eslint",
-                    "options": {
-                        "lintFilePatterns": ["packages/nest-spectator/**/*.ts"]
-                    }
-                },
-                "test": {
-                    "builder": "@nrwl/jest:jest",
-                    "outputs": ["coverage/packages/nest-spectator"],
-                    "options": {
-                        "jestConfig": "packages/nest-spectator/jest.config.js",
-                        "passWithNoTests": true
-                    }
-                },
-                "build": {
-                    "builder": "@nrwl/node:package",
-                    "outputs": ["{options.outputPath}"],
-                    "options": {
-                        "outputPath": "dist/packages/nest-spectator",
-                        "tsConfig": "packages/nest-spectator/tsconfig.lib.json",
-                        "packageJson": "packages/nest-spectator/package.json",
-                        "main": "packages/nest-spectator/src/index.ts",
-                        "assets": ["packages/nest-spectator/*.md"]
                     }
                 }
             }
