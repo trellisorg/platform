@@ -1,3 +1,4 @@
+<div>Generation: {{ generation$ | ngrxPush }}</div>
 <div *ngFor="let column of activeGame$ | ngrxPush; trackBy: trackLifeRow">
     <div style="display: flex">
         <div *ngFor="let item of column; trackBy: trackLife" class="cell">

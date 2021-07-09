@@ -290,34 +290,6 @@
                 }
             }
         },
-        "conways-game-of-life-e2e": {
-            "root": "apps/conways-game-of-life-e2e",
-            "sourceRoot": "apps/conways-game-of-life-e2e/src",
-            "projectType": "application",
-            "architect": {
-                "e2e": {
-                    "builder": "@nrwl/cypress:cypress",
-                    "options": {
-                        "cypressConfig": "apps/conways-game-of-life-e2e/cypress.json",
-                        "tsConfig": "apps/conways-game-of-life-e2e/tsconfig.e2e.json",
-                        "devServerTarget": "conways-game-of-life:serve:development"
-                    },
-                    "configurations": {
-                        "production": {
-                            "devServerTarget": "conways-game-of-life:serve:production"
-                        }
-                    }
-                },
-                "lint": {
-                    "builder": "@nrwl/linter:eslint",
-                    "options": {
-                        "lintFilePatterns": [
-                            "apps/conways-game-of-life-e2e/**/*.{js,ts}"
-                        ]
-                    }
-                }
-            }
-        },
         "make-buildable": {
             "root": "packages/make-buildable",
             "sourceRoot": "packages/make-buildable/src",

@@ -42,10 +42,6 @@
         "conways-game-of-life": {
             "tags": []
         },
-        "conways-game-of-life-e2e": {
-            "tags": [],
-            "implicitDependencies": ["conways-game-of-life"]
-        },
         "make-buildable": {
             "tags": []
         },

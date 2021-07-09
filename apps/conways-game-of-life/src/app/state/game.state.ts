@@ -1,21 +1,17 @@
-import {
-    Action,
-    createAction,
-    createFeatureSelector,
-    createReducer,
-    createSelector,
-    on,
-} from '@ngrx/store';
+import { createAction, createFeature, createReducer, on } from '@ngrx/store';
 import { COLUMNS, ROWS, updateLifeCycle } from './game.utils';
 
 export const GAME_STATE = 'game';
 
 export interface GameState {
-    activeGame: number[][];
+    currentGeneration: number[][];
+    generation: number;
 }
 
+export const nextGeneration = createAction('[Game of Life] iteration');
+
 export const initialGameState: GameState = {
-    activeGame: (function () {
+    currentGeneration: (function () {
         const active: number[][] = [];
         for (let i = 0; i < COLUMNS; i++) {
             active.push([]);
@@ -26,28 +22,25 @@ export const initialGameState: GameState = {
 
         return active;
     })(),
+    generation: 0,
 };
-
-export const gameIteration = createAction('[Game of Life] iteration');
 
 const reducer = createReducer<GameState>(
     initialGameState,
-    on(gameIteration, (state) => ({
+    on(nextGeneration, (state) => ({
         ...state,
-        activeGame: updateLifeCycle(state.activeGame),
+        currentGeneration: updateLifeCycle(state.currentGeneration),
+        generation: state.generation + 1,
     }))
 );
 
-export function gameStateReducer(
-    state: GameState | undefined,
-    action: Action
-): GameState {
-    return reducer(state, action);
-}
+export const gameFeature = createFeature({
+    name: GAME_STATE,
+    reducer: reducer,
+});
 
-export const selectGameState = createFeatureSelector<GameState>(GAME_STATE);
-
-export const selectActiveGame = createSelector(
-    selectGameState,
-    (state) => state.activeGame
-);
+export const {
+    selectCurrentGeneration,
+    selectGeneration,
+    reducer: gameReducer,
+} = gameFeature;

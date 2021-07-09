@@ -11,7 +11,7 @@ import {
 } from '@trellisorg/rx-dynamic-component';
 import { AppComponent } from './app.component';
 import { GameEffects } from './state/game.effects';
-import { gameStateReducer, GAME_STATE } from './state/game.state';
+import { gameReducer, GAME_STATE } from './state/game.state';
 
 @NgModule({
     declarations: [AppComponent],
@@ -19,7 +19,7 @@ import { gameStateReducer, GAME_STATE } from './state/game.state';
         BrowserModule,
         RouterModule.forRoot([], { initialNavigation: 'enabled' }),
         StoreModule.forRoot({
-            [GAME_STATE]: gameStateReducer,
+            [GAME_STATE]: gameReducer,
         }),
         EffectsModule.forRoot([GameEffects]),
         StoreDevtoolsModule.instrument({

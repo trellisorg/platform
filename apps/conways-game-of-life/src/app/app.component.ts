@@ -7,7 +7,7 @@ import { select, Store } from '@ngrx/store';
 import { RxDynamicComponentService } from '@trellisorg/rx-dynamic-component';
 import type { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { selectActiveGame } from './state/game.state';
+import { selectCurrentGeneration, selectGeneration } from './state/game.state';
 
 interface LifeCell {
     alive: number;
@@ -24,7 +24,7 @@ export class AppComponent {
     title = 'conways-game-of-life';
 
     activeGame$: Observable<LifeCell[][]> = this._store.pipe(
-        select(selectActiveGame),
+        select(selectCurrentGeneration),
         map((game) =>
             game.map((row) =>
                 row.map((alive: number) => ({
@@ -36,6 +36,8 @@ export class AppComponent {
             )
         )
     );
+
+    generation$ = this._store.pipe(select(selectGeneration));
 
     constructor(
         private rxDynamicComponentService: RxDynamicComponentService,
