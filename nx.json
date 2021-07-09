@@ -30,9 +30,6 @@
         }
     },
     "projects": {
-        "make-buildable": {
-            "tags": []
-        },
         "angularfire-ngrx": {
             "tags": []
         },
@@ -42,13 +39,22 @@
         "api": {
             "tags": []
         },
-        "ngrx-data-websocket-demo": {
+        "conways-game-of-life": {
+            "tags": []
+        },
+        "make-buildable": {
+            "tags": []
+        },
+        "nest-spectator": {
             "tags": []
         },
         "ngrx-data-websocket-client": {
             "tags": []
         },
         "ngrx-data-websocket-core": {
+            "tags": []
+        },
+        "ngrx-data-websocket-demo": {
             "tags": []
         },
         "ngrx-data-websocket-server": {
@@ -63,15 +69,14 @@
         "ngrx-universal-rehydrate-demo-api": {
             "tags": []
         },
+        "nxls": {
+            "tags": []
+        },
         "rx-dynamic-component": {
             "tags": []
         },
         "rx-dynamic-component-demo": {
             "tags": []
-        },
-        "nxls": {
-            "tags": []
-        },
-        "nest-spectator": { "tags": [] }
+        }
     }
 }
