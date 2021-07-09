@@ -3,3 +3,7 @@ to demonstrate the usage of `rx-dynamic-component`, in the game, each cell is it
 and async'd into the outlet. These components will change if the cell changes from dead to alive or alive to dead otherwise they do not rerender.
 
 Run `yarn nx serve conways-game-of-life` and see the generations progress!
+
+Orange squares are alive black are dead
+
+![game of life](game.png)
