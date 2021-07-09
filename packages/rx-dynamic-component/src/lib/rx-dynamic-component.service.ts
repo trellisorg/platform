@@ -8,7 +8,7 @@ import {
     Optional,
 } from '@angular/core';
 import { from, Observable, of, throwError } from 'rxjs';
-import { catchError, switchMap } from 'rxjs/operators';
+import { catchError, switchMap, tap } from 'rxjs/operators';
 import {
     DynamicComponentRootConfig,
     DYNAMIC_COMPONENT,
@@ -19,6 +19,11 @@ import {
 
 @Injectable()
 export class RxDynamicComponentService {
+    private readonly componentCache: Map<
+        string,
+        ComponentFactory<any>
+    > = new Map<string, ComponentFactory<any>>();
+
     constructor(
         @Inject(DYNAMIC_MANIFEST_MAP)
         private manifests: ManifestMap,
@@ -44,6 +49,10 @@ export class RxDynamicComponentService {
         componentId: string,
         injector?: Injector
     ): Observable<ComponentFactory<T>> {
+        if (this.componentCache.has(componentId)) {
+            return of(this.componentCache.get(componentId));
+        }
+
         const manifest = this.manifests.get(componentId);
 
         if (!manifest) {
@@ -77,7 +86,7 @@ export class RxDynamicComponentService {
                         this._compiler.compileModuleAsync(moduleOrFactory)
                     );
                 } else {
-                    console.error(
+                    throw new Error(
                         `Looks like you have AOT disabled but your NgModule is not compiled into an NgModuleFactory.`
                     );
                 }
@@ -98,6 +107,10 @@ export class RxDynamicComponentService {
                         dynamicComponentType
                     )
                 );
+            }),
+            tap((componentFactory) => {
+                if (!this.componentCache.has(componentId))
+                    this.componentCache.set(componentId, componentFactory);
             }),
             catchError((error) => {
                 if (this.config.devMode) {

@@ -1916,6 +1916,13 @@
   dependencies:
     tslib "^2.0.0"
 
+"@ngrx/component@^12.2.0":
+  version "12.2.0"
+  resolved "https://registry.yarnpkg.com/@ngrx/component/-/component-12.2.0.tgz#e207cf07ec3a99a32c02d0f1a756010006f18d60"
+  integrity sha512-g3KiP0qANYcpBEOIkErF1gut1JLHSAHI82FnKQJwTGqLwsAeX6rG3Yh9E9nzEqmPkQcnsNtCBZKy/lRU+cslJw==
+  dependencies:
+    tslib "^2.0.0"
+
 "@ngrx/data@12.0.0":
   version "12.0.0"
   resolved "https://registry.yarnpkg.com/@ngrx/data/-/data-12.0.0.tgz#4eb04734d3590adcd734236bff8a35d4da08fc19"

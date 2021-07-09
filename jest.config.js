@@ -16,5 +16,6 @@ module.exports = {
         '<rootDir>/apps/rx-dynamic-component-demo',
         '<rootDir>/packages/nest-spectator',
         '<rootDir>/packages/nxls',
+        '<rootDir>/apps/conways-game-of-life',
     ],
 };
