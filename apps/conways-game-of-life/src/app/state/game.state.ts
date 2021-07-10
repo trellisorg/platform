@@ -1,5 +1,11 @@
-import { createAction, createFeature, createReducer, on } from '@ngrx/store';
-import { COLUMNS, ROWS, updateLifeCycle } from './game.utils';
+import {
+    createAction,
+    createFeature,
+    createReducer,
+    on,
+    props,
+} from '@ngrx/store';
+import { COLUMNS, ROWS } from './game.utils';
 
 export const GAME_STATE = 'game';
 
@@ -8,7 +14,14 @@ export interface GameState {
     generation: number;
 }
 
-export const nextGeneration = createAction('[Game of Life] iteration');
+export const nextGeneration = createAction(
+    '[Game of Life] trigger next generation'
+);
+
+export const updateGeneration = createAction(
+    '[Game of Life] update generation',
+    props<{ generation: number[][] }>()
+);
 
 export const initialGameState: GameState = {
     currentGeneration: (function () {
@@ -27,9 +40,9 @@ export const initialGameState: GameState = {
 
 const reducer = createReducer<GameState>(
     initialGameState,
-    on(nextGeneration, (state) => ({
+    on(updateGeneration, (state, { generation }) => ({
         ...state,
-        currentGeneration: updateLifeCycle(state.currentGeneration),
+        currentGeneration: generation,
         generation: state.generation + 1,
     }))
 );

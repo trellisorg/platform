@@ -1,7 +1,7 @@
 export const CELL_SIZE_PX = 10;
 
-export const COLUMNS = 500 / CELL_SIZE_PX;
-export const ROWS = 500 / CELL_SIZE_PX;
+export const COLUMNS = 750 / CELL_SIZE_PX;
+export const ROWS = 750 / CELL_SIZE_PX;
 
 const setCellValueHelper = (game: number[][], row: number, col: number) => {
     try {
@@ -49,11 +49,7 @@ export const updateLifeCycle = (activeGame: number[][]) => {
             newRow.push(updateCellValue(activeGame, i, j));
         }
 
-        newGame.push(
-            newRow.toString() === activeGame[i].toString()
-                ? activeGame[i]
-                : newRow
-        );
+        newGame.push(newRow);
     }
     return newGame;
 };

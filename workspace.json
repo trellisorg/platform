@@ -218,7 +218,8 @@
                             "apps/conways-game-of-life/src/assets"
                         ],
                         "styles": ["apps/conways-game-of-life/src/styles.scss"],
-                        "scripts": []
+                        "scripts": [],
+                        "webWorkerTsConfig": "apps/conways-game-of-life/tsconfig.worker.json"
                     },
                     "configurations": {
                         "production": {
