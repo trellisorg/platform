@@ -78,5 +78,13 @@
         "rx-dynamic-component-demo": {
             "tags": []
         }
+    },
+    "targetDependencies": {
+        "build": [
+            {
+                "target": "build",
+                "projects": "dependencies"
+            }
+        ]
     }
 }

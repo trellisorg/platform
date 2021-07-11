@@ -16,7 +16,7 @@ jobs:
                   command: yarn nx affected:test --parallel
             - run:
                   name: Build
-                  command: yarn nx affected:build --parallel --maxParallel=3
+                  command: yarn nx affected:build
 
 workflows:
     run:
