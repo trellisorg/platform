@@ -30,12 +30,6 @@
         }
     },
     "projects": {
-        "angularfire-ngrx": {
-            "tags": []
-        },
-        "angularfire-ngrx-demo": {
-            "tags": []
-        },
         "api": {
             "tags": []
         },

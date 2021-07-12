@@ -19,9 +19,6 @@
         "baseUrl": ".",
         "paths": {
             "@trellis/make-buildable": ["packages/make-buildable/src/index.ts"],
-            "@trellisorg/angularfire-ngrx": [
-                "packages/angularfire-ngrx/src/index.ts"
-            ],
             "@trellisorg/nest-spectator": [
                 "packages/nest-spectator/src/index.ts"
             ],
