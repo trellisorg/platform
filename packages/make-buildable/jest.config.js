@@ -7,4 +7,5 @@ module.exports = {
     moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'html'],
     coverageDirectory: '../../coverage/packages/make-buildable',
     globals: { 'ts-jest': { tsconfig: '<rootDir>/tsconfig.spec.json' } },
+    testEnvironment: 'node',
 };

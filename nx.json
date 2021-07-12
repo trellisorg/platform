@@ -30,12 +30,6 @@
         }
     },
     "projects": {
-        "angularfire-ngrx": {
-            "tags": []
-        },
-        "angularfire-ngrx-demo": {
-            "tags": []
-        },
         "api": {
             "tags": []
         },
@@ -78,5 +72,13 @@
         "rx-dynamic-component-demo": {
             "tags": []
         }
+    },
+    "targetDependencies": {
+        "build": [
+            {
+                "target": "build",
+                "projects": "dependencies"
+            }
+        ]
     }
 }
