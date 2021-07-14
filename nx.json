@@ -71,6 +71,9 @@
         },
         "rx-dynamic-component-demo": {
             "tags": []
+        },
+        "rx-operators": {
+            "tags": []
         }
     },
     "targetDependencies": {

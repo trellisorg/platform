@@ -37,6 +37,10 @@
             "@trellisorg/nxls": ["packages/nxls/src/index.ts"],
             "@trellisorg/rx-dynamic-component": [
                 "packages/rx-dynamic-component/src/index.ts"
+            ],
+            "@trellisorg/rx-operators": ["packages/rx-operators/src/index.ts"],
+            "@trellisorg/rx-operators/combination": [
+                "packages/rx-operators/src/lib/combination/index.ts"
             ]
         }
     },
