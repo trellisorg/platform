@@ -3,6 +3,7 @@ import {
     ChangeDetectionStrategy,
     Component,
     ComponentFactory,
+    ComponentRef,
     Input,
     ViewChild,
     ViewContainerRef,
@@ -30,6 +31,20 @@ export class DynamicOutletComponent<T extends Component>
         this._factory = factory;
     }
 
+    @Input() set data(data: Partial<T>) {
+        this._data = data;
+
+        this.setData();
+    }
+
+    get data(): Partial<T> {
+        return this._data;
+    }
+
+    private _data: Partial<T>;
+
+    private component: ComponentRef<T>;
+
     ngAfterViewInit(): void {
         if (this._factory) {
             this.loadOutlet(this._factory);
@@ -38,6 +53,20 @@ export class DynamicOutletComponent<T extends Component>
 
     loadOutlet(factory: ComponentFactory<T>): void {
         this.outlet.clear();
-        this.outlet.createComponent(factory);
+        this.component = this.outlet.createComponent(factory);
+
+        this.setData();
+    }
+
+    setData(): void {
+        if (this.data && this.component) {
+            const instance = this.component.instance;
+
+            Object.entries(this.data).forEach(
+                ([key, value]) => (instance[key] = value)
+            );
+
+            this.component.changeDetectorRef.detectChanges();
+        }
     }
 }

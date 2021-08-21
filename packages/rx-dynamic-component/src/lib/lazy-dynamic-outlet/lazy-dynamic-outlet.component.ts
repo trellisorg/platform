@@ -1,6 +1,7 @@
 import {
     Component,
     ComponentFactory,
+    ComponentRef,
     Input,
     ViewChild,
     ViewContainerRef,
@@ -20,6 +21,16 @@ export class LazyDynamicOutletComponent<T extends Component> {
         rootMargin: '0px',
     };
 
+    @Input() set data(data: Partial<T>) {
+        this._data = data;
+
+        this.setData();
+    }
+
+    get data(): Partial<T> {
+        return this._data;
+    }
+
     @Input() set factory(factory: ComponentFactory<T>) {
         this._factory = factory;
 
@@ -34,11 +45,29 @@ export class LazyDynamicOutletComponent<T extends Component> {
 
     private _factory: ComponentFactory<T>;
 
+    private _data: Partial<T>;
+
     private intersected = false;
+
+    private component: ComponentRef<T>;
 
     loadOutlet(): void {
         this.outlet.clear();
-        this.outlet.createComponent(this.factory);
+        this.component = this.outlet.createComponent(this.factory);
+
+        this.setData();
+    }
+
+    setData(): void {
+        if (this.data && this.component) {
+            const instance = this.component.instance;
+
+            Object.entries(this.data).forEach(
+                ([key, value]) => (instance[key] = value)
+            );
+
+            this.component.changeDetectorRef.detectChanges();
+        }
     }
 
     elementIntersected(): void {

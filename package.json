@@ -11,7 +11,7 @@
         "e2e": "yarn nx e2e",
         "affected:apps": "yarn nx affected:apps",
         "affected:libs": "yarn nx affected:libs",
-        "affected:build": "yarn nx affected:build",
+        "affected:build": "yarn nx affected:build --parallel false",
         "affected:e2e": "yarn nx affected:e2e",
         "affected:test": "yarn nx affected:test",
         "affected:lint": "yarn nx affected:lint",
