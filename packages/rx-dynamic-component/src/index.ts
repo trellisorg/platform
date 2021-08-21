@@ -1,5 +1,7 @@
-export * from './lib/dynamic-outlet/dynamic-outlet.component';
-export * from './lib/dynamic-outlet/dynamic-outlet.module';
+export { DynamicOutletComponent } from './lib/dynamic-outlet/dynamic-outlet.component';
+export { DynamicOutletModule } from './lib/dynamic-outlet/dynamic-outlet.module';
+export { LazyDynamicOutletComponent } from './lib/lazy-dynamic-outlet/lazy-dynamic-outlet.component';
+export { LazyDynamicOutletModule } from './lib/lazy-dynamic-outlet/lazy-dynamic-outlet.module';
 export {
     DynamicComponentManifest,
     DynamicComponentRootConfig,

@@ -4,25 +4,25 @@ import {
     Component,
     ComponentFactory,
     Input,
-    OnInit,
     ViewChild,
     ViewContainerRef,
 } from '@angular/core';
 
 @Component({
+    // eslint-disable-next-line @angular-eslint/component-selector
     selector: 'rx-dynamic-outlet',
     templateUrl: './dynamic-outlet.component.html',
     styleUrls: ['./dynamic-outlet.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DynamicOutletComponent implements OnInit, AfterViewInit {
+export class DynamicOutletComponent<T extends Component>
+    implements AfterViewInit
+{
     @ViewChild('outlet', { read: ViewContainerRef }) outlet: ViewContainerRef;
 
-    constructor() {}
+    private _factory: ComponentFactory<T>;
 
-    private _factory: ComponentFactory<any>;
-
-    @Input() set factory(factory: ComponentFactory<any>) {
+    @Input() set factory(factory: ComponentFactory<T>) {
         if (this.outlet) {
             this.loadOutlet(factory);
         }
@@ -30,15 +30,13 @@ export class DynamicOutletComponent implements OnInit, AfterViewInit {
         this._factory = factory;
     }
 
-    ngOnInit(): void {}
-
     ngAfterViewInit(): void {
         if (this._factory) {
             this.loadOutlet(this._factory);
         }
     }
 
-    loadOutlet(factory: ComponentFactory<any>): void {
+    loadOutlet(factory: ComponentFactory<T>): void {
         this.outlet.clear();
         this.outlet.createComponent(factory);
     }

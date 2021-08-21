@@ -1,0 +1,8 @@
+<div
+    rxObserveIntersecting
+    [debounceTime]="300"
+    [config]="config"
+    (visible)="loadOutlet()"
+>
+    <div #outlet></div>
+</div>
