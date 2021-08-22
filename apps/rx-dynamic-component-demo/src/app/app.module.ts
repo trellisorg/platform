@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import {
     DynamicOutletModule,
+    LazyDynamicOutletModule,
     RxDynamicComponentModule,
 } from '@trellisorg/rx-dynamic-component';
 import { AppComponent } from './app.component';
@@ -36,6 +37,7 @@ import { QueryParam2Module } from './query-param2/query-param2.module';
             ],
         }),
         DynamicOutletModule,
+        LazyDynamicOutletModule,
         RouterModule.forRoot([]),
         FormsModule,
     ],

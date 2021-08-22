@@ -1,0 +1,93 @@
+{
+    "projectType": "application",
+    "root": "apps/rx-dynamic-component-demo",
+    "sourceRoot": "apps/rx-dynamic-component-demo/src",
+    "prefix": "trellisorg",
+    "targets": {
+        "build": {
+            "executor": "@angular-devkit/build-angular:browser",
+            "options": {
+                "outputPath": "dist/apps/rx-dynamic-component-demo",
+                "index": "apps/rx-dynamic-component-demo/src/index.html",
+                "main": "apps/rx-dynamic-component-demo/src/main.ts",
+                "polyfills": "apps/rx-dynamic-component-demo/src/polyfills.ts",
+                "tsConfig": "apps/rx-dynamic-component-demo/tsconfig.app.json",
+                "assets": [
+                    "apps/rx-dynamic-component-demo/src/favicon.ico",
+                    "apps/rx-dynamic-component-demo/src/assets"
+                ],
+                "styles": ["apps/rx-dynamic-component-demo/src/styles.scss"],
+                "scripts": [],
+                "vendorChunk": true,
+                "extractLicenses": false,
+                "buildOptimizer": false,
+                "sourceMap": true,
+                "optimization": false,
+                "namedChunks": true
+            },
+            "configurations": {
+                "production": {
+                    "fileReplacements": [
+                        {
+                            "replace": "apps/rx-dynamic-component-demo/src/environments/environment.ts",
+                            "with": "apps/rx-dynamic-component-demo/src/environments/environment.prod.ts"
+                        }
+                    ],
+                    "outputHashing": "all",
+                    "sourceMap": false,
+                    "namedChunks": false,
+                    "extractLicenses": true,
+                    "vendorChunk": false,
+                    "budgets": [
+                        {
+                            "type": "initial",
+                            "maximumWarning": "2mb",
+                            "maximumError": "5mb"
+                        },
+                        {
+                            "type": "anyComponentStyle",
+                            "maximumWarning": "6kb",
+                            "maximumError": "10kb"
+                        }
+                    ]
+                }
+            },
+            "defaultConfiguration": ""
+        },
+        "serve": {
+            "executor": "@angular-devkit/build-angular:dev-server",
+            "options": {
+                "browserTarget": "rx-dynamic-component-demo:build"
+            },
+            "configurations": {
+                "production": {
+                    "browserTarget": "rx-dynamic-component-demo:build:production"
+                }
+            }
+        },
+        "extract-i18n": {
+            "executor": "@angular-devkit/build-angular:extract-i18n",
+            "options": {
+                "browserTarget": "rx-dynamic-component-demo:build"
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": [
+                    "apps/rx-dynamic-component-demo/src/**/*.ts",
+                    "apps/rx-dynamic-component-demo/src/**/*.html"
+                ]
+            }
+        },
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/apps/rx-dynamic-component-demo"],
+            "options": {
+                "jestConfig": "apps/rx-dynamic-component-demo/jest.config.js",
+                "passWithNoTests": true
+            }
+        }
+    },
+    "tags": []
+}

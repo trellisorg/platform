@@ -29,50 +29,7 @@
             }
         }
     },
-    "projects": {
-        "api": {
-            "tags": []
-        },
-        "conways-game-of-life": {
-            "tags": []
-        },
-        "make-buildable": {
-            "tags": []
-        },
-        "nest-spectator": {
-            "tags": []
-        },
-        "ngrx-data-websocket-client": {
-            "tags": []
-        },
-        "ngrx-data-websocket-core": {
-            "tags": []
-        },
-        "ngrx-data-websocket-demo": {
-            "tags": []
-        },
-        "ngrx-data-websocket-server": {
-            "tags": []
-        },
-        "ngrx-universal-rehydrate": {
-            "tags": []
-        },
-        "ngrx-universal-rehydrate-demo": {
-            "tags": []
-        },
-        "ngrx-universal-rehydrate-demo-api": {
-            "tags": []
-        },
-        "nxls": {
-            "tags": []
-        },
-        "rx-dynamic-component": {
-            "tags": []
-        },
-        "rx-dynamic-component-demo": {
-            "tags": []
-        }
-    },
+    "projects": {},
     "targetDependencies": {
         "build": [
             {
