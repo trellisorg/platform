@@ -65,8 +65,6 @@ export class LazyDynamicOutletComponent<T extends Component> {
             Object.entries(this.data).forEach(
                 ([key, value]) => (instance[key] = value)
             );
-
-            this.component.changeDetectorRef.detectChanges();
         }
     }
 

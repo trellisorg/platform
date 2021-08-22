@@ -45,6 +45,8 @@ export class DynamicOutletComponent<T extends Component>
 
     private component: ComponentRef<T>;
 
+    constructor() {}
+
     ngAfterViewInit(): void {
         if (this._factory) {
             this.loadOutlet(this._factory);
@@ -65,8 +67,6 @@ export class DynamicOutletComponent<T extends Component>
             Object.entries(this.data).forEach(
                 ([key, value]) => (instance[key] = value)
             );
-
-            this.component.changeDetectorRef.detectChanges();
         }
     }
 }
