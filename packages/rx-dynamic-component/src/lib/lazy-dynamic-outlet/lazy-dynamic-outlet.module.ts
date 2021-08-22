@@ -8,6 +8,6 @@ import { ObserveIntersectingDirective } from './observe-intersecting.directive';
 @NgModule({
     declarations: [LazyDynamicOutletComponent, ObserveIntersectingDirective],
     imports: [CommonModule, ObserversModule, ReactiveComponentModule],
-    exports: [LazyDynamicOutletComponent, ObserveIntersectingDirective],
+    exports: [LazyDynamicOutletComponent],
 })
 export class LazyDynamicOutletModule {}
