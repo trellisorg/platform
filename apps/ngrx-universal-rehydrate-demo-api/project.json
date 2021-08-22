@@ -1,0 +1,55 @@
+{
+    "root": "apps/ngrx-universal-rehydrate-demo-api",
+    "sourceRoot": "apps/ngrx-universal-rehydrate-demo-api/src",
+    "projectType": "application",
+    "prefix": "ngrx-universal-rehydrate-demo-api",
+    "targets": {
+        "build": {
+            "executor": "@nrwl/node:build",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "dist/apps/ngrx-universal-rehydrate-demo-api",
+                "main": "apps/ngrx-universal-rehydrate-demo-api/src/main.ts",
+                "tsConfig": "apps/ngrx-universal-rehydrate-demo-api/tsconfig.app.json",
+                "assets": ["apps/ngrx-universal-rehydrate-demo-api/src/assets"],
+                "maxWorkers": 2
+            },
+            "configurations": {
+                "production": {
+                    "optimization": true,
+                    "extractLicenses": true,
+                    "inspect": false,
+                    "fileReplacements": [
+                        {
+                            "replace": "apps/ngrx-universal-rehydrate-demo-api/src/environments/environment.ts",
+                            "with": "apps/ngrx-universal-rehydrate-demo-api/src/environments/environment.prod.ts"
+                        }
+                    ]
+                }
+            }
+        },
+        "serve": {
+            "executor": "@nrwl/node:execute",
+            "options": {
+                "buildTarget": "ngrx-universal-rehydrate-demo-api:build"
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": [
+                    "apps/ngrx-universal-rehydrate-demo-api/**/*.ts"
+                ]
+            }
+        },
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/apps/ngrx-universal-rehydrate-demo-api"],
+            "options": {
+                "jestConfig": "apps/ngrx-universal-rehydrate-demo-api/jest.config.js",
+                "passWithNoTests": true
+            }
+        }
+    },
+    "tags": []
+}

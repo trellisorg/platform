@@ -1,0 +1,56 @@
+{
+    "root": "packages/nxls",
+    "sourceRoot": "packages/nxls/src",
+    "projectType": "library",
+    "targets": {
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": ["packages/nxls/**/*.ts"]
+            }
+        },
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/packages/nxls"],
+            "options": {
+                "jestConfig": "packages/nxls/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "build": {
+            "executor": "@nrwl/node:package",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "dist/packages/nxls",
+                "tsConfig": "packages/nxls/tsconfig.lib.json",
+                "packageJson": "packages/nxls/package.json",
+                "main": "packages/nxls/src/index.ts",
+                "assets": [
+                    "packages/nxls/*.md",
+                    {
+                        "input": "packages/nxls",
+                        "glob": "**/files/**",
+                        "output": "/"
+                    },
+                    {
+                        "input": "packages/nxls",
+                        "glob": "**/files/**/.gitkeep",
+                        "output": "/"
+                    },
+                    {
+                        "input": "packages/nxls",
+                        "glob": "**/*.json",
+                        "output": "/"
+                    },
+                    {
+                        "input": "packages/nxls",
+                        "glob": "**/*.js",
+                        "output": "/"
+                    },
+                    "LICENSE"
+                ]
+            }
+        }
+    },
+    "tags": []
+}

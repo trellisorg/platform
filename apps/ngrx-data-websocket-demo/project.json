@@ -1,0 +1,101 @@
+{
+    "projectType": "application",
+    "generators": {
+        "@schematics/angular:component": {
+            "style": "scss"
+        }
+    },
+    "root": "apps/ngrx-data-websocket-demo",
+    "sourceRoot": "apps/ngrx-data-websocket-demo/src",
+    "prefix": "trellisorg",
+    "targets": {
+        "build": {
+            "executor": "@angular-devkit/build-angular:browser",
+            "options": {
+                "outputPath": "dist/apps/ngrx-data-websocket-demo",
+                "index": "apps/ngrx-data-websocket-demo/src/index.html",
+                "main": "apps/ngrx-data-websocket-demo/src/main.ts",
+                "polyfills": "apps/ngrx-data-websocket-demo/src/polyfills.ts",
+                "tsConfig": "apps/ngrx-data-websocket-demo/tsconfig.app.json",
+                "assets": [
+                    "apps/ngrx-data-websocket-demo/src/favicon.ico",
+                    "apps/ngrx-data-websocket-demo/src/assets"
+                ],
+                "styles": ["apps/ngrx-data-websocket-demo/src/styles.scss"],
+                "scripts": [],
+                "vendorChunk": true,
+                "extractLicenses": false,
+                "buildOptimizer": false,
+                "sourceMap": true,
+                "optimization": false,
+                "namedChunks": true
+            },
+            "configurations": {
+                "production": {
+                    "fileReplacements": [
+                        {
+                            "replace": "apps/ngrx-data-websocket-demo/src/environments/environment.ts",
+                            "with": "apps/ngrx-data-websocket-demo/src/environments/environment.prod.ts"
+                        }
+                    ],
+                    "optimization": true,
+                    "outputHashing": "all",
+                    "sourceMap": false,
+                    "namedChunks": false,
+                    "extractLicenses": true,
+                    "vendorChunk": false,
+                    "buildOptimizer": true,
+                    "budgets": [
+                        {
+                            "type": "initial",
+                            "maximumWarning": "2mb",
+                            "maximumError": "5mb"
+                        },
+                        {
+                            "type": "anyComponentStyle",
+                            "maximumWarning": "6kb",
+                            "maximumError": "10kb"
+                        }
+                    ]
+                }
+            },
+            "outputs": ["{options.outputPath}"],
+            "defaultConfiguration": ""
+        },
+        "serve": {
+            "executor": "@angular-devkit/build-angular:dev-server",
+            "options": {
+                "browserTarget": "ngrx-data-websocket-demo:build"
+            },
+            "configurations": {
+                "production": {
+                    "browserTarget": "ngrx-data-websocket-demo:build:production"
+                }
+            }
+        },
+        "extract-i18n": {
+            "executor": "@angular-devkit/build-angular:extract-i18n",
+            "options": {
+                "browserTarget": "ngrx-data-websocket-demo:build"
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": [
+                    "apps/ngrx-data-websocket-demo/**/*.ts",
+                    "apps/ngrx-data-websocket-demo/src/**/*.html"
+                ]
+            }
+        },
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "options": {
+                "jestConfig": "apps/ngrx-data-websocket-demo/jest.config.js",
+                "passWithNoTests": true
+            },
+            "outputs": ["coverage/apps/ngrx-data-websocket-demo"]
+        }
+    },
+    "tags": []
+}

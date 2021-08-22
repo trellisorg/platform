@@ -1,0 +1,39 @@
+{
+    "projectType": "library",
+    "root": "packages/ngrx-data-websocket/client",
+    "sourceRoot": "packages/ngrx-data-websocket/client/src",
+    "prefix": "trellis",
+    "targets": {
+        "build": {
+            "executor": "@nrwl/angular:package",
+            "options": {
+                "tsConfig": "packages/ngrx-data-websocket/client/tsconfig.lib.json",
+                "project": "packages/ngrx-data-websocket/client/ng-package.json"
+            },
+            "configurations": {
+                "production": {
+                    "tsConfig": "packages/ngrx-data-websocket/client/tsconfig.lib.prod.json"
+                }
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": [
+                    "packages/ngrx-data-websocket/client/**/*.ts",
+                    "packages/ngrx-data-websocket/client/src/**/*.html"
+                ]
+            }
+        },
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "options": {
+                "jestConfig": "packages/ngrx-data-websocket/client/jest.config.js",
+                "passWithNoTests": true
+            },
+            "outputs": ["coverage/packages/ngrx-data-websocket/client"]
+        }
+    },
+    "generators": {},
+    "tags": []
+}

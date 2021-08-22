@@ -1,0 +1,36 @@
+{
+    "root": "packages/ngrx-data-websocket/server",
+    "sourceRoot": "packages/ngrx-data-websocket/server/src",
+    "projectType": "library",
+    "generators": {},
+    "targets": {
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": [
+                    "packages/ngrx-data-websocket/server/**/*.ts"
+                ]
+            }
+        },
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "options": {
+                "jestConfig": "packages/ngrx-data-websocket/server/jest.config.js",
+                "passWithNoTests": true
+            },
+            "outputs": ["coverage/packages/ngrx-data-websocket/server"]
+        },
+        "build": {
+            "executor": "@nrwl/node:package",
+            "options": {
+                "outputPath": "dist/packages/ngrx-data-websocket/server",
+                "tsConfig": "packages/ngrx-data-websocket/server/tsconfig.lib.json",
+                "packageJson": "packages/ngrx-data-websocket/server/package.json",
+                "main": "packages/ngrx-data-websocket/server/src/index.ts",
+                "assets": ["packages/ngrx-data-websocket/server/*.md"]
+            },
+            "outputs": ["{options.outputPath}"]
+        }
+    },
+    "tags": []
+}
