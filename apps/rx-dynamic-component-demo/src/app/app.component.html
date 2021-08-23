@@ -12,8 +12,12 @@
     </div>
     <div style="border: 2px solid orange">
         <rx-dynamic-outlet
-            [data]="data"
             [factory]="queryParamComponent$ | async"
         ></rx-dynamic-outlet>
+        <rx-lazy-dynamic-outlet
+            *ngFor="let el of arr"
+            [factory]="queryParamComponent$ | async"
+        >
+        </rx-lazy-dynamic-outlet>
     </div>
 </div>

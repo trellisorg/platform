@@ -1,9 +1,16 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    Input,
+    OnChanges,
+    SimpleChanges,
+} from '@angular/core';
 
 @Component({
     selector: 'trellisorg-query-param1',
     templateUrl: './query-param1.component.html',
     styleUrls: ['./query-param1.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class QueryParam1Component implements OnChanges {
     @Input() set title(title: string) {
