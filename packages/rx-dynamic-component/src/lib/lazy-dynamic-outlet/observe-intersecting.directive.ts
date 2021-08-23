@@ -4,6 +4,7 @@ import {
     ElementRef,
     EventEmitter,
     Input,
+    NgZone,
     OnDestroy,
     OnInit,
     Output,
@@ -18,7 +19,7 @@ import { delay, filter } from 'rxjs/operators';
  */
 @Directive({
     // eslint-disable-next-line @angular-eslint/directive-selector
-    selector: 'div[rxObserveIntersecting]',
+    selector: '[rxObserveIntersecting]',
 })
 export class ObserveIntersectingDirective
     implements OnDestroy, OnInit, AfterViewInit
@@ -38,7 +39,7 @@ export class ObserveIntersectingDirective
         observer: IntersectionObserver;
     }>();
 
-    constructor(private element: ElementRef) {}
+    constructor(private element: ElementRef, private _ngZone: NgZone) {}
 
     ngOnInit() {
         this.createObserver();
@@ -70,16 +71,15 @@ export class ObserveIntersectingDirective
     }
 
     private createObserver(): void {
-        const isIntersecting = (entry: IntersectionObserverEntry) =>
-            entry.isIntersecting || entry.intersectionRatio > 0;
-
-        this.observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach((entry) => {
-                if (isIntersecting(entry)) {
-                    this.subject$.next({ entry, observer });
-                }
-            });
-        }, this.config);
+        this._ngZone.runOutsideAngular(() => {
+            this.observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting || entry.intersectionRatio > 0) {
+                        this.subject$.next({ entry, observer });
+                    }
+                });
+            }, this.config);
+        });
     }
 
     private startObservingElements(): Subscription | void {
@@ -96,7 +96,7 @@ export class ObserveIntersectingDirective
                 const isStillVisible = await this.isVisible(target);
 
                 if (isStillVisible) {
-                    this.visible.emit(target);
+                    this._ngZone.run(() => this.visible.emit(target));
                     observer.unobserve(target);
                 }
             });
