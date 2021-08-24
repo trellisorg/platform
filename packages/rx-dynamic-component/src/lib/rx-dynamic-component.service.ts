@@ -6,15 +6,16 @@ import {
     Injector,
     NgModuleFactory,
     Optional,
+    Type
 } from '@angular/core';
 import { from, Observable, of, throwError } from 'rxjs';
 import { catchError, switchMap, tap } from 'rxjs/operators';
 import {
-    DynamicComponentRootConfig,
     DYNAMIC_COMPONENT,
     DYNAMIC_COMPONENT_CONFIG,
     DYNAMIC_MANIFEST_MAP,
-    ManifestMap,
+    DynamicComponentRootConfig,
+    ManifestMap
 } from './rx-dynamic-component.manifest';
 
 @Injectable()
@@ -45,10 +46,10 @@ export class RxDynamicComponentService {
      * @param componentId
      * @param injector
      */
-    getComponentFactory<T>(
+    getComponentFactory<TComponentType, TComponent = TComponentType extends Type<infer TComponentInstance> ? TComponentInstance : TComponentType>(
         componentId: string,
         injector?: Injector
-    ): Observable<ComponentFactory<T>> {
+    ): Observable<ComponentFactory<TComponent>> {
         if (this.componentCache.has(componentId)) {
             return of(this.componentCache.get(componentId));
         }
@@ -103,7 +104,7 @@ export class RxDynamicComponentService {
                 );
 
                 return of(
-                    moduleRef.componentFactoryResolver.resolveComponentFactory<T>(
+                    moduleRef.componentFactoryResolver.resolveComponentFactory<TComponent>(
                         dynamicComponentType
                     )
                 );

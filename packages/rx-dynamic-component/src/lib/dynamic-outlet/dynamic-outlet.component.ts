@@ -5,6 +5,7 @@ import {
     ComponentFactory,
     ComponentRef,
     Input,
+    Type,
     ViewChild,
     ViewContainerRef,
 } from '@angular/core';
@@ -16,14 +17,14 @@ import {
     styleUrls: ['./dynamic-outlet.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DynamicOutletComponent<T extends Component>
+export class DynamicOutletComponent<TComponentType extends Type<unknown>, TComponent = InstanceType<TComponentType>>
     implements AfterViewInit
 {
     @ViewChild('outlet', { read: ViewContainerRef }) outlet: ViewContainerRef;
 
-    private _factory: ComponentFactory<T>;
+    private _factory: ComponentFactory<TComponent>;
 
-    @Input() set factory(factory: ComponentFactory<T>) {
+    @Input() set factory(factory: ComponentFactory<TComponent>) {
         if (this.outlet) {
             this.loadOutlet(factory);
         }
@@ -31,7 +32,7 @@ export class DynamicOutletComponent<T extends Component>
         this._factory = factory;
     }
 
-    private component: ComponentRef<T>;
+    private component: ComponentRef<TComponent>;
 
     ngAfterViewInit(): void {
         if (this._factory) {
@@ -39,7 +40,7 @@ export class DynamicOutletComponent<T extends Component>
         }
     }
 
-    loadOutlet(factory: ComponentFactory<T>): void {
+    loadOutlet(factory: ComponentFactory<TComponent>): void {
         this.outlet.clear();
         this.component = this.outlet.createComponent(factory);
     }
