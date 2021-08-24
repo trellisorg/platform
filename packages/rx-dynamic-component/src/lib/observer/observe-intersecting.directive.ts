@@ -3,14 +3,17 @@ import {
     Directive,
     ElementRef,
     EventEmitter,
+    Inject,
     Input,
     NgZone,
     OnDestroy,
     OnInit,
+    Optional,
     Output,
 } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { delay, filter } from 'rxjs/operators';
+import { INTERSECTION_OBSERVER_CONFIG } from './intersection-observer.config';
 
 /**
  * Thank you @gc_psk for the great Intersection Observer Directive!
@@ -26,10 +29,17 @@ export class ObserveIntersectingDirective
 {
     @Input() debounceTime = 0;
 
-    @Input() config: IntersectionObserverInit = {
-        threshold: [0.25],
-        rootMargin: '0px',
-    };
+    @Input() set config(config: IntersectionObserverInit) {
+        // Spread the defaults to ensure each prop is set
+        this._config = {
+            ...this.defaultConfig,
+            ...config,
+        };
+    }
+
+    get config(): IntersectionObserverInit {
+        return this._config;
+    }
 
     @Output() visible = new EventEmitter<HTMLElement>();
 
@@ -39,7 +49,27 @@ export class ObserveIntersectingDirective
         observer: IntersectionObserver;
     }>();
 
-    constructor(private element: ElementRef, private _ngZone: NgZone) {}
+    /**
+     * Settings some sane defaults.
+     * @private
+     */
+    private _config: IntersectionObserverInit;
+
+    private readonly defaultConfig: IntersectionObserverInit;
+
+    constructor(
+        private element: ElementRef,
+        private _ngZone: NgZone,
+        @Optional()
+        @Inject(INTERSECTION_OBSERVER_CONFIG)
+        config: IntersectionObserverInit
+    ) {
+        this.defaultConfig = {
+            threshold: [0.25],
+            rootMargin: '0px',
+            ...(config || {}),
+        };
+    }
 
     ngOnInit() {
         this.createObserver();
@@ -62,7 +92,7 @@ export class ObserveIntersectingDirective
     private isVisible(element: HTMLElement): Promise<boolean> {
         return new Promise<boolean>((resolve) => {
             const observer = new IntersectionObserver(([entry]) => {
-                resolve(entry.intersectionRatio === 1);
+                resolve(entry.intersectionRatio > 0);
                 observer.disconnect();
             });
 

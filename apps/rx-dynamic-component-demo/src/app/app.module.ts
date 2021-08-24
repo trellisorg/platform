@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import {
     DynamicOutletModule,
@@ -8,6 +10,7 @@ import {
     RxDynamicComponentModule,
 } from '@trellisorg/rx-dynamic-component';
 import { AppComponent } from './app.component';
+import { DialogModule } from './dialog/dialog.module';
 import { QueryParam2Module } from './query-param2/query-param2.module';
 
 @NgModule({
@@ -40,6 +43,9 @@ import { QueryParam2Module } from './query-param2/query-param2.module';
         LazyDynamicOutletModule,
         RouterModule.forRoot([]),
         FormsModule,
+        MatBottomSheetModule,
+        DialogModule,
+        BrowserAnimationsModule,
     ],
     providers: [],
     bootstrap: [AppComponent],

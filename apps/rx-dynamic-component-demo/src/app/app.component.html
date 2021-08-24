@@ -1,3 +1,5 @@
+<button (click)="open()">Open</button>
+
 <div class="query-container">
     <div>
         <label for="querySelect">Select a Query Param</label>
@@ -14,9 +16,9 @@
         <rx-dynamic-outlet
             [factory]="queryParamComponent$ | async"
         ></rx-dynamic-outlet>
-        <div *ngFor="let el of arr" style="height: 30px">
-            <rx-lazy-dynamic-outlet [factory]="queryParamComponent$ | async">
-            </rx-lazy-dynamic-outlet>
-        </div>
+        <!--        <div *ngFor="let el of arr" style="height: 500px; border: black solid">-->
+        <!--            <rx-lazy-dynamic-outlet [factory]="queryParamComponent$ | async">-->
+        <!--            </rx-lazy-dynamic-outlet>-->
+        <!--        </div>-->
     </div>
 </div>
