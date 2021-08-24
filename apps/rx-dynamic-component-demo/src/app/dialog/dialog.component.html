@@ -1,4 +1,4 @@
 <rx-dynamic-outlet
-    *ngIf="factory$ | async as factory"
-    [factory]="factory"
+    *ngIf="state$ | async"
+    [factory]="factory$ | async"
 ></rx-dynamic-outlet>

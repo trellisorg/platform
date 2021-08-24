@@ -2,6 +2,7 @@ import { Component, ComponentFactory, Inject, OnInit } from '@angular/core';
 import { MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 import { RxDynamicComponentService } from '@trellisorg/rx-dynamic-component';
 import type { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Store } from './store';
 
 @Component({
@@ -12,6 +13,8 @@ import { Store } from './store';
 export class DialogComponent implements OnInit {
     factory$: Observable<ComponentFactory<any>> =
         this.rxDynamicComponentService.getComponentFactory('lazy');
+
+    state$ = this._store.state$.pipe(map(Boolean));
 
     constructor(
         private _store: Store,
