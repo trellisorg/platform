@@ -1,19 +1,12 @@
 {
-    "migrations": [
-        {
-            "version": "12.1.0",
-            "factory": "./update-12/replace-prod-flag",
-            "description": "Replace the deprecated '--prod' in package.json scripts.",
-            "package": "@angular/cli",
-            "name": "replace-deprecated-prod-flag"
-        },
-        {
-            "version": "12.6.0-beta.0",
-            "cli": "nx",
-            "description": "Uses `getJestProjects()` to populate projects array in root level `jest.config.js` file.",
-            "factory": "./src/migrations/update-12-6-0/update-base-jest-config",
-            "package": "@nrwl/jest",
-            "name": "update-jest-config-to-use-util"
-        }
-    ]
+  "migrations": [
+    {
+      "cli": "nx",
+      "version": "12.8.0-beta.0",
+      "description": "Remove Typescript Preprocessor Plugin",
+      "factory": "./src/migrations/update-12-8-0/remove-typescript-plugin",
+      "package": "@nrwl/cypress",
+      "name": "remove-typescript-plugin"
+    }
+  ]
 }
