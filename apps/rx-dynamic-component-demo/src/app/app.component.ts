@@ -1,7 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RxDynamicComponentService } from '@trellisorg/rx-dynamic-component';
 import { filter, switchMap } from 'rxjs/operators';
+import { DialogComponent } from './dialog/dialog.component';
 import type { QueryParam1Component } from './query-param1/query-param1.component';
 import type { QueryParam2Component } from './query-param2/query-param2.component';
 
@@ -28,7 +30,8 @@ export class AppComponent {
     constructor(
         private _route: ActivatedRoute,
         private rxDynamicComponentService: RxDynamicComponentService,
-        private _router: Router
+        private _router: Router,
+        private _matBottomSheet: MatBottomSheet
     ) {
     }
 
@@ -36,6 +39,13 @@ export class AppComponent {
         this._router.navigate([], {
             queryParams: {
                 query: ($event.target as HTMLSelectElement).value,
+            },
+        });
+    }
+    open() {
+        this._matBottomSheet.open(DialogComponent, {
+            data: {
+                name: 'Jay',
             },
         });
     }

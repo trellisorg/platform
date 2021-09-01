@@ -16,7 +16,10 @@
                     "apps/rx-dynamic-component-demo/src/favicon.ico",
                     "apps/rx-dynamic-component-demo/src/assets"
                 ],
-                "styles": ["apps/rx-dynamic-component-demo/src/styles.scss"],
+                "styles": [
+                    "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+                    "apps/rx-dynamic-component-demo/src/styles.scss"
+                ],
                 "scripts": [],
                 "vendorChunk": true,
                 "extractLicenses": false,

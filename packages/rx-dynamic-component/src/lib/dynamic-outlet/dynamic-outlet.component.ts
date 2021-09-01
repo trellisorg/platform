@@ -40,8 +40,18 @@ export class DynamicOutletComponent<TComponentType extends Type<unknown>, TCompo
         }
     }
 
+    /**
+     * Function that will load the new factory into the outlet
+     *
+     * It will first clear the outlet so that previously rendered factories
+     * are cleared and removed from the DOM
+     *
+     * It will then create the component from the factory using the ViewContainerRef
+     * @param factory
+     */
     loadOutlet(factory: ComponentFactory<TComponent>): void {
         this.outlet.clear();
+
         this.component = this.outlet.createComponent(factory);
     }
 }
