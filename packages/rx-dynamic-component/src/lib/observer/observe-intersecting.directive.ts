@@ -29,6 +29,11 @@ export class ObserveIntersectingDirective
 {
     @Input() debounceTime = 0;
 
+    /**
+     * Will be used if the IntersectionObserver is unable to be created
+     */
+    @Input() defaultVisibility = false;
+
     @Input() set config(config: IntersectionObserverInit) {
         // Spread the defaults to ensure each prop is set
         this._config = {
@@ -57,6 +62,8 @@ export class ObserveIntersectingDirective
 
     private readonly defaultConfig: IntersectionObserverInit;
 
+    private readonly intersectionObserverSupported: boolean;
+
     constructor(
         private element: ElementRef,
         private _ngZone: NgZone,
@@ -69,14 +76,16 @@ export class ObserveIntersectingDirective
             rootMargin: '0px',
             ...(config || {}),
         };
+
+        this.intersectionObserverSupported = 'IntersectionObserver' in window;
     }
 
     ngOnInit() {
-        this.createObserver();
+        if (this.intersectionObserverSupported) this.createObserver();
     }
 
     ngAfterViewInit() {
-        this.startObservingElements();
+        if (this.intersectionObserverSupported) this.startObservingElements();
     }
 
     ngOnDestroy() {
