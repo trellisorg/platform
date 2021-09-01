@@ -135,7 +135,7 @@ This will setup an observable that listens on query params and loads the correct
 is either `query1` or `query2`. The value you pass into `RxDynamicComponentService#getComponentFactory`
 must equal one of the `componentId`s from the manifest you provided.
 
-### (Optional) Import DynamicOutletModule into the component you will be dynamically loading into
+### (Optional) Import DynamicOutletModule or LazyDynamicOutletModule into the component you will be dynamically loading into
 
 `rx-dynamic-component` provides a component that can be used that is setup with an internal `ViewContainerRef`
 for ease of use, but if you know what you are doing you can implement whatever sort of `ViewContainerRef` you want.
@@ -154,9 +154,42 @@ export class AppModule {}
 ```
 
 ```angular2html
-
+<!--Will load the outlet as soon as the observable emits-->
 <rx-dynamic-outlet [factory]="queryParamComponent$ | async"></rx-dynamic-outlet>
+<!--Will load the outlet as soon as the observable emits assuming the component is in view with IntersectionObserver-->
+<rx-lazy-dynamic-outlet [factory]="queryParamComponent$ | async"></rx-lazy-dynamic-outlet>
 ```
 
 With that when the query params `query` property is equal to one of the manifest entries the corresponding Angular
 component will be loaded into the DOM.
+
+### (Optional) Add custom lazy loading support to your elements with ObserveIntersectingDirective
+
+```angular2html
+<!--Will only be loaded once the element is scrolled into view-->
+<div rxObserveIntersecting>
+</div>
+```
+
+Can be globally configured with the `INTERSECTION_OBSERVER_CONFIG` Injection token
+
+```typescript
+import { NgModule } from '@angular/core';
+
+@NgModule({
+    providers: [
+        {
+            provide: INTERSECTION_OBSERVER_CONFIG, 
+            useValue: IntersectionObserverInit // See: https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/IntersectionObserver
+        }
+    ]
+})
+AppModule {}
+```
+You can also pass in the a `Partial<IntersectionObserverInit>` object to the element itself
+
+```angular2html
+<!--Will only be loaded once the element is scrolled into view-->
+<div rxObserveIntersecting [config]='Partial<IntersectionObserverInit>'>
+</div>
+```

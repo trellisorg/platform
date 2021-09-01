@@ -13,9 +13,6 @@ Trellis uses internally but has opened sourced for the community to use.**
 
 ## Projects available
 
--   [angularfire-ngrx](https://github.com/trellisorg/platform/tree/master/packages/angularfire-ngrx)
-    -   `yarn add @trellisorg/angularfire-ngrx`
-    -   [npm](https://www.npmjs.com/package/@trellisorg/angularfire-ngrx)
 -   [make-buildable](https://github.com/trellisorg/platform/tree/master/packages/make-buildable)
     -   `yarn add @trellisorg/make-buildable`
     -   [npm](https://www.npmjs.com/package/@trellisorg/make-buildable)
