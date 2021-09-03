@@ -14,8 +14,6 @@ import { addSlice, RehydrateStoreModule } from './store';
 import { FEATURE_STORES, REHYDRATE_ROOT_CONFIG } from './tokens';
 import { defaultRehydrationRootConfig, RehydrationRootConfig } from './utils';
 
-export let AppInjector: Injector;
-
 @NgModule({
     imports: [RehydrateStoreModule],
 })
@@ -27,8 +25,6 @@ export class NgrxUniversalRehydrateBrowserRootModule {
         @Inject(PLATFORM_ID) platformId: Object,
         _store: Store
     ) {
-        AppInjector = _injector;
-
         /*
          * If we are on the server then we need to add the slices defined at root
          * to the store so they can be transferred

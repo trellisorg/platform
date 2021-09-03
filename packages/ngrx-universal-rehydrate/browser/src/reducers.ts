@@ -23,8 +23,6 @@ export function browserRehydrateReducer(
             undefined
         );
 
-        console.log('Transferred', statesTransferred);
-
         /**
          * Only return a reducer that will attempt to rehydrate the state if there were states transferred to begin with
          */
