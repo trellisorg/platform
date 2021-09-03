@@ -31,8 +31,11 @@
             "@trellisorg/ngrx-data-websocket-server": [
                 "packages/ngrx-data-websocket/server/src/index.ts"
             ],
-            "@trellisorg/ngrx-universal-rehydrate": [
-                "packages/ngrx-universal-rehydrate/src/index.ts"
+            "@trellisorg/ngrx-universal-rehydrate/browser": [
+                "packages/ngrx-universal-rehydrate/browser/src/index.ts"
+            ],
+            "@trellisorg/ngrx-universal-rehydrate/server": [
+                "packages/ngrx-universal-rehydrate/server/src/index.ts"
             ],
             "@trellisorg/nxls": ["packages/nxls/src/index.ts"],
             "@trellisorg/rx-dynamic-component": [

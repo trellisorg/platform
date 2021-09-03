@@ -6,24 +6,22 @@ import {
     Injector,
     NgModuleFactory,
     Optional,
-    Type
+    Type,
 } from '@angular/core';
 import { from, Observable, of, throwError } from 'rxjs';
 import { catchError, switchMap, tap } from 'rxjs/operators';
 import {
+    DynamicComponentRootConfig,
     DYNAMIC_COMPONENT,
     DYNAMIC_COMPONENT_CONFIG,
     DYNAMIC_MANIFEST_MAP,
-    DynamicComponentRootConfig,
-    ManifestMap
+    ManifestMap,
 } from './rx-dynamic-component.manifest';
 
 @Injectable()
 export class RxDynamicComponentService {
-    private readonly componentCache: Map<
-        string,
-        ComponentFactory<any>
-    > = new Map<string, ComponentFactory<any>>();
+    private readonly componentCache: Map<string, ComponentFactory<any>> =
+        new Map<string, ComponentFactory<any>>();
 
     constructor(
         @Inject(DYNAMIC_MANIFEST_MAP)
@@ -46,11 +44,19 @@ export class RxDynamicComponentService {
      * @param componentId
      * @param injector
      */
-    getComponentFactory<TComponentType, TComponent = TComponentType extends Type<infer TComponentInstance> ? TComponentInstance : TComponentType>(
+    getComponentFactory<
+        TComponentType,
+        TComponent = TComponentType extends Type<infer TComponentInstance>
+            ? TComponentInstance
+            : TComponentType
+    >(
         componentId: string,
         injector?: Injector
     ): Observable<ComponentFactory<TComponent>> {
-        if (this.componentCache.has(componentId)) {
+        if (
+            this.config.cacheFactories &&
+            this.componentCache.has(componentId)
+        ) {
             return of(this.componentCache.get(componentId));
         }
 
@@ -99,9 +105,8 @@ export class RxDynamicComponentService {
                  * By providing a DYNAMIC_COMPONENT injection in the module we are loading we know what component it is
                  * that should be rendered from the declarations array in the module
                  */
-                const dynamicComponentType = moduleRef.injector.get(
-                    DYNAMIC_COMPONENT
-                );
+                const dynamicComponentType =
+                    moduleRef.injector.get(DYNAMIC_COMPONENT);
 
                 return of(
                     moduleRef.componentFactoryResolver.resolveComponentFactory<TComponent>(
@@ -110,7 +115,10 @@ export class RxDynamicComponentService {
                 );
             }),
             tap((componentFactory) => {
-                if (!this.componentCache.has(componentId))
+                if (
+                    this.config.cacheFactories &&
+                    !this.componentCache.has(componentId)
+                )
                     this.componentCache.set(componentId, componentFactory);
             }),
             catchError((error) => {

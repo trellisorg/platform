@@ -5,10 +5,11 @@ import {
     BrowserModule,
     BrowserTransferStateModule,
 } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
 import { EffectsModule } from '@ngrx/effects';
 import { Store, StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { NgrxUniversalRehydrateModule } from '@trellisorg/ngrx-universal-rehydrate';
+import { NgrxUniversalRehydrateBrowserModule } from '@trellisorg/ngrx-universal-rehydrate/browser';
 import { AppComponent } from './app.component';
 import { Effects } from './effects';
 import { loadData, titleReducer } from './store';
@@ -18,25 +19,45 @@ import { loadData, titleReducer } from './store';
     imports: [
         BrowserModule.withServerTransition({ appId: 'serverApp' }),
         StoreModule.forRoot(
-            { titleState: titleReducer },
+            { root: titleReducer },
             {
                 runtimeChecks: {
-                    strictStateSerializability: true,
+                    strictStateSerializability: false,
                 },
             }
         ),
         EffectsModule.forRoot([Effects]),
-        NgrxUniversalRehydrateModule.forRoot({ stores: [] }),
+        NgrxUniversalRehydrateBrowserModule.forRoot({
+            stores: ['root'],
+            disableWarnings: false,
+        }),
         StoreDevtoolsModule.instrument({}),
         BrowserTransferStateModule,
         HttpClientModule,
         HttpClientJsonpModule,
+        RouterModule.forRoot([
+            {
+                path: 'feature1',
+                loadChildren: () =>
+                    import('./feature1/feature1.module').then(
+                        (m) => m.Feature1Module
+                    ),
+            },
+            {
+                path: 'feature2',
+                loadChildren: () =>
+                    import('./feature2/feature2.module').then(
+                        (m) => m.Feature2Module
+                    ),
+            },
+        ]),
     ],
     providers: [],
     bootstrap: [AppComponent],
 })
 export class AppModule {
     constructor(
+        // eslint-disable-next-line @typescript-eslint/ban-types
         @Inject(PLATFORM_ID) private platformId: Object,
         private _store: Store
     ) {

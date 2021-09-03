@@ -12,11 +12,13 @@ export type ManifestMap = Map<string, DynamicComponentManifest>;
 export interface DynamicComponentRootConfig {
     devMode?: boolean;
     manifests?: DynamicComponentManifest[];
+    cacheFactories?: boolean;
 }
 
 export const defaultRootConfig: DynamicComponentRootConfig = {
     manifests: [],
     devMode: false,
+    cacheFactories: false,
 };
 
 /**
