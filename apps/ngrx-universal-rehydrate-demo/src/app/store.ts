@@ -27,6 +27,6 @@ export function titleReducer(state: State<any> | undefined, action: Action) {
 }
 
 export const selectData = createSelector(
-    (state: { titleState: { items: Item[] } }) => state.titleState,
+    (state: any) => state.root,
     (state) => state.items
 );

@@ -1,13 +1,13 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Feature2Component } from './feature2.component';
-import { NgrxUniversalRehydrateModule } from '@trellisorg/ngrx-universal-rehydrate';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { NgrxUniversalRehydrateBrowserModule } from '@trellisorg/ngrx-universal-rehydrate/browser';
+import { Feature2Component } from './feature2.component';
 
 @NgModule({
     declarations: [Feature2Component],
     imports: [
-        NgrxUniversalRehydrateModule.forFeature(['feature2']),
+        NgrxUniversalRehydrateBrowserModule.forFeature(['feature2']),
         CommonModule,
         RouterModule.forChild([
             {

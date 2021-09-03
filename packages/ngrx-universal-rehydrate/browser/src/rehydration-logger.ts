@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { REHYDRATE_ROOT_CONFIG } from './tokens';
-import { RehydrationRootConfig } from '@trellisorg/ngrx-universal-rehydrate';
+import type { RehydrationRootConfig } from './utils';
 
 @Injectable()
 export class RehydrationLogger {

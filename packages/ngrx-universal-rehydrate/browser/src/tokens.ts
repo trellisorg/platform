@@ -1,12 +1,12 @@
 import { InjectionToken } from '@angular/core';
 import { makeStateKey } from '@angular/platform-browser';
-import { RehydrationRootConfig } from '@trellisorg/ngrx-universal-rehydrate';
+import type { RehydrationRootConfig } from './utils';
 
 export const REHYDRATE_ROOT_CONFIG = new InjectionToken<RehydrationRootConfig>(
     'ngrxUniversalHydrateRootConfig'
 );
 
-export const TRANSFERRED_STATES = makeStateKey<string[]>(
+export const REHYDRATE_TRANSFER_STATE = makeStateKey<Set<string>>(
     'ngrxUniversalStatesTransferred'
 );
 

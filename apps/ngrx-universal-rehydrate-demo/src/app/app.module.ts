@@ -5,14 +5,14 @@ import {
     BrowserModule,
     BrowserTransferStateModule,
 } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
 import { EffectsModule } from '@ngrx/effects';
 import { Store, StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { NgrxUniversalRehydrateModule } from '@trellisorg/ngrx-universal-rehydrate';
+import { NgrxUniversalRehydrateBrowserModule } from '@trellisorg/ngrx-universal-rehydrate/browser';
 import { AppComponent } from './app.component';
 import { Effects } from './effects';
 import { loadData, titleReducer } from './store';
-import { RouterModule } from '@angular/router';
 
 @NgModule({
     declarations: [AppComponent],
@@ -27,7 +27,7 @@ import { RouterModule } from '@angular/router';
             }
         ),
         EffectsModule.forRoot([Effects]),
-        NgrxUniversalRehydrateModule.forRoot({
+        NgrxUniversalRehydrateBrowserModule.forRoot({
             stores: ['root'],
             disableWarnings: false,
         }),
@@ -57,6 +57,7 @@ import { RouterModule } from '@angular/router';
 })
 export class AppModule {
     constructor(
+        // eslint-disable-next-line @typescript-eslint/ban-types
         @Inject(PLATFORM_ID) private platformId: Object,
         private _store: Store
     ) {
