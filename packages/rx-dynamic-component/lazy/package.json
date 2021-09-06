@@ -1,0 +1,6 @@
+{
+    "ngPackage": {},
+    "peerDependencies": {
+        "@angular/cdk": ">=9"
+    }
+}

@@ -6,11 +6,10 @@
     },
     "license": "MIT",
     "peerDependencies": {
-        "@angular/common": "^11.2.3",
-        "@angular/core": "^11.2.3",
-        "@angular/cdk": "12.2.2",
-        "@angular/router": "12.2.2",
-        "rxjs": "6.6.7"
+        "@angular/common": ">=9",
+        "@angular/core": ">=9",
+        "@angular/router": ">=9",
+        "rxjs": ">=6"
     },
     "dependencies": {
         "tslib": "^2.0.0"
