@@ -10,11 +10,12 @@ import {
 import type { Observable } from 'rxjs';
 import { from, of, throwError } from 'rxjs';
 import { catchError, switchMap, tap } from 'rxjs/operators';
-import type { DynamicComponentRootConfig, ManifestMap } from './manifest';
 import {
+    DynamicComponentRootConfig,
     DYNAMIC_COMPONENT,
     DYNAMIC_COMPONENT_CONFIG,
     DYNAMIC_MANIFEST_MAP,
+    ManifestMap,
 } from './manifest';
 
 @Injectable()
