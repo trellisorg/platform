@@ -1,4 +1,4 @@
-import { Compiler, InjectionToken } from '@angular/core';
+import { InjectionToken } from '@angular/core';
 import type { LoadChildrenCallback } from '@angular/router';
 
 export type ManifestMap = Map<string, DynamicComponentManifest>;
@@ -57,7 +57,3 @@ export const DYNAMIC_MANIFEST_MAP = new InjectionToken<ManifestMap>(
  * Injection token used for telling the library what component in a lazy loaded module to use for rendering
  */
 export const DYNAMIC_COMPONENT = new InjectionToken<any>('DYNAMIC_COMPONENT');
-
-export const DYNAMIC_COMPILER = new InjectionToken<Compiler>(
-    'DYNAMIC_COMPILER'
-);

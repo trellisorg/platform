@@ -12,7 +12,7 @@ import {
     DYNAMIC_MANIFEST_MAP,
     ManifestMap,
     _FEATURE_DYNAMIC_COMPONENT_MANIFESTS,
-} from './rx-dynamic-component.manifest';
+} from './manifest';
 import { RxDynamicComponentService } from './rx-dynamic-component.service';
 
 function _initialManifestMap(

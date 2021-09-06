@@ -1,14 +1,14 @@
+import type { ComponentFactory, Type } from '@angular/core';
 import {
     Compiler,
-    ComponentFactory,
     Inject,
     Injectable,
     Injector,
     NgModuleFactory,
     Optional,
-    Type,
 } from '@angular/core';
-import { from, Observable, of, throwError } from 'rxjs';
+import type { Observable } from 'rxjs';
+import { from, of, throwError } from 'rxjs';
 import { catchError, switchMap, tap } from 'rxjs/operators';
 import {
     DynamicComponentRootConfig,
@@ -16,7 +16,7 @@ import {
     DYNAMIC_COMPONENT_CONFIG,
     DYNAMIC_MANIFEST_MAP,
     ManifestMap,
-} from './rx-dynamic-component.manifest';
+} from './manifest';
 
 @Injectable()
 export class RxDynamicComponentService {

@@ -1,6 +1,6 @@
 {
     "name": "@trellisorg/rx-dynamic-component",
-    "version": "0.1.2",
+    "version": "0.1.3",
     "repository": {
         "url": "https://github.com/trellisorg/platform/tree/master/packages/rx-dynamic-component"
     },
@@ -9,9 +9,8 @@
         "@angular/common": "^11.2.3",
         "@angular/core": "^11.2.3",
         "@angular/cdk": "12.2.2",
-        "@ngrx/component": "^12.2.0",
-        "rxjs": "6.6.7",
-        "@angular/router": "12.2.2"
+        "@angular/router": "12.2.2",
+        "rxjs": "6.6.7"
     },
     "dependencies": {
         "tslib": "^2.0.0"

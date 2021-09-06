@@ -6,9 +6,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import {
     DynamicOutletModule,
-    LazyDynamicOutletModule,
     RxDynamicComponentModule,
 } from '@trellisorg/rx-dynamic-component';
+import { LazyDynamicOutletModule } from '@trellisorg/rx-dynamic-component/lazy';
 import { AppComponent } from './app.component';
 import { DialogModule } from './dialog/dialog.module';
 import { QueryParam2Module } from './query-param2/query-param2.module';
