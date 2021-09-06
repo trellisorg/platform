@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import {
     REHYDRATE_TRANSFER_STATE,
     selectStateToTransfer,
-} from '@trellisorg/ngrx-universal-rehydrate/browser';
+} from '@trellisorg/ngrx-universal-rehydrate';
 import { take } from 'rxjs/operators';
 
 /**
@@ -52,7 +52,11 @@ export class NgrxUniversalRehydrateServerModule {
          * since we are wrapping that callback with our own callback to ensure that the transfer state for rehydration
          * is added to the TransferState before it is serialized
          */
-        const serializeStateCallback = callbacks.find((c) => !!c);
+        const serializeStateCallback =
+            callbacks[0] ||
+            // So, so hacky. But currently there is no other way to find the right callback since the functions
+            // prototype does not have the name property. Open to ideas here.
+            callbacks.find((c) => c.toString().includes(`appId + '-state'`));
 
         if (serializeStateCallback) {
             callbacks[0] = serializeRehydrateStateFactory(

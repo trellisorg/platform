@@ -9,7 +9,7 @@ import { RouterModule } from '@angular/router';
 import { EffectsModule } from '@ngrx/effects';
 import { Store, StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { NgrxUniversalRehydrateBrowserModule } from '@trellisorg/ngrx-universal-rehydrate/browser';
+import { NgrxUniversalRehydrateBrowserModule } from '@trellisorg/ngrx-universal-rehydrate';
 import { AppComponent } from './app.component';
 import { Effects } from './effects';
 import { loadData, titleReducer } from './store';

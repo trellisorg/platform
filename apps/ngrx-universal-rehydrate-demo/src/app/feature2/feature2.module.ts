@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { NgrxUniversalRehydrateBrowserModule } from '@trellisorg/ngrx-universal-rehydrate/browser';
+import { NgrxUniversalRehydrateBrowserModule } from '@trellisorg/ngrx-universal-rehydrate';
 import { Feature2Component } from './feature2.component';
 
 @NgModule({

@@ -6,7 +6,10 @@ import { Component, ComponentFactory, Input, Type } from '@angular/core';
     templateUrl: './lazy-dynamic-outlet.component.html',
     styleUrls: ['./lazy-dynamic-outlet.component.scss'],
 })
-export class LazyDynamicOutletComponent<TComponentType extends Type<unknown>, TComponent = InstanceType<TComponentType>> {
+export class LazyDynamicOutletComponent<
+    TComponentType extends Type<unknown>,
+    TComponent = InstanceType<TComponentType>
+> {
     @Input() lazyDynamicOutletConfig: IntersectionObserverInit = {
         threshold: [0.25],
         rootMargin: '0px',

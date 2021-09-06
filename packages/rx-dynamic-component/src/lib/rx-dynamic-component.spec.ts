@@ -14,6 +14,7 @@ import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 @Component({
+    // eslint-disable-next-line @angular-eslint/component-selector
     selector: 'container',
     template: ` <rx-dynamic-outlet
         [factory]="factory$ | async"
@@ -33,6 +34,7 @@ class ContainerComponent {
 }
 
 @Component({
+    // eslint-disable-next-line @angular-eslint/component-selector
     selector: 'lazy-child1',
     template: ` <div data-testid="lazyChildDiv">lazyChildDiv</div>`,
     styles: [''],
