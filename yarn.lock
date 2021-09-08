@@ -2580,6 +2580,13 @@
     estree-walker "^1.0.1"
     picomatch "^2.2.2"
 
+"@rx-angular/cdk@^1.0.0-alpha.10":
+  version "1.0.0-alpha.10"
+  resolved "https://registry.yarnpkg.com/@rx-angular/cdk/-/cdk-1.0.0-alpha.10.tgz#751f20df13b3299965e5cd8123eb14e02e6e4127"
+  integrity sha512-QI2jtVjxBccBmcir0yfkgY/IYFgFh/sOeJNFj28DWeLWIizfdyTb8YCcelni4dbJSpQkV+d+CAhyM0IiW4R1Pw==
+  dependencies:
+    tslib "^2.0.0"
+
 "@schematics/angular@12.2.2":
   version "12.2.2"
   resolved "https://registry.yarnpkg.com/@schematics/angular/-/angular-12.2.2.tgz#3eaa470b1adf639fc17034969298777021930551"
@@ -11715,7 +11722,14 @@ run-queue@^1.0.0, run-queue@^1.0.3:
   dependencies:
     aproba "^1.1.1"
 
-rx@4.1.0:
+rx-angular@^1.1.3:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/rx-angular/-/rx-angular-1.1.3.tgz#eac48c03ea035361a1361b537f388899c52939f8"
+  integrity sha1-6sSMA+oDU2GhNhtTfziImcUpOfg=
+  dependencies:
+    rx "*"
+
+rx@*, rx@4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/rx/-/rx-4.1.0.tgz#a5f13ff79ef3b740fe30aa803fb09f98805d4782"
   integrity sha1-pfE/957zt0D+MKqAP7CfmIBdR4I=

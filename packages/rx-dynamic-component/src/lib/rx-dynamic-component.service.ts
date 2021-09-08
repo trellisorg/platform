@@ -10,6 +10,7 @@ import {
 import type { Observable } from 'rxjs';
 import { from, of, throwError } from 'rxjs';
 import { catchError, switchMap, tap } from 'rxjs/operators';
+import { Logger } from './logger';
 import {
     DynamicComponentRootConfig,
     DYNAMIC_COMPONENT,
@@ -29,7 +30,8 @@ export class RxDynamicComponentService {
         @Optional() private _compiler: Compiler,
         private _injector: Injector,
         @Inject(DYNAMIC_COMPONENT_CONFIG)
-        private config: DynamicComponentRootConfig
+        private config: DynamicComponentRootConfig,
+        private logger: Logger
     ) {}
 
     /**
@@ -64,7 +66,7 @@ export class RxDynamicComponentService {
 
         if (!manifest) {
             if (this.config.devMode) {
-                console.warn(
+                this.logger.warn(
                     `Could not find a manifest with componentId: ${componentId}. Did you mean one of: ${Array.from(
                         this.manifests.keys()
                     ).join(',')}?`
@@ -123,7 +125,7 @@ export class RxDynamicComponentService {
             }),
             catchError((error) => {
                 if (this.config.devMode) {
-                    console.error(
+                    this.logger.error(
                         `There was an error resolving the component factory with componentId: ${componentId}`,
                         error
                     );

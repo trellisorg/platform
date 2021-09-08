@@ -1,9 +1,5 @@
-import {
-    Inject,
-    ModuleWithProviders,
-    NgModule,
-    OnDestroy,
-} from '@angular/core';
+import { Inject, ModuleWithProviders, NgModule } from '@angular/core';
+import { Logger } from './logger';
 import {
     defaultRootConfig,
     DynamicComponentManifest,
@@ -13,6 +9,7 @@ import {
     ManifestMap,
     _FEATURE_DYNAMIC_COMPONENT_MANIFESTS,
 } from './manifest';
+import { RxDynamicComponentPreloaderService } from './rx-dynamic-component-preloader.service';
 import { RxDynamicComponentService } from './rx-dynamic-component.service';
 
 function _initialManifestMap(
@@ -28,12 +25,17 @@ export class RxDynamicComponentRootModule {
     constructor(
         rxDynamicComponentService: RxDynamicComponentService,
         @Inject(DYNAMIC_COMPONENT_CONFIG) config: DynamicComponentRootConfig,
-        @Inject(DYNAMIC_MANIFEST_MAP) map: ManifestMap
-    ) {}
+        @Inject(DYNAMIC_MANIFEST_MAP) map: ManifestMap,
+        rxDynamicComponentPreloaderService: RxDynamicComponentPreloaderService
+    ) {
+        rxDynamicComponentPreloaderService.processManifestPreloads(
+            config.manifests
+        );
+    }
 }
 
 @NgModule({})
-export class RxDynamicComponentFeatureModule implements OnDestroy {
+export class RxDynamicComponentFeatureModule {
     constructor(
         @Inject(_FEATURE_DYNAMIC_COMPONENT_MANIFESTS)
         private manifests: DynamicComponentManifest[],
@@ -45,15 +47,6 @@ export class RxDynamicComponentFeatureModule implements OnDestroy {
          */
         manifests.forEach((manifest) =>
             manifestMap.set(manifest.componentId, manifest)
-        );
-    }
-
-    ngOnDestroy(): void {
-        /**
-         * When the module is destroyed unregister each manifest from the root manifest map
-         */
-        this.manifests.forEach((manifest) =>
-            this.manifestMap.delete(manifest.componentId)
         );
     }
 }
@@ -86,6 +79,8 @@ export class RxDynamicComponentModule {
                     provide: DYNAMIC_MANIFEST_MAP,
                     useValue: _initialManifestMap(mergedConfig.manifests || []),
                 },
+                RxDynamicComponentPreloaderService,
+                Logger,
             ],
         };
     }

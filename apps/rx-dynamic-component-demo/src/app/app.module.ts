@@ -29,6 +29,7 @@ import { QueryParam2Module } from './query-param2/query-param2.module';
                         import('./query-param1/query-param1.module').then(
                             (m) => m.QueryParam1Module
                         ),
+                    preload: true,
                 },
                 /**
                  * Or can be used to reference the module directly
