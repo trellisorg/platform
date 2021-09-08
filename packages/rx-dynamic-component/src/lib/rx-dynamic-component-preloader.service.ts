@@ -122,9 +122,9 @@ export class RxDynamicComponentPreloaderService {
         priority: DynamicManifestPreloadPriority
     ): Promise<void> {
         if (
+            this.isBrowser &&
             'requestIdleCallback' in window &&
-            priority === DynamicManifestPreloadPriority.IDLE &&
-            this.isBrowser
+            priority === DynamicManifestPreloadPriority.IDLE
         ) {
             this.logger.log(
                 `requestIdleCallback is available, scheduling load for "${manifest.componentId}" with a timeout of ${timeout}ms`
