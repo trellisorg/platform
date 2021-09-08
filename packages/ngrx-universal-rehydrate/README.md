@@ -27,7 +27,7 @@ from universal to the client. You can see this if you install the Redux DevTools
 2. Add the following to your `AppModule`'s import
 
 ```typescript
-NgrxUniversalRehydrateModule.forRoot({}),
+NgrxUniversalRehydrateModule.forRoot({})
 ```
 
 `forRoot` takes a config object in the shape of:
@@ -47,3 +47,27 @@ export interface NgrxUniversalHydrateConfig {
 ```
 
 If `stores` is left empty or undefined then the entire store is transferred.
+
+3. Import `NgrxUniversalRehydrateServerModule` into your apps `AppServerModule`
+
+```typescript
+import { NgModule } from '@angular/core';
+import {
+    ServerModule,
+    ServerTransferStateModule,
+} from '@angular/platform-server';
+import { NgrxUniversalRehydrateServerModule } from '@trellisorg/ngrx-universal-rehydrate/server';
+import { AppComponent } from './app.component';
+import { AppModule } from './app.module';
+
+@NgModule({
+    imports: [
+        AppModule,
+        ServerModule,
+        ServerTransferStateModule,
+        NgrxUniversalRehydrateServerModule.forServer(),
+    ],
+    bootstrap: [AppComponent],
+})
+export class AppServerModule {}
+```
