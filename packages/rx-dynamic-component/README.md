@@ -193,3 +193,51 @@ You can also pass in the a `Partial<IntersectionObserverInit>` object to the ele
 <div rxObserveIntersecting [config]='Partial<IntersectionObserverInit>'>
 </div>
 ```
+
+### (Optional) Advanced manifest configuration
+
+`rx-dynamic-component` provides the ability to preload manifests.
+
+Manifest Configuration:
+```typescript
+export interface DynamicComponentManifest<T = string> {
+    preload?: boolean;
+    priority?: DynamicManifestPreloadPriority;
+    timeout?: number;
+    cacheFactories?: boolean;
+    componentId: T;
+    loadChildren: LoadChildrenCallback;
+}
+```
+
+We have already seen `componentId` and `loadChildren` above in the first couple of steps.
+
+Each of the following properties can be configured globally (in `forRoot()`) or at the manifest level. Global values are used if the manifest does not
+have a value set for that property, and the manifest level properties override global properties.
+
+#### Preloading
+
+We can configure these manifests to be preloaded so that when we go to use them in our application the asset bundles have already
+been downloaded to the browser.
+
+`preload` - Whether this manifest should be preloaded or not
+
+`priority` - Manifests can either be preloaded immediately or when the browser is idling as to not block the main thread.
+Values will either be `DynamicManifestPreloadPriority.IDLE` or `DynamicManifestPreloadPriority.IMMEDIATE`. `priority` will only be used if
+`preload: true`
+
+`timeout` - The timeout to configure for `window.requestIdleCallback` that will preload the manifest in the background when using `DynamicManifestPreloadPriority.IDLE`
+Reference: https://developer.mozilla.org/en-US/docs/Web/API/Window/requestIdleCallback, `timeout` is ignored if `preload: false` or `priority: 'immediate'`
+
+#### Caching
+
+`cacheFactories` - Will cache the `ComponentFactory` pulled from the manifest if set to true. Still a little buggy in certain cases but works for the majority.
+
+### (Optional) Manually preload manifests
+
+The `RxDynamicComponentService` exposes a method:
+
+`loadManifest(componentId: string, priority: DynamicManifestPreloadPriority = DynamicManifestPreloadPriority.IDLE)`
+
+that can be called to force a preload for a manifest. Global and Manifest configurations are ignored in this case and instead the values passed
+in will determine how to preload the manifest.

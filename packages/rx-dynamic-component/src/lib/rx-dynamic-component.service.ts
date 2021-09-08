@@ -10,13 +10,17 @@ import {
 import type { Observable } from 'rxjs';
 import { from, of, throwError } from 'rxjs';
 import { catchError, switchMap, tap } from 'rxjs/operators';
+import { Logger } from './logger';
 import {
+    DEFAULT_TIMEOUT,
     DynamicComponentRootConfig,
+    DynamicManifestPreloadPriority,
     DYNAMIC_COMPONENT,
     DYNAMIC_COMPONENT_CONFIG,
     DYNAMIC_MANIFEST_MAP,
     ManifestMap,
 } from './manifest';
+import { RxDynamicComponentPreloaderService } from './rx-dynamic-component-preloader.service';
 
 @Injectable()
 export class RxDynamicComponentService {
@@ -29,8 +33,43 @@ export class RxDynamicComponentService {
         @Optional() private _compiler: Compiler,
         private _injector: Injector,
         @Inject(DYNAMIC_COMPONENT_CONFIG)
-        private config: DynamicComponentRootConfig
+        private config: DynamicComponentRootConfig,
+        private logger: Logger,
+        private rxDynamicComponentPreloaderService: RxDynamicComponentPreloaderService
     ) {}
+
+    private cannotFindManifest(componentId: string): void {
+        this.logger.error(
+            `The componentId, ${componentId}, you supplied is not registered to a manifest. Did you mean one of ${Array.from(
+                this.manifests.keys()
+            ).join(',')}`
+        );
+    }
+
+    /**
+     * Manually trigger a load for a manifest to preload it
+     * @param componentId
+     * @param priority
+     */
+    loadManifest(
+        componentId: string,
+        priority: DynamicManifestPreloadPriority = DynamicManifestPreloadPriority.IDLE
+    ): Promise<void> {
+        const manifest = this.manifests.get(componentId);
+
+        if (!manifest) {
+            this.cannotFindManifest(componentId);
+            throw new Error(
+                `${componentId} does not exist in the ManifestMap.`
+            );
+        }
+
+        return this.rxDynamicComponentPreloaderService.loadWithPriority(
+            manifest,
+            DEFAULT_TIMEOUT,
+            priority
+        );
+    }
 
     /**
      * References:
@@ -53,26 +92,27 @@ export class RxDynamicComponentService {
         componentId: string,
         injector?: Injector
     ): Observable<ComponentFactory<TComponent>> {
-        if (
-            this.config.cacheFactories &&
-            this.componentCache.has(componentId)
-        ) {
-            return of(this.componentCache.get(componentId));
-        }
-
         const manifest = this.manifests.get(componentId);
 
         if (!manifest) {
             if (this.config.devMode) {
-                console.warn(
-                    `Could not find a manifest with componentId: ${componentId}. Did you mean one of: ${Array.from(
-                        this.manifests.keys()
-                    ).join(',')}?`
-                );
+                this.cannotFindManifest(componentId);
             }
             return throwError(
                 `No manifest found for componentId: ${componentId}`
             );
+        }
+
+        /*
+         * Factories can be cached at either the global level or at the manifest level
+         */
+        if (
+            (manifest.cacheFactories ||
+                (this.config.cacheFactories &&
+                    manifest.cacheFactories === undefined)) &&
+            this.componentCache.has(componentId)
+        ) {
+            return of(this.componentCache.get(componentId));
         }
 
         const loadChildren = manifest.loadChildren();
@@ -123,7 +163,7 @@ export class RxDynamicComponentService {
             }),
             catchError((error) => {
                 if (this.config.devMode) {
-                    console.error(
+                    this.logger.error(
                         `There was an error resolving the component factory with componentId: ${componentId}`,
                         error
                     );

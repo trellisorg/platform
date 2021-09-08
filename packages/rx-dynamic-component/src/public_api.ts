@@ -3,6 +3,7 @@ export { DynamicOutletModule } from './lib/dynamic-outlet/dynamic-outlet.module'
 export {
     DynamicComponentManifest,
     DynamicComponentRootConfig,
+    DynamicManifestPreloadPriority,
     DYNAMIC_COMPONENT,
 } from './lib/manifest';
 export {
