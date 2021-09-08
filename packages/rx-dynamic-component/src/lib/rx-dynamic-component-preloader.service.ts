@@ -1,4 +1,5 @@
-import { Inject, Injectable, NgZone } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Inject, Injectable, NgZone, PLATFORM_ID } from '@angular/core';
 import type { Observable } from 'rxjs';
 import { isObservable } from 'rxjs';
 import { Logger } from './logger';
@@ -41,12 +42,18 @@ function isPromiseOrObservable<T>(
 export class RxDynamicComponentPreloaderService {
     private readonly preloaded: Set<string> = new Set<string>();
 
+    private readonly isBrowser: boolean;
+
     constructor(
         @Inject(DYNAMIC_COMPONENT_CONFIG)
         private config: DynamicComponentRootConfig,
         private _ngZone: NgZone,
-        private logger: Logger
-    ) {}
+        private logger: Logger,
+        // eslint-disable-next-line @typescript-eslint/ban-types
+        @Inject(PLATFORM_ID) platformId: Object
+    ) {
+        this.isBrowser = isPlatformBrowser(platformId);
+    }
 
     async processManifestPreloads(
         manifests: DynamicComponentManifest[]
@@ -100,6 +107,15 @@ export class RxDynamicComponentPreloaderService {
         }
     }
 
+    /**
+     * Will load the manifest with the specified priority by leveraging window.requestIdleCallback
+     *
+     * If that is unable (SSR or no browser support) priority will default to IMMEDIATE and the manifest will be
+     * loaded right away
+     * @param manifest
+     * @param timeout
+     * @param priority
+     */
     async loadWithPriority(
         manifest: DynamicComponentManifest,
         timeout: number,
@@ -107,7 +123,8 @@ export class RxDynamicComponentPreloaderService {
     ): Promise<void> {
         if (
             'requestIdleCallback' in window &&
-            priority === DynamicManifestPreloadPriority.IDLE
+            priority === DynamicManifestPreloadPriority.IDLE &&
+            this.isBrowser
         ) {
             this.logger.log(
                 `requestIdleCallback is available, scheduling load for "${manifest.componentId}" with a timeout of ${timeout}ms`
