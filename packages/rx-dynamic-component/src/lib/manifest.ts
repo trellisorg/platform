@@ -16,31 +16,35 @@ export const enum DynamicManifestPreloadPriority {
     IDLE = 'idle',
 }
 
+/**
+ * preload: Whether or not this manifest should be preloaded.
+ * priority: Either IDLE or IMMEDIATE, First checked at global config, then manifest, then defaults to IDLE
+ * timeout: The amount of time in milliseconds to wait for an idle callback before triggering a load
+ */
 export interface PreloadManifest {
-    preload: true;
+    preload?: boolean;
     priority?: DynamicManifestPreloadPriority;
     timeout?: number;
 }
 
-export interface IdleManifest {
-    preload?: false | undefined;
-}
-
-export type DynamicComponentRootConfig = {
+/**
+ * devMode: Will enable logging to debug how things are loaded
+ * manifests
+ * cacheFactories: Whether or not to cache the factories that are piped through RxDynamicService (Can be buggy in places)
+ *
+ * TODO: allow for caching at the manifest level
+ */
+export interface DynamicComponentRootConfig extends PreloadManifest {
     devMode?: boolean;
     manifests?: DynamicComponentManifest[];
     cacheFactories?: boolean;
-} & (PreloadManifest | IdleManifest);
-
-export const defaultManifestLoadConfig: IdleManifest = {
-    preload: false,
-};
+}
 
 export const defaultRootConfig: DynamicComponentRootConfig = {
     manifests: [],
     devMode: false,
     cacheFactories: false,
-    ...defaultManifestLoadConfig,
+    preload: false,
 };
 
 /**
@@ -48,13 +52,10 @@ export const defaultRootConfig: DynamicComponentRootConfig = {
  * componentId is used to find the correct module to load in the manifest map
  */
 
-interface DynamicComponentManifestBase<T = string> {
+export interface DynamicComponentManifest<T = string> extends PreloadManifest {
     componentId: T;
     loadChildren: LoadChildrenCallback;
 }
-
-export type DynamicComponentManifest<T = string> =
-    DynamicComponentManifestBase<T> & (PreloadManifest | IdleManifest);
 
 /**
  * The root configuration injection token

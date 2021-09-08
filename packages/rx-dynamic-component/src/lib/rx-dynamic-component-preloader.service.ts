@@ -1,16 +1,16 @@
-import { Inject, Injectable, NgZone } from '@angular/core';
-import { Logger } from './logger';
-import {
-    DEFAULT_TIMEOUT,
-    DynamicComponentManifest,
-    DynamicComponentRootConfig,
-    DYNAMIC_COMPONENT_CONFIG,
-} from './manifest';
-
 /*
  * TODO: Remove IdleDeadline and requestIdleCallback typing once upgrade to 4.4
  * https://github.com/microsoft/TypeScript/issues/40807
  */
+import { Inject, Injectable, NgZone } from '@angular/core';
+import {
+    DynamicComponentManifest,
+    DynamicComponentRootConfig,
+    DynamicManifestPreloadPriority,
+} from '@trellisorg/rx-dynamic-component';
+import { Logger } from './logger';
+import { DEFAULT_TIMEOUT, DYNAMIC_COMPONENT_CONFIG } from './manifest';
+
 interface IdleDeadline {
     didTimeout: boolean;
     timeRemaining: () => number;
@@ -38,12 +38,22 @@ export class RxDynamicComponentPreloaderService {
         manifests: DynamicComponentManifest[]
     ): Promise<void> {
         for (const manifest of manifests) {
-            if (manifest.preload || (manifest.preload && this.config.preload)) {
+            /*
+             * Should preload the manifest if explicitly set or inherited from the global config.
+             */
+            if (
+                manifest.preload ||
+                (manifest.preload !== false && this.config.preload)
+            ) {
                 // Will default to a timeout of 1 second
                 const timeout =
-                    (manifest.timeout ??
-                        (this.config.preload && this.config.timeout)) ||
-                    DEFAULT_TIMEOUT;
+                    manifest.timeout ?? this.config.timeout ?? DEFAULT_TIMEOUT;
+
+                // If not specified the priority will always be IDLE
+                const priority: DynamicManifestPreloadPriority =
+                    manifest.priority ??
+                    this.config.priority ??
+                    DynamicManifestPreloadPriority.IDLE;
 
                 if (NgZone.isInAngularZone()) {
                     this.logger.log(
@@ -51,20 +61,28 @@ export class RxDynamicComponentPreloaderService {
                     );
                     await this._ngZone.runOutsideAngular(
                         async () =>
-                            await this.idleLoadIfPossible(manifest, timeout)
+                            await this.loadWithPriority(
+                                manifest,
+                                timeout,
+                                priority
+                            )
                     );
                 } else {
-                    await this.idleLoadIfPossible(manifest, timeout);
+                    await this.loadWithPriority(manifest, timeout, priority);
                 }
             }
         }
     }
 
-    async idleLoadIfPossible(
+    async loadWithPriority(
         manifest: DynamicComponentManifest,
-        timeout: number
+        timeout: number,
+        priority: DynamicManifestPreloadPriority
     ): Promise<void> {
-        if ('requestIdleCallback' in window) {
+        if (
+            'requestIdleCallback' in window &&
+            priority === DynamicManifestPreloadPriority.IDLE
+        ) {
             this.logger.log(
                 `requestIdleCallback is available, scheduling load for "${manifest.componentId}" with a timeout of ${timeout}ms`
             );
@@ -83,9 +101,10 @@ export class RxDynamicComponentPreloaderService {
                 }
             );
         } else {
-            this.logger.log(
-                `requestIdleCallback is not available, loading ${manifest.componentId} immediately`
-            );
+            if (priority === DynamicManifestPreloadPriority.IDLE)
+                this.logger.log(
+                    `requestIdleCallback is not available, loading ${manifest.componentId} immediately`
+                );
             await this.loadManifest(manifest);
         }
     }
