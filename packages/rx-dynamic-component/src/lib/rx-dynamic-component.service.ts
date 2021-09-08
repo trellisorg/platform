@@ -92,13 +92,6 @@ export class RxDynamicComponentService {
         componentId: string,
         injector?: Injector
     ): Observable<ComponentFactory<TComponent>> {
-        if (
-            this.config.cacheFactories &&
-            this.componentCache.has(componentId)
-        ) {
-            return of(this.componentCache.get(componentId));
-        }
-
         const manifest = this.manifests.get(componentId);
 
         if (!manifest) {
@@ -108,6 +101,18 @@ export class RxDynamicComponentService {
             return throwError(
                 `No manifest found for componentId: ${componentId}`
             );
+        }
+
+        /*
+         * Factories can be cached at either the global level or at the manifest level
+         */
+        if (
+            (manifest.cacheFactories ||
+                (this.config.cacheFactories &&
+                    manifest.cacheFactories === undefined)) &&
+            this.componentCache.has(componentId)
+        ) {
+            return of(this.componentCache.get(componentId));
         }
 
         const loadChildren = manifest.loadChildren();

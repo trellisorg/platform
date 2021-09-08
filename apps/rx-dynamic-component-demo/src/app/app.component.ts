@@ -19,7 +19,7 @@ export class AppComponent {
         switchMap((params) =>
             this.rxDynamicComponentService.getComponentFactory<
                 QueryParam1Component | QueryParam2Component
-                >(params['query'])
+            >(params['query'])
         )
     );
 
@@ -33,6 +33,7 @@ export class AppComponent {
         private _router: Router,
         private _matBottomSheet: MatBottomSheet
     ) {
+        this.rxDynamicComponentService.loadManifest('service-preload');
     }
 
     changeQueryParams($event: Event): void {

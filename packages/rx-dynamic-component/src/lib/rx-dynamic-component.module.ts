@@ -40,7 +40,8 @@ export class RxDynamicComponentFeatureModule {
         @Inject(_FEATURE_DYNAMIC_COMPONENT_MANIFESTS)
         private manifests: DynamicComponentManifest[],
         @Inject(DYNAMIC_MANIFEST_MAP)
-        private manifestMap: ManifestMap
+        private manifestMap: ManifestMap,
+        rxDynamicComponentPreloaderService: RxDynamicComponentPreloaderService
     ) {
         /**
          * Register each of the feature manifests with the root map
@@ -48,6 +49,8 @@ export class RxDynamicComponentFeatureModule {
         manifests.forEach((manifest) =>
             manifestMap.set(manifest.componentId, manifest)
         );
+
+        rxDynamicComponentPreloaderService.processManifestPreloads(manifests);
     }
 }
 

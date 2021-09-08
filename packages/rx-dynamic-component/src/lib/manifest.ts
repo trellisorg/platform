@@ -20,11 +20,13 @@ export const enum DynamicManifestPreloadPriority {
  * preload: Whether or not this manifest should be preloaded.
  * priority: Either IDLE or IMMEDIATE, First checked at global config, then manifest, then defaults to IDLE
  * timeout: The amount of time in milliseconds to wait for an idle callback before triggering a load
+ * cacheFactories: Whether this factory should be cached or if all factories can be cached
  */
-export interface PreloadManifest {
+export interface SharedManifestConfig {
     preload?: boolean;
     priority?: DynamicManifestPreloadPriority;
     timeout?: number;
+    cacheFactories?: boolean;
 }
 
 /**
@@ -34,10 +36,9 @@ export interface PreloadManifest {
  *
  * TODO: allow for caching at the manifest level
  */
-export interface DynamicComponentRootConfig extends PreloadManifest {
+export interface DynamicComponentRootConfig extends SharedManifestConfig {
     devMode?: boolean;
     manifests?: DynamicComponentManifest[];
-    cacheFactories?: boolean;
 }
 
 export const defaultRootConfig: DynamicComponentRootConfig = {
@@ -52,7 +53,8 @@ export const defaultRootConfig: DynamicComponentRootConfig = {
  * componentId is used to find the correct module to load in the manifest map
  */
 
-export interface DynamicComponentManifest<T = string> extends PreloadManifest {
+export interface DynamicComponentManifest<T = string>
+    extends SharedManifestConfig {
     componentId: T;
     loadChildren: LoadChildrenCallback;
 }
