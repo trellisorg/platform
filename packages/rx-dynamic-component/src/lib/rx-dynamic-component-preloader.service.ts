@@ -1,16 +1,17 @@
+import { Inject, Injectable, NgZone } from '@angular/core';
+import { Logger } from './logger';
+import {
+    DEFAULT_TIMEOUT,
+    DynamicComponentManifest,
+    DynamicComponentRootConfig,
+    DynamicManifestPreloadPriority,
+    DYNAMIC_COMPONENT_CONFIG,
+} from './manifest';
+
 /*
  * TODO: Remove IdleDeadline and requestIdleCallback typing once upgrade to 4.4
  * https://github.com/microsoft/TypeScript/issues/40807
  */
-import { Inject, Injectable, NgZone } from '@angular/core';
-import {
-    DynamicComponentManifest,
-    DynamicComponentRootConfig,
-    DynamicManifestPreloadPriority,
-} from '@trellisorg/rx-dynamic-component';
-import { Logger } from './logger';
-import { DEFAULT_TIMEOUT, DYNAMIC_COMPONENT_CONFIG } from './manifest';
-
 interface IdleDeadline {
     didTimeout: boolean;
     timeRemaining: () => number;
