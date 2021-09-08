@@ -3,6 +3,8 @@ import type { LoadChildrenCallback } from '@angular/router';
 
 export type ManifestMap = Map<string, DynamicComponentManifest>;
 
+export const DEFAULT_TIMEOUT = 1_000;
+
 /**
  * Root configuration for RxDynamicComponent
  * devMode: disabling devMode will prevent console.warn's when an issue arises.

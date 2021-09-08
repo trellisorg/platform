@@ -1,6 +1,7 @@
 import { Inject, Injectable, NgZone } from '@angular/core';
 import { Logger } from './logger';
 import {
+    DEFAULT_TIMEOUT,
     DynamicComponentManifest,
     DynamicComponentRootConfig,
     DYNAMIC_COMPONENT_CONFIG,
@@ -42,7 +43,7 @@ export class RxDynamicComponentPreloaderService {
                 const timeout =
                     (manifest.timeout ??
                         (this.config.preload && this.config.timeout)) ||
-                    1000;
+                    DEFAULT_TIMEOUT;
 
                 if (NgZone.isInAngularZone()) {
                     this.logger.log(
