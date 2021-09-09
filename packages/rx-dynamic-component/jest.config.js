@@ -1,7 +1,7 @@
 module.exports = {
     displayName: 'rx-dynamic-component',
     preset: '../../jest.preset.js',
-    setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
+    setupFilesAfterEnv: ['<rootDir>/test-setup.ts'],
     globals: {
         'ts-jest': {
             stringifyContentPathRegex: '\\.(html|svg)$',

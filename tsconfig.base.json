@@ -35,14 +35,14 @@
                 "packages/ngrx-universal-rehydrate/src/index.ts"
             ],
             "@trellisorg/ngrx-universal-rehydrate/server": [
-                "packages/ngrx-universal-rehydrate/src/lib/server/src/index.ts"
+                "packages/ngrx-universal-rehydrate/server/src/index.ts"
             ],
             "@trellisorg/nxls": ["packages/nxls/src/index.ts"],
             "@trellisorg/rx-dynamic-component": [
                 "packages/rx-dynamic-component/src/index.ts"
             ],
             "@trellisorg/rx-dynamic-component/lazy": [
-                "packages/rx-dynamic-component/src/lib/lazy/src/index.ts"
+                "packages/rx-dynamic-component/lazy/src/index.ts"
             ]
         }
     },

@@ -16,6 +16,6 @@
         "compilationMode": "partial",
         "enableResourceInlining": true
     },
-    "exclude": ["src/test-setup.ts", "**/*.spec.ts"],
+    "exclude": ["test-setup.ts", "**/*.spec.ts"],
     "include": ["./**/*.ts"]
 }
