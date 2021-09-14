@@ -19,6 +19,10 @@
         "baseUrl": ".",
         "paths": {
             "@trellis/make-buildable": ["packages/make-buildable/src/index.ts"],
+            "@trellisorg/clampjs": ["packages/clampjs/src/index.ts"],
+            "@trellisorg/clampjs/angular": [
+                "packages/clampjs/angular/index.ts"
+            ],
             "@trellisorg/nest-spectator": [
                 "packages/nest-spectator/src/index.ts"
             ],

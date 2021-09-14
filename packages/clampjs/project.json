@@ -1,0 +1,42 @@
+{
+    "projectType": "library",
+    "root": "packages/clampjs",
+    "sourceRoot": "packages/clampjs/src",
+    "prefix": "trellisorg",
+    "targets": {
+        "build": {
+            "executor": "@nrwl/angular:package",
+            "outputs": ["dist/packages/clampjs"],
+            "options": {
+                "project": "packages/clampjs/ng-package.json"
+            },
+            "configurations": {
+                "production": {
+                    "tsConfig": "packages/clampjs/tsconfig.lib.prod.json"
+                },
+                "development": {
+                    "tsConfig": "packages/clampjs/tsconfig.lib.json"
+                }
+            },
+            "defaultConfiguration": "production"
+        },
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/packages/clampjs"],
+            "options": {
+                "jestConfig": "packages/clampjs/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": [
+                    "packages/clampjs/src/**/*.ts",
+                    "packages/clampjs/src/**/*.html"
+                ]
+            }
+        }
+    },
+    "tags": []
+}

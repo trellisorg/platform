@@ -1,0 +1,7 @@
+{
+    "ngPackage": {},
+    "dependencies": {
+        "@angular/core": "*",
+        "@angular/common": "*"
+    }
+}

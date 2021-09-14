@@ -2,6 +2,7 @@
     "version": 2,
     "projects": {
         "api": "apps/api",
+        "clampjs": "packages/clampjs",
         "conways-game-of-life": "apps/conways-game-of-life",
         "make-buildable": "packages/make-buildable",
         "nest-spectator": "packages/nest-spectator",
