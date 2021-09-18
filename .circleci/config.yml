@@ -5,6 +5,10 @@ orbs:
 
 jobs:
     build-and-test:
+        parameters:
+            flags:
+                type: string
+                default: ''
         docker:
             - image: cimg/node:12.20
         steps:
@@ -13,7 +17,7 @@ jobs:
                   pkg-manager: yarn
             - run:
                   name: Run tests
-                  command: yarn nx affected:test --parallel
+                  command: yarn nx affected:test --parallel << parameters.flags >>
             - run:
                   name: Build
                   command: yarn nx affected:build
@@ -21,4 +25,13 @@ jobs:
 workflows:
     run:
         jobs:
-            - build-and-test
+            - build-and-test:
+                  name: build-and-test-pr
+                  filters:
+                      branches:
+                          ignore: master
+            - build-and-test:
+                  name: build-and-test-master
+                  filters:
+                      branches:
+                          only: master
