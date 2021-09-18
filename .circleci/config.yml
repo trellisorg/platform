@@ -32,6 +32,7 @@ workflows:
                           ignore: master
             - build-and-test:
                   name: build-and-test-master
+                  flags: '--all'
                   filters:
                       branches:
                           only: master
