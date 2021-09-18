@@ -36,9 +36,10 @@ export interface SharedManifestConfig {
  *
  * TODO: allow for caching at the manifest level
  */
-export interface DynamicComponentRootConfig extends SharedManifestConfig {
+export interface DynamicComponentRootConfig<T extends string = string>
+    extends SharedManifestConfig {
     devMode?: boolean;
-    manifests?: DynamicComponentManifest[];
+    manifests?: DynamicComponentManifest<T>[];
 }
 
 export const defaultRootConfig: DynamicComponentRootConfig = {
