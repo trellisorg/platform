@@ -20,7 +20,7 @@ jobs:
                   command: yarn nx affected:test --parallel << parameters.flags >>
             - run:
                   name: Build
-                  command: yarn nx affected:build
+                  command: yarn nx affected:build << parameters.flags >>
 
 workflows:
     run:
