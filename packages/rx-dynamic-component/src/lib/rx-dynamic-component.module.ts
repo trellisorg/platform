@@ -62,8 +62,8 @@ export class RxDynamicComponentModule {
      * Providing manifests at the root level is optional as they can be added later with forFeature
      * @param config
      */
-    static forRoot(
-        config: DynamicComponentRootConfig
+    static forRoot<T extends string = string>(
+        config: DynamicComponentRootConfig<T>
     ): ModuleWithProviders<RxDynamicComponentRootModule> {
         const mergedConfig: DynamicComponentRootConfig = {
             ...defaultRootConfig,
@@ -91,7 +91,7 @@ export class RxDynamicComponentModule {
     /**
      * If manifests are added in feature module then forFeature can be used to add manifests to the store of manifests in memory
      */
-    static forFeature(
+    static forFeature<T extends string = string>(
         manifests: DynamicComponentManifest[]
     ): ModuleWithProviders<RxDynamicComponentFeatureModule> {
         return {
