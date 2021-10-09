@@ -1,7 +1,15 @@
 import { isPlatformBrowser } from '@angular/common';
-import { Inject, Injectable, NgZone, PLATFORM_ID } from '@angular/core';
+import {
+    Inject,
+    Injectable,
+    Injector,
+    NgZone,
+    PLATFORM_ID,
+} from '@angular/core';
 import type { Observable } from 'rxjs';
-import { isObservable } from 'rxjs';
+import { isObservable, of } from 'rxjs';
+import { catchError, map, switchMap } from 'rxjs/operators';
+import { runCanImports } from './can-import';
 import { Logger } from './logger';
 import {
     DEFAULT_TIMEOUT,
@@ -10,6 +18,7 @@ import {
     DynamicManifestPreloadPriority,
     DYNAMIC_COMPONENT_CONFIG,
 } from './manifest';
+import { wrapIntoObservable } from './utils';
 
 /*
  * TODO: Remove IdleDeadline and requestIdleCallback typing once upgrade to 4.4
@@ -50,7 +59,8 @@ export class RxDynamicComponentPreloaderService {
         private _ngZone: NgZone,
         private logger: Logger,
         // eslint-disable-next-line @typescript-eslint/ban-types
-        @Inject(PLATFORM_ID) platformId: Object
+        @Inject(PLATFORM_ID) platformId: Object,
+        private _injector: Injector
     ) {
         this.isBrowser = isPlatformBrowser(platformId);
     }
@@ -152,15 +162,30 @@ export class RxDynamicComponentPreloaderService {
         }
     }
 
-    async loadManifest(manifest: DynamicComponentManifest): Promise<void> {
+    async loadManifest(manifest: DynamicComponentManifest): Promise<boolean> {
         this.logger.log(`Loading ${manifest.componentId}`);
 
         const promiseOrObservable = manifest.loadChildren();
 
-        await (isObservable(promiseOrObservable)
-            ? promiseOrObservable.toPromise()
-            : promiseOrObservable);
+        const canImportGuards = manifest.canImport ?? [];
 
-        return;
+        return runCanImports(this._injector, manifest, canImportGuards)
+            .pipe(
+                switchMap((canImport) =>
+                    canImport
+                        ? wrapIntoObservable(promiseOrObservable).pipe(
+                              map(() => true),
+                              catchError((error) => {
+                                  this.logger.error(
+                                      `Failed to load ${manifest.componentId}`,
+                                      error
+                                  );
+                                  return of(false);
+                              })
+                          )
+                        : of(false)
+                )
+            )
+            .toPromise();
     }
 }
