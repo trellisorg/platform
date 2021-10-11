@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RxDynamicComponentService } from '@trellisorg/rx-dynamic-component';
+import { BehaviorSubject } from 'rxjs';
 import { filter, switchMap } from 'rxjs/operators';
 import { DialogComponent } from './dialog/dialog.component';
 import type { QueryParam1Component } from './query-param1/query-param1.component';
@@ -27,6 +28,8 @@ export class AppComponent {
 
     arr = new Array(100).fill(0);
 
+    data$ = new BehaviorSubject<any>({ title: 'this is a title' });
+    
     constructor(
         private _route: ActivatedRoute,
         private rxDynamicComponentService: RxDynamicComponentService,
@@ -34,6 +37,10 @@ export class AppComponent {
         private _matBottomSheet: MatBottomSheet
     ) {
         this.rxDynamicComponentService.loadManifest('service-preload');
+
+        setTimeout(() => {
+            this.data$.next({ title: 'new title', notProp: '' });
+        }, 3000);
     }
 
     changeQueryParams($event: Event): void {

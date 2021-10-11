@@ -15,6 +15,7 @@
     <div style="border: 2px solid orange">
         <rx-dynamic-outlet
             [factory]="queryParamComponent$ | async"
+            [data]="data$ | async"
         ></rx-dynamic-outlet>
         Demo of lazy loaded outlet
         <div *ngFor="let el of arr" style="height: 500px; border: black solid">

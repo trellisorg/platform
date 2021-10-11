@@ -17,6 +17,8 @@ export class LazyDynamicOutletComponent<
 
     @Input() factory: ComponentFactory<TComponent>;
 
+    @Input() data: any;
+
     intersected = false;
 
     elementIntersected(): void {

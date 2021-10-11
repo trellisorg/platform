@@ -1,6 +1,7 @@
 import {
     AfterViewInit,
     ChangeDetectionStrategy,
+    ChangeDetectorRef,
     Component,
     ComponentFactory,
     ComponentRef,
@@ -8,6 +9,8 @@ import {
     Type,
     ViewChild,
     ViewContainerRef,
+    ɵComponentDef,
+    ɵComponentType,
 } from '@angular/core';
 
 @Component({
@@ -17,8 +20,10 @@ import {
     styleUrls: ['./dynamic-outlet.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DynamicOutletComponent<TComponentType extends Type<unknown>, TComponent = InstanceType<TComponentType>>
-    implements AfterViewInit
+export class DynamicOutletComponent<
+    TComponentType extends Type<unknown>,
+    TComponent = InstanceType<TComponentType>
+> implements AfterViewInit
 {
     @ViewChild('outlet', { read: ViewContainerRef }) outlet: ViewContainerRef;
 
@@ -32,11 +37,45 @@ export class DynamicOutletComponent<TComponentType extends Type<unknown>, TCompo
         this._factory = factory;
     }
 
+    @Input() set data(data: any) {
+        this._data = data;
+
+        this.setComponentData(this.data);
+    }
+
+    get data(): any {
+        return this._data;
+    }
+
+    private _data: any;
+
     private component: ComponentRef<TComponent>;
+
+    private inputs: {
+        [P in keyof TComponent]: string;
+    };
+
+    private changeDetectorRef: ChangeDetectorRef;
+
+    constructor(private _changeDetectorEef: ChangeDetectorRef) {}
 
     ngAfterViewInit(): void {
         if (this._factory) {
             this.loadOutlet(this._factory);
+        }
+    }
+
+    private setComponentData<T extends any>(data: T): void {
+        if (this.component && data) {
+            Object.entries(data).forEach(([key, value]) => {
+                if (this.inputs[key]) {
+                    this.component.instance[key] = value;
+                } else {
+                    console.warn(`Cannot set properties that are not inputs.`);
+                }
+            });
+
+            this.changeDetectorRef.markForCheck();
         }
     }
 
@@ -53,5 +92,14 @@ export class DynamicOutletComponent<TComponentType extends Type<unknown>, TCompo
         this.outlet.clear();
 
         this.component = this.outlet.createComponent(factory);
+
+        this.changeDetectorRef = this.component.injector.get(ChangeDetectorRef);
+
+        this.inputs = (
+            (this.component.componentType as ɵComponentType<TComponent>)
+                .ɵcmp as ɵComponentDef<TComponent>
+        ).inputs;
+
+        this.setComponentData(this.data);
     }
 }
