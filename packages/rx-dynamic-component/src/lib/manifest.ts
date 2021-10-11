@@ -1,5 +1,6 @@
 import { InjectionToken } from '@angular/core';
 import type { LoadChildrenCallback } from '@angular/router';
+import type { CanImport } from './can-import';
 
 export type ManifestMap = Map<string, DynamicComponentManifest>;
 
@@ -58,6 +59,7 @@ export interface DynamicComponentManifest<T = string>
     extends SharedManifestConfig {
     componentId: T;
     loadChildren: LoadChildrenCallback;
+    canImport?: CanImport[];
 }
 
 /**

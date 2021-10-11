@@ -1707,6 +1707,11 @@
     lodash.camelcase "^4.3.0"
     protobufjs "^6.8.6"
 
+"@hirez_io/observer-spy@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@hirez_io/observer-spy/-/observer-spy-2.1.0.tgz#2c531366385763437d18af8b751e0eb0f2ad82f6"
+  integrity sha512-wGLRpUq3Qhcyyx2oQmx2HWe2trp6tpkUvz3U9Uqq5eywXL9uV0W9+QkeBzif8axhOQlq7Xngs9pC0S611+hkLg==
+
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@istanbuljs/load-nyc-config/-/load-nyc-config-1.1.0.tgz#fd3db1d59ecf7cf121e80650bb86712f9b55eced"
