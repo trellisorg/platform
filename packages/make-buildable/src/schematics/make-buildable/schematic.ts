@@ -115,7 +115,7 @@ function normalizeOptions(
             .trim()
             .split(',')
             .map((config) => config.trim().toLowerCase()),
-        pathInLibs: options.projectName.replace(/-/g, '/'),
+        pathInLibs: project.root.substring(project.root.indexOf('/') + 1),
         angularVersion: versions.angular,
         tsLibVersion: versions.tsLib,
         npmScope,
