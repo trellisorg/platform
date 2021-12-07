@@ -26,21 +26,29 @@ function checkDependency(
 
     alreadyVisited.add(currentSource);
 
-    depTree[currentSource].forEach((dep) => {
-        if (dep.target === target) {
-            chains.push([...depsPath, target]);
-        } else {
-            chains.push(
-                ...checkDependency(
-                    depTree,
-                    dep.target,
-                    target,
-                    depsPath,
-                    alreadyVisited
-                )
-            );
-        }
-    });
+    const node = depTree[currentSource];
+
+    /*
+     Npm dependencies don't have a node in the depTree so the index may be
+     undefined.
+    */
+    if(node) {
+        node.forEach((dep) => {
+            if (dep.target === target) {
+                chains.push([...depsPath, target]);
+            } else {
+                chains.push(
+                    ...checkDependency(
+                        depTree,
+                        dep.target,
+                        target,
+                        depsPath,
+                        alreadyVisited
+                    )
+                );
+            }
+        });
+    }
 
     return chains;
 }
