@@ -11,30 +11,12 @@ import {
     DYNAMIC_COMPONENT_CONFIG,
 } from './manifest';
 
-/*
- * TODO: Remove IdleDeadline and requestIdleCallback typing once upgrade to 4.4
- * https://github.com/microsoft/TypeScript/issues/40807
- */
-interface IdleDeadline {
-    didTimeout: boolean;
-    timeRemaining: () => number;
-}
-
-declare global {
-    interface Window {
-        requestIdleCallback: (
-            callback: (idleDeadline: IdleDeadline) => unknown,
-            options?: { timeout?: number }
-        ) => void;
-    }
-}
-
 function isPromiseOrObservable<T>(
     promiseOrObservable: Promise<T> | Observable<T> | any
 ): boolean {
     return (
         !!(promiseOrObservable as Promise<T>)?.then ||
-        isObservable<T>(promiseOrObservable)
+        isObservable(promiseOrObservable)
     );
 }
 

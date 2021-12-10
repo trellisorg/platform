@@ -31,8 +31,8 @@ export class StoryDataService extends SocketCollectionServiceBase<Story> {
 
 export const selectStories = createSelector(
     (stories) => stories,
-    (stories: Stories) =>
-        stories.reduce<Stories[]>(
+    (stories) =>
+        stories.reduce(
             (prev, cur) => {
                 prev[cur.column].push(cur);
 

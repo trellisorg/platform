@@ -94,7 +94,6 @@ export class ObserveIntersectingDirective
             this.observer = undefined;
         }
 
-        this.subject$.next();
         this.subject$.complete();
     }
 
