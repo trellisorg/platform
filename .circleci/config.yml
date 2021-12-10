@@ -10,7 +10,7 @@ jobs:
                 type: string
                 default: ''
         docker:
-            - image: cimg/node:14
+            - image: cimg/node:14.18
         steps:
             - checkout
             - node/install-packages:
