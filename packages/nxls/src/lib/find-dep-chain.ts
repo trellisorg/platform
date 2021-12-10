@@ -24,6 +24,18 @@ function checkDependency(
         return [];
     }
 
+    // If npm dependency then there is not a node, and we want to skip adding
+    // it to alreadyVisited as we'd like to visit the target npm node again.
+    if(currentSource.startsWith('npm:')) {
+        if(currentSource.split('npm:')[1] === target) {
+            chains.push([...depsPath])
+        } else {
+            // We don't need to visit this npm node again, it's not our target.
+            alreadyVisited.add(currentSource);
+        }
+        return chains;
+    }
+
     alreadyVisited.add(currentSource);
 
     const node = depTree[currentSource];
