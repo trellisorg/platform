@@ -1,4 +1,4 @@
-import { Component, ComponentFactory, Input, Type } from '@angular/core';
+import { Component, Input, Type } from '@angular/core';
 
 @Component({
     // eslint-disable-next-line @angular-eslint/component-selector
@@ -7,15 +7,18 @@ import { Component, ComponentFactory, Input, Type } from '@angular/core';
     styleUrls: ['./lazy-dynamic-outlet.component.scss'],
 })
 export class LazyDynamicOutletComponent<
-    TComponentType extends Type<unknown>,
-    TComponent = InstanceType<TComponentType>
+    TData extends unknown,
+    TComponent extends unknown,
+    TComponentType extends Type<TComponent>
 > {
     @Input() lazyDynamicOutletConfig: IntersectionObserverInit = {
         threshold: [0.25],
         rootMargin: '0px',
     };
 
-    @Input() factory: ComponentFactory<TComponent>;
+    @Input() componentType: TComponentType;
+
+    @Input() data: TData;
 
     intersected = false;
 

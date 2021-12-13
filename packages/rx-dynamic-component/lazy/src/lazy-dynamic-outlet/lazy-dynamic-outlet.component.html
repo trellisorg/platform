@@ -6,6 +6,7 @@
 >
     <rx-dynamic-outlet
         *ngIf="intersected"
-        [factory]="factory"
+        [componentType]="factory"
+        [data]="data"
     ></rx-dynamic-outlet>
 </div>

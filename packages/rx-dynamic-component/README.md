@@ -155,9 +155,9 @@ export class AppModule {}
 
 ```angular2html
 <!--Will load the outlet as soon as the observable emits-->
-<rx-dynamic-outlet [factory]="queryParamComponent$ | async"></rx-dynamic-outlet>
+<rx-dynamic-outlet [componentType]="queryParamComponent$ | async"></rx-dynamic-outlet>
 <!--Will load the outlet as soon as the observable emits assuming the component is in view with IntersectionObserver-->
-<rx-lazy-dynamic-outlet [factory]="queryParamComponent$ | async"></rx-lazy-dynamic-outlet>
+<rx-lazy-dynamic-outlet [componentType]="queryParamComponent$ | async"></rx-lazy-dynamic-outlet>
 ```
 
 With that when the query params `query` property is equal to one of the manifest entries the corresponding Angular
