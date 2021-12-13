@@ -29,7 +29,7 @@ export class AppComponent {
     arr = new Array(100).fill(0);
 
     data$ = new BehaviorSubject<any>({ title: 'this is a title' });
-    
+
     constructor(
         private _route: ActivatedRoute,
         private rxDynamicComponentService: RxDynamicComponentService,

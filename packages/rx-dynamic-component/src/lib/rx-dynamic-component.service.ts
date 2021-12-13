@@ -8,8 +8,8 @@ import {
     Optional,
 } from '@angular/core';
 import type { Observable } from 'rxjs';
-import { from, of, throwError } from 'rxjs';
-import { catchError, switchMap, tap } from 'rxjs/operators';
+import { from, map, of, throwError } from 'rxjs';
+import { catchError, switchMap } from 'rxjs/operators';
 import { Logger } from './logger';
 import {
     DEFAULT_TIMEOUT,
@@ -88,10 +88,7 @@ export class RxDynamicComponentService {
         TComponent = TComponentType extends Type<infer TComponentInstance>
             ? TComponentInstance
             : TComponentType
-    >(
-        componentId: string,
-        injector?: Injector
-    ): Observable<ComponentFactory<TComponent>> {
+    >(componentId: string, injector?: Injector): Observable<TComponent> {
         const manifest = this.manifests.get(componentId);
 
         if (!manifest) {
@@ -99,20 +96,8 @@ export class RxDynamicComponentService {
                 this.cannotFindManifest(componentId);
             }
             return throwError(
-                `No manifest found for componentId: ${componentId}`
+                () => `No manifest found for componentId: ${componentId}`
             );
-        }
-
-        /*
-         * Factories can be cached at either the global level or at the manifest level
-         */
-        if (
-            (manifest.cacheFactories ||
-                (this.config.cacheFactories &&
-                    manifest.cacheFactories === undefined)) &&
-            this.componentCache.has(componentId)
-        ) {
-            return of(this.componentCache.get(componentId));
         }
 
         const loadChildren = manifest.loadChildren();
@@ -138,28 +123,16 @@ export class RxDynamicComponentService {
                     );
                 }
             }),
-            switchMap((factory) => {
-                const moduleRef = factory.create(injector || this._injector);
+            map((moduleFactory) => {
+                const moduleRef = moduleFactory.create(
+                    injector ?? this._injector
+                );
 
                 /**
                  * By providing a DYNAMIC_COMPONENT injection in the module we are loading we know what component it is
                  * that should be rendered from the declarations array in the module
                  */
-                const dynamicComponentType =
-                    moduleRef.injector.get(DYNAMIC_COMPONENT);
-
-                return of(
-                    moduleRef.componentFactoryResolver.resolveComponentFactory<TComponent>(
-                        dynamicComponentType
-                    )
-                );
-            }),
-            tap((componentFactory) => {
-                if (
-                    this.config.cacheFactories &&
-                    !this.componentCache.has(componentId)
-                )
-                    this.componentCache.set(componentId, componentFactory);
+                return moduleRef.injector.get(DYNAMIC_COMPONENT);
             }),
             catchError((error) => {
                 if (this.config.devMode) {
@@ -169,7 +142,7 @@ export class RxDynamicComponentService {
                     );
                 }
 
-                return throwError(error);
+                return throwError(() => error);
             })
         );
     }

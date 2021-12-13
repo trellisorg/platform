@@ -32,9 +32,6 @@ export interface SharedManifestConfig {
 /**
  * devMode: Will enable logging to debug how things are loaded
  * manifests
- * cacheFactories: Whether or not to cache the factories that are piped through RxDynamicService (Can be buggy in places)
- *
- * TODO: allow for caching at the manifest level
  */
 export interface DynamicComponentRootConfig<T extends string = string>
     extends SharedManifestConfig {
@@ -45,7 +42,6 @@ export interface DynamicComponentRootConfig<T extends string = string>
 export const defaultRootConfig: DynamicComponentRootConfig = {
     manifests: [],
     devMode: false,
-    cacheFactories: false,
     preload: false,
 };
 

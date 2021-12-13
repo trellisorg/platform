@@ -17,7 +17,7 @@ import { switchMap } from 'rxjs/operators';
     // eslint-disable-next-line @angular-eslint/component-selector
     selector: 'container',
     template: ` <rx-dynamic-outlet
-        [factory]="factory$ | async"
+        [componentType]="factory$ | async"
     ></rx-dynamic-outlet>`,
     styles: [''],
 })

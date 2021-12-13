@@ -1,4 +1,8 @@
 <button (click)="open()">Open</button>
+<rx-dynamic-outlet
+    [componentType]="queryParamComponent$ | async"
+    [data]="data$ | async"
+></rx-dynamic-outlet>
 
 <div class="query-container">
     <div>
@@ -13,13 +17,11 @@
         </select>
     </div>
     <div style="border: 2px solid orange">
-        <rx-dynamic-outlet
-            [factory]="queryParamComponent$ | async"
-            [data]="data$ | async"
-        ></rx-dynamic-outlet>
         Demo of lazy loaded outlet
         <div *ngFor="let el of arr" style="height: 500px; border: black solid">
-            <rx-lazy-dynamic-outlet [factory]="queryParamComponent$ | async">
+            <rx-lazy-dynamic-outlet
+                [componentType]="queryParamComponent$ | async"
+            >
             </rx-lazy-dynamic-outlet>
         </div>
     </div>

@@ -3,7 +3,6 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
-    ComponentFactory,
     ComponentRef,
     Input,
     Type,
@@ -21,23 +20,25 @@ import {
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DynamicOutletComponent<
-    TComponentType extends Type<unknown>,
-    TComponent = InstanceType<TComponentType>
+    TData extends unknown,
+    TComponent extends unknown,
+    TComponentType extends Type<TComponent>,
+    TComponentInstance = InstanceType<TComponentType>
 > implements AfterViewInit
 {
     @ViewChild('outlet', { read: ViewContainerRef }) outlet: ViewContainerRef;
 
-    private _factory: ComponentFactory<TComponent>;
+    private _componentType: TComponentType;
 
-    @Input() set factory(factory: ComponentFactory<TComponent>) {
+    @Input() set componentType(componentType: TComponentType) {
         if (this.outlet) {
-            this.loadOutlet(factory);
+            this.loadOutlet(componentType);
         }
 
-        this._factory = factory;
+        this._componentType = componentType;
     }
 
-    @Input() set data(data: any) {
+    @Input() set data(data: TData) {
         this._data = data;
 
         this.setComponentData(this.data);
@@ -47,25 +48,23 @@ export class DynamicOutletComponent<
         return this._data;
     }
 
-    private _data: any;
-
-    private component: ComponentRef<TComponent>;
+    private _data: TData;
 
     private inputs: {
-        [P in keyof TComponent]: string;
+        [P in keyof TComponentInstance]: string;
     };
 
     private changeDetectorRef: ChangeDetectorRef;
 
-    constructor(private _changeDetectorEef: ChangeDetectorRef) {}
+    private component: ComponentRef<TComponent>;
 
     ngAfterViewInit(): void {
-        if (this._factory) {
-            this.loadOutlet(this._factory);
+        if (this._componentType) {
+            this.loadOutlet(this._componentType);
         }
     }
 
-    private setComponentData<T extends any>(data: T): void {
+    private setComponentData(data: TData): void {
         if (this.component && data) {
             Object.entries(data).forEach(([key, value]) => {
                 if (this.inputs[key]) {
@@ -86,18 +85,18 @@ export class DynamicOutletComponent<
      * are cleared and removed from the DOM
      *
      * It will then create the component from the factory using the ViewContainerRef
-     * @param factory
+     * @param tComponent
      */
-    loadOutlet(factory: ComponentFactory<TComponent>): void {
+    loadOutlet(tComponent: TComponentType): void {
         this.outlet.clear();
 
-        this.component = this.outlet.createComponent(factory);
+        this.component = this.outlet.createComponent(tComponent);
 
         this.changeDetectorRef = this.component.injector.get(ChangeDetectorRef);
 
         this.inputs = (
-            (this.component.componentType as ɵComponentType<TComponent>)
-                .ɵcmp as ɵComponentDef<TComponent>
+            (this.component.componentType as ɵComponentType<TComponentInstance>)
+                .ɵcmp as ɵComponentDef<TComponentInstance>
         ).inputs;
 
         this.setComponentData(this.data);
