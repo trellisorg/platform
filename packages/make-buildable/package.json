@@ -1,6 +1,6 @@
 {
     "name": "@trellisorg/make-buildable",
-    "version": "0.0.10",
+    "version": "0.0.11",
     "main": "src/index.js",
     "schematics": "./collection.json",
     "builders": "./builders.json",
