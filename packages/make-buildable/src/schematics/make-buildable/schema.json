@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/schema",
-    "id": "MakeBuildable",
+    "$id": "MakeBuildable",
     "title": "",
     "type": "object",
     "properties": {
