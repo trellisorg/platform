@@ -1,4 +1,4 @@
-import type { ComponentFactory, Type } from '@angular/core';
+import type { ComponentFactory, StaticProvider, Type } from '@angular/core';
 import {
     Compiler,
     Inject,
@@ -81,7 +81,7 @@ export class RxDynamicComponentService {
      * then this will allow you to display an error message in your template based on if this Observable
      * (or the underlying Promise when calling loadChildren()) fails.
      * @param componentId
-     * @param injector
+     * @param options
      */
     getComponentFactory<
         TComponentType,
@@ -90,7 +90,10 @@ export class RxDynamicComponentService {
             : TComponentType
     >(
         componentId: string,
-        injector?: Injector
+        options?: {
+            providers?: StaticProvider[];
+            injector?: Injector;
+        }
     ): Observable<ComponentFactory<TComponent>> {
         const manifest = this.manifests.get(componentId);
 
@@ -139,7 +142,18 @@ export class RxDynamicComponentService {
                 }
             }),
             switchMap((factory) => {
-                const moduleRef = factory.create(injector || this._injector);
+                const shouldOverrideInjector =
+                    options?.providers?.length || options?.injector;
+
+                const dynamicInjector = shouldOverrideInjector
+                    ? Injector.create({
+                          providers: options?.providers ?? [],
+                          parent: options?.injector ?? this._injector,
+                          name: `${componentId}-injector`,
+                      })
+                    : this._injector;
+
+                const moduleRef = factory.create(dynamicInjector);
 
                 /**
                  * By providing a DYNAMIC_COMPONENT injection in the module we are loading we know what component it is
