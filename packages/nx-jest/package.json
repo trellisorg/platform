@@ -1,7 +1,18 @@
 {
     "name": "@trellisorg/nx-jest",
-    "version": "0.0.1",
+    "version": "0.0.3",
+    "license": "MIT",
     "type": "commonjs",
     "schematics": "./generators.json",
-    "builders": "./executors.json"
+    "builders": "./executors.json",
+    "repository": {
+        "url": "https://github.com/trellisorg/platform/tree/master/packages/nx-jest"
+    },
+    "homepage": "https://github.com/trellisorg/platform/tree/master/packages/nx-jest",
+    "author": "Jay Bell <jay@trellis.org>",
+    "keywords": [
+        "nx",
+        "jest",
+        "testing"
+    ]
 }

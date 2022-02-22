@@ -84,12 +84,12 @@ export function createJestOverrides(
                 return prev;
             }
 
+            const artifactPath = path.join(`dist/${node.data.root}`, indexFile);
+
             return [
                 ...prev,
                 `"${tsAliasPrefix}${rootPath.join('/')}": [
-                  path.join(__dirname, '../${offset}dist/', '${
-                    node.data.root
-                }', '${indexFile}')
+                  '<rootDir>/${offset}${artifactPath}'
                 ]`,
             ];
         }, [] as string[]);
@@ -135,7 +135,7 @@ export async function jestExecutor2(
             projGraph,
             context.root,
             context.projectName,
-            context.targetName,
+            'build',
             context.configurationName ?? ''
         );
 
