@@ -11,9 +11,11 @@ import {
 } from '@nrwl/workspace/src/core/project-graph';
 import type { DependentBuildableProjectNode } from '@nrwl/workspace/src/utilities/buildable-libs-utils';
 import { calculateProjectDependencies } from '@nrwl/workspace/src/utilities/buildable-libs-utils';
-import { mkdirSync, readFileSync, writeFileSync } from 'fs';
-import * as path from 'path';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
+import { join, resolve } from 'path';
 import type { NxJestExecutorOptions } from './schema';
+
+const outputDirs = ['dist', 'build'];
 
 const createTmpJestConfig = (
     jestConfigPath: string,
@@ -22,7 +24,7 @@ const createTmpJestConfig = (
     dependencies: DependentBuildableProjectNode[]
 ): string => {
     const jestConfig = readFileSync(
-        path.resolve(context.cwd, jestConfigPath)
+        resolve(context.cwd, jestConfigPath)
     ).toString();
 
     const overrides = createJestOverrides(root, context, dependencies);
@@ -71,27 +73,61 @@ export function createJestOverrides(
         .reduce((prev, dep) => {
             const node = dep.node as ProjectGraphProjectNode;
 
+            // Find the output dir of the deps artifacts.
+            const outputDir = outputDirs.find((dir) =>
+                existsSync(join(context.cwd, dir, node.data.root))
+            );
+
+            if (!outputDir) {
+                throw new Error(
+                    `Artifacts for ${dep.name} do not exist in /build or /dist. Are you sure you compiled them before running test?`
+                );
+            }
+
             const rootPath = node.data.root.split('/');
             rootPath.shift();
 
+            // Path to the folder that contains the deps compiled artifacts
+            const artifactsPath = join(outputDir, node.data.root);
+
+            // The JSON object of the deps package.json
             const distPackageJson = readJsonFile(
-                path.join(context.cwd, 'dist', node.data.root, 'package.json')
+                join(context.cwd, artifactsPath, 'package.json')
             );
 
             const indexFile = findIndexFile(distPackageJson);
 
-            if (!indexFile) {
-                return prev;
+            // The TS import alias for the dep
+            const aliasPath = `${tsAliasPrefix}${rootPath.join('/')}`;
+
+            const pathToRoot = `<rootDir>/${offset}`;
+
+            if (indexFile) {
+                const indexPath = join(artifactsPath, indexFile);
+
+                prev.push(`"${aliasPath}": [
+                  '${pathToRoot}${indexPath}'
+                ]`);
             }
 
-            const artifactPath = path.join(`dist/${node.data.root}`, indexFile);
+            // Not sure if this is going to be needed for not for secondary entry points.
+            // const additionalEntryPoints: Record<string, string> | undefined =
+            //     distPackageJson['additionalEntryPoints'];
+            //
+            // // Find additional entry points and map them.
+            // if (additionalEntryPoints) {
+            //     prev.push(
+            //         ...Object.entries(additionalEntryPoints).map(
+            //             ([entryName, entryPoint]: [string, string]) =>
+            //                 `"${aliasPath}/${entryName}": ['${pathToRoot}${join(
+            //                     artifactsPath,
+            //                     entryPoint
+            //                 )}']`
+            //         )
+            //     );
+            // }
 
-            return [
-                ...prev,
-                `"${tsAliasPrefix}${rootPath.join('/')}": [
-                  '<rootDir>/${offset}${artifactPath}'
-                ]`,
-            ];
+            return prev;
         }, [] as string[]);
 
     return `
@@ -142,7 +178,7 @@ export async function jestExecutor2(
         const projectRoot =
             context.workspace.projects[context.projectName].root;
 
-        const tmpProjectFolder = path.join(context.cwd, `tmp/${projectRoot}`);
+        const tmpProjectFolder = join(context.cwd, `tmp/${projectRoot}`);
         mkdirSync(tmpProjectFolder, { recursive: true });
 
         const temporaryJestConfig = createTmpJestConfig(
@@ -154,12 +190,12 @@ export async function jestExecutor2(
 
         // Write the temporary jest config with correct paths
         writeFileSync(
-            path.join(tmpProjectFolder, 'jest.config.js'),
+            join(tmpProjectFolder, 'jest.config.js'),
             temporaryJestConfig,
             'utf8'
         );
 
-        config.jestConfig = path.join(
+        config.jestConfig = join(
             process.cwd(),
             `tmp/${projectRoot}`,
             'jest.config.js'
