@@ -14,6 +14,20 @@ yarn add -D @trellisorg/nx-betterer
 
 # Usage
 
+To ensure that Nx has generated the dep graph this library needs to run, in your `package.json` scripts change:
+
+```
+"betterer": "betterer"
+```
+
+to
+
+```
+"betterer": "yarn nx graph --open=false --file=tmp/output.json && betterer"
+```
+
+(If you do not use `yarn` you can substitute it for `npx`, `npx nx graph --open false --file tmp/output.json`)
+
 You should have a `.betterer.ts` file in the root of your repo after installing `betterer`.
 
 If this is your first time setting up tests it will look something like:
