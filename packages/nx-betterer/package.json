@@ -1,6 +1,6 @@
 {
     "name": "@trellisorg/nx-betterer",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "type": "commonjs",
     "license": "MIT",
     "peerDependencies": {
