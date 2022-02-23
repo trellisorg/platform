@@ -1,6 +1,6 @@
 {
     "name": "@trellisorg/nx-jest",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "license": "MIT",
     "type": "commonjs",
     "schematics": "./generators.json",
