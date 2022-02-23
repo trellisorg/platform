@@ -14,7 +14,7 @@ Trellis uses internally but has opened sourced for the community to use.**
 ## Projects available
 
 -   [make-buildable](https://github.com/trellisorg/platform/tree/master/packages/make-buildable)
-    -   `yarn add @trellisorg/make-buildable`
+    -   `yarn add -D @trellisorg/make-buildable`
     -   [npm](https://www.npmjs.com/package/@trellisorg/make-buildable)
 -   [ngrx-data-websocket](https://github.com/trellisorg/platform/tree/master/packages/ngrx-data-websocket)
     -   [client](https://github.com/trellisorg/platform/tree/master/packages/ngrx-data-websocket/client)
@@ -32,11 +32,17 @@ Trellis uses internally but has opened sourced for the community to use.**
 -   [nxls](https://github.com/trellisorg/platform/tree/master/packages/nxls)
     -   `yarn global add nxls`
     -   [npm](https://www.npmjs.com/package/@trellisorg/nxls)
+-   [nx-betterer](https://github.com/trellisorg/platform/tree/master/packages/nx-betterer)
+    -   `yarn add -D @trellisorg/nx-betterer`
+    -   [npm](https://www.npmjs.com/package/@trellisorg/nx-betterer)
+-   [nx-jest](https://github.com/trellisorg/platform/tree/master/packages/nx-jest)
+    -   `yarn add -D nx-jest`
+    -   [npm](https://www.npmjs.com/package/@trellisorg/nx-jest)
 -   [rx-dynamic-component](https://github.com/trellisorg/platform/tree/master/packages/rx-dynamic-component)
     -   `yarn add @trellisorg/rx-dynamic-component`
     -   [npm](https://www.npmjs.com/package/@trellisorg/rx-dynamic-component)
 -   [nest-spectator](https://github.com/trellisorg/platform/tree/master/packages/nest-spectator)
-    -   `yarn add @trellisorg/nest-spectator`
+    -   `yarn add -D @trellisorg/nest-spectator`
     -   [npm](https://www.npmjs.com/package/@trellisorg/nest-spectator)
 
 ## Build
