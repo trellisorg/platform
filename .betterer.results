@@ -1,0 +1,94 @@
+// BETTERER RESULTS V2.
+// 
+// If this file contains merge conflicts, use `betterer merge` to automatically resolve them:
+// https://phenomnomnominal.github.io/betterer/docs/results-file/#merge
+//
+exports[`number of builds that not are strict`] = {
+  value: `14
+`
+};
+
+exports[`number of tests that are not strict`] = {
+  value: `14
+`
+};
+
+exports[`number of tests that are are not strict with alwaysStrict (and are not strict)`] = {
+  value: `14
+`
+};
+
+exports[`number of tests that are are not strict with strictBindCallApply (and are not strict)`] = {
+  value: `14
+`
+};
+
+exports[`number of tests that are are not strict with strictFunctionTypes (and are not strict)`] = {
+  value: `14
+`
+};
+
+exports[`number of tests that are are not strict with strictNullChecks (and are not strict)`] = {
+  value: `14
+`
+};
+
+exports[`number of tests that are are not strict with strictPropertyInitialization (and are not strict)`] = {
+  value: `14
+`
+};
+
+exports[`number of tests that are are not strict with noImplicitAny (and are not strict)`] = {
+  value: `14
+`
+};
+
+exports[`number of tests that are are not strict with noImplicitThis (and are not strict)`] = {
+  value: `14
+`
+};
+
+exports[`number of tests that are are not strict with useUnknownInCatchVariables (and are not strict)`] = {
+  value: `14
+`
+};
+
+exports[`number of builds that are not strict with alwaysStrict (and are not strict, does not include non-buildable)`] = {
+  value: `14
+`
+};
+
+exports[`number of builds that are not strict with strictBindCallApply (and are not strict, does not include non-buildable)`] = {
+  value: `14
+`
+};
+
+exports[`number of builds that are not strict with strictFunctionTypes (and are not strict, does not include non-buildable)`] = {
+  value: `14
+`
+};
+
+exports[`number of builds that are not strict with strictNullChecks (and are not strict, does not include non-buildable)`] = {
+  value: `14
+`
+};
+
+exports[`number of builds that are not strict with strictPropertyInitialization (and are not strict, does not include non-buildable)`] = {
+  value: `14
+`
+};
+
+exports[`number of builds that are not strict with noImplicitAny (and are not strict, does not include non-buildable)`] = {
+  value: `14
+`
+};
+
+exports[`number of builds that are not strict with noImplicitThis (and are not strict, does not include non-buildable)`] = {
+  value: `14
+`
+};
+
+exports[`number of builds that are not strict with useUnknownInCatchVariables (and are not strict, does not include non-buildable)`] = {
+  value: `14
+`
+};
