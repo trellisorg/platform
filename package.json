@@ -25,7 +25,8 @@
         "help": "yarn nx help",
         "postinstall": "ngcc --properties es2015 browser module main",
         "setup": "chmod -R +x ./tools/setup.sh && ./tools/setup.sh",
-        "workspace-generator": "yarn nx workspace-generator"
+        "workspace-generator": "yarn nx workspace-generator",
+        "betterer": "yarn nx dep-graph --open=false --file=tmp/output.json && betterer"
     },
     "private": true,
     "dependencies": {
@@ -85,6 +86,7 @@
         "@angular-eslint/template-parser": "13.0.1",
         "@angular/compiler-cli": "13.1.0",
         "@angular/language-service": "13.1.0",
+        "@betterer/cli": "^5.1.6",
         "@nestjs/schematics": "^8.0.5",
         "@nestjs/testing": "^8.2.3",
         "@nrwl/angular": "13.3.9",

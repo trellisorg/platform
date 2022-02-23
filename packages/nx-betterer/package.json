@@ -1,0 +1,22 @@
+{
+    "name": "@trellisorg/nx-betterer",
+    "version": "0.0.1",
+    "type": "commonjs",
+    "license": "MIT",
+    "peerDependencies": {
+        "@nrwl/devkit": "^12 || ^13",
+        "@betterer/cli": "^5"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/trellisorg/platform",
+        "directory": "packages/nx-betterer"
+    },
+    "description": "Nrwl Nx plugin for running a suite of betterer tests.",
+    "homepage": "https://github.com/trellisorg/platform/tree/master/packages/nx-betterer",
+    "author": {
+        "name": "Jay Bell",
+        "email": "jay@trellis.org"
+    },
+    "readme": "https://github.com/trellisorg/platform/tree/master/packages/nx-betterer"
+}
