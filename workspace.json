@@ -12,6 +12,7 @@
         "ngrx-universal-rehydrate": "packages/ngrx-universal-rehydrate",
         "ngrx-universal-rehydrate-demo": "apps/ngrx-universal-rehydrate-demo",
         "ngrx-universal-rehydrate-demo-api": "apps/ngrx-universal-rehydrate-demo-api",
+        "nx-jest": "packages/nx-jest",
         "nxls": "packages/nxls",
         "rx-dynamic-component": "packages/rx-dynamic-component",
         "rx-dynamic-component-demo": "apps/rx-dynamic-component-demo"

@@ -1,0 +1,9 @@
+{
+    "executors": {
+        "jest": {
+            "implementation": "./impl",
+            "schema": "./schema.json",
+            "description": "Runs tests with jest."
+        }
+    }
+}

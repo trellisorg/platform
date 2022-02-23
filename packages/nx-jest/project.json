@@ -1,0 +1,41 @@
+{
+    "root": "packages/nx-jest",
+    "sourceRoot": "packages/nx-jest/src",
+    "projectType": "library",
+    "targets": {
+        "build": {
+            "executor": "@nrwl/js:swc",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "dist/packages/nx-jest",
+                "main": "packages/nx-jest/src/index.ts",
+                "tsConfig": "packages/nx-jest/tsconfig.lib.json",
+                "assets": [
+                    "packages/nx-jest/*.md",
+                    {
+                        "input": "packages/nx-jest",
+                        "glob": "**/*.json",
+                        "ignore": ["**/tsconfig*.json", "project.json"],
+                        "output": "/"
+                    }
+                ]
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": ["packages/nx-jest/**/*.ts"]
+            }
+        },
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/packages/nx-jest"],
+            "options": {
+                "jestConfig": "packages/nx-jest/jest.config.js",
+                "passWithNoTests": true
+            }
+        }
+    },
+    "tags": []
+}
