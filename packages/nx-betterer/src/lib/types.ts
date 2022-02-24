@@ -1,9 +1,9 @@
-import type { ProjectGraph, ProjectGraphProjectNode } from '@nrwl/devkit';
+import type { WorkspaceConfiguration } from '@nrwl/devkit';
+import type { ProjectConfiguration } from '@nrwl/tao/src/shared/workspace';
 
 export interface NxBettererContext {
-    plainWorkspaceJson: { projects: Record<string, string | any> };
-    workspaceJson: ProjectGraph;
-    workspaceProjects: ProjectGraphProjectNode[];
+    plainWorkspaceJson: WorkspaceConfiguration;
+    workspaceProjects: ProjectConfiguration[];
     tsConfigBase: TsConfig;
 }
 

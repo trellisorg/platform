@@ -1,4 +1,5 @@
-import { ProjectGraphProjectNode, readJsonFile } from '@nrwl/devkit';
+import type { ProjectConfiguration } from '@nrwl/devkit';
+import { readJsonFile } from '@nrwl/devkit';
 import { join } from 'path';
 import type { TsConfig } from './types';
 
@@ -34,7 +35,7 @@ export function readTsConfig(path: string): TsConfig | undefined {
  */
 export function isCompilerFlagSet(
     tsConfigBase: TsConfig,
-    project: ProjectGraphProjectNode,
+    project: ProjectConfiguration,
     flag: keyof TsConfig['compilerOptions'],
     value: boolean,
     type: 'lib' | 'app' | 'spec' | 'e2e'
@@ -42,9 +43,9 @@ export function isCompilerFlagSet(
     const rootFlagSet = tsConfigBase.compilerOptions?.[flag];
 
     const tsConfigLibJson = readTsConfig(
-        join(project.data.root, `tsconfig.${type}.json`)
+        join(project.root, `tsconfig.${type}.json`)
     );
-    const tsConfigJson = readTsConfig(join(project.data.root, 'tsconfig.json'));
+    const tsConfigJson = readTsConfig(join(project.root, 'tsconfig.json'));
 
     const libFlagSet = tsConfigLibJson?.compilerOptions?.[flag];
     const projectFlagSet = tsConfigJson?.compilerOptions?.[flag];
@@ -60,6 +61,6 @@ export function isCompilerFlagSet(
  * Check if the library is buildable or not.
  * @param project
  */
-export function isBuildable(project: ProjectGraphProjectNode): boolean {
-    return !!project.data.targets?.build;
+export function isBuildable(project: ProjectConfiguration): boolean {
+    return !!project.targets?.['build'];
 }

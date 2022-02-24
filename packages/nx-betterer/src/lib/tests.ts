@@ -14,7 +14,7 @@ export function numberOfTestsThatDoNotHaveAStrictFlag(
         return new BettererTest({
             test: () => {
                 const projectsWithTestTarget = context.workspaceProjects.filter(
-                    (project) => project.data.targets?.test
+                    (project) => project.targets?.['test']
                 );
 
                 return projectsWithTestTarget.filter((project) => {
@@ -47,7 +47,7 @@ export function numberOfTestsThatAreNotStrict(context: NxBettererContext) {
         return new BettererTest({
             test: () => {
                 const projectsWithTestTarget = context.workspaceProjects.filter(
-                    (project) => project.data.targets?.test
+                    (project) => project.targets?.['test']
                 );
 
                 return projectsWithTestTarget.filter((project) => {
@@ -150,7 +150,9 @@ export function numberOfNonBuildableLibraries(context: NxBettererContext) {
         return new BettererTest({
             test: () => {
                 return context.workspaceProjects.filter(
-                    (project) => !isBuildable(project) && project.type === 'lib'
+                    (project) =>
+                        !isBuildable(project) &&
+                        project.projectType === 'library'
                 ).length;
             },
             constraint: smaller,
