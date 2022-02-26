@@ -9,8 +9,8 @@ import {
     Tree,
     url,
 } from '@angular-devkit/schematics';
+import { offsetFromRoot } from '@nrwl/devkit';
 import {
-    offsetFromRoot,
     readJsonInTree,
     readNxJson,
     readWorkspace,
@@ -43,15 +43,14 @@ const parseVersionRegex = /\d+\.\d+\.\d+/;
 
 function getVersions(host: Tree): Versions {
     const packageJson = readJsonInTree(host, 'package.json');
-    const nrwlWorkspace = packageJson.devDependencies['@nrwl/workspace'].match(
-        parseVersionRegex
-    )[0];
-    const angular = packageJson.dependencies['@angular/core']?.match(
-        parseVersionRegex
-    )[0];
-    const tsLib = packageJson.dependencies['tslib']?.match(
-        parseVersionRegex
-    )[0];
+    const nrwlWorkspace =
+        packageJson.devDependencies['@nrwl/workspace'].match(
+            parseVersionRegex
+        )[0];
+    const angular =
+        packageJson.dependencies['@angular/core']?.match(parseVersionRegex)[0];
+    const tsLib =
+        packageJson.dependencies['tslib']?.match(parseVersionRegex)[0];
     return {
         angular,
         tsLib,
