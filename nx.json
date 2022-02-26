@@ -16,7 +16,8 @@
         "tsconfig.base.json": "*",
         "tslint.json": "*",
         ".eslintrc.json": "*",
-        "nx.json": "*"
+        "nx.json": "*",
+        "yarn.lock": "*"
     },
     "tasksRunnerOptions": {
         "default": {
