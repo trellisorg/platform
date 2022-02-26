@@ -12,11 +12,11 @@ import {
 const REHYDRATE_STORE = 'rehydrateStore';
 
 interface RehydrateStore {
-    slices: Set<string>;
+    slices: string[];
 }
 
 const initialRehydrateStore: RehydrateStore = {
-    slices: new Set<string>(),
+    slices: [],
 };
 
 export const addSlice = createAction(
@@ -30,7 +30,7 @@ export const rehydrateFeature = createFeature({
         initialRehydrateStore,
         on(addSlice, (state, { slices }) => ({
             ...state,
-            slices: new Set<string>([...state.slices, ...slices]),
+            slices: [...new Set<string>([...state.slices, ...slices])],
         }))
     ),
 });
@@ -39,8 +39,8 @@ export const selectStateToTransfer = createSelector(
     (state) => state,
     rehydrateFeature.selectSlices,
     (state, slices) =>
-        slices.size > 0
-            ? [...slices].reduce(
+        slices.length > 0
+            ? slices.reduce(
                   (toTransfer, slice) => ({
                       ...toTransfer,
                       [slice]: state[slice],
