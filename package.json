@@ -43,7 +43,7 @@
         "@angular/platform-browser-dynamic": "13.2.4",
         "@angular/platform-server": "13.2.4",
         "@angular/router": "13.2.4",
-        "@nestjs/common": "^8.2.3",
+        "@nestjs/common": "^8.3.1",
         "@nestjs/core": "^8.2.3",
         "@nestjs/platform-express": "^8.2.3",
         "@nestjs/platform-socket.io": "^8.2.3",
