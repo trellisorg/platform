@@ -1,21 +1,21 @@
 {
-    "version": 2,
-    "projects": {
-        "api": "apps/api",
-        "conways-game-of-life": "apps/conways-game-of-life",
-        "make-buildable": "packages/make-buildable",
-        "nest-spectator": "packages/nest-spectator",
-        "ngrx-data-websocket-client": "packages/ngrx-data-websocket/client",
-        "ngrx-data-websocket-core": "packages/ngrx-data-websocket/core",
-        "ngrx-data-websocket-demo": "apps/ngrx-data-websocket-demo",
-        "ngrx-data-websocket-server": "packages/ngrx-data-websocket/server",
-        "ngrx-universal-rehydrate": "packages/ngrx-universal-rehydrate",
-        "ngrx-universal-rehydrate-demo": "apps/ngrx-universal-rehydrate-demo",
-        "ngrx-universal-rehydrate-demo-api": "apps/ngrx-universal-rehydrate-demo-api",
-        "nx-betterer": "packages/nx-betterer",
-        "nx-jest": "packages/nx-jest",
-        "nxls": "packages/nxls",
-        "rx-dynamic-component": "packages/rx-dynamic-component",
-        "rx-dynamic-component-demo": "apps/rx-dynamic-component-demo"
-    }
+  "version": 2,
+  "projects": {
+    "api": "apps/api",
+    "conways-game-of-life": "apps/conways-game-of-life",
+    "make-buildable": "packages/make-buildable",
+    "nest-spectator": "packages/nest-spectator",
+    "ngrx-data-websocket-client": "packages/ngrx-data-websocket/client",
+    "ngrx-data-websocket-core": "packages/ngrx-data-websocket/core",
+    "ngrx-data-websocket-demo": "apps/ngrx-data-websocket-demo",
+    "ngrx-data-websocket-server": "packages/ngrx-data-websocket/server",
+    "ngrx-universal-rehydrate": "packages/ngrx-universal-rehydrate",
+    "ngrx-universal-rehydrate-demo": "apps/ngrx-universal-rehydrate-demo",
+    "ngrx-universal-rehydrate-demo-api": "apps/ngrx-universal-rehydrate-demo-api",
+    "nx-betterer": "packages/nx-betterer",
+    "nx-jest": "packages/nx-jest",
+    "nxls": "packages/nxls",
+    "rx-dynamic-component": "packages/rx-dynamic-component",
+    "rx-dynamic-component-demo": "apps/rx-dynamic-component-demo"
+  }
 }
