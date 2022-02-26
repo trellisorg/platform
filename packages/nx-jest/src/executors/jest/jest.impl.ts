@@ -141,7 +141,8 @@ export function createJestOverrides(
       ...pathsToModuleNameMapper({
         ${paths.join(',')}
       })
-    }
+    },
+    transformIgnorePatterns: [...(module.exports.transformIgnorePatterns || []), '^.+\\\\.js$'],
   }`;
 }
 
