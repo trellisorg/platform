@@ -176,6 +176,11 @@
   resolved "https://registry.yarnpkg.com/@angular-eslint/bundled-angular-compiler/-/bundled-angular-compiler-13.0.1.tgz#fc0a568f915948fc4eb701abb331dc2f0e3ebc71"
   integrity sha512-Eih9Kh0hxHO4+3in9mgjksQecym0p+3p+287y3LLihIc7gCkAO4xZeHGVGiC8qUX72PNUXkDlyskI9oHjK9Axw==
 
+"@angular-eslint/bundled-angular-compiler@13.1.0":
+  version "13.1.0"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/bundled-angular-compiler/-/bundled-angular-compiler-13.1.0.tgz#5806625096441050d9b39b01d176f38d7549e9bc"
+  integrity sha512-0VSAZ3zrHkKdbvogQ4GLSf+lKojtPL3LXLlvXU9xNgNsqw68+gSNwaWd595tXoQCmpwWpTerKUbyIsGnPA7EYA==
+
 "@angular-eslint/eslint-plugin-template@13.0.1":
   version "13.0.1"
   resolved "https://registry.yarnpkg.com/@angular-eslint/eslint-plugin-template/-/eslint-plugin-template-13.0.1.tgz#96d5e319278f629afcd034ff57f02de19e510e2b"
@@ -194,12 +199,12 @@
     "@angular-eslint/utils" "13.0.1"
     "@typescript-eslint/experimental-utils" "5.3.0"
 
-"@angular-eslint/template-parser@13.0.1":
-  version "13.0.1"
-  resolved "https://registry.yarnpkg.com/@angular-eslint/template-parser/-/template-parser-13.0.1.tgz#80121c3101053f1494cc8ec8882f569f7610d601"
-  integrity sha512-GEJzVLS4Sb4UdurqaPD1/ucGhagGAQCp17CIgjpcXRwzxBZ9OLqbO/rx8diRbADp+1rceVq4BhADsg3VdsOsuw==
+"@angular-eslint/template-parser@13.1.0":
+  version "13.1.0"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/template-parser/-/template-parser-13.1.0.tgz#5161dc061610212b730d929de9b3d7d365de8335"
+  integrity sha512-gKV+kms+kYm1HdToH3j4HL1RrjvMHscVkhwjoV1WbJColnfDivVAZ6/5/J92/A/8r7vJptQkftsbiaGKDyg47w==
   dependencies:
-    "@angular-eslint/bundled-angular-compiler" "13.0.1"
+    "@angular-eslint/bundled-angular-compiler" "13.1.0"
     eslint-scope "^5.1.0"
 
 "@angular-eslint/utils@13.0.1":
