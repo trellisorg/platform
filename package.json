@@ -101,7 +101,7 @@
         "@nrwl/tao": "13.8.3",
         "@nrwl/workspace": "13.8.3",
         "@swc/cli": "~0.1.52",
-        "@swc/core": "1.2.118",
+        "@swc/core": "1.2.146",
         "@swc/helpers": "~0.2.14",
         "@swc/jest": "0.2.15",
         "@types/jest": "27.0.2",
