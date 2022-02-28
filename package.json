@@ -102,7 +102,7 @@
         "@nrwl/workspace": "13.8.3",
         "@swc/cli": "~0.1.52",
         "@swc/core": "1.2.146",
-        "@swc/helpers": "~0.2.14",
+        "@swc/helpers": "~0.3.6",
         "@swc/jest": "0.2.20",
         "@types/jest": "27.0.2",
         "@types/node": "12.20.14",
