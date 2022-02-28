@@ -103,7 +103,7 @@
         "@swc/cli": "~0.1.52",
         "@swc/core": "1.2.118",
         "@swc/helpers": "~0.2.14",
-        "@swc/jest": "0.2.15",
+        "@swc/jest": "0.2.20",
         "@types/jest": "27.0.2",
         "@types/node": "12.20.14",
         "eslint-plugin-cypress": "^2.10.3",
