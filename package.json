@@ -81,7 +81,7 @@
         "@angular-devkit/schematics": "^13.2.5",
         "@angular-eslint/eslint-plugin": "13.0.1",
         "@angular-eslint/eslint-plugin-template": "13.0.1",
-        "@angular-eslint/template-parser": "13.0.1",
+        "@angular-eslint/template-parser": "13.1.0",
         "@angular/compiler-cli": "13.2.4",
         "@angular/language-service": "13.2.4",
         "@betterer/cli": "^5.1.6",
