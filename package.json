@@ -62,7 +62,7 @@
         "@typescript-eslint/parser": "^4.30.0",
         "cypress": "^9.5.0",
         "dotenv": "10.0.0",
-        "eslint": "7.22.0",
+        "eslint": "7.32.0",
         "eslint-config-prettier": "8.1.0",
         "jest-marbles": "^2.5.1",
         "lodash.merge": "^4.6.2",
