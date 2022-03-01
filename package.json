@@ -104,7 +104,7 @@
         "@swc/core": "1.2.146",
         "@swc/helpers": "~0.3.6",
         "@swc/jest": "0.2.20",
-        "@types/jest": "27.0.2",
+        "@types/jest": "27.4.1",
         "@types/node": "12.20.14",
         "eslint-plugin-cypress": "^2.10.3",
         "jest": "27.2.3",
