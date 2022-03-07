@@ -1875,10 +1875,10 @@
     multer "1.4.4"
     tslib "2.3.1"
 
-"@nestjs/platform-socket.io@^8.2.3":
-  version "8.3.1"
-  resolved "https://registry.yarnpkg.com/@nestjs/platform-socket.io/-/platform-socket.io-8.3.1.tgz#8c1edc9b6407160c5d7ef98ca4d661b1e0b201c9"
-  integrity sha512-dXd3HhJQO9YkLL3HiwnPlHpcZyZfhviWCJ1+qF9cZcujTRzv2AAVL2Pn+dVAmdSEaPDZo3BYkcX3lG0fPqBOhw==
+"@nestjs/platform-socket.io@^8.4.0":
+  version "8.4.0"
+  resolved "https://registry.yarnpkg.com/@nestjs/platform-socket.io/-/platform-socket.io-8.4.0.tgz#5f3bf6fdee1158302192320b45691ef7e4be7df3"
+  integrity sha512-m+ymUL+JA16K798oNXzePXeAl2PVpulNMDrCm91tIyvK+QIV3oGz/V3mcuZLhg5g0KRcTcCWkbIF7zcaJ4hR3g==
   dependencies:
     socket.io "4.4.1"
     tslib "2.3.1"
