@@ -1841,10 +1841,10 @@
   resolved "https://registry.yarnpkg.com/@kwsites/promise-deferred/-/promise-deferred-1.1.1.tgz#8ace5259254426ccef57f3175bc64ed7095ed919"
   integrity sha512-GaHYm+c0O9MjZRu0ongGBRbinu8gVAMd2UZjji6jVmqKtZluZnptXGWhz1E8j8D2HJ3f/yMxKAUC0b+57wncIw==
 
-"@nestjs/common@^8.2.3":
-  version "8.3.1"
-  resolved "https://registry.yarnpkg.com/@nestjs/common/-/common-8.3.1.tgz#4d5fcc879865acf012733cc5c0f804a46de89fe3"
-  integrity sha512-3kKeaRXn1c2jf0ihVu6bvQ9Ok+7CkqkU0Ggi5NjWXA2oVRs3vPzr2d5DEvqUqY9JZpT5qGvzRDyKzaPlekxD2A==
+"@nestjs/common@^8.4.0":
+  version "8.4.0"
+  resolved "https://registry.yarnpkg.com/@nestjs/common/-/common-8.4.0.tgz#b8649836cfe74bc0700eb8a1c2a4d4d7997c66f8"
+  integrity sha512-uvm1Ccw0qRka/Gd5Mo5A2MQo9ItwewPes1fE2SBboennPojoiJ4A3iKirtlPuxsL+HQ4oD5eO02OsDyLYL2z6w==
   dependencies:
     axios "0.26.0"
     iterare "1.2.1"
@@ -1875,10 +1875,10 @@
     multer "1.4.4"
     tslib "2.3.1"
 
-"@nestjs/platform-socket.io@^8.2.3":
-  version "8.3.1"
-  resolved "https://registry.yarnpkg.com/@nestjs/platform-socket.io/-/platform-socket.io-8.3.1.tgz#8c1edc9b6407160c5d7ef98ca4d661b1e0b201c9"
-  integrity sha512-dXd3HhJQO9YkLL3HiwnPlHpcZyZfhviWCJ1+qF9cZcujTRzv2AAVL2Pn+dVAmdSEaPDZo3BYkcX3lG0fPqBOhw==
+"@nestjs/platform-socket.io@^8.4.0":
+  version "8.4.0"
+  resolved "https://registry.yarnpkg.com/@nestjs/platform-socket.io/-/platform-socket.io-8.4.0.tgz#5f3bf6fdee1158302192320b45691ef7e4be7df3"
+  integrity sha512-m+ymUL+JA16K798oNXzePXeAl2PVpulNMDrCm91tIyvK+QIV3oGz/V3mcuZLhg5g0KRcTcCWkbIF7zcaJ4hR3g==
   dependencies:
     socket.io "4.4.1"
     tslib "2.3.1"
@@ -2260,10 +2260,10 @@
     webpack-merge "^5.8.0"
     webpack-node-externals "^3.0.0"
 
-"@nrwl/nx-cloud@13.1.5":
-  version "13.1.5"
-  resolved "https://registry.yarnpkg.com/@nrwl/nx-cloud/-/nx-cloud-13.1.5.tgz#cd9cf8c415226a7b63b4027fd0d42878761a5255"
-  integrity sha512-busITSwldU7K78/ncr4fjZxc+TeuDnbXREM/cbyVM0Gob5Q36T3nLpCxPkV7iCdJZACSKe7UbKm/IEYLPnrXmA==
+"@nrwl/nx-cloud@13.1.6":
+  version "13.1.6"
+  resolved "https://registry.yarnpkg.com/@nrwl/nx-cloud/-/nx-cloud-13.1.6.tgz#c1923ffc3c8336363e6c2c0d43d640b5671d8045"
+  integrity sha512-p/Iybpvixywm2iSFb6tcNde8BAIYFbzowhsNwDOuEVy7s9y9v/bEvCdT14VF6SxWrcGylyXo8A98Yyg0hsr0zQ==
   dependencies:
     axios "^0.21.1"
     chalk "4.1.0"
