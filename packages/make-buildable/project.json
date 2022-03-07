@@ -19,7 +19,7 @@
             "outputs": ["coverage/packages/make-buildable"]
         },
         "build": {
-            "executor": "@nrwl/node:package",
+            "executor": "@nrwl/js:tsc",
             "options": {
                 "outputPath": "dist/packages/make-buildable",
                 "tsConfig": "packages/make-buildable/tsconfig.lib.json",

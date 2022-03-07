@@ -5,7 +5,7 @@
     "prefix": "ngrx-universal-rehydrate-demo-api",
     "targets": {
         "build": {
-            "executor": "@nrwl/node:build",
+            "executor": "@nrwl/node:webpack",
             "outputs": ["{options.outputPath}"],
             "options": {
                 "outputPath": "dist/apps/ngrx-universal-rehydrate-demo-api",
@@ -29,7 +29,7 @@
             }
         },
         "serve": {
-            "executor": "@nrwl/node:execute",
+            "executor": "@nrwl/node:node",
             "options": {
                 "buildTarget": "ngrx-universal-rehydrate-demo-api:build"
             }
