@@ -5,10 +5,7 @@ import {
     readJsonFile,
 } from '@nrwl/devkit';
 import jestExecutor from '@nrwl/jest/src/executors/jest/jest.impl';
-import {
-    createProjectGraphAsync,
-    readCachedProjectGraph,
-} from '@nrwl/workspace/src/core/project-graph';
+import { createProjectGraphAsync } from '@nrwl/workspace/src/core/project-graph';
 import type { DependentBuildableProjectNode } from '@nrwl/workspace/src/utilities/buildable-libs-utils';
 import { calculateProjectDependencies } from '@nrwl/workspace/src/utilities/buildable-libs-utils';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
@@ -166,8 +163,7 @@ export async function jestExecutor2(
      */
     if (!options.testFromSource && !options.watch && !options.watchAll) {
         // We only need to create the cached project graph if not testing from source
-        await createProjectGraphAsync();
-        const projGraph = readCachedProjectGraph();
+        const projGraph = await createProjectGraphAsync();
         const { dependencies } = calculateProjectDependencies(
             projGraph,
             context.root,
