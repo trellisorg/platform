@@ -21,7 +21,7 @@
             "outputs": ["coverage/packages/ngrx-data-websocket/server"]
         },
         "build": {
-            "executor": "@nrwl/node:package",
+            "executor": "@nrwl/js:tsc",
             "options": {
                 "outputPath": "dist/packages/ngrx-data-websocket/server",
                 "tsConfig": "packages/ngrx-data-websocket/server/tsconfig.lib.json",
