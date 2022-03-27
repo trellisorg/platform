@@ -27,7 +27,7 @@ from universal to the client. You can see this if you install the Redux DevTools
 2. Add the following to your `AppModule`'s import
 
 ```typescript
-NgrxUniversalRehydrateModule.forRoot({})
+NgrxUniversalRehydrateBrowserModule.forRoot({})
 ```
 
 `forRoot` takes a config object in the shape of:
