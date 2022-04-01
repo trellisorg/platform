@@ -38,19 +38,21 @@ export class RxDynamicComponentRootModule {
 export class RxDynamicComponentFeatureModule {
     constructor(
         @Inject(_FEATURE_DYNAMIC_COMPONENT_MANIFESTS)
-        private manifests: DynamicComponentManifest[],
+        private manifests: DynamicComponentManifest[][],
         @Inject(DYNAMIC_MANIFEST_MAP)
         private manifestMap: ManifestMap,
         rxDynamicComponentPreloaderService: RxDynamicComponentPreloaderService
     ) {
+        const flattened = manifests.flat();
         /**
          * Register each of the feature manifests with the root map
          */
-        manifests.forEach((manifest) =>
+
+        flattened.forEach((manifest) =>
             manifestMap.set(manifest.componentId, manifest)
         );
 
-        rxDynamicComponentPreloaderService.processManifestPreloads(manifests);
+        rxDynamicComponentPreloaderService.processManifestPreloads(flattened);
     }
 }
 
@@ -100,6 +102,7 @@ export class RxDynamicComponentModule {
                 {
                     provide: _FEATURE_DYNAMIC_COMPONENT_MANIFESTS,
                     useValue: manifests,
+                    multi: true,
                 },
             ],
         };

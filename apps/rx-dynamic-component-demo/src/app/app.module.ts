@@ -52,36 +52,43 @@ import { QueryParam2Module } from './query-param2/query-param2.module';
                     preload: true,
                     priority: DynamicManifestPreloadPriority.IDLE,
                 },
-                /**
-                 * Will preload immediately, may cause main thread blocking
-                 */
-                {
-                    componentId: 'preload-immediate',
-                    loadChildren: () =>
-                        import(
-                            './preload-immediate/preload-immediate.module'
-                        ).then((m) => m.PreloadImmediateModule),
-                    preload: true,
-                    priority: DynamicManifestPreloadPriority.IMMEDIATE,
-                },
-                /**
-                 * Is loaded via the RxDynamicComponentService, does not need to have the preload flag as the service
-                 * will explicitly preload it when called.
-                 *
-                 * Remember, if preload is set to true globally then this needs to have preload set to false otherwise
-                 * it will be automatically preloaded rather than preloaded when the service calls load manifest
-                 */
-                {
-                    componentId: 'service-preload',
-                    loadChildren: () =>
-                        import('./service-preload/service-preload.module').then(
-                            (m) => m.ServicePreloadModule
-                        ),
-                    preload: false,
-                },
             ],
             preload: true,
         }),
+        /**
+         * Providing these separately to test that multiple feature modules do not overwrite each other
+         */
+        RxDynamicComponentModule.forFeature([
+            /**
+             * Will preload immediately, may cause main thread blocking
+             */
+            {
+                componentId: 'preload-immediate',
+                loadChildren: () =>
+                    import('./preload-immediate/preload-immediate.module').then(
+                        (m) => m.PreloadImmediateModule
+                    ),
+                preload: true,
+                priority: DynamicManifestPreloadPriority.IMMEDIATE,
+            },
+        ]),
+        RxDynamicComponentModule.forFeature([
+            /**
+             * Is loaded via the RxDynamicComponentService, does not need to have the preload flag as the service
+             * will explicitly preload it when called.
+             *
+             * Remember, if preload is set to true globally then this needs to have preload set to false otherwise
+             * it will be automatically preloaded rather than preloaded when the service calls load manifest
+             */
+            {
+                componentId: 'service-preload',
+                loadChildren: () =>
+                    import('./service-preload/service-preload.module').then(
+                        (m) => m.ServicePreloadModule
+                    ),
+                preload: false,
+            },
+        ]),
         DynamicOutletModule,
         LazyDynamicOutletModule,
         RouterModule.forRoot([]),

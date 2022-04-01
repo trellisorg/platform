@@ -14,7 +14,8 @@
                 "production": {
                     "tsConfig": "packages/rx-dynamic-component/tsconfig.lib.prod.json"
                 }
-            }
+            },
+            "defaultConfiguration": "production"
         },
         "lint": {
             "executor": "@nrwl/linter:eslint",
