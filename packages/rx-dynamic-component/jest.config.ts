@@ -1,7 +1,7 @@
 module.exports = {
-    displayName: 'ngrx-data-websocket-demo',
-    preset: '../../jest.preset.js',
-    setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
+    displayName: 'rx-dynamic-component',
+
+    setupFilesAfterEnv: ['<rootDir>/test-setup.ts'],
     globals: {
         'ts-jest': {
             stringifyContentPathRegex: '\\.(html|svg)$',
@@ -9,7 +9,7 @@ module.exports = {
             tsconfig: '<rootDir>/tsconfig.spec.json',
         },
     },
-    coverageDirectory: '../../coverage/apps/ngrx-data-websocket-demo',
+    coverageDirectory: '../../coverage/packages/rx-dynamic-component',
     snapshotSerializers: [
         'jest-preset-angular/build/serializers/no-ng-attributes',
         'jest-preset-angular/build/serializers/ng-snapshot',
@@ -19,4 +19,5 @@ module.exports = {
         '^.+.(ts|mjs|js|html)$': 'jest-preset-angular',
     },
     transformIgnorePatterns: ['node_modules/(?!.*.mjs$)'],
+    preset: '../../jest.preset.ts',
 };

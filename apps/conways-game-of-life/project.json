@@ -85,7 +85,7 @@
             "executor": "@nrwl/jest:jest",
             "outputs": ["coverage/apps/conways-game-of-life"],
             "options": {
-                "jestConfig": "apps/conways-game-of-life/jest.config.js",
+                "jestConfig": "apps/conways-game-of-life/jest.config.ts",
                 "passWithNoTests": true
             }
         }

@@ -1,6 +1,6 @@
 module.exports = {
-    displayName: 'nxls',
-    preset: '../../jest.preset.js',
+    displayName: 'ngrx-data-websocket-core',
+
     globals: {
         'ts-jest': { tsconfig: '<rootDir>/tsconfig.spec.json' },
     },
@@ -8,6 +8,7 @@ module.exports = {
         '^.+\\.[tj]sx?$': 'ts-jest',
     },
     moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-    coverageDirectory: '../../coverage/packages/nxls',
+    coverageDirectory: '../../../coverage/packages/ngrx-data-websocket/core',
     testEnvironment: 'node',
+    preset: '../../../jest.preset.ts',
 };

@@ -87,7 +87,7 @@
             "executor": "@nrwl/jest:jest",
             "outputs": ["coverage/apps/rx-dynamic-component-demo"],
             "options": {
-                "jestConfig": "apps/rx-dynamic-component-demo/jest.config.js",
+                "jestConfig": "apps/rx-dynamic-component-demo/jest.config.ts",
                 "passWithNoTests": true
             }
         }

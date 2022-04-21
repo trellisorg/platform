@@ -29,7 +29,7 @@
             "executor": "@nrwl/jest:jest",
             "outputs": ["coverage/packages/ngrx-universal-rehydrate"],
             "options": {
-                "jestConfig": "packages/ngrx-universal-rehydrate/jest.config.js",
+                "jestConfig": "packages/ngrx-universal-rehydrate/jest.config.ts",
                 "passWithNoTests": true
             }
         }

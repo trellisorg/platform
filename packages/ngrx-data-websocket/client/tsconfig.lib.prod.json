@@ -2,5 +2,6 @@
     "extends": "./tsconfig.lib.json",
     "angularCompilerOptions": {
         "compilationMode": "partial"
-    }
+    },
+    "exclude": ["jest.config.ts"]
 }

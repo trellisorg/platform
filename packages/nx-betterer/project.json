@@ -24,7 +24,7 @@
             "executor": "@nrwl/jest:jest",
             "outputs": ["coverage/packages/nx-betterer"],
             "options": {
-                "jestConfig": "packages/nx-betterer/jest.config.js",
+                "jestConfig": "packages/nx-betterer/jest.config.ts",
                 "passWithNoTests": true
             }
         }

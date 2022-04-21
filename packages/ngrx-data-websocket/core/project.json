@@ -15,7 +15,7 @@
         "test": {
             "executor": "@nrwl/jest:jest",
             "options": {
-                "jestConfig": "packages/ngrx-data-websocket/core/jest.config.js",
+                "jestConfig": "packages/ngrx-data-websocket/core/jest.config.ts",
                 "passWithNoTests": true
             },
             "outputs": ["coverage/packages/ngrx-data-websocket/core"]

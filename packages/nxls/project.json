@@ -13,7 +13,7 @@
             "executor": "@nrwl/jest:jest",
             "outputs": ["coverage/packages/nxls"],
             "options": {
-                "jestConfig": "packages/nxls/jest.config.js",
+                "jestConfig": "packages/nxls/jest.config.ts",
                 "passWithNoTests": true
             }
         },

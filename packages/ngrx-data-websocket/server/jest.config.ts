@@ -1,6 +1,6 @@
 module.exports = {
-    displayName: 'ngrx-data-websocket-core',
-    preset: '../../../jest.preset.js',
+    displayName: 'ngrx-data-websocket-server',
+
     globals: {
         'ts-jest': { tsconfig: '<rootDir>/tsconfig.spec.json' },
     },
@@ -8,6 +8,7 @@ module.exports = {
         '^.+\\.[tj]sx?$': 'ts-jest',
     },
     moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-    coverageDirectory: '../../../coverage/packages/ngrx-data-websocket/core',
+    coverageDirectory: '../../../coverage/packages/ngrx-data-websocket/server',
     testEnvironment: 'node',
+    preset: '../../../jest.preset.ts',
 };

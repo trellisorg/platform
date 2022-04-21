@@ -13,7 +13,7 @@
             "executor": "@nrwl/jest:jest",
             "outputs": ["coverage/packages/nest-spectator"],
             "options": {
-                "jestConfig": "packages/nest-spectator/jest.config.js",
+                "jestConfig": "packages/nest-spectator/jest.config.ts",
                 "passWithNoTests": true
             }
         },

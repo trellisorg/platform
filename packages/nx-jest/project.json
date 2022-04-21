@@ -32,7 +32,7 @@
             "executor": "@nrwl/jest:jest",
             "outputs": ["coverage/packages/nx-jest"],
             "options": {
-                "jestConfig": "packages/nx-jest/jest.config.js",
+                "jestConfig": "packages/nx-jest/jest.config.ts",
                 "passWithNoTests": true
             }
         }

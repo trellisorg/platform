@@ -13,7 +13,7 @@
         "test": {
             "executor": "@nrwl/jest:jest",
             "options": {
-                "jestConfig": "packages/make-buildable/jest.config.js",
+                "jestConfig": "packages/make-buildable/jest.config.ts",
                 "passWithNoTests": true
             },
             "outputs": ["coverage/packages/make-buildable"]

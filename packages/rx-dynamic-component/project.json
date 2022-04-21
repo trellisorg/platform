@@ -30,7 +30,7 @@
             "executor": "@nrwl/jest:jest",
             "outputs": ["coverage/packages/rx-dynamic-component"],
             "options": {
-                "jestConfig": "packages/rx-dynamic-component/jest.config.js",
+                "jestConfig": "packages/rx-dynamic-component/jest.config.ts",
                 "passWithNoTests": true
             }
         }

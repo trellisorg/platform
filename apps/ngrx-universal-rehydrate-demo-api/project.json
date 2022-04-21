@@ -46,7 +46,7 @@
             "executor": "@nrwl/jest:jest",
             "outputs": ["coverage/apps/ngrx-universal-rehydrate-demo-api"],
             "options": {
-                "jestConfig": "apps/ngrx-universal-rehydrate-demo-api/jest.config.js",
+                "jestConfig": "apps/ngrx-universal-rehydrate-demo-api/jest.config.ts",
                 "passWithNoTests": true
             }
         }
