@@ -1,5 +1,4 @@
 {
-    "root": "packages/nest-spectator",
     "sourceRoot": "packages/nest-spectator/src",
     "projectType": "library",
     "targets": {

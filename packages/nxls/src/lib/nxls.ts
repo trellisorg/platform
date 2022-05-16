@@ -1,4 +1,4 @@
-import { readWorkspaceJson } from '@nrwl/workspace';
+import { createProjectGraphAsync } from '@nrwl/devkit';
 import * as yargs from 'yargs';
 import { calcDependencyOverlap } from './calc-dependency-overlap';
 import { findCircularDependencies } from './circular-deps';
@@ -144,8 +144,9 @@ yargs
                 default: [],
             },
         },
-        (args) => {
-            const projects = listProjects(args, readWorkspaceJson().projects);
+        async (args) => {
+            const projectGraph = await createProjectGraphAsync();
+            const projects = listProjects(args, projectGraph.nodes);
             projects.forEach((project) => {
                 console.log(
                     `${project.name}`,
@@ -186,8 +187,8 @@ yargs
                 default: [],
             },
         },
-        (args) => {
-            const unusedDeps = findUnusedDependencies(args);
+        async (args) => {
+            const unusedDeps = await findUnusedDependencies(args);
 
             console.log('Unused Deps', unusedDeps);
         }
@@ -216,8 +217,8 @@ yargs
                 default: [],
             },
         },
-        (args) => {
-            const circularDeps = findCircularDependencies(args);
+        async (args) => {
+            const circularDeps = await findCircularDependencies(args);
 
             if (circularDeps.length)
                 circularDeps.forEach((value) => {

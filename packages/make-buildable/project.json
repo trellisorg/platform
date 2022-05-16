@@ -1,5 +1,4 @@
 {
-    "root": "packages/make-buildable",
     "sourceRoot": "packages/make-buildable/src",
     "projectType": "library",
     "generators": {},

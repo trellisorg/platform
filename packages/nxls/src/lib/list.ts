@@ -1,4 +1,4 @@
-import type { ProjectConfiguration } from '@nrwl/tao/src/shared/workspace';
+import type { ProjectGraphProjectNode } from '@nrwl/devkit';
 import type { FilterableCommand } from './types';
 import { filterProjects, readOrGenerateDepFile } from './util';
 
@@ -8,7 +8,7 @@ export interface ListProjects extends FilterableCommand {
 
 export function listProjects(
     list: ListProjects,
-    projects: Record<string, ProjectConfiguration>
+    projects: Record<string, ProjectGraphProjectNode>
 ): { name: string; numDependents?: number }[] {
     const filtered: string[] = filterProjects(list, projects);
 

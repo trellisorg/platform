@@ -1,11 +1,7 @@
-import type { ProjectConfiguration } from '@nrwl/tao/src/shared/workspace';
-import { readWorkspaceJson } from '@nrwl/workspace';
+import type { ProjectGraphProjectNode } from '@nrwl/devkit';
+import { createProjectGraphAsync } from '@nrwl/devkit';
 import type { Dependencies, FilterableCommand } from './types';
-import {
-    filterDependencyGraph,
-    filterProjects,
-    readOrGenerateDepFile,
-} from './util';
+import { filterDependencyGraph, filterProjects } from './util';
 
 export interface FindUnusedConfig extends FilterableCommand {
     excludeExternal?: boolean;
@@ -13,7 +9,7 @@ export interface FindUnusedConfig extends FilterableCommand {
 
 export function _findUnusedDependencies(
     dependencies: Dependencies,
-    projects: Record<string, ProjectConfiguration>,
+    projects: Record<string, ProjectGraphProjectNode>,
     config: FindUnusedConfig
 ): string[] {
     const filteredProjects = filterProjects(config, projects);
@@ -38,10 +34,7 @@ export function _findUnusedDependencies(
             config.excludeExternal ? !project.startsWith('npm:') : true
         )
         .forEach((project) => {
-            if (
-                !usedDeps.has(project) &&
-                projects[project]?.projectType !== 'application'
-            ) {
+            if (!usedDeps.has(project) && projects[project]?.type !== 'app') {
                 unusedDeps.add(project);
             }
         });
@@ -49,14 +42,14 @@ export function _findUnusedDependencies(
     return [...unusedDeps];
 }
 
-export function findUnusedDependencies(config: FindUnusedConfig): string[] {
-    const nxDepsFile = readOrGenerateDepFile();
-
-    const workspaceJson = readWorkspaceJson();
+export async function findUnusedDependencies(
+    config: FindUnusedConfig
+): Promise<string[]> {
+    const projectGraph = await createProjectGraphAsync();
 
     return _findUnusedDependencies(
-        nxDepsFile.dependencies,
-        workspaceJson.projects,
+        projectGraph.dependencies,
+        projectGraph.nodes,
         config
     );
 }

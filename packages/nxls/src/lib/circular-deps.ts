@@ -1,12 +1,7 @@
-import type { ProjectConfiguration } from '@nrwl/tao/src/shared/workspace';
-import { readWorkspaceJson } from '@nrwl/workspace';
+import type { ProjectGraph } from '@nrwl/devkit';
+import { createProjectGraphAsync } from '@nrwl/devkit';
 import type { Dep, Dependencies, FilterableCommand } from './types';
-import {
-    filterDependencyGraph,
-    filterProjects,
-    readOrGenerateDepFile,
-    uniqueArray,
-} from './util';
+import { filterDependencyGraph, filterProjects, uniqueArray } from './util';
 
 function buildKey(path: string[]): string {
     return path.join(' -> ');
@@ -19,13 +14,13 @@ function processDependency(
     circularDeps: Map<string, { path: string[]; key: string }>,
     nodesVisited: Set<string>
 ): void {
-    const root = deps[currentTarget];
+    const targetsDependencies = deps[currentTarget];
 
-    if (root.length === 0) {
+    if (!targetsDependencies || targetsDependencies.length === 0) {
         return;
     }
 
-    for (const dep of root) {
+    for (const dep of targetsDependencies) {
         // if the dep already exists in the path don't add it and add path to circular deps
         if (depsInPath.includes(dep.target)) {
             const index = depsInPath.findIndex((v) => v === dep.target);
@@ -50,12 +45,14 @@ function processDependency(
 }
 
 export function _findCircularDependencies(
-    dependencies: Dependencies,
     config: FilterableCommand,
-    projects: Record<string, ProjectConfiguration>
+    projectGraph: ProjectGraph
 ): { path: string[]; key: string }[] {
     const allDependencies: [string, Dep[]][] = Object.entries(
-        filterDependencyGraph(dependencies, filterProjects(config, projects))
+        filterDependencyGraph(
+            projectGraph.dependencies,
+            filterProjects(config, projectGraph.nodes)
+        )
     );
 
     const circularDeps = new Map<string, { key: string; path: string[] }>();
@@ -64,7 +61,7 @@ export function _findCircularDependencies(
 
     allDependencies
         .filter(([dep]) => !dep.startsWith('npm:'))
-        .forEach(([name, dependency], index) => {
+        .forEach(([name], index) => {
             if (!nodesVisited.has(name)) {
                 console.log(
                     `Processing top level dep number ${index} - ${name}`
@@ -72,7 +69,7 @@ export function _findCircularDependencies(
                 processDependency(
                     [name],
                     name,
-                    dependencies,
+                    projectGraph.dependencies,
                     circularDeps,
                     nodesVisited
                 );
@@ -84,7 +81,7 @@ export function _findCircularDependencies(
         });
 
     return uniqueArray(
-        Array.from(circularDeps.entries()).map(([key, value]) => value),
+        Array.from(circularDeps.entries()).map(([, value]) => value),
         (item) => item.key
     );
 }
@@ -97,14 +94,10 @@ export function _findCircularDependencies(
  * If app1 imports lib1 and lib1 imports lib2 and lib2 imports lib1 only
  * lib1 -> lib2 -> lib1 will be printed, app1 will be left out as it is not part of the circular dependency
  */
-export function findCircularDependencies(
+export async function findCircularDependencies(
     config: FilterableCommand
-): { path: string[]; key: string }[] {
-    const dependencies = readOrGenerateDepFile().dependencies;
-    const workspaceJson = readWorkspaceJson();
-    return _findCircularDependencies(
-        dependencies,
-        config,
-        workspaceJson.projects
-    );
+): Promise<{ path: string[]; key: string }[]> {
+    const projectGraph = await createProjectGraphAsync();
+
+    return _findCircularDependencies(config, projectGraph);
 }

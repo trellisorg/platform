@@ -1,6 +1,5 @@
 {
     "projectType": "library",
-    "root": "packages/ngrx-data-websocket/client",
     "sourceRoot": "packages/ngrx-data-websocket/client/src",
     "prefix": "trellis",
     "targets": {

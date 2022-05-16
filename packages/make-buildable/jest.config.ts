@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     name: 'make-buildable',
 
     transform: {
@@ -8,5 +8,5 @@ module.exports = {
     coverageDirectory: '../../coverage/packages/make-buildable',
     globals: { 'ts-jest': { tsconfig: '<rootDir>/tsconfig.spec.json' } },
     testEnvironment: 'node',
-    preset: '../../jest.preset.ts',
+    preset: '../../jest.preset.js',
 };

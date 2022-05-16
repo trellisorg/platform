@@ -1,5 +1,4 @@
 {
-    "root": "packages/nx-jest",
     "sourceRoot": "packages/nx-jest/src",
     "projectType": "library",
     "targets": {

@@ -1,6 +1,5 @@
 {
     "projectType": "library",
-    "root": "packages/ngrx-universal-rehydrate",
     "sourceRoot": "packages/ngrx-universal-rehydrate/src",
     "prefix": "trellisorg",
     "targets": {

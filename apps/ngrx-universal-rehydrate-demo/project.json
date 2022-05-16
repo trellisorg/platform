@@ -1,6 +1,5 @@
 {
     "projectType": "application",
-    "root": "apps/ngrx-universal-rehydrate-demo",
     "sourceRoot": "apps/ngrx-universal-rehydrate-demo/src",
     "prefix": "trellisorg",
     "targets": {

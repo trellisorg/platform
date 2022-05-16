@@ -1,5 +1,4 @@
 {
-    "root": "packages/nxls",
     "sourceRoot": "packages/nxls/src",
     "projectType": "library",
     "targets": {

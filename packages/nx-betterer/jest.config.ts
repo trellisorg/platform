@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     displayName: 'nx-betterer',
 
     globals: {
@@ -11,5 +11,5 @@ module.exports = {
     },
     moduleFileExtensions: ['ts', 'js', 'html'],
     coverageDirectory: '../../coverage/packages/nx-betterer',
-    preset: '../../jest.preset.ts',
+    preset: '../../jest.preset.js',
 };

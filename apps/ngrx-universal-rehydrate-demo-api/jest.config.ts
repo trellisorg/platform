@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     displayName: 'ngrx-universal-rehydrate-demo-api',
 
     globals: {
@@ -10,5 +10,5 @@ module.exports = {
     moduleFileExtensions: ['ts', 'js', 'html'],
     coverageDirectory: '../../coverage/apps/ngrx-universal-rehydrate-demo-api',
     testEnvironment: 'node',
-    preset: '../../jest.preset.ts',
+    preset: '../../jest.preset.js',
 };

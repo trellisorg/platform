@@ -1,6 +1,5 @@
 {
     "projectType": "application",
-    "root": "apps/conways-game-of-life",
     "sourceRoot": "apps/conways-game-of-life/src",
     "prefix": "trellisorg",
     "targets": {

@@ -1,5 +1,4 @@
 {
-    "root": "packages/ngrx-data-websocket/core",
     "sourceRoot": "packages/ngrx-data-websocket/core/src",
     "projectType": "library",
     "generators": {},

@@ -1,5 +1,4 @@
 {
-    "root": "packages/nx-betterer",
     "sourceRoot": "packages/nx-betterer/src",
     "projectType": "library",
     "targets": {

@@ -1,4 +1,4 @@
-import type { ProjectConfiguration } from '@nrwl/tao/src/shared/workspace';
+import type { ProjectGraphProjectNode } from '@nrwl/devkit';
 import { execSync } from 'child_process';
 import { readFileSync } from 'fs';
 import type { Dependencies, Framework, NxDepGraph, NxDepsJson } from './types';
@@ -71,28 +71,31 @@ export function filterProjects(
         projectType?: 'app' | 'lib';
         frameworks?: Framework[];
     },
-    projects: Record<string, ProjectConfiguration>
+    projects: Record<string, ProjectGraphProjectNode>
 ): string[] {
     let filtered = Object.entries(projects);
 
     if (buildable != null) {
         filtered = filtered.filter(
-            ([, config]) => !!config.targets['build'] === buildable
+            ([, config]) => !!config.data.targets['build'] === buildable
         );
     }
 
     if (projectType != null) {
         filtered = filtered.filter(
-            ([, config]) => config.projectType === projectTypeMap[projectType]
+            ([, config]) =>
+                config.data.projectType === projectTypeMap[projectType]
         );
     }
 
     if (frameworks?.length) {
         filtered = filtered.filter(
             ([, config]) =>
-                config.targets['build'] &&
+                config.data.targets['build'] &&
                 frameworks.some((framework) =>
-                    new RegExp(framework).test(config.targets['build'].executor)
+                    new RegExp(framework).test(
+                        config.data.targets['build'].executor
+                    )
                 )
         );
     }

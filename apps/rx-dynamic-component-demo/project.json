@@ -1,6 +1,5 @@
 {
     "projectType": "application",
-    "root": "apps/rx-dynamic-component-demo",
     "sourceRoot": "apps/rx-dynamic-component-demo/src",
     "prefix": "trellisorg",
     "targets": {

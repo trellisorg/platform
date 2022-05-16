@@ -1,6 +1,5 @@
 {
     "projectType": "library",
-    "root": "packages/rx-dynamic-component",
     "sourceRoot": "packages/rx-dynamic-component/src",
     "prefix": "trellisorg",
     "targets": {

@@ -5,7 +5,6 @@
             "style": "scss"
         }
     },
-    "root": "apps/ngrx-data-websocket-demo",
     "sourceRoot": "apps/ngrx-data-websocket-demo/src",
     "prefix": "trellisorg",
     "targets": {
