@@ -109,13 +109,14 @@ export class RxDynamicComponentService {
         /*
          * Factories can be cached at either the global level or at the manifest level
          */
+        const component = this.componentCache.get(componentId);
         if (
             (manifest.cacheFactories ||
                 (this.config.cacheFactories &&
                     manifest.cacheFactories === undefined)) &&
-            this.componentCache.has(componentId)
+            component
         ) {
-            return of(this.componentCache.get(componentId));
+            return of(component);
         }
 
         const loadChildren = manifest.loadChildren();
