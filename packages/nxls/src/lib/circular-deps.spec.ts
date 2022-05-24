@@ -1,3 +1,4 @@
+import type { ProjectGraphProjectNode } from '@nrwl/devkit';
 import { _findCircularDependencies } from './circular-deps';
 import type { Dependencies } from './types';
 
@@ -7,22 +8,26 @@ describe('Circular Deps', () => {
     const lib2 = 'lib2';
     const lib3 = 'lib3';
 
-    const projects = {
+    const projects: Record<string, ProjectGraphProjectNode> = {
         [app1]: {
-            targets: {},
-            root: `apps/${app1}/src`,
+            type: 'app',
+            name: app1,
+            data: {},
         },
         [lib1]: {
-            targets: {},
-            root: `packages/${lib1}/src`,
+            type: 'lib',
+            name: lib2,
+            data: {},
         },
         [lib2]: {
-            targets: {},
-            root: `packages/${lib2}/src`,
+            type: 'lib',
+            name: lib2,
+            data: {},
         },
         [lib3]: {
-            targets: {},
-            root: `packages/${lib3}/src`,
+            type: 'lib',
+            name: lib3,
+            data: {},
         },
     };
 
@@ -40,9 +45,15 @@ describe('Circular Deps', () => {
             [lib3]: [],
         };
 
-        expect(_findCircularDependencies(dependencies, {}, projects)).toEqual(
-            []
-        );
+        expect(
+            _findCircularDependencies(
+                {},
+                {
+                    nodes: projects,
+                    dependencies,
+                }
+            )
+        ).toEqual([]);
     });
 
     it('should find the shorted circular dep path', () => {
@@ -71,7 +82,15 @@ describe('Circular Deps', () => {
             ],
         };
 
-        expect(_findCircularDependencies(dependencies, {}, projects)).toEqual([
+        expect(
+            _findCircularDependencies(
+                {},
+                {
+                    nodes: projects,
+                    dependencies,
+                }
+            )
+        ).toEqual([
             { path: [lib1, lib2, lib1], key: `${lib1} -> ${lib2} -> ${lib1}` },
             { path: [lib3, lib3], key: `${lib3} -> ${lib3}` },
         ]);

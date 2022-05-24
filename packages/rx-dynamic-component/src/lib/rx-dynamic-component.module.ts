@@ -29,7 +29,7 @@ export class RxDynamicComponentRootModule {
         rxDynamicComponentPreloaderService: RxDynamicComponentPreloaderService
     ) {
         rxDynamicComponentPreloaderService.processManifestPreloads(
-            config.manifests
+            config.manifests ?? []
         );
     }
 }

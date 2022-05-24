@@ -3,6 +3,8 @@
     "projects": {
         "api": "apps/api",
         "conways-game-of-life": "apps/conways-game-of-life",
+        "dynamic-host": "apps/dynamic-host",
+        "dynamic-remote": "apps/dynamic-remote",
         "make-buildable": "packages/make-buildable",
         "nest-spectator": "packages/nest-spectator",
         "ngrx-data-websocket-client": "packages/ngrx-data-websocket/client",

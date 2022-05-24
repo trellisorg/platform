@@ -17,14 +17,18 @@ import {
     styleUrls: ['./dynamic-outlet.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DynamicOutletComponent<TComponentType extends Type<unknown>, TComponent = InstanceType<TComponentType>>
-    implements AfterViewInit
+export class DynamicOutletComponent<
+    TComponentType extends Type<unknown>,
+    TComponent = InstanceType<TComponentType>
+> implements AfterViewInit
 {
-    @ViewChild('outlet', { read: ViewContainerRef }) outlet: ViewContainerRef;
+    @ViewChild('outlet', { read: ViewContainerRef }) outlet!: ViewContainerRef;
 
-    private _factory: ComponentFactory<TComponent>;
+    private _factory: ComponentFactory<TComponent> | null | undefined;
 
-    @Input() set factory(factory: ComponentFactory<TComponent>) {
+    @Input() set factory(
+        factory: ComponentFactory<TComponent> | null | undefined
+    ) {
         if (this.outlet) {
             this.loadOutlet(factory);
         }
@@ -32,7 +36,7 @@ export class DynamicOutletComponent<TComponentType extends Type<unknown>, TCompo
         this._factory = factory;
     }
 
-    private component: ComponentRef<TComponent>;
+    private component?: ComponentRef<TComponent>;
 
     ngAfterViewInit(): void {
         if (this._factory) {
@@ -49,9 +53,11 @@ export class DynamicOutletComponent<TComponentType extends Type<unknown>, TCompo
      * It will then create the component from the factory using the ViewContainerRef
      * @param factory
      */
-    loadOutlet(factory: ComponentFactory<TComponent>): void {
+    loadOutlet(factory: ComponentFactory<TComponent> | null | undefined): void {
         this.outlet.clear();
 
-        this.component = this.outlet.createComponent(factory);
+        if (factory) {
+            this.component = this.outlet.createComponent(factory);
+        }
     }
 }
