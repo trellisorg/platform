@@ -63,7 +63,7 @@
         "dotenv": "10.0.0",
         "eslint": "7.32.0",
         "eslint-config-prettier": "8.1.0",
-        "jest-marbles": "^2.5.1",
+        "jest-marbles": "^3.0.2",
         "lodash.merge": "^4.6.2",
         "prettier": "2.5.1",
         "reflect-metadata": "^0.1.13",
