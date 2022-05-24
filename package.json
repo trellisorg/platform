@@ -43,7 +43,7 @@
         "@angular/router": "13.3.9",
         "@nestjs/common": "^8.4.0",
         "@nestjs/core": "^8.2.3",
-        "@nestjs/platform-express": "^8.2.3",
+        "@nestjs/platform-express": "^8.4.5",
         "@nestjs/platform-socket.io": "^8.4.0",
         "@nestjs/testing": "^8.2.3",
         "@nestjs/websockets": "^8.2.3",
