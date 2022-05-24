@@ -1,20 +1,20 @@
-import type { ProjectConfiguration } from '@nrwl/tao/src/shared/workspace';
+import type { ProjectGraphProjectNode } from '@nrwl/devkit';
 import { _findUnusedDependencies } from './unused-deps';
 
 describe('Unused Deps', () => {
     const app1 = 'app1';
     const lib1 = 'lib1';
 
-    const workspaceJson: Record<string, ProjectConfiguration> = {
+    const workspaceJson: Record<string, ProjectGraphProjectNode> = {
         [app1]: {
-            targets: {},
-            root: '',
-            projectType: 'application',
+            type: 'app',
+            name: app1,
+            data: {},
         },
         [lib1]: {
-            targets: {},
-            root: '',
-            projectType: 'library',
+            type: 'lib',
+            name: lib1,
+            data: {},
         },
     };
 
