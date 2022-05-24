@@ -16,6 +16,7 @@ jobs:
             - node/install-packages:
                   pkg-manager: yarn
                   include-branch-in-cache-key: false
+                  cache-version: v2
             - run:
                   name: Run tests
                   command: yarn nx affected:test --parallel << parameters.flags >>
