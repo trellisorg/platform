@@ -9,8 +9,8 @@ jobs:
             flags:
                 type: string
                 default: ''
-        docker:
-            - image: cimg/node:14.18
+        machine:
+            image: ubuntu-2004:202010-01
         steps:
             - checkout
             - node/install-packages:
