@@ -2265,6 +2265,17 @@
     semver "7.3.4"
     tslib "^2.3.0"
 
+"@nrwl/devkit@14.1.9":
+  version "14.1.9"
+  resolved "https://registry.yarnpkg.com/@nrwl/devkit/-/devkit-14.1.9.tgz#54c808e19bb95d56c7ccb0c44ba1bc710d979d2b"
+  integrity sha512-y+gqtluiOZ/wiAXb5Z4FfzroyB/+cLP5zHXQTNuuuVC9U25RiuGK8RL+Wg91VWzHCu7E+oMtCToNw7MWDRGFDg==
+  dependencies:
+    ejs "^3.1.7"
+    ignore "^5.0.4"
+    rxjs "^6.5.4"
+    semver "7.3.4"
+    tslib "^2.3.0"
+
 "@nrwl/eslint-plugin-nx@14.1.8":
   version "14.1.8"
   resolved "https://registry.yarnpkg.com/@nrwl/eslint-plugin-nx/-/eslint-plugin-nx-14.1.8.tgz#4424c2de06bacba2316297a42dcc2e5504b7a0bf"
