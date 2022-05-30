@@ -7,7 +7,7 @@ import {
 import {
     DynamicOutletModule,
     DYNAMIC_COMPONENT,
-    RxDynamicComponentModule,
+    RxDynamicComponentProviders,
     RxDynamicComponentService,
 } from '@trellisorg/rx-dynamic-component';
 import { Observable, of } from 'rxjs';
@@ -17,7 +17,7 @@ import { switchMap } from 'rxjs/operators';
     // eslint-disable-next-line @angular-eslint/component-selector
     selector: 'container',
     template: ` <rx-dynamic-outlet
-        [factory]="factory$ | async"
+        [load]="factory$ | async"
     ></rx-dynamic-outlet>`,
     styles: [''],
 })
@@ -27,7 +27,7 @@ class ContainerComponent {
     constructor(private rxDynamicComponentService: RxDynamicComponentService) {
         this.factory$ = of('dynamic-lazy-child1').pipe(
             switchMap((componentId) =>
-                this.rxDynamicComponentService.getComponentFactory(componentId)
+                this.rxDynamicComponentService.getComponent(componentId)
             )
         );
     }
@@ -63,7 +63,7 @@ describe('RxDynamicComponent', () => {
     const createComponent = createComponentFactory({
         component: ContainerComponent,
         imports: [
-            RxDynamicComponentModule.forRoot({
+            RxDynamicComponentProviders.forRoot({
                 devMode: true,
                 manifests: [
                     {

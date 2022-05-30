@@ -7,7 +7,7 @@ import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import {
     DynamicOutletModule,
-    RxDynamicComponentModule,
+    provideRxDynamicComponent,
 } from '@trellisorg/rx-dynamic-component';
 import { AppComponent } from './app.component';
 import { GameEffects } from './state/game.effects';
@@ -17,7 +17,7 @@ import { gameReducer, GAME_STATE } from './state/game.state';
     declarations: [AppComponent],
     imports: [
         BrowserModule,
-        RouterModule.forRoot([], { initialNavigation: 'enabled' }),
+        RouterModule.forRoot([], { initialNavigation: 'enabledBlocking' }),
         StoreModule.forRoot({
             [GAME_STATE]: gameReducer,
         }),
@@ -26,7 +26,10 @@ import { gameReducer, GAME_STATE } from './state/game.state';
             logOnly: false,
         }),
         ReactiveComponentModule,
-        RxDynamicComponentModule.forRoot({
+        DynamicOutletModule,
+    ],
+    providers: [
+        provideRxDynamicComponent({
             manifests: [
                 {
                     componentId: 'dead',
@@ -42,9 +45,7 @@ import { gameReducer, GAME_STATE } from './state/game.state';
                 },
             ],
         }),
-        DynamicOutletModule,
     ],
-    providers: [],
     bootstrap: [AppComponent],
 })
 export class AppModule {}

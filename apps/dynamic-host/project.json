@@ -19,9 +19,7 @@
                 ],
                 "styles": ["apps/dynamic-host/src/styles.scss"],
                 "scripts": [],
-                "customWebpackConfig": {
-                    "path": "apps/dynamic-host/webpack.config.js"
-                }
+                "aot": true
             },
             "configurations": {
                 "production": {

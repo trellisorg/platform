@@ -13,7 +13,7 @@
         "skipTemplateCodegen": true,
         "strictMetadataEmit": true,
         "enableIvy": true,
-        "compilationMode": "partial",
+        "compilationMode": "full",
         "enableResourceInlining": true
     },
     "exclude": [

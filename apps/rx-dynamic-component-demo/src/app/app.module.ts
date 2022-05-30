@@ -7,7 +7,8 @@ import { RouterModule } from '@angular/router';
 import {
     DynamicManifestPreloadPriority,
     DynamicOutletModule,
-    RxDynamicComponentModule,
+    provideRxDynamicComponent,
+    provideRxDynamicComponentManifests,
 } from '@trellisorg/rx-dynamic-component';
 import { LazyDynamicOutletModule } from '@trellisorg/rx-dynamic-component/lazy';
 import { AppComponent } from './app.component';
@@ -18,7 +19,16 @@ import { QueryParam2Module } from './query-param2/query-param2.module';
     declarations: [AppComponent],
     imports: [
         BrowserModule,
-        RxDynamicComponentModule.forRoot({
+        DynamicOutletModule,
+        LazyDynamicOutletModule,
+        RouterModule.forRoot([]),
+        FormsModule,
+        MatBottomSheetModule,
+        DialogModule,
+        BrowserAnimationsModule,
+    ],
+    providers: [
+        provideRxDynamicComponent({
             devMode: true,
             manifests: [
                 /**
@@ -55,24 +65,7 @@ import { QueryParam2Module } from './query-param2/query-param2.module';
             ],
             preload: true,
         }),
-        /**
-         * Providing these separately to test that multiple feature modules do not overwrite each other
-         */
-        RxDynamicComponentModule.forFeature([
-            /**
-             * Will preload immediately, may cause main thread blocking
-             */
-            {
-                componentId: 'preload-immediate',
-                loadChildren: () =>
-                    import('./preload-immediate/preload-immediate.module').then(
-                        (m) => m.PreloadImmediateModule
-                    ),
-                preload: true,
-                priority: DynamicManifestPreloadPriority.IMMEDIATE,
-            },
-        ]),
-        RxDynamicComponentModule.forFeature([
+        provideRxDynamicComponentManifests([
             /**
              * Is loaded via the RxDynamicComponentService, does not need to have the preload flag as the service
              * will explicitly preload it when called.
@@ -89,15 +82,24 @@ import { QueryParam2Module } from './query-param2/query-param2.module';
                 preload: false,
             },
         ]),
-        DynamicOutletModule,
-        LazyDynamicOutletModule,
-        RouterModule.forRoot([]),
-        FormsModule,
-        MatBottomSheetModule,
-        DialogModule,
-        BrowserAnimationsModule,
+        /**
+         * Providing these separately to test that multiple feature modules do not overwrite each other
+         */
+        provideRxDynamicComponentManifests([
+            /**
+             * Will preload immediately, may cause main thread blocking
+             */
+            {
+                componentId: 'preload-immediate',
+                loadChildren: () =>
+                    import('./preload-immediate/preload-immediate.module').then(
+                        (m) => m.PreloadImmediateModule
+                    ),
+                preload: true,
+                priority: DynamicManifestPreloadPriority.IMMEDIATE,
+            },
+        ]),
     ],
-    providers: [],
     bootstrap: [AppComponent],
 })
 export class AppModule {}

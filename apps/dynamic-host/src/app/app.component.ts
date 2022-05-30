@@ -8,7 +8,13 @@ import { RxDynamicComponentService } from '@trellisorg/rx-dynamic-component';
 })
 export class AppComponent {
     readonly dynamicRemote$ =
-        this.rxDynamicComponentService.getComponentFactory('dynamic-remote');
+        this.rxDynamicComponentService.getComponent('dynamic-remote');
+
+    readonly dynamicStandalone$ =
+        this.rxDynamicComponentService.getComponent('dynamic-standalone');
+
+    readonly dynamicModule$ =
+        this.rxDynamicComponentService.getComponent('dynamic-module');
 
     constructor(private rxDynamicComponentService: RxDynamicComponentService) {}
 }

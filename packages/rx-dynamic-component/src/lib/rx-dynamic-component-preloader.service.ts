@@ -1,7 +1,7 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Inject, Injectable, NgZone, PLATFORM_ID } from '@angular/core';
 import type { Observable } from 'rxjs';
-import { isObservable } from 'rxjs';
+import { firstValueFrom, isObservable } from 'rxjs';
 import { Logger } from './logger';
 import {
     DEFAULT_TIMEOUT,
@@ -55,7 +55,11 @@ export class RxDynamicComponentPreloaderService {
             if (
                 (manifest.preload ||
                     (manifest.preload !== false && this.config.preload)) &&
-                isPromiseOrObservable(manifest.loadChildren()) &&
+                isPromiseOrObservable(
+                    'loadChildren' in manifest
+                        ? manifest.loadChildren()
+                        : manifest.loadComponent()
+                ) &&
                 !this.preloaded.has(manifest.componentId)
             ) {
                 this.preloaded.add(manifest.componentId);
@@ -137,10 +141,13 @@ export class RxDynamicComponentPreloaderService {
     async loadManifest(manifest: DynamicComponentManifest): Promise<void> {
         this.logger.log(`Loading ${manifest.componentId}`);
 
-        const promiseOrObservable = manifest.loadChildren();
+        const promiseOrObservable =
+            'loadChildren' in manifest
+                ? manifest.loadChildren()
+                : manifest.loadComponent();
 
         await (isObservable(promiseOrObservable)
-            ? promiseOrObservable.toPromise()
+            ? firstValueFrom(promiseOrObservable)
             : promiseOrObservable);
 
         return;

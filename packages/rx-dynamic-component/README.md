@@ -155,9 +155,9 @@ export class AppModule {}
 
 ```angular2html
 <!--Will load the outlet as soon as the observable emits-->
-<rx-dynamic-outlet [factory]="queryParamComponent$ | async"></rx-dynamic-outlet>
+<rx-dynamic-outlet [load]="queryParamComponent$ | async"></rx-dynamic-outlet>
 <!--Will load the outlet as soon as the observable emits assuming the component is in view with IntersectionObserver-->
-<rx-lazy-dynamic-outlet [factory]="queryParamComponent$ | async"></rx-lazy-dynamic-outlet>
+<rx-lazy-dynamic-outlet [load]="queryParamComponent$ | async"></rx-lazy-dynamic-outlet>
 ```
 
 With that when the query params `query` property is equal to one of the manifest entries the corresponding Angular
@@ -179,13 +179,14 @@ import { NgModule } from '@angular/core';
 @NgModule({
     providers: [
         {
-            provide: INTERSECTION_OBSERVER_CONFIG, 
+            provide: INTERSECTION_OBSERVER_CONFIG,
             useValue: IntersectionObserverInit // See: https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/IntersectionObserver
         }
     ]
 })
 AppModule {}
 ```
+
 You can also pass in the a `Partial<IntersectionObserverInit>` object to the element itself
 
 ```angular2html
@@ -199,6 +200,7 @@ You can also pass in the a `Partial<IntersectionObserverInit>` object to the ele
 `rx-dynamic-component` provides the ability to preload manifests.
 
 Manifest Configuration:
+
 ```typescript
 export interface DynamicComponentManifest<T = string> {
     preload?: boolean;

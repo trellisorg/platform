@@ -3,7 +3,7 @@
     <div style="display: flex">
         <div *ngFor="let item of column; trackBy: trackLife" class="cell">
             <rx-dynamic-outlet
-                [factory]="item.component | ngrxPush"
+                [load]="item.component | ngrxPush"
             ></rx-dynamic-outlet>
         </div>
     </div>

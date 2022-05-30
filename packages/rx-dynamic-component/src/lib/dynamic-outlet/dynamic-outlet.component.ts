@@ -2,7 +2,6 @@ import {
     AfterViewInit,
     ChangeDetectionStrategy,
     Component,
-    ComponentFactory,
     ComponentRef,
     Input,
     Type,
@@ -18,29 +17,27 @@ import {
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DynamicOutletComponent<
-    TComponentType extends Type<unknown>,
-    TComponent = InstanceType<TComponentType>
+    TComponent,
+    TComponentType extends Type<TComponent>
 > implements AfterViewInit
 {
     @ViewChild('outlet', { read: ViewContainerRef }) outlet!: ViewContainerRef;
 
-    private _factory: ComponentFactory<TComponent> | null | undefined;
+    private _load: TComponentType | null | undefined;
 
-    @Input() set factory(
-        factory: ComponentFactory<TComponent> | null | undefined
-    ) {
+    @Input() set load(factory: TComponentType | null | undefined) {
         if (this.outlet) {
             this.loadOutlet(factory);
         }
 
-        this._factory = factory;
+        this._load = factory;
     }
 
     private component?: ComponentRef<TComponent>;
 
     ngAfterViewInit(): void {
-        if (this._factory) {
-            this.loadOutlet(this._factory);
+        if (this._load) {
+            this.loadOutlet(this._load);
         }
     }
 
@@ -53,7 +50,7 @@ export class DynamicOutletComponent<
      * It will then create the component from the factory using the ViewContainerRef
      * @param factory
      */
-    loadOutlet(factory: ComponentFactory<TComponent> | null | undefined): void {
+    loadOutlet(factory: TComponentType | null | undefined): void {
         this.outlet.clear();
 
         if (factory) {

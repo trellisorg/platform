@@ -7,8 +7,7 @@ export {
     DYNAMIC_COMPONENT,
 } from './lib/manifest';
 export {
-    RxDynamicComponentFeatureModule,
-    RxDynamicComponentModule,
-    RxDynamicComponentRootModule,
-} from './lib/rx-dynamic-component.module';
+    provideRxDynamicComponent,
+    provideRxDynamicComponentManifests,
+} from './lib/rx-dynamic-component.providers';
 export * from './lib/rx-dynamic-component.service';

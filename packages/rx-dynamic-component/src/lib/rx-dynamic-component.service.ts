@@ -1,4 +1,4 @@
-import type { ComponentFactory, StaticProvider, Type } from '@angular/core';
+import type { Type } from '@angular/core';
 import {
     Compiler,
     Inject,
@@ -8,24 +8,29 @@ import {
     Optional,
 } from '@angular/core';
 import type { Observable } from 'rxjs';
-import { from, of, throwError } from 'rxjs';
+import { from, isObservable, of, throwError } from 'rxjs';
 import { catchError, switchMap, tap } from 'rxjs/operators';
 import { Logger } from './logger';
 import {
     DEFAULT_TIMEOUT,
+    DynamicComponentManifest,
     DynamicComponentRootConfig,
     DynamicManifestPreloadPriority,
     DYNAMIC_COMPONENT,
     DYNAMIC_COMPONENT_CONFIG,
     DYNAMIC_MANIFEST_MAP,
+    LoadComponentCallback,
+    LoadModuleCallback,
     ManifestMap,
 } from './manifest';
 import { RxDynamicComponentPreloaderService } from './rx-dynamic-component-preloader.service';
 
 @Injectable()
 export class RxDynamicComponentService {
-    private readonly componentCache: Map<string, ComponentFactory<any>> =
-        new Map<string, ComponentFactory<any>>();
+    private readonly componentCache: Map<string, Type<any>> = new Map<
+        string,
+        Type<any>
+    >();
 
     constructor(
         @Inject(DYNAMIC_MANIFEST_MAP)
@@ -81,20 +86,8 @@ export class RxDynamicComponentService {
      * then this will allow you to display an error message in your template based on if this Observable
      * (or the underlying Promise when calling loadChildren()) fails.
      * @param componentId
-     * @param options
      */
-    getComponentFactory<
-        TComponentType,
-        TComponent = TComponentType extends Type<infer TComponentInstance>
-            ? TComponentInstance
-            : TComponentType
-    >(
-        componentId: string,
-        options?: {
-            providers?: StaticProvider[];
-            injector?: Injector;
-        }
-    ): Observable<ComponentFactory<TComponent>> {
+    getComponent(componentId: string): Observable<Type<any>> {
         const manifest = this.manifests.get(componentId);
 
         if (!manifest) {
@@ -102,7 +95,7 @@ export class RxDynamicComponentService {
                 this.cannotFindManifest(componentId);
             }
             return throwError(
-                `No manifest found for componentId: ${componentId}`
+                () => `No manifest found for componentId: ${componentId}`
             );
         }
 
@@ -111,67 +104,22 @@ export class RxDynamicComponentService {
          */
         const component = this.componentCache.get(componentId);
         if (
-            (manifest.cacheFactories ||
-                (this.config.cacheFactories &&
-                    manifest.cacheFactories === undefined)) &&
+            (manifest.cacheComponents ||
+                (this.config.cacheComponents &&
+                    manifest.cacheComponents === undefined)) &&
             component
         ) {
             return of(component);
         }
 
-        const loadChildren = manifest.loadChildren();
-
-        /**
-         * Use Promise.resolve as we are unsure if loadChildren is a function that returns a promise or a value
-         */
-        return from(Promise.resolve(loadChildren)).pipe(
-            switchMap((moduleOrFactory) => {
-                /**
-                 * If the app is not being run with AOT enabled then we may need to compile the module into a module factory
-                 * before passing it onto the component factory resolver
-                 */
-                if (moduleOrFactory instanceof NgModuleFactory) {
-                    return of(moduleOrFactory);
-                } else if (this._compiler) {
-                    return from(
-                        this._compiler.compileModuleAsync(moduleOrFactory)
-                    );
-                } else {
-                    throw new Error(
-                        `Looks like you have AOT disabled but your NgModule is not compiled into an NgModuleFactory.`
-                    );
-                }
-            }),
-            switchMap((factory) => {
-                const shouldOverrideInjector =
-                    options?.providers?.length || options?.injector;
-
-                const dynamicInjector = shouldOverrideInjector
-                    ? Injector.create({
-                          providers: options?.providers ?? [],
-                          parent: options?.injector ?? this._injector,
-                          name: `${componentId}-injector`,
-                      })
-                    : this._injector;
-
-                const moduleRef = factory.create(dynamicInjector);
-
-                /**
-                 * By providing a DYNAMIC_COMPONENT injection in the module we are loading we know what component it is
-                 * that should be rendered from the declarations array in the module
-                 */
-                const dynamicComponentType =
-                    moduleRef.injector.get(DYNAMIC_COMPONENT);
-
-                return of(
-                    moduleRef.componentFactoryResolver.resolveComponentFactory<TComponent>(
-                        dynamicComponentType
-                    )
-                );
-            }),
+        return (
+            'loadChildren' in manifest
+                ? this.loadModule(manifest, manifest.loadChildren)
+                : this.loadComponent(manifest.loadComponent)
+        ).pipe(
             tap((componentFactory) => {
                 if (
-                    this.config.cacheFactories &&
+                    this.config.cacheComponents &&
                     !this.componentCache.has(componentId)
                 )
                     this.componentCache.set(componentId, componentFactory);
@@ -185,6 +133,70 @@ export class RxDynamicComponentService {
                 }
 
                 return throwError(error);
+            })
+        );
+    }
+
+    private loadComponent(
+        loadComponentCallback: LoadComponentCallback
+    ): Observable<Type<any>> {
+        const loadComponent = loadComponentCallback();
+
+        return isObservable(loadComponent)
+            ? loadComponent
+            : from(Promise.resolve(loadComponent));
+    }
+
+    private loadModule(
+        manifest: DynamicComponentManifest,
+        loadModuleCallback: LoadModuleCallback
+    ): Observable<Type<any>> {
+        const loadChildren = loadModuleCallback();
+
+        /**
+         * Use Promise.resolve() as we are unsure if loadChildren is a function that returns a promise, observable or a value
+         */
+        return (
+            isObservable(loadChildren)
+                ? loadChildren
+                : from(Promise.resolve(loadChildren))
+        ).pipe(
+            switchMap((moduleOrFactory) => {
+                /**
+                 * If the app is not being run with AOT enabled then we may need to compile the module into a module factory
+                 * before passing it onto the component factory resolver
+                 */
+                if (moduleOrFactory instanceof NgModuleFactory) {
+                    return of(moduleOrFactory);
+                } else if (this._compiler) {
+                    return from(
+                        this._compiler.compileModuleAsync(moduleOrFactory)
+                    );
+                } else {
+                    return throwError(
+                        () =>
+                            `Looks like you have AOT disabled but your NgModule is not compiled into an NgModuleFactory.`
+                    );
+                }
+            }),
+            switchMap((factory) => {
+                const moduleRef = factory.create(this._injector);
+
+                /**
+                 * By providing a DYNAMIC_COMPONENT injection in the module we are loading we know what component it is
+                 * that should be rendered from the declarations array in the module
+                 */
+                const dynamicComponentType =
+                    moduleRef.injector.get<Type<any>>(DYNAMIC_COMPONENT);
+
+                if (!dynamicComponentType) {
+                    return throwError(
+                        () =>
+                            `No dynamic component found with id: ${manifest.componentId}`
+                    );
+                }
+
+                return of(dynamicComponentType);
             })
         );
     }
