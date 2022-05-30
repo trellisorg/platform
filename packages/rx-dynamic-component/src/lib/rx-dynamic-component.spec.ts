@@ -1,4 +1,4 @@
-import { Component, ComponentFactory, NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import {
     byText,
     createComponentFactory,
@@ -7,10 +7,10 @@ import {
 import {
     DynamicOutletModule,
     DYNAMIC_COMPONENT,
-    RxDynamicComponentProviders,
+    provideRxDynamicComponent,
     RxDynamicComponentService,
 } from '@trellisorg/rx-dynamic-component';
-import { Observable, of } from 'rxjs';
+import { of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 @Component({
@@ -22,15 +22,13 @@ import { switchMap } from 'rxjs/operators';
     styles: [''],
 })
 class ContainerComponent {
-    factory$: Observable<ComponentFactory<any>>;
+    readonly factory$ = of('dynamic-lazy-child1').pipe(
+        switchMap((componentId) =>
+            this.rxDynamicComponentService.getComponent(componentId)
+        )
+    );
 
-    constructor(private rxDynamicComponentService: RxDynamicComponentService) {
-        this.factory$ = of('dynamic-lazy-child1').pipe(
-            switchMap((componentId) =>
-                this.rxDynamicComponentService.getComponent(componentId)
-            )
-        );
-    }
+    constructor(private rxDynamicComponentService: RxDynamicComponentService) {}
 }
 
 @Component({
@@ -62,8 +60,9 @@ describe('RxDynamicComponent', () => {
 
     const createComponent = createComponentFactory({
         component: ContainerComponent,
-        imports: [
-            RxDynamicComponentProviders.forRoot({
+        imports: [DynamicOutletModule],
+        providers: [
+            provideRxDynamicComponent({
                 devMode: true,
                 manifests: [
                     {
@@ -72,7 +71,6 @@ describe('RxDynamicComponent', () => {
                     },
                 ],
             }),
-            DynamicOutletModule,
         ],
     });
 
