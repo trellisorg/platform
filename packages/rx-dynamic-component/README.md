@@ -11,6 +11,8 @@ to run demo: `yarn nx serve rx-dynamic-component-demo` and navigate to `http://l
 
 ### Define your modules and components to be lazy loaded
 
+#### With a Module and `DYNAMIC_COMPONENT` token
+
 ```typescript
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -37,18 +39,38 @@ Note the `DYNAMIC_COMPONENT` injection token that provides the Component that wi
 This is required otherwise `rx-dynamic-component`
 is not able to resolve and know what to render
 
+#### With a standalone component
+
+```typescript
+@Component({
+    standalone: true,
+    // rest
+})
+export class StandaloneComponent {} 
+```
+
+The above code was generated using `yarn nx g c query-param1 --standalone`.
+
 ### Define your dynamic component manifests
 
 ```typescript
 import { DynamicComponentManifest } from './rx-dynamic-component.manifest';
 
 const manifests: DynamicComponentManifest[] = [
-    // Using dynamic import
+    // Using dynamic import and module + token
     {
         componentId: 'query1',
         loadChildren: () =>
             import('./query-param1/query-param1.module').then(
                 (m) => m.QueryParam1Module
+            ),
+    },
+    // Using dynamic import and standalone component
+    {
+        componentId: 'standalone',
+        loadComponent: () =>
+            import('./standalone/standalone.component').then(
+                (m) => m.StandaloneComponent
             ),
     },
     // Using direct module reference
@@ -59,7 +81,7 @@ const manifests: DynamicComponentManifest[] = [
 ];
 ```
 
-### Import RxDynamicComponentModule into your root AppModule
+### Provide into your root AppModule
 
 ```typescript
 import { NgModule } from '@angular/core';
@@ -68,37 +90,34 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { RxDynamicComponentModule } from '@trellisorg/rx-dynamic-component';
 import { RouterModule } from '@angular/router';
+import { provideRxDynamicComponent } from './rx-dynamic-component.providers';
 
 @NgModule({
     declarations: [AppComponent],
     imports: [
         BrowserModule,
-        RxDynamicComponentModule.forRoot({
-            devMode: true,
-            manifests: [
-                {
-                    componentId: 'query1',
-                    loadChildren: () =>
-                        import('./query-param1/query-param1.module').then(
-                            (m) => m.QueryParam1Module
-                        ),
-                },
-            ],
-        }),
         RouterModule.forRoot([]),
     ],
-    providers: [],
+    providers: [
+      // Note: This used to be `RxDynamicComponentModule.forRoot()` imported into the `imports` array
+        provideRxDynamicComponent({
+            manifests: [
+                // manifests
+            ],
+        }),
+    ],
     bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+}
 ```
 
 You can enable `devMode` to have `console.warn`'s show up in the console of your application. By default, it is `false`.
 
-There is also a `forFeature()` that can be used in feature modules to register manifests in other places as long
-as `forRoot()` has been called.
+There is also a `provideRxDynamicComponentManifests()` function that can be used in feature modules to register manifests in other places as long
+as `provideRxDynamicComponent()` has been called.
 
-### Setup an observable to trigger the creation of a ComponentFactory
+### Set up an observable to trigger the creation of a ComponentFactory
 
 ```typescript
 import { Component, ComponentFactory } from '@angular/core';
@@ -113,25 +132,23 @@ import { filter, switchMap } from 'rxjs/operators';
     styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-    queryParamComponent$: Observable<ComponentFactory<any>>;
+    queryParamComponent$ = this._route.queryParams.pipe(
+        filter((params) => !!params['query']),
+        switchMap((params) =>
+            this.rxDynamicComponentService.getComponent(
+                params['query']
+            )
+        )
+    );
 
     constructor(
         private _route: ActivatedRoute,
         private rxDynamicComponentService: RxDynamicComponentService
-    ) {
-        this.queryParamComponent$ = this._route.queryParams.pipe(
-            filter((params) => !!params['query']),
-            switchMap((params) =>
-                this.rxDynamicComponentService.getComponentFactory(
-                    params['query']
-                )
-            )
-        );
-    }
+    ) {}
 }
 ```
 
-This will setup an observable that listens on query params and loads the correct component factory. In our demo case it
+This will set up an observable that listens on query params and loads the correct component factory. In our demo case it
 is either `query1` or `query2`. The value you pass into `RxDynamicComponentService#getComponentFactory`
 must equal one of the `componentId`s from the manifest you provided.
 
@@ -208,7 +225,10 @@ export interface DynamicComponentManifest<T = string> {
     timeout?: number;
     cacheFactories?: boolean;
     componentId: T;
+    // Required if `loadComponent` is omitted
     loadChildren: LoadChildrenCallback;
+    // Required if `loadChildren` is omitted
+    loadComponent: LoadComponentCallback;
 }
 ```
 
