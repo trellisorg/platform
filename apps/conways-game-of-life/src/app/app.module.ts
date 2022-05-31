@@ -6,7 +6,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import {
-    DynamicOutletModule,
+    DynamicOutletComponent,
     provideRxDynamicComponent,
 } from '@trellisorg/rx-dynamic-component';
 import { AppComponent } from './app.component';
@@ -26,7 +26,7 @@ import { gameReducer, GAME_STATE } from './state/game.state';
             logOnly: false,
         }),
         ReactiveComponentModule,
-        DynamicOutletModule,
+        DynamicOutletComponent,
     ],
     providers: [
         provideRxDynamicComponent({

@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {
-    DynamicOutletModule,
+    DynamicOutletComponent,
     provideRxDynamicComponent,
 } from '@trellisorg/rx-dynamic-component';
 import { AppComponent } from './app.component';
 
 @NgModule({
     declarations: [AppComponent],
-    imports: [BrowserModule, DynamicOutletModule],
+    imports: [BrowserModule, DynamicOutletComponent],
     providers: [
         provideRxDynamicComponent({
             devMode: true,

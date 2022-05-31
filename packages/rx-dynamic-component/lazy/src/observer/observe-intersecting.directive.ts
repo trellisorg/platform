@@ -23,6 +23,7 @@ import { INTERSECTION_OBSERVER_CONFIG } from './intersection-observer.config';
 @Directive({
     // eslint-disable-next-line @angular-eslint/directive-selector
     selector: '[rxObserveIntersecting]',
+    standalone: true,
 })
 export class ObserveIntersectingDirective
     implements OnDestroy, OnInit, AfterViewInit

@@ -46,7 +46,7 @@ is not able to resolve and know what to render
     standalone: true,
     // rest
 })
-export class StandaloneComponent {} 
+export class StandaloneComponent {}
 ```
 
 The above code was generated using `yarn nx g c query-param1 --standalone`.
@@ -94,12 +94,9 @@ import { provideRxDynamicComponent } from './rx-dynamic-component.providers';
 
 @NgModule({
     declarations: [AppComponent],
-    imports: [
-        BrowserModule,
-        RouterModule.forRoot([]),
-    ],
+    imports: [BrowserModule, RouterModule.forRoot([])],
     providers: [
-      // Note: This used to be `RxDynamicComponentModule.forRoot()` imported into the `imports` array
+        // Note: This used to be `RxDynamicComponentModule.forRoot()` imported into the `imports` array
         provideRxDynamicComponent({
             manifests: [
                 // manifests
@@ -108,8 +105,7 @@ import { provideRxDynamicComponent } from './rx-dynamic-component.providers';
     ],
     bootstrap: [AppComponent],
 })
-export class AppModule {
-}
+export class AppModule {}
 ```
 
 You can enable `devMode` to have `console.warn`'s show up in the console of your application. By default, it is `false`.
@@ -135,9 +131,7 @@ export class AppComponent {
     queryParamComponent$ = this._route.queryParams.pipe(
         filter((params) => !!params['query']),
         switchMap((params) =>
-            this.rxDynamicComponentService.getComponent(
-                params['query']
-            )
+            this.rxDynamicComponentService.getComponent(params['query'])
         )
     );
 

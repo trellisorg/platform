@@ -6,11 +6,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import {
     DynamicManifestPreloadPriority,
-    DynamicOutletModule,
+    DynamicOutletComponent,
     provideRxDynamicComponent,
     provideRxDynamicComponentManifests,
 } from '@trellisorg/rx-dynamic-component';
-import { LazyDynamicOutletModule } from '@trellisorg/rx-dynamic-component/lazy';
+import { LazyDynamicOutletComponent } from '@trellisorg/rx-dynamic-component/lazy';
 import { AppComponent } from './app.component';
 import { DialogModule } from './dialog/dialog.module';
 import { QueryParam2Module } from './query-param2/query-param2.module';
@@ -19,8 +19,8 @@ import { QueryParam2Module } from './query-param2/query-param2.module';
     declarations: [AppComponent],
     imports: [
         BrowserModule,
-        DynamicOutletModule,
-        LazyDynamicOutletModule,
+        DynamicOutletComponent,
+        LazyDynamicOutletComponent,
         RouterModule.forRoot([]),
         FormsModule,
         MatBottomSheetModule,

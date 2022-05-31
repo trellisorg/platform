@@ -1,8 +1,0 @@
-<div
-    rxObserveIntersecting
-    [debounceTime]="300"
-    [config]="lazyDynamicOutletConfig"
-    (visible)="intersected = true"
->
-    <rx-dynamic-outlet *ngIf="intersected" [load]="load"></rx-dynamic-outlet>
-</div>

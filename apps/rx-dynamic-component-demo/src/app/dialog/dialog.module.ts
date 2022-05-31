@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import {
-    DynamicOutletModule,
+    DynamicOutletComponent,
     provideRxDynamicComponentManifests,
 } from '@trellisorg/rx-dynamic-component';
 import { DialogComponent } from './dialog.component';
@@ -9,7 +9,7 @@ import { Store } from './store';
 
 @NgModule({
     declarations: [DialogComponent],
-    imports: [CommonModule, DynamicOutletModule],
+    imports: [CommonModule, DynamicOutletComponent],
     providers: [
         Store,
         provideRxDynamicComponentManifests([

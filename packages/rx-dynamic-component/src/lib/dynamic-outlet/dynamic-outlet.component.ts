@@ -12,9 +12,10 @@ import {
 @Component({
     // eslint-disable-next-line @angular-eslint/component-selector
     selector: 'rx-dynamic-outlet',
-    templateUrl: './dynamic-outlet.component.html',
-    styleUrls: ['./dynamic-outlet.component.scss'],
+    template: `<div #outlet></div>`,
+    styleUrls: [],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
 })
 export class DynamicOutletComponent<
     TComponent,
