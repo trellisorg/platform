@@ -82,7 +82,7 @@
         "@angular-eslint/eslint-plugin-template": "13.2.1",
         "@angular-eslint/template-parser": "13.2.1",
         "@angular/compiler-cli": "13.3.9",
-        "@angular/language-service": "13.3.9",
+        "@angular/language-service": "13.3.11",
         "@betterer/cli": "5.3.6",
         "@nestjs/schematics": "8.0.11",
         "@nestjs/testing": "8.4.6",
