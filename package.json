@@ -85,7 +85,7 @@
         "@angular/language-service": "13.3.9",
         "@betterer/cli": "5.3.6",
         "@nestjs/schematics": "8.0.11",
-        "@nestjs/testing": "8.4.5",
+        "@nestjs/testing": "8.4.6",
         "@nrwl/angular": "14.1.9",
         "@nrwl/cli": "14.1.9",
         "@nrwl/cypress": "14.1.9",
