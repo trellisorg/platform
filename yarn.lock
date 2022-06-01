@@ -2005,10 +2005,10 @@
   dependencies:
     tslib "2.4.0"
 
-"@nestjs/websockets@8.4.5":
-  version "8.4.5"
-  resolved "https://registry.yarnpkg.com/@nestjs/websockets/-/websockets-8.4.5.tgz#5977770d5eed02c848fca5ba043e4be53f8f9d86"
-  integrity sha512-xKBREaT0N6zYPvL+PKSeElWXdnNYCROmNGsZ/vpnSfnrGAwdSl/QVQ2+HMAgO4xiqmKNQEotvSW+Fs+PvdYx7Q==
+"@nestjs/websockets@8.4.6":
+  version "8.4.6"
+  resolved "https://registry.yarnpkg.com/@nestjs/websockets/-/websockets-8.4.6.tgz#d95d86af1076b153a1fb79aaf7aeef4221b7dd82"
+  integrity sha512-4MQhNv58nz14m8ifyE+jBBsFZoSn7KaaEry7MN2gKYKpWJwn9zW5ghrxb+VoWVvpuLE0CZ1kHN5zlvLqUnFfzA==
   dependencies:
     iterare "1.2.1"
     object-hash "3.0.0"
