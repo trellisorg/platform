@@ -30,7 +30,8 @@ import { DYNAMIC_COMPONENT } from '@trellisorg/rx-dynamic-component';
         },
     ],
 })
-export class QueryParam1Module {}
+export class QueryParam1Module {
+}
 ```
 
 The above code was generated using `yarn nx g (m|c) query-param1`.
@@ -46,7 +47,8 @@ is not able to resolve and know what to render
     standalone: true,
     // rest
 })
-export class StandaloneComponent {}
+export class StandaloneComponent {
+}
 ```
 
 The above code was generated using `yarn nx g c query-param1 --standalone`.
@@ -105,13 +107,14 @@ import { provideRxDynamicComponent } from './rx-dynamic-component.providers';
     ],
     bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+}
 ```
 
 You can enable `devMode` to have `console.warn`'s show up in the console of your application. By default, it is `false`.
 
-There is also a `provideRxDynamicComponentManifests()` function that can be used in feature modules to register manifests in other places as long
-as `provideRxDynamicComponent()` has been called.
+There is also a `provideRxDynamicComponentManifests()` function that can be used in feature modules to register
+manifests in other places as long as `provideRxDynamicComponent()` has been called.
 
 ### Set up an observable to trigger the creation of a ComponentFactory
 
@@ -138,7 +141,8 @@ export class AppComponent {
     constructor(
         private _route: ActivatedRoute,
         private rxDynamicComponentService: RxDynamicComponentService
-    ) {}
+    ) {
+    }
 }
 ```
 
@@ -146,7 +150,7 @@ This will set up an observable that listens on query params and loads the correc
 is either `query1` or `query2`. The value you pass into `RxDynamicComponentService#getComponentFactory`
 must equal one of the `componentId`s from the manifest you provided.
 
-### (Optional) Import DynamicOutletModule or LazyDynamicOutletModule into the component you will be dynamically loading into
+### (Optional) Import DynamicOutletComponent or LazyDynamicOutletComponent into the component you will be dynamically loading into
 
 `rx-dynamic-component` provides a component that can be used that is setup with an internal `ViewContainerRef`
 for ease of use, but if you know what you are doing you can implement whatever sort of `ViewContainerRef` you want.
@@ -156,19 +160,20 @@ for ease of use, but if you know what you are doing you can implement whatever s
     declarations: [AppComponent],
     imports: [
         // other imports
-        DynamicOutletModule,
+        DynamicOutletComponent,
     ],
     providers: [],
     bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+}
 ```
 
 ```angular2html
 <!--Will load the outlet as soon as the observable emits-->
-<rx-dynamic-outlet [load]="queryParamComponent$ | async"></rx-dynamic-outlet>
+<rx-dynamic-outlet [load]='queryParamComponent$ | async'></rx-dynamic-outlet>
 <!--Will load the outlet as soon as the observable emits assuming the component is in view with IntersectionObserver-->
-<rx-lazy-dynamic-outlet [load]="queryParamComponent$ | async"></rx-lazy-dynamic-outlet>
+<rx-lazy-dynamic-outlet [load]='queryParamComponent$ | async'></rx-lazy-dynamic-outlet>
 ```
 
 With that when the query params `query` property is equal to one of the manifest entries the corresponding Angular
@@ -189,10 +194,13 @@ import { NgModule } from '@angular/core';
 
 @NgModule({
     providers: [
+        // Directly with injection token
         {
             provide: INTERSECTION_OBSERVER_CONFIG,
             useValue: IntersectionObserverInit // See: https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/IntersectionObserver
-        }
+        },
+        // Or with provider function
+        provideIntersectionObserverConfig(IntersectionObserverInit)
     ]
 })
 AppModule {}
@@ -228,26 +236,31 @@ export interface DynamicComponentManifest<T = string> {
 
 We have already seen `componentId` and `loadChildren` above in the first couple of steps.
 
-Each of the following properties can be configured globally (in `forRoot()`) or at the manifest level. Global values are used if the manifest does not
-have a value set for that property, and the manifest level properties override global properties.
+Each of the following properties can be configured globally (in `forRoot()`) or at the manifest level. Global values are
+used if the manifest does not have a value set for that property, and the manifest level properties override global
+properties.
 
 #### Preloading
 
-We can configure these manifests to be preloaded so that when we go to use them in our application the asset bundles have already
-been downloaded to the browser.
+We can configure these manifests to be preloaded so that when we go to use them in our application the asset bundles
+have already been downloaded to the browser.
 
 `preload` - Whether this manifest should be preloaded or not
 
-`priority` - Manifests can either be preloaded immediately or when the browser is idling as to not block the main thread.
-Values will either be `DynamicManifestPreloadPriority.IDLE` or `DynamicManifestPreloadPriority.IMMEDIATE`. `priority` will only be used if
+`priority` - Manifests can either be preloaded immediately or when the browser is idling as to not block the main
+thread. Values will either be `DynamicManifestPreloadPriority.IDLE` or `DynamicManifestPreloadPriority.IMMEDIATE`
+. `priority` will only be used if
 `preload: true`
 
-`timeout` - The timeout to configure for `window.requestIdleCallback` that will preload the manifest in the background when using `DynamicManifestPreloadPriority.IDLE`
-Reference: https://developer.mozilla.org/en-US/docs/Web/API/Window/requestIdleCallback, `timeout` is ignored if `preload: false` or `priority: 'immediate'`
+`timeout` - The timeout to configure for `window.requestIdleCallback` that will preload the manifest in the background
+when using `DynamicManifestPreloadPriority.IDLE`
+Reference: https://developer.mozilla.org/en-US/docs/Web/API/Window/requestIdleCallback, `timeout` is ignored
+if `preload: false` or `priority: 'immediate'`
 
 #### Caching
 
-`cacheFactories` - Will cache the `ComponentFactory` pulled from the manifest if set to true. Still a little buggy in certain cases but works for the majority.
+`cacheFactories` - Will cache the `ComponentFactory` pulled from the manifest if set to true. Still a little buggy in
+certain cases but works for the majority.
 
 ### (Optional) Manually preload manifests
 
@@ -255,5 +268,5 @@ The `RxDynamicComponentService` exposes a method:
 
 `loadManifest(componentId: string, priority: DynamicManifestPreloadPriority = DynamicManifestPreloadPriority.IDLE)`
 
-that can be called to force a preload for a manifest. Global and Manifest configurations are ignored in this case and instead the values passed
-in will determine how to preload the manifest.
+that can be called to force a preload for a manifest. Global and Manifest configurations are ignored in this case and
+instead the values passed in will determine how to preload the manifest.
