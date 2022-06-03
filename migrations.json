@@ -1,28 +1,39 @@
 {
     "migrations": [
         {
-            "cli": "nx",
-            "version": "14.0.6",
-            "description": "Remove root property from project.json files",
-            "factory": "./src/migrations/update-14-0-6/remove-roots",
-            "package": "nx",
-            "name": "14-0-6-remove-root"
+            "version": "14.0.0",
+            "factory": "./update-14/angular-packages-version-prefix",
+            "description": "Update Angular packages 'dependencies' and 'devDependencies' version prefix to '^' instead of '~'.",
+            "package": "@angular/cli",
+            "name": "update-angular-packages-version-prefix"
         },
         {
-            "version": "14.1.5-beta.0",
-            "cli": "nx",
-            "description": "Update to export default in jest config and revert jest.preset.ts to jest.preset.js",
-            "factory": "./src/migrations/update-14-1-5/update-exports-jest-config",
-            "package": "@nrwl/jest",
-            "name": "update-to-export-default"
+            "version": "14.0.0",
+            "factory": "./update-14/remove-show-circular-dependencies-option",
+            "description": "Remove 'showCircularDependencies' option from browser and server builders.",
+            "package": "@angular/cli",
+            "name": "remove-show-circular-dependencies-option"
         },
         {
-            "cli": "nx",
-            "version": "14.1.5-beta.0",
-            "description": "Rename option swcrcPath to swcrc, and resolve relative to workspace root",
-            "factory": "./src/migrations/update-14.1.5-beta.0/update-swcrc-path",
-            "package": "@nrwl/js",
-            "name": "update-swcrc-path"
+            "version": "14.0.0",
+            "factory": "./update-14/remove-default-project-option",
+            "description": "Remove 'defaultProject' option from workspace configuration. The project to use will be determined from the current working directory.",
+            "package": "@angular/cli",
+            "name": "remove-default-project-option"
+        },
+        {
+            "version": "14.0.0",
+            "factory": "./update-14/replace-default-collection-option",
+            "description": "Replace 'defaultCollection' option in workspace configuration with 'schematicCollections'.",
+            "package": "@angular/cli",
+            "name": "replace-default-collection-option"
+        },
+        {
+            "version": "14.0.0",
+            "factory": "./update-14/update-libraries-secondary-entrypoints",
+            "description": "Remove 'package.json' files from library projects secondary entrypoints.",
+            "package": "@angular/cli",
+            "name": "update-libraries-secondary-entrypoints"
         }
     ]
 }

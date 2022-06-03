@@ -30,8 +30,7 @@ import { DYNAMIC_COMPONENT } from '@trellisorg/rx-dynamic-component';
         },
     ],
 })
-export class QueryParam1Module {
-}
+export class QueryParam1Module {}
 ```
 
 The above code was generated using `yarn nx g (m|c) query-param1`.
@@ -47,8 +46,7 @@ is not able to resolve and know what to render
     standalone: true,
     // rest
 })
-export class StandaloneComponent {
-}
+export class StandaloneComponent {}
 ```
 
 The above code was generated using `yarn nx g c query-param1 --standalone`.
@@ -107,8 +105,7 @@ import { provideRxDynamicComponent } from './rx-dynamic-component.providers';
     ],
     bootstrap: [AppComponent],
 })
-export class AppModule {
-}
+export class AppModule {}
 ```
 
 You can enable `devMode` to have `console.warn`'s show up in the console of your application. By default, it is `false`.
@@ -141,8 +138,7 @@ export class AppComponent {
     constructor(
         private _route: ActivatedRoute,
         private rxDynamicComponentService: RxDynamicComponentService
-    ) {
-    }
+    ) {}
 }
 ```
 
@@ -165,8 +161,7 @@ for ease of use, but if you know what you are doing you can implement whatever s
     providers: [],
     bootstrap: [AppComponent],
 })
-export class AppModule {
-}
+export class AppModule {}
 ```
 
 ```angular2html
