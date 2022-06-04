@@ -1,5 +1,5 @@
-import { InjectionToken } from '@angular/core';
-import type { LoadChildrenCallback } from '@angular/router';
+import { InjectionToken, NgModuleFactory, Type } from '@angular/core';
+import type { Observable } from 'rxjs';
 
 export type ManifestMap = Map<string, DynamicComponentManifest>;
 
@@ -26,7 +26,7 @@ export interface SharedManifestConfig {
     preload?: boolean;
     priority?: DynamicManifestPreloadPriority;
     timeout?: number;
-    cacheFactories?: boolean;
+    cacheComponents?: boolean;
 }
 
 /**
@@ -45,7 +45,7 @@ export interface DynamicComponentRootConfig<T extends string = string>
 export const defaultRootConfig: DynamicComponentRootConfig = {
     manifests: [],
     devMode: false,
-    cacheFactories: false,
+    cacheComponents: false,
     preload: false,
 };
 
@@ -53,12 +53,31 @@ export const defaultRootConfig: DynamicComponentRootConfig = {
  * DynamicComponentManifest is similar to how lazy loaded routes are configured with @angular/router
  * componentId is used to find the correct module to load in the manifest map
  */
+export type LoadComponent =
+    | Type<unknown>
+    | Observable<Type<unknown>>
+    | Promise<Type<unknown>>;
 
-export interface DynamicComponentManifest<T = string>
-    extends SharedManifestConfig {
+export type LoadComponentCallback = () => LoadComponent;
+
+export type LoadModule =
+    | Type<any>
+    | NgModuleFactory<any>
+    | Observable<Type<any>>
+    | Promise<NgModuleFactory<any> | Type<any>>;
+
+export type LoadModuleCallback = () => LoadModule;
+
+export type LoadModuleOrComponent =
+    | { loadChildren: LoadModuleCallback }
+    | { loadComponent: LoadComponentCallback };
+
+export type DynamicComponentManifest<T = string> = SharedManifestConfig & {
     componentId: T;
-    loadChildren: LoadChildrenCallback;
-}
+} & (
+        | { loadChildren: LoadModuleCallback }
+        | { loadComponent: LoadComponentCallback }
+    );
 
 /**
  * The root configuration injection token

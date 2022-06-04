@@ -1,21 +1,36 @@
-import { Component, ComponentFactory, Input, Type } from '@angular/core';
+import { Component, Input, Type } from '@angular/core';
+import { ObserveIntersectingDirective } from '../observer/observe-intersecting.directive';
 
 @Component({
     // eslint-disable-next-line @angular-eslint/component-selector
     selector: 'rx-lazy-dynamic-outlet',
-    templateUrl: './lazy-dynamic-outlet.component.html',
-    styleUrls: ['./lazy-dynamic-outlet.component.scss'],
+    template: `<div
+        rxObserveIntersecting
+        [debounceTime]="debounceTime"
+        [config]="lazyDynamicOutletConfig"
+        (visible)="intersected = true"
+    >
+        <rx-dynamic-outlet
+            *ngIf="intersected"
+            [load]="load"
+        ></rx-dynamic-outlet>
+    </div> `,
+    styleUrls: [],
+    standalone: true,
+    imports: [ObserveIntersectingDirective],
 })
 export class LazyDynamicOutletComponent<
-    TComponentType extends Type<unknown>,
-    TComponent = InstanceType<TComponentType>
+    TComponent,
+    TComponentType extends Type<TComponent>
 > {
     @Input() lazyDynamicOutletConfig: IntersectionObserverInit = {
         threshold: [0.25],
         rootMargin: '0px',
     };
 
-    @Input() factory: ComponentFactory<TComponent>;
+    @Input() load: Type<TComponentType>;
+
+    @Input() debounceTime = 300;
 
     intersected = false;
 

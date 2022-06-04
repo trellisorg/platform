@@ -1,25 +1,24 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import {
-    DynamicOutletModule,
-    RxDynamicComponentModule,
+    DynamicOutletComponent,
+    provideRxDynamicComponentManifests,
 } from '@trellisorg/rx-dynamic-component';
 import { DialogComponent } from './dialog.component';
 import { Store } from './store';
 
 @NgModule({
     declarations: [DialogComponent],
-    imports: [
-        CommonModule,
-        RxDynamicComponentModule.forFeature([
+    imports: [CommonModule, DynamicOutletComponent],
+    providers: [
+        Store,
+        provideRxDynamicComponentManifests([
             {
                 componentId: 'lazy',
                 loadChildren: () =>
                     import('../lazy/lazy.module').then((m) => m.LazyModule),
             },
         ]),
-        DynamicOutletModule,
     ],
-    providers: [Store],
 })
 export class DialogModule {}

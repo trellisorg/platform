@@ -1,36 +1,34 @@
-import { Component, ComponentFactory, NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import {
     byText,
     createComponentFactory,
     Spectator,
 } from '@ngneat/spectator/jest';
 import {
-    DynamicOutletModule,
+    DynamicOutletComponent,
     DYNAMIC_COMPONENT,
-    RxDynamicComponentModule,
+    provideRxDynamicComponent,
     RxDynamicComponentService,
 } from '@trellisorg/rx-dynamic-component';
-import { Observable, of } from 'rxjs';
+import { of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 @Component({
     // eslint-disable-next-line @angular-eslint/component-selector
     selector: 'container',
     template: ` <rx-dynamic-outlet
-        [factory]="factory$ | async"
+        [load]="factory$ | async"
     ></rx-dynamic-outlet>`,
     styles: [''],
 })
 class ContainerComponent {
-    factory$: Observable<ComponentFactory<any>>;
+    readonly factory$ = of('dynamic-lazy-child1').pipe(
+        switchMap((componentId) =>
+            this.rxDynamicComponentService.getComponent(componentId)
+        )
+    );
 
-    constructor(private rxDynamicComponentService: RxDynamicComponentService) {
-        this.factory$ = of('dynamic-lazy-child1').pipe(
-            switchMap((componentId) =>
-                this.rxDynamicComponentService.getComponentFactory(componentId)
-            )
-        );
-    }
+    constructor(private rxDynamicComponentService: RxDynamicComponentService) {}
 }
 
 @Component({
@@ -62,8 +60,9 @@ describe('RxDynamicComponent', () => {
 
     const createComponent = createComponentFactory({
         component: ContainerComponent,
-        imports: [
-            RxDynamicComponentModule.forRoot({
+        imports: [DynamicOutletComponent],
+        providers: [
+            provideRxDynamicComponent({
                 devMode: true,
                 manifests: [
                     {
@@ -72,7 +71,6 @@ describe('RxDynamicComponent', () => {
                     },
                 ],
             }),
-            DynamicOutletModule,
         ],
     });
 

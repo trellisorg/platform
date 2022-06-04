@@ -41,7 +41,7 @@
         ]
     },
     "cli": {
-        "defaultCollection": "@nrwl/angular"
+        "schematicCollections": ["@nrwl/angular"]
     },
     "generators": {
         "@nrwl/workspace": {
@@ -114,6 +114,5 @@
         "@nrwl/angular:component": {
             "style": "scss"
         }
-    },
-    "defaultProject": "ngrx-universal-rehydrate-demo-api"
+    }
 }

@@ -4,7 +4,7 @@ import {
     DYNAMIC_COMPONENT_CONFIG,
 } from './manifest';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class Logger {
     constructor(
         @Inject(DYNAMIC_COMPONENT_CONFIG)

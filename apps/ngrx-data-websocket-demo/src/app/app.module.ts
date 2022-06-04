@@ -19,7 +19,7 @@ import { AppComponent } from './app.component';
     imports: [
         BrowserModule,
         RouterModule.forRoot([], {
-            initialNavigation: 'enabled',
+            initialNavigation: 'enabledBlocking',
             relativeLinkResolution: 'legacy',
         }),
         DragDropModule,

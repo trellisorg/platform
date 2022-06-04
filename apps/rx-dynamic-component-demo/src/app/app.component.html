@@ -14,11 +14,11 @@
     </div>
     <div style="border: 2px solid orange">
         <rx-dynamic-outlet
-            [factory]="queryParamComponent$ | async"
+            [load]="queryParamComponent$ | async"
         ></rx-dynamic-outlet>
         Demo of lazy loaded outlet
         <div *ngFor="let el of arr" style="height: 500px; border: black solid">
-            <rx-lazy-dynamic-outlet [factory]="queryParamComponent$ | async">
+            <rx-lazy-dynamic-outlet [load]="queryParamComponent$ | async">
             </rx-lazy-dynamic-outlet>
         </div>
     </div>

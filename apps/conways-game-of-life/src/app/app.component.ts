@@ -1,8 +1,4 @@
-import {
-    ChangeDetectionStrategy,
-    Component,
-    ComponentFactory,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Type } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { RxDynamicComponentService } from '@trellisorg/rx-dynamic-component';
 import type { Observable } from 'rxjs';
@@ -11,7 +7,7 @@ import { selectCurrentGeneration, selectGeneration } from './state/game.state';
 
 interface LifeCell {
     alive: number;
-    component: Observable<ComponentFactory<any>>;
+    component: Observable<Type<any>>;
 }
 
 @Component({
@@ -23,13 +19,13 @@ interface LifeCell {
 export class AppComponent {
     title = 'conways-game-of-life';
 
-    activeGame$: Observable<LifeCell[][]> = this._store.pipe(
+    readonly activeGame$: Observable<LifeCell[][]> = this._store.pipe(
         select(selectCurrentGeneration),
         map((game) =>
             game.map((row) =>
                 row.map((alive: number) => ({
                     alive,
-                    component: this.rxDynamicComponentService.getComponentFactory(
+                    component: this.rxDynamicComponentService.getComponent(
                         alive === 0 ? 'dead' : 'alive'
                     ),
                 }))
@@ -37,7 +33,7 @@ export class AppComponent {
         )
     );
 
-    generation$ = this._store.pipe(select(selectGeneration));
+    readonly generation$ = this._store.pipe(select(selectGeneration));
 
     constructor(
         private rxDynamicComponentService: RxDynamicComponentService,
