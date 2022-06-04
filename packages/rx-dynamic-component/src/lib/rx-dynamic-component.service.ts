@@ -25,7 +25,9 @@ import {
 } from './manifest';
 import { RxDynamicComponentPreloaderService } from './rx-dynamic-component-preloader.service';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root',
+})
 export class RxDynamicComponentService {
     private readonly componentCache: Map<string, Type<any>> = new Map<
         string,

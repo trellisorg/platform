@@ -1,5 +1,4 @@
 import { inject, Provider } from '@angular/core';
-import { Logger } from './logger';
 import {
     defaultRootConfig,
     DynamicComponentManifest,
@@ -10,7 +9,6 @@ import {
     _FEATURE_DYNAMIC_COMPONENT_MANIFESTS,
 } from './manifest';
 import { RxDynamicComponentPreloaderService } from './rx-dynamic-component-preloader.service';
-import { RxDynamicComponentService } from './rx-dynamic-component.service';
 
 function _initialManifestMap(
     manifests: DynamicComponentManifest[]
@@ -35,7 +33,6 @@ export function provideRxDynamicComponent<T extends string = string>(
     };
 
     return [
-        RxDynamicComponentService,
         {
             provide: DYNAMIC_COMPONENT_CONFIG,
             useValue: mergedConfig,
@@ -44,8 +41,6 @@ export function provideRxDynamicComponent<T extends string = string>(
             provide: DYNAMIC_MANIFEST_MAP,
             useValue: _initialManifestMap(mergedConfig.manifests || []),
         },
-        Logger,
-        RxDynamicComponentPreloaderService,
     ];
 }
 

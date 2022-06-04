@@ -20,7 +20,9 @@ function isPromiseOrObservable<T>(
     );
 }
 
-@Injectable()
+@Injectable({
+    providedIn: 'root',
+})
 export class RxDynamicComponentPreloaderService {
     private readonly preloaded: Set<string> = new Set<string>();
 
