@@ -5,7 +5,7 @@ import {
     Spectator,
 } from '@ngneat/spectator/jest';
 import {
-    DynamicOutletModule,
+    DynamicOutletComponent,
     DYNAMIC_COMPONENT,
     provideRxDynamicComponent,
     RxDynamicComponentService,
@@ -60,7 +60,7 @@ describe('RxDynamicComponent', () => {
 
     const createComponent = createComponentFactory({
         component: ContainerComponent,
-        imports: [DynamicOutletModule],
+        imports: [DynamicOutletComponent],
         providers: [
             provideRxDynamicComponent({
                 devMode: true,
