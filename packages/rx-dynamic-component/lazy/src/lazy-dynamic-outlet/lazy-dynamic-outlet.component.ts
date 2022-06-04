@@ -1,4 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input, Type } from '@angular/core';
+import { DynamicOutletComponent } from '@trellisorg/rx-dynamic-component';
 import { ObserveIntersectingDirective } from '../observer/observe-intersecting.directive';
 
 @Component({
@@ -17,7 +19,11 @@ import { ObserveIntersectingDirective } from '../observer/observe-intersecting.d
     </div> `,
     styleUrls: [],
     standalone: true,
-    imports: [ObserveIntersectingDirective],
+    imports: [
+        ObserveIntersectingDirective,
+        DynamicOutletComponent,
+        CommonModule,
+    ],
 })
 export class LazyDynamicOutletComponent<
     TComponent,
@@ -28,7 +34,7 @@ export class LazyDynamicOutletComponent<
         rootMargin: '0px',
     };
 
-    @Input() load: Type<TComponentType>;
+    @Input() load?: Type<TComponentType> | null;
 
     @Input() debounceTime = 300;
 

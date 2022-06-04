@@ -9,3 +9,9 @@
 <div style="border: orange dashed 5px; margin-top: 5px">
     <rx-dynamic-outlet [load]="dynamicModule$ | async"></rx-dynamic-outlet>
 </div>
+<div style="border: red dashed 5px; margin-top: 5px">
+    With lazy dynamic outlet, loaded once in view with intersection observer
+    <rx-lazy-dynamic-outlet
+        [load]="dynamicModule$ | async"
+    ></rx-lazy-dynamic-outlet>
+</div>

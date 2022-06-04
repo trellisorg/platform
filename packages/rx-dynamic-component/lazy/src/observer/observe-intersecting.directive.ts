@@ -35,7 +35,7 @@ export class ObserveIntersectingDirective
      */
     @Input() defaultVisibility = false;
 
-    @Input() set config(config: IntersectionObserverInit) {
+    @Input() set config(config: IntersectionObserverInit | undefined) {
         // Spread the defaults to ensure each prop is set
         this._config = {
             ...this.defaultConfig,
@@ -43,7 +43,7 @@ export class ObserveIntersectingDirective
         };
     }
 
-    get config(): IntersectionObserverInit {
+    get config(): IntersectionObserverInit | undefined {
         return this._config;
     }
 
@@ -59,7 +59,7 @@ export class ObserveIntersectingDirective
      * Settings some sane defaults.
      * @private
      */
-    private _config: IntersectionObserverInit;
+    private _config?: IntersectionObserverInit;
 
     private readonly defaultConfig: IntersectionObserverInit;
 

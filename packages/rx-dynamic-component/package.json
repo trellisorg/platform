@@ -1,6 +1,6 @@
 {
     "name": "@trellisorg/rx-dynamic-component",
-    "version": "0.2.0-rc.2",
+    "version": "0.2.0",
     "repository": {
         "url": "https://github.com/trellisorg/platform/tree/master/packages/rx-dynamic-component"
     },

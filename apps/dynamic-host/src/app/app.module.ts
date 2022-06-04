@@ -4,11 +4,16 @@ import {
     DynamicOutletComponent,
     provideRxDynamicComponent,
 } from '@trellisorg/rx-dynamic-component';
+import { LazyDynamicOutletComponent } from '@trellisorg/rx-dynamic-component/lazy';
 import { AppComponent } from './app.component';
 
 @NgModule({
     declarations: [AppComponent],
-    imports: [BrowserModule, DynamicOutletComponent],
+    imports: [
+        BrowserModule,
+        DynamicOutletComponent,
+        LazyDynamicOutletComponent,
+    ],
     providers: [
         provideRxDynamicComponent({
             devMode: true,

@@ -19,7 +19,8 @@
                 ],
                 "styles": ["apps/dynamic-host/src/styles.scss"],
                 "scripts": [],
-                "aot": true
+                "aot": true,
+                "buildLibsFromSource": true
             },
             "configurations": {
                 "production": {
