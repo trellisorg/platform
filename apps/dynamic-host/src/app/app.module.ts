@@ -33,6 +33,20 @@ import { AppComponent } from './app.component';
                         ),
                 },
                 {
+                    componentId: 'dynamic-rendered-at',
+                    loadComponent: () =>
+                        import('./rendered-at/rendered-at.component').then(
+                            (m) => m.RenderedAtComponent
+                        ),
+                },
+                {
+                    componentId: 'dynamic-rendered-at2',
+                    loadComponent: () =>
+                        import('./rendered-at2/rendered-at2.component').then(
+                            (m) => m.RenderedAt2Component
+                        ),
+                },
+                {
                     componentId: 'dynamic-module',
                     loadChildren: () =>
                         import('./dynamic-module/dynamic-module.module').then(

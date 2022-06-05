@@ -15,3 +15,19 @@
         [load]="dynamicModule$ | async"
     ></rx-lazy-dynamic-outlet>
 </div>
+<div style="border: black dashed 5px; margin-top: 5px">
+    I am rendering components at the bottom
+    <rx-dynamic-outlet
+        [load]="dynamicRenderedAt$ | async"
+        [replace]="false"
+        [insertAtEnd]="true"
+    ></rx-dynamic-outlet>
+</div>
+<div style="border: blue dashed 5px; margin-top: 5px">
+    I am rendering components at the top
+    <rx-dynamic-outlet
+        [load]="dynamicRenderedAt$ | async"
+        [replace]="false"
+        [insertAtEnd]="false"
+    ></rx-dynamic-outlet>
+</div>

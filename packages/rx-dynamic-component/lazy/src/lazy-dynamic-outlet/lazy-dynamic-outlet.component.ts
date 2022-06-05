@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, Type } from '@angular/core';
+import { Component, Injector, Input, Type } from '@angular/core';
 import { DynamicOutletComponent } from '@trellisorg/rx-dynamic-component';
 import { ObserveIntersectingDirective } from '../observer/observe-intersecting.directive';
 
@@ -15,6 +15,9 @@ import { ObserveIntersectingDirective } from '../observer/observe-intersecting.d
         <rx-dynamic-outlet
             *ngIf="intersected"
             [load]="load"
+            [injector]="injector"
+            [insertAtEnd]="insertAtEnd"
+            [replace]="replace"
         ></rx-dynamic-outlet>
     </div> `,
     styleUrls: [],
@@ -37,6 +40,23 @@ export class LazyDynamicOutletComponent<
     @Input() load?: Type<TComponentType> | null;
 
     @Input() debounceTime = 300;
+
+    /**
+     * Custom injector that will be used in the dynamic component
+     */
+    @Input() injector?: Injector;
+
+    /**
+     * Whether the component should be replaced or added into the `ViewContainerRef` to be rendered
+     * alongside the previous dynamic components.
+     */
+    @Input() replace = true;
+
+    /**
+     * If `replace` is false then when inserting into the `ViewContainerRef` this will either create the component
+     * at the "start" or the "end".
+     */
+    @Input() insertAtEnd = true;
 
     intersected = false;
 

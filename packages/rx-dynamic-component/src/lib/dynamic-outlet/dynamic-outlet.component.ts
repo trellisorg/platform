@@ -3,6 +3,7 @@ import {
     ChangeDetectionStrategy,
     Component,
     ComponentRef,
+    Injector,
     Input,
     Type,
     ViewChild,
@@ -34,6 +35,23 @@ export class DynamicOutletComponent<
         this._load = factory;
     }
 
+    /**
+     * Custom injector that will be used in the dynamic component
+     */
+    @Input() injector?: Injector;
+
+    /**
+     * Whether the component should be replaced or added into the `ViewContainerRef` to be rendered
+     * alongside the previous dynamic components.
+     */
+    @Input() replace = true;
+
+    /**
+     * If `replace` is false then when inserting into the `ViewContainerRef` this will either create the component
+     * at the "start" or the "end".
+     */
+    @Input() insertAtEnd = true;
+
     private component?: ComponentRef<TComponent>;
 
     ngAfterViewInit(): void {
@@ -52,10 +70,15 @@ export class DynamicOutletComponent<
      * @param factory
      */
     loadOutlet(factory: TComponentType | null | undefined): void {
-        this.outlet.clear();
+        if (this.replace) {
+            this.outlet.clear();
+        }
 
         if (factory) {
-            this.component = this.outlet.createComponent(factory);
+            this.component = this.outlet.createComponent(factory, {
+                index: this.insertAtEnd ? undefined : 0,
+                injector: this.injector,
+            });
         }
     }
 }
