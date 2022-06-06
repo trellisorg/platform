@@ -55,7 +55,7 @@
         "@ngrx/store": "13.2.0",
         "@ngrx/store-devtools": "13.2.0",
         "@nguniversal/builders": "13.1.1",
-        "@nguniversal/express-engine": "13.1.1",
+        "@nguniversal/express-engine": "14.0.0",
         "@typescript-eslint/eslint-plugin": "^4.30.0",
         "@typescript-eslint/parser": "^4.30.0",
         "cypress": "^9.7.0",
