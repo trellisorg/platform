@@ -100,7 +100,7 @@
         "@nrwl/workspace": "14.1.9",
         "@swc/cli": "^0.1.57",
         "@swc/core": "^1.2.196",
-        "@swc/helpers": "^0.3.13",
+        "@swc/helpers": "^0.3.17",
         "@swc/jest": "^0.2.21",
         "@types/google.maps": "^3.49.2",
         "@types/jest": "27.4.1",
