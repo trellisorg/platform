@@ -41,7 +41,8 @@
         ]
     },
     "cli": {
-        "schematicCollections": ["@nrwl/angular"]
+        "schematicCollections": ["@nrwl/angular"],
+        "defaultCollection": "@nrwl/angular"
     },
     "generators": {
         "@nrwl/workspace": {
@@ -110,6 +111,9 @@
         "@nrwl/angular:library": {
             "linter": "eslint",
             "unitTestRunner": "jest"
+        },
+        "@nrwl/angular:component": {
+            "style": "css"
         }
     }
 }
