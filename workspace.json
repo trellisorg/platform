@@ -5,6 +5,7 @@
         "conways-game-of-life": "apps/conways-game-of-life",
         "dynamic-host": "apps/dynamic-host",
         "dynamic-remote": "apps/dynamic-remote",
+        "google-places-autocomplete": "packages/google-places-autocomplete",
         "make-buildable": "packages/make-buildable",
         "nest-spectator": "packages/nest-spectator",
         "ngrx-data-websocket-client": "packages/ngrx-data-websocket/client",

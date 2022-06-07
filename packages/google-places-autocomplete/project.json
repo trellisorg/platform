@@ -1,0 +1,37 @@
+{
+    "projectType": "library",
+    "sourceRoot": "packages/google-places-autocomplete/src",
+    "prefix": "trellisorg",
+    "targets": {
+        "build": {
+            "executor": "@nrwl/angular:package",
+            "outputs": ["dist/packages/google-places-autocomplete"],
+            "options": {
+                "project": "packages/google-places-autocomplete/ng-package.json"
+            },
+            "configurations": {
+                "production": {
+                    "tsConfig": "packages/google-places-autocomplete/tsconfig.lib.prod.json"
+                },
+                "development": {
+                    "tsConfig": "packages/google-places-autocomplete/tsconfig.lib.json"
+                }
+            },
+            "defaultConfiguration": "production"
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": [
+                    "packages/google-places-autocomplete/**/*.ts",
+                    "packages/google-places-autocomplete/**/*.html",
+                    "packages/google-places-autocomplete/loader/**/*.ts",
+                    "packages/google-places-autocomplete/loader/**/*.html",
+                    "packages/google-places-autocomplete/jsonp/**/*.ts",
+                    "packages/google-places-autocomplete/jsonp/**/*.html"
+                ]
+            }
+        }
+    },
+    "tags": []
+}

@@ -19,6 +19,15 @@
         "baseUrl": ".",
         "paths": {
             "@trellis/make-buildable": ["packages/make-buildable/src/index.ts"],
+            "@trellisorg/google-places-autocomplete": [
+                "packages/google-places-autocomplete/src/index.ts"
+            ],
+            "@trellisorg/google-places-autocomplete/jsonp": [
+                "packages/google-places-autocomplete/jsonp/src/index.ts"
+            ],
+            "@trellisorg/google-places-autocomplete/loader": [
+                "packages/google-places-autocomplete/loader/src/index.ts"
+            ],
             "@trellisorg/nest-spectator": [
                 "packages/nest-spectator/src/index.ts"
             ],
