@@ -20,5 +20,6 @@
         "nxls": "packages/nxls",
         "rx-dynamic-component": "packages/rx-dynamic-component",
         "rx-dynamic-component-demo": "apps/rx-dynamic-component-demo"
-    }
+    },
+    "$schema": "./node_modules/nx/schemas/workspace-schema.json"
 }

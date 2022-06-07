@@ -1,4 +1,5 @@
 {
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
     "sourceRoot": "apps/ngrx-universal-rehydrate-demo-api/src",
     "projectType": "application",
     "prefix": "ngrx-universal-rehydrate-demo-api",

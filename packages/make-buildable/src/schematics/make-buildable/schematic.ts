@@ -9,10 +9,9 @@ import {
     Tree,
     url,
 } from '@angular-devkit/schematics';
-import { offsetFromRoot } from '@nrwl/devkit';
+import { offsetFromRoot, readNxJson } from '@nrwl/devkit';
 import {
     readJsonInTree,
-    readNxJson,
     readWorkspace,
     updateJsonInTree,
     updateWorkspaceInTree,

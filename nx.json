@@ -41,8 +41,7 @@
         ]
     },
     "cli": {
-        "schematicCollections": ["@nrwl/angular"],
-        "defaultCollection": "@nrwl/angular"
+        "schematicCollections": ["@nrwl/angular"]
     },
     "generators": {
         "@nrwl/workspace": {
@@ -115,5 +114,6 @@
         "@nrwl/angular:component": {
             "style": "css"
         }
-    }
+    },
+    "$schema": "./node_modules/nx/schemas/nx-schema.json"
 }
