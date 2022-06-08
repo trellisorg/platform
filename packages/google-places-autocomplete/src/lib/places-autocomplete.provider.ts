@@ -6,10 +6,12 @@ import {
     PlacesAutocompleteConfig,
 } from './types';
 
-export function providePlacesAutocomplete(
-    config: Pick<PlacesAutocompleteConfig, 'apiKey'> &
-        Partial<Omit<PlacesAutocompleteConfig, 'apiKey'>>
-): Provider {
+type ProviderConfig = Pick<PlacesAutocompleteConfig, 'apiKey'> & {
+    loaderOptions: Partial<PlacesAutocompleteConfig['loaderOptions']>;
+    options: Partial<PlacesAutocompleteConfig['options']>;
+};
+
+export function providePlacesAutocomplete(config: ProviderConfig): Provider {
     return {
         provide: GOOGLE_MAPS_SDK_CONFIG,
         useValue: {
