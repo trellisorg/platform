@@ -7,8 +7,8 @@ import {
 } from './types';
 
 type ProviderConfig = Pick<PlacesAutocompleteConfig, 'apiKey'> & {
-    loaderOptions: Partial<PlacesAutocompleteConfig['loaderOptions']>;
-    options: Partial<PlacesAutocompleteConfig['options']>;
+    loaderOptions?: Partial<PlacesAutocompleteConfig['loaderOptions']>;
+    options?: Partial<PlacesAutocompleteConfig['options']>;
 };
 
 export function providePlacesAutocomplete(config: ProviderConfig): Provider {
