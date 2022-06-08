@@ -20,7 +20,7 @@ export class PlacesAutocompleteDirective implements AfterViewInit {
 
     private readonly config = inject(GOOGLE_MAPS_SDK_CONFIG);
 
-    private readonly mapsSdkFactory = inject(GOOGLE_MAPS_SDK_FACTORY);
+    private readonly mapsSdkFactory = inject(GOOGLE_MAPS_SDK_FACTORY, 8);
 
     constructor(private readonly elementRef: ElementRef) {}
 
@@ -28,13 +28,7 @@ export class PlacesAutocompleteDirective implements AfterViewInit {
         this.init();
     }
 
-    async init(): Promise<void> {
-        // Reuse the existing `window.google` if it exists otherwise load it
-        const googleMaps =
-            typeof google !== 'undefined' && google?.maps?.places?.Autocomplete
-                ? google
-                : await this.mapsSdkFactory(this.config);
-
+    registerAutocomplete(googleMaps: typeof google): void {
         this.autocomplete = new googleMaps.maps.places.Autocomplete(
             this.elementRef.nativeElement,
             this.config.options
@@ -46,5 +40,20 @@ export class PlacesAutocompleteDirective implements AfterViewInit {
                 this.placeChanged.emit(place);
             }
         });
+    }
+
+    async init(): Promise<void> {
+        const googleLoaded =
+            typeof google !== 'undefined' && google?.maps?.places?.Autocomplete;
+
+        // Reuse the existing `window.google` if it exists otherwise load it
+        if (googleLoaded) {
+            this.registerAutocomplete(google);
+        } else if (this.mapsSdkFactory) {
+            await this.mapsSdkFactory(this.config);
+            this.registerAutocomplete(google);
+        } else {
+            throw new Error(`Google Maps SDK not loaded.`);
+        }
     }
 }
