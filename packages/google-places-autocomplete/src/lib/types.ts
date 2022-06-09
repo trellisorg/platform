@@ -28,6 +28,7 @@ export interface PlacesAutocompleteConfig {
     apiKey: string;
     options: AutocompleteOptions;
     loaderOptions: LoaderOptions;
+    devMode: boolean;
 }
 
 export const defaultLoaderOptions: Partial<LoaderOptions> = {

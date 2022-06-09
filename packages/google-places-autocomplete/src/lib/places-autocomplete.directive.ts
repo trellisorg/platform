@@ -53,7 +53,11 @@ export class PlacesAutocompleteDirective implements AfterViewInit {
             await this.mapsSdkFactory(this.config);
             this.registerAutocomplete(google);
         } else {
-            throw new Error(`Google Maps SDK not loaded.`);
+            if (this.config.devMode) {
+                console.error(
+                    `Google Maps SDK has not been loaded. The placesAutocomplete directive will not work correctly.`
+                );
+            }
         }
     }
 }
