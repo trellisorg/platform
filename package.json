@@ -104,7 +104,7 @@
         "@swc/jest": "^0.2.21",
         "@types/google.maps": "^3.49.2",
         "@types/jest": "27.4.1",
-        "@types/node": "12.20.14",
+        "@types/node": "17.0.42",
         "cypress": "^9.1.0",
         "eslint-plugin-cypress": "^2.10.3",
         "jest": "27.5.1",
