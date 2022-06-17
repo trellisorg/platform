@@ -47,11 +47,18 @@ export function Setter<T>(token: ProviderToken<T>) {
                     const setterKey = `set${capitalize(
                         propertyName
                     )}` as keyof T;
+
                     const setter = service[setterKey] as unknown as (
                         value: unknown
                     ) => void;
 
-                    setter(value);
+                    if (setter) {
+                        setter(value);
+                    } else {
+                        throw new Error(
+                            `${token} does not contain a setter for ${propertyName}`
+                        );
+                    }
                 }
             },
             get() {
