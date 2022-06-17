@@ -46,6 +46,9 @@
             "@trellisorg/ngrx-universal-rehydrate/server": [
                 "packages/ngrx-universal-rehydrate/server/src/index.ts"
             ],
+            "@trellisorg/ngx-decorators": [
+                "packages/ngx-decorators/src/index.ts"
+            ],
             "@trellisorg/nx-betterer": ["packages/nx-betterer/src/index.ts"],
             "@trellisorg/nx-jest": ["packages/nx-jest/src/index.ts"],
             "@trellisorg/nxls": ["packages/nxls/src/index.ts"],

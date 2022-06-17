@@ -15,6 +15,7 @@
         "ngrx-universal-rehydrate": "packages/ngrx-universal-rehydrate",
         "ngrx-universal-rehydrate-demo": "apps/ngrx-universal-rehydrate-demo",
         "ngrx-universal-rehydrate-demo-api": "apps/ngrx-universal-rehydrate-demo-api",
+        "ngx-decorators": "packages/ngx-decorators",
         "nx-betterer": "packages/nx-betterer",
         "nx-jest": "packages/nx-jest",
         "nxls": "packages/nxls",

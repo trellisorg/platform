@@ -1,0 +1,41 @@
+{
+    "projectType": "library",
+    "sourceRoot": "packages/ngx-decorators/src",
+    "prefix": "trellisorg",
+    "targets": {
+        "build": {
+            "executor": "@nrwl/angular:package",
+            "outputs": ["dist/packages/ngx-decorators"],
+            "options": {
+                "project": "packages/ngx-decorators/ng-package.json"
+            },
+            "configurations": {
+                "production": {
+                    "tsConfig": "packages/ngx-decorators/tsconfig.lib.prod.json"
+                },
+                "development": {
+                    "tsConfig": "packages/ngx-decorators/tsconfig.lib.json"
+                }
+            },
+            "defaultConfiguration": "production"
+        },
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/packages/ngx-decorators"],
+            "options": {
+                "jestConfig": "packages/ngx-decorators/jest.config.ts",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": [
+                    "packages/ngx-decorators/**/*.ts",
+                    "packages/ngx-decorators/**/*.html"
+                ]
+            }
+        }
+    },
+    "tags": []
+}
