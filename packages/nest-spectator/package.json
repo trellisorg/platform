@@ -1,6 +1,6 @@
 {
     "name": "@trellisorg/nest-spectator",
-    "version": "0.0.13",
+    "version": "0.0.14",
     "description": "Auto-mocking for Nestjs providers",
     "author": "Jay Bell <jay@trellis.org>",
     "homepage": "https://www.npmjs.com/package/nest-spectator",
@@ -19,5 +19,8 @@
         "typescript",
         "testing",
         "jest"
-    ]
+    ],
+    "dependencies": {
+        "@nestjs/common": "^7 || ^8"
+    }
 }
