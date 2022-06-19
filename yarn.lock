@@ -1820,6 +1820,11 @@
   dependencies:
     fast-deep-equal "^3.1.3"
 
+"@hirez_io/observer-spy@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@hirez_io/observer-spy/-/observer-spy-2.2.0.tgz#3b1df531ba333a9a6cbbec0333d3fbdc4c68cc3c"
+  integrity sha512-G9nv87vjRILgB/X1AtKBv1DZX7yXSYAOCXon/f+QULKoXVhVehYUF5Lv0SQ97ebf1sA48Z2CyQ9h2v4Pz6DgaQ==
+
 "@humanwhocodes/config-array@^0.5.0":
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/@humanwhocodes/config-array/-/config-array-0.5.0.tgz#1407967d4c6eecd7388f83acf1eaf4d0c6e58ef9"
@@ -8709,10 +8714,10 @@ neo-async@^2.6.2:
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.2.tgz#b4aafb93e3aeb2d8174ca53cf163ab7d7308305f"
   integrity sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==
 
-ng-packagr@14.0.0:
-  version "14.0.0"
-  resolved "https://registry.yarnpkg.com/ng-packagr/-/ng-packagr-14.0.0.tgz#ce54d2c065f188d8c6230c03d3e20c37de5adc5d"
-  integrity sha512-jHkpWm2yEpMPbY0Qz3sfDh+7uAfyskEMesEPA1aGQXxvwiIaCl+8RFRdPQxObYOj8Uv7ZJxoyUkqi8KqI5RV9g==
+ng-packagr@~14.0.0:
+  version "14.0.2"
+  resolved "https://registry.yarnpkg.com/ng-packagr/-/ng-packagr-14.0.2.tgz#5c824b753a4c5e2851c0e130fd98f4df77f6c04b"
+  integrity sha512-Yoiy/cvpYvPTVdAZFPsU2Xg1YdY9w7wVTamKNtz78l1sXA6inQuTGlsvNy+yOJTH7TLZmEjU2WHkmJHgxU10Pg==
   dependencies:
     "@rollup/plugin-json" "^4.1.0"
     "@rollup/plugin-node-resolve" "^13.1.3"

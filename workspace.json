@@ -19,7 +19,8 @@
         "nx-jest": "packages/nx-jest",
         "nxls": "packages/nxls",
         "rx-dynamic-component": "packages/rx-dynamic-component",
-        "rx-dynamic-component-demo": "apps/rx-dynamic-component-demo"
+        "rx-dynamic-component-demo": "apps/rx-dynamic-component-demo",
+        "update": "packages/update"
     },
     "$schema": "./node_modules/nx/schemas/workspace-schema.json"
 }

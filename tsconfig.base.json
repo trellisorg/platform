@@ -54,7 +54,8 @@
             ],
             "@trellisorg/rx-dynamic-component/lazy": [
                 "packages/rx-dynamic-component/lazy/src/index.ts"
-            ]
+            ],
+            "@trellisorg/update": ["packages/update/src/index.ts"]
         }
     },
     "exclude": ["node_modules", "tmp"]
