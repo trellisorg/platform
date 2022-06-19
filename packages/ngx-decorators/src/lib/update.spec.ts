@@ -8,7 +8,11 @@ import { BehaviorSubject } from 'rxjs';
 class Store {
     readonly counter$ = new BehaviorSubject<number>(0);
 
+    readonly counter2$ = new BehaviorSubject<number>(0);
+
     readonly setCounter = (value: number) => this.counter$.next(value);
+
+    readonly setCounterTwo = (value: number) => this.counter2$.next(value);
 }
 
 @Component({
@@ -18,13 +22,21 @@ class Store {
     template: `<div id="input">
             {{ counter }}
         </div>
-        <div id="observable">{{ counter$ | async }}</div>`,
+        <div id="observable">{{ counter$ | async }}</div>
+        <div id="input">
+            {{ counterTwo }}
+        </div>
+        <div id="observable">{{ counterTwo$ | async }}</div>`,
     providers: [Store],
 })
 class TestComponent {
     @Input() @Update(Store) counter = 0;
 
+    @Input() @Update(Store, 'setCounterTwo') counterTwo = 0;
+
     readonly counter$ = this.store.counter$;
+
+    readonly counterTwo$ = this.store.counter2$;
 
     constructor(private readonly store: Store) {}
 }
@@ -56,5 +68,13 @@ describe('Update', () => {
         fixture.detectChanges();
 
         expect(subscribeSpyTo(store.counter$).getLastValue()).toEqual(1);
+    });
+
+    it('should update the store value with renamed setter', () => {
+        component.counterTwo = 1;
+
+        fixture.detectChanges();
+
+        expect(subscribeSpyTo(store.counter2$).getLastValue()).toEqual(1);
     });
 });
