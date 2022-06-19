@@ -1,29 +1,30 @@
 {
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
     "projectType": "library",
-    "sourceRoot": "packages/ngx-decorators/src",
+    "sourceRoot": "packages/update/src",
     "prefix": "trellisorg",
     "targets": {
         "build": {
             "executor": "@nrwl/angular:package",
-            "outputs": ["dist/packages/ngx-decorators"],
+            "outputs": ["dist/packages/update"],
             "options": {
-                "project": "packages/ngx-decorators/ng-package.json"
+                "project": "packages/update/ng-package.json"
             },
             "configurations": {
                 "production": {
-                    "tsConfig": "packages/ngx-decorators/tsconfig.lib.prod.json"
+                    "tsConfig": "packages/update/tsconfig.lib.prod.json"
                 },
                 "development": {
-                    "tsConfig": "packages/ngx-decorators/tsconfig.lib.json"
+                    "tsConfig": "packages/update/tsconfig.lib.json"
                 }
             },
             "defaultConfiguration": "production"
         },
         "test": {
             "executor": "@nrwl/jest:jest",
-            "outputs": ["coverage/packages/ngx-decorators"],
+            "outputs": ["coverage/packages/update"],
             "options": {
-                "jestConfig": "packages/ngx-decorators/jest.config.ts",
+                "jestConfig": "packages/update/jest.config.ts",
                 "passWithNoTests": true
             }
         },
@@ -31,8 +32,8 @@
             "executor": "@nrwl/linter:eslint",
             "options": {
                 "lintFilePatterns": [
-                    "packages/ngx-decorators/**/*.ts",
-                    "packages/ngx-decorators/**/*.html"
+                    "packages/update/**/*.ts",
+                    "packages/update/**/*.html"
                 ]
             }
         }

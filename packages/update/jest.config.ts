@@ -1,6 +1,6 @@
 /* eslint-disable */
 export default {
-    displayName: 'ngx-decorators',
+    displayName: 'update',
     preset: '../../jest.preset.js',
     setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
     globals: {
@@ -9,7 +9,7 @@ export default {
             stringifyContentPathRegex: '\\.(html|svg)$',
         },
     },
-    coverageDirectory: '../../coverage/packages/ngx-decorators',
+    coverageDirectory: '../../coverage/packages/update',
     transform: {
         '^.+\\.(ts|mjs|js|html)$': 'jest-preset-angular',
     },
