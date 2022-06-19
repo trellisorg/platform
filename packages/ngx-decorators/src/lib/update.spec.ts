@@ -1,0 +1,60 @@
+import { Component, Injectable, Input } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { subscribeSpyTo } from '@hirez_io/observer-spy';
+import { Update } from '@trellisorg/ngx-decorators';
+import { BehaviorSubject } from 'rxjs';
+
+@Injectable()
+class Store {
+    readonly counter$ = new BehaviorSubject<number>(0);
+
+    readonly setCounter = (value: number) => this.counter$.next(value);
+}
+
+@Component({
+    // eslint-disable-next-line @angular-eslint/component-selector
+    selector: 'test',
+    styles: [''],
+    template: `<div id="input">
+            {{ counter }}
+        </div>
+        <div id="observable">{{ counter$ | async }}</div>`,
+    providers: [Store],
+})
+class TestComponent {
+    @Input() @Update(Store) counter = 0;
+
+    readonly counter$ = this.store.counter$;
+
+    constructor(private readonly store: Store) {}
+}
+
+describe('Update', () => {
+    let component: TestComponent;
+    let fixture: ComponentFixture<TestComponent>;
+
+    let store: Store;
+
+    beforeEach(() => {
+        TestBed.configureTestingModule({ declarations: [TestComponent] });
+        fixture = TestBed.createComponent(TestComponent);
+        component = fixture.componentInstance;
+
+        store = fixture.componentRef.injector.get(Store);
+    });
+
+    it('should create', () => {
+        expect(component).toBeDefined();
+        expect(store).toBeDefined();
+
+        expect(subscribeSpyTo(store.counter$).getLastValue()).toEqual(0);
+    });
+
+    it('should update the store value', () => {
+        component.counter = 1;
+
+        fixture.detectChanges();
+
+        expect(subscribeSpyTo(store.counter$).getLastValue()).toEqual(1);
+    });
+});

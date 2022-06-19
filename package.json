@@ -84,6 +84,7 @@
         "@angular/compiler-cli": "14.0.0",
         "@angular/language-service": "14.0.0",
         "@betterer/cli": "5.3.6",
+        "@hirez_io/observer-spy": "^2.2.0",
         "@nestjs/schematics": "8.0.11",
         "@nestjs/testing": "8.4.6",
         "@nrwl/angular": "14.2.1",

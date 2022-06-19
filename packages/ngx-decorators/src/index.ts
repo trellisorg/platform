@@ -1,1 +1,1 @@
-export * from './lib/setter';
+export * from './lib/update';
