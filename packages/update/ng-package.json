@@ -1,6 +1,6 @@
 {
     "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
-    "dest": "../../dist/packages/ngx-decorators",
+    "dest": "../../dist/packages/update",
     "lib": {
         "entryFile": "src/index.ts"
     }
