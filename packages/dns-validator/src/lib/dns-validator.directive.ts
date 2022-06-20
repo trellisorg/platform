@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { NgControl } from '@angular/forms';
 import { ComponentStore, tapResponse } from '@ngrx/component-store';
-import { debounceTime, Observable, switchMap } from 'rxjs';
+import { debounceTime, map, Observable, switchMap } from 'rxjs';
 import { DNS_VALIDATOR_CONFIG } from './dns-validator.config';
 
 type DoHBoolean = boolean | '1' | '0' | 0 | 1;
@@ -41,6 +41,10 @@ class DnsValidatorStore extends ComponentStore<DnsValidatorState> {
     private readonly config = inject(DNS_VALIDATOR_CONFIG, 8);
 
     readonly response$ = this.select((state) => state.response);
+
+    readonly invalid$ = this.response$.pipe(
+        map((response) => response && response.Status !== 0)
+    );
 
     readonly clear = this.updater((state) => ({
         ...state,
@@ -110,6 +114,8 @@ export class DnsValidatorDirective {
     @Input() transformFn?: (value: string) => string;
 
     readonly response$ = this.dnsValidatorStore.response$;
+
+    readonly invalid$ = this.dnsValidatorStore.invalid$;
 
     private readonly config = inject(DNS_VALIDATOR_CONFIG, 8);
 
