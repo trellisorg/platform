@@ -19,6 +19,9 @@
         "baseUrl": ".",
         "paths": {
             "@trellis/make-buildable": ["packages/make-buildable/src/index.ts"],
+            "@trellisorg/dns-validator": [
+                "packages/dns-validator/src/index.ts"
+            ],
             "@trellisorg/google-places-autocomplete": [
                 "packages/google-places-autocomplete/src/index.ts"
             ],

@@ -3,6 +3,8 @@
     "projects": {
         "api": "apps/api",
         "conways-game-of-life": "apps/conways-game-of-life",
+        "dns-validator": "packages/dns-validator",
+        "dns-validator-demo": "apps/dns-validator-demo",
         "dynamic-host": "apps/dynamic-host",
         "dynamic-remote": "apps/dynamic-remote",
         "google-places-autocomplete": "packages/google-places-autocomplete",
