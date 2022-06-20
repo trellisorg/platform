@@ -1,0 +1,41 @@
+{
+    "projectType": "library",
+    "sourceRoot": "packages/dns-validator/src",
+    "prefix": "trellisorg",
+    "targets": {
+        "build": {
+            "executor": "@nrwl/angular:package",
+            "outputs": ["dist/packages/dns-validator"],
+            "options": {
+                "project": "packages/dns-validator/ng-package.json"
+            },
+            "configurations": {
+                "production": {
+                    "tsConfig": "packages/dns-validator/tsconfig.lib.prod.json"
+                },
+                "development": {
+                    "tsConfig": "packages/dns-validator/tsconfig.lib.json"
+                }
+            },
+            "defaultConfiguration": "production"
+        },
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/packages/dns-validator"],
+            "options": {
+                "jestConfig": "packages/dns-validator/jest.config.ts",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": [
+                    "packages/dns-validator/**/*.ts",
+                    "packages/dns-validator/**/*.html"
+                ]
+            }
+        }
+    },
+    "tags": []
+}
