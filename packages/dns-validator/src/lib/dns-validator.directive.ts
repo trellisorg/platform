@@ -1,10 +1,12 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import {
     Directive,
+    ElementRef,
     HostListener,
     inject,
     Injectable,
     Input,
+    Renderer2,
 } from '@angular/core';
 import { NgControl } from '@angular/forms';
 import { ComponentStore, tapResponse } from '@ngrx/component-store';
@@ -28,6 +30,7 @@ export interface DoHResponse {
 }
 
 const googleDoH = `https://dns.google/resolve`;
+const formClass = 'form-control-warning';
 
 interface DnsValidatorState {
     response?: DoHResponse;
@@ -35,13 +38,9 @@ interface DnsValidatorState {
 
 @Injectable()
 class DnsValidatorStore extends ComponentStore<DnsValidatorState> {
-    readonly response$ = this.select((state) => state.response);
-
     private readonly config = inject(DNS_VALIDATOR_CONFIG, 8);
 
-    constructor(private readonly _httpClient: HttpClient) {
-        super();
-    }
+    readonly response$ = this.select((state) => state.response);
 
     readonly clear = this.updater((state) => ({
         ...state,
@@ -63,15 +62,38 @@ class DnsValidatorStore extends ComponentStore<DnsValidatorState> {
                     this.patchState({
                         response,
                     });
+
+                    this.processStatus(response.Status);
                 },
                 () => {
                     this.patchState({
                         response: undefined,
                     });
+
+                    this.processStatus(0);
                 }
             )
         )
     );
+
+    constructor(
+        private readonly _httpClient: HttpClient,
+        private readonly elementRef: ElementRef,
+        private readonly _renderer2: Renderer2
+    ) {
+        super();
+    }
+
+    private processStatus(status: DoHResponse['Status']): void {
+        if (status === 0) {
+            this._renderer2.removeClass(
+                this.elementRef.nativeElement,
+                formClass
+            );
+        } else {
+            this._renderer2.addClass(this.elementRef.nativeElement, formClass);
+        }
+    }
 }
 
 @Directive({
