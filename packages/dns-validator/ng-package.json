@@ -3,5 +3,6 @@
     "dest": "../../dist/packages/dns-validator",
     "lib": {
         "entryFile": "src/index.ts"
-    }
+    },
+    "allowedNonPeerDependencies": ["@ngrx/component-store"]
 }
