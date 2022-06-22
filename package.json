@@ -3,7 +3,6 @@
     "version": "0.0.0",
     "license": "MIT",
     "scripts": {
-        "nx": "if [ -z $CI ]; then NG_PERSISTENT_BUILD_CACHE=1; fi && node --max_old_space_size=4096 ./node_modules/.bin/nx",
         "start": "yarn nx serve",
         "build": "yarn affected:build --all --parallel",
         "test": "yarn affected:test --all --parallel",
