@@ -22,7 +22,7 @@ export function Update<T, K extends keyof T>(
         // eslint-disable-next-line @typescript-eslint/ban-types
         injectMap.set(token, new WeakMap<object, T>()).get(token))!;
 
-    return (target: unknown, propertyName: string) => {
+    return (target: any, propertyName: string) => {
         let service: T | null | undefined;
 
         const updaterKey =
@@ -61,6 +61,16 @@ export function Update<T, K extends keyof T>(
             get() {
                 return this[`_${propertyName}`];
             },
+            enumerable: true,
         });
+
+        console.log(target.prototype);
+
+        // const constructor = target.constructor;
+        //
+        // target.constructor = (...args: unknown[]) => {
+        //     constructor(args);
+        //     console.log('constructor');
+        // };
     };
 }
