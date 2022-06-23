@@ -1,3 +1,4 @@
+import { isPlatformServer } from '@angular/common';
 import {
     AfterViewInit,
     Directive,
@@ -10,6 +11,7 @@ import {
     OnInit,
     Optional,
     Output,
+    PLATFORM_ID,
 } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { delay, filter } from 'rxjs/operators';
@@ -70,7 +72,8 @@ export class ObserveIntersectingDirective
         private _ngZone: NgZone,
         @Optional()
         @Inject(INTERSECTION_OBSERVER_CONFIG)
-        config: IntersectionObserverInit
+        config: IntersectionObserverInit,
+        @Inject(PLATFORM_ID) private readonly platformId: string
     ) {
         this.defaultConfig = {
             threshold: [0.25],
@@ -78,7 +81,10 @@ export class ObserveIntersectingDirective
             ...(config || {}),
         };
 
-        this.intersectionObserverSupported = 'IntersectionObserver' in window;
+        this.intersectionObserverSupported =
+            !isPlatformServer(this.platformId) &&
+            typeof window !== 'undefined' &&
+            'IntersectionObserver' in window;
     }
 
     ngOnInit() {
