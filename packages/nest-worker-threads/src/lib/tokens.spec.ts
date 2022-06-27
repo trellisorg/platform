@@ -1,5 +1,4 @@
-import { getPoolToken } from '@bull-queue-standalone-app-demo/nest-worker-threads';
-import { providerPrefix } from './tokens';
+import { getPoolToken, providerPrefix } from './tokens';
 
 describe('tokens', () => {
     it('should create the getPoolToken correctly', () => {

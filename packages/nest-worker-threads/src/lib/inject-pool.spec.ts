@@ -1,9 +1,6 @@
-import {
-    getPoolToken,
-    InjectPool,
-} from '@bull-queue-standalone-app-demo/nest-worker-threads';
 import { Injectable } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
+import { getPoolToken, InjectPool } from '@trellisorg/nest-worker-threads';
 
 const token = 'MockPool';
 
