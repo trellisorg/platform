@@ -1,0 +1,36 @@
+{
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "apps/nest-worker-threads-demo/src",
+    "projectType": "application",
+    "targets": {
+        "build": {
+            "executor": "@nrwl/node:webpack",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "dist/apps/nest-worker-threads-demo",
+                "main": "apps/nest-worker-threads-demo/src/main.ts",
+                "tsConfig": "apps/nest-worker-threads-demo/tsconfig.app.json",
+                "additionalEntryPoints": [
+                    {
+                        "entryName": "worker",
+                        "entryPath": "apps/nest-worker-threads-demo/src/workers/worker.ts"
+                    }
+                ]
+            }
+        },
+        "serve": {
+            "executor": "@nrwl/node:node",
+            "options": {
+                "buildTarget": "nest-worker-threads-demo:build"
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": ["apps/nest-worker-threads-demo/**/*.ts"]
+            }
+        }
+    },
+    "tags": []
+}

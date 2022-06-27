@@ -44,13 +44,21 @@ perfect for our use case.
 
 `yarn add @trellisorg/nest-worker-threads node-worker-threads-pool`
 
+## Demo
+
+See demo code [here](https://github.com/trellisorg/platform/tree/master/apps/nest-worker-threads-demo)
+
 ## How
 
 ### Step 1: Create Worker Thread code
 
 Configure an [additional entry point](https://nx.dev/packages/node/executors/webpack#additionalentrypoints) in your
 Webpack config, in Nx, this would be in your projects `build` target
-options. (Additional configuration properties left out for brevity)
+options. (Additional configuration properties left out for brevity).
+
+_Note: You do not need to use additional entry points for your Worker Thread code, as long as there is a
+Javascript (`.js` or `.mjs`) file at the location this library is looking for it will work. Nor do you need to bootstrap
+a standalone Nest app._
 
 `project.json`
 
@@ -100,8 +108,8 @@ class Worker {
   Decorator to tell Nest what method should be used to process incoming messages. More on this below.
    */
     @ThreadMessage()
-    getDate(message: Message<{ value: string }>): { value: string } {
-        return { value: message.data.value };
+    getDate(message: Message<{ message: string }>): { message: string } {
+        return { message: message.data.message };
     }
 }
 
@@ -173,7 +181,7 @@ The type defining what the `exec` command is expecting to return. This will stro
 You should create a shared type so that the code in your main thread is expecting the same request/response types as the service processing
 the message in your Worker Thread.
  */
-type ExecCommand = (value: string) => { value: string };
+type ExecCommand = ({ message }: { message: string }) => { message: string };
 
 @Injectable()
 export class AppService {
@@ -188,10 +196,11 @@ export class AppService {
      */
     getResultFromWorker() {
         return this.pool.exec({
-            value: 'Hello World',
+            message: 'Hello World',
         });
     }
 }
 ```
 
-Now if you hit the endpoint in the controller (if generated with Nx: `curl http://localhost:3333/api`) you will see `{ value: 'Hello World' }` logged.
+Now if you hit the endpoint in the controller (if generated with Nx: `curl http://localhost:3333/api`) you will
+see `{ message: 'Hello World' }` logged.
