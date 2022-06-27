@@ -64,6 +64,7 @@
         "eslint-config-prettier": "8.5.0",
         "jest-marbles": "^3.0.2",
         "lodash.merge": "^4.6.2",
+        "node-worker-threads-pool": "^1.5.1",
         "prettier": "2.6.2",
         "reflect-metadata": "^0.1.13",
         "rxjs": "^7.5.5",

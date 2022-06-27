@@ -10,6 +10,7 @@
         "google-places-autocomplete": "packages/google-places-autocomplete",
         "make-buildable": "packages/make-buildable",
         "nest-spectator": "packages/nest-spectator",
+        "nest-worker-threads": "packages/nest-worker-threads",
         "ngrx-data-websocket-client": "packages/ngrx-data-websocket/client",
         "ngrx-data-websocket-core": "packages/ngrx-data-websocket/core",
         "ngrx-data-websocket-demo": "apps/ngrx-data-websocket-demo",

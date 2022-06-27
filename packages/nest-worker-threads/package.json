@@ -1,0 +1,23 @@
+{
+    "name": "@trellisorg/nest-worker-threads",
+    "version": "1.0.0",
+    "repository": {
+        "url": "https://github.com/trellisorg/platform/tree/master/packages/nest-worker-threads"
+    },
+    "homepage": "https://github.com/trellisorg/platform/tree/master/packages/nest-worker-threads",
+    "author": "Jay Bell <jay@trellis.org>",
+    "description": "Run Standalone Nest apps in Worker Threads and call them from your main Nest app.",
+    "license": "MIT",
+    "type": "commonjs",
+    "peerDependencies": {
+        "node-worker-threads-pool": "^1.5.1",
+        "@nestjs/common": "^7 || ^8"
+    },
+    "keywords": [
+        "threads",
+        "nest",
+        "parallel",
+        "workers",
+        "express"
+    ]
+}
