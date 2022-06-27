@@ -50,7 +50,7 @@ perfect for our use case.
 
 Configure an [additional entry point](https://nx.dev/packages/node/executors/webpack#additionalentrypoints) in your
 Webpack config, in Nx, this would be in your projects `build` target
-options. (Additional configuration properties left our for brevity)
+options. (Additional configuration properties left out for brevity)
 
 `project.json`
 
