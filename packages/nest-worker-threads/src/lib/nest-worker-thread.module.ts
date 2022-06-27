@@ -1,7 +1,7 @@
 import { DynamicModule, Module } from '@nestjs/common';
 import { StaticPool } from 'node-worker-threads-pool';
 import { getPoolToken } from './tokens';
-import { NestWorkerThreadConfig } from './types';
+import type { NestWorkerThreadConfig } from './types';
 
 /**
  * @description Configuration module to provide the different static pools

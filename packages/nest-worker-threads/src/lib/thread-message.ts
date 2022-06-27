@@ -1,5 +1,5 @@
 import { parentPort } from 'worker_threads';
-import { Message } from './types';
+import type { Message } from './types';
 
 /**
  * @description a method decorator to be added to an @Injectable service within a Standalone app
@@ -14,7 +14,9 @@ export function ThreadMessage<T>(this: T, event?: string) {
 
         parentPort.on('message', (data: Message) => {
             if (event == null || data.event === event) {
-                const result = (target[propertyKey] as Function).call(this, {
+                const result = (
+                    target[propertyKey] as (...args: unknown[]) => unknown
+                ).call(this, {
                     event: 'message',
                     data,
                 });
