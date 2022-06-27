@@ -1,5 +1,4 @@
-import { StaticPool } from 'node-worker-threads-pool';
-import { StaticPoolOptions } from 'node-worker-threads-pool/dist/staticPool';
+import type { StaticPool } from 'node-worker-threads-pool';
 
 export interface Message<T = any> {
     event: string;
@@ -8,6 +7,8 @@ export interface Message<T = any> {
 
 export type Pools = Map<string, StaticPool<any>>;
 
+export type StaticPoolOptions = ConstructorParameters<typeof StaticPool<any>>[0]
+
 export interface NestWorkerThreadConfig {
-    pools: { id: string; options: StaticPoolOptions<any> }[];
+    pools: { id: string; options: StaticPoolOptions }[];
 }
