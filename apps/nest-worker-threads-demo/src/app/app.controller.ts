@@ -10,4 +10,9 @@ export class AppController {
     getData() {
         return this.appService.getResultFromWorker();
     }
+
+    @Get('timeout')
+    getDataTimeout() {
+        return this.appService.getResultFromWorkerWithTimeout();
+    }
 }
