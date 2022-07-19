@@ -1,4 +1,5 @@
-import { inject, Provider } from '@angular/core';
+import type { Provider } from '@angular/core';
+import { ENVIRONMENT_INITIALIZER, inject } from '@angular/core';
 import {
     defaultRootConfig,
     DynamicComponentManifest,
@@ -18,6 +19,24 @@ function _initialManifestMap(
     );
 }
 
+function initializeEnvironmentManifests<T extends string = string>(
+    manifests: DynamicComponentManifest<T>[]
+) {
+    return () => {
+        const manifestMap: ManifestMap = inject(DYNAMIC_MANIFEST_MAP);
+
+        const rxDynamicComponentPreloaderService: RxDynamicComponentPreloaderService =
+            inject(RxDynamicComponentPreloaderService);
+
+        manifests.forEach((manifest) => {
+            manifestMap.set(manifest.componentId, manifest);
+        });
+
+        // Send the manifests off to preload if they are configured to do so.
+        rxDynamicComponentPreloaderService.processManifestPreloads(manifests);
+    };
+}
+
 /**
  * Root providers that should be provided as high up in the dependency tree as you want to use this library.
  *
@@ -32,6 +51,8 @@ export function provideRxDynamicComponent<T extends string = string>(
         ...config,
     };
 
+    const manifests = mergedConfig.manifests || [];
+
     return [
         {
             provide: DYNAMIC_COMPONENT_CONFIG,
@@ -39,7 +60,12 @@ export function provideRxDynamicComponent<T extends string = string>(
         },
         {
             provide: DYNAMIC_MANIFEST_MAP,
-            useValue: _initialManifestMap(mergedConfig.manifests || []),
+            useValue: _initialManifestMap(manifests),
+        },
+        {
+            provide: ENVIRONMENT_INITIALIZER,
+            useValue: initializeEnvironmentManifests(manifests),
+            multi: true,
         },
     ];
 }
@@ -50,21 +76,17 @@ export function provideRxDynamicComponent<T extends string = string>(
  */
 export function provideRxDynamicComponentManifests<T extends string = string>(
     manifests: DynamicComponentManifest<T>[]
-): Provider {
-    const manifestMap = inject(DYNAMIC_MANIFEST_MAP);
-
-    manifests.forEach((manifest) =>
-        manifestMap.set(manifest.componentId, manifest)
-    );
-
-    // Send the manifests off to preload if they are configured to do so.
-    inject(RxDynamicComponentPreloaderService).processManifestPreloads(
-        manifests
-    );
-
-    return {
-        provide: _FEATURE_DYNAMIC_COMPONENT_MANIFESTS,
-        useValue: manifests,
-        multi: true,
-    };
+): Provider[] {
+    return [
+        {
+            provide: _FEATURE_DYNAMIC_COMPONENT_MANIFESTS,
+            useValue: manifests,
+            multi: true,
+        },
+        {
+            provide: ENVIRONMENT_INITIALIZER,
+            useValue: initializeEnvironmentManifests(manifests),
+            multi: true,
+        },
+    ];
 }
