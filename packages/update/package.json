@@ -1,6 +1,6 @@
 {
     "name": "@trellisorg/update",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "peerDependencies": {
         "@angular/common": "^14.0.0",
         "@angular/core": "^14.0.0"

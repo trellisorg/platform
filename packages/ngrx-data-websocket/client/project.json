@@ -14,7 +14,8 @@
                 "production": {
                     "tsConfig": "packages/ngrx-data-websocket/client/tsconfig.lib.prod.json"
                 }
-            }
+            },
+            "defaultConfiguration": "production"
         },
         "lint": {
             "executor": "@nrwl/linter:eslint",

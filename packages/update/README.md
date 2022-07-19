@@ -1,6 +1,6 @@
 # @trellisorg/update
 
-Provides a decorator (`@Update`) that allows you to hook into the assignment of a property in a class and then call some 
+Provides a decorator (`@Update`) that allows you to hook into the assignment of a property in a class and then call some
 function on an injectable to update it.
 
 ## Install
@@ -54,3 +54,7 @@ class TestComponent {
     constructor(private readonly store: Store) {}
 }
 ```
+
+> Caveat: Properties must be explicitly defined, if they are optional properties you
+> have to set them to `undefined` otherwise this library cannot patch the correct
+> setters on the property.

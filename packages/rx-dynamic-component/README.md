@@ -7,6 +7,8 @@ Working example: check `apps/rx-dynamic-component-demo`
 
 to run demo: `yarn nx serve rx-dynamic-component-demo` and navigate to `http://localhost:4200`
 
+> \*Note: If you are using Angular <14 you will need to install v0.1.9, if using Angular ^14 any version will work.
+
 ## Adding to your application:
 
 ### Define your modules and components to be lazy loaded
