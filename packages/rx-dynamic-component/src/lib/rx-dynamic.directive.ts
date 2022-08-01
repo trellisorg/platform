@@ -1,7 +1,6 @@
 import {
     AfterViewInit,
     ChangeDetectorRef,
-    ComponentRef,
     Directive,
     Injector,
     Input,
@@ -39,19 +38,31 @@ export class RxDynamicDirective<TComponent>
      */
     @Input() insertAtEnd = true;
 
+    /**
+     * The dynamic component to load. Will be either a manifestId or
+     * @param componentType
+     */
     @Input() set load(
         componentType: string | Type<TComponent> | null | undefined
     ) {
-        this.loadComponent(componentType);
+        this._load = componentType;
+
+        if (this._initialized) {
+            this.setComponent(componentType);
+        }
     }
 
-    @Input() config?: Pick<SharedManifestConfig, 'timeout' | 'priority'>;
+    @Input() config?: Partial<
+        Pick<SharedManifestConfig, 'timeout' | 'priority'>
+    >;
 
-    private _componentRef?: ComponentRef<TComponent>;
+    private _load?: string | Type<TComponent> | null;
 
     private _componentType?: Type<TComponent> | null;
 
     private _index = 0;
+
+    private _initialized = false;
 
     constructor(
         private readonly viewContainerRef: ViewContainerRef,
@@ -61,13 +72,40 @@ export class RxDynamicDirective<TComponent>
     ) {}
 
     ngAfterViewInit(): void {
-        if (this._componentType) {
-            this.loadComponent(this._componentType);
+        this._initialized = true;
+
+        if (this._load) {
+            this.setComponent(this._load);
         }
     }
 
     // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
-    ngOnDestroy(): void {}
+    ngOnDestroy(): void {
+        /*
+        This lifecycle hook is empty. It is only here so that we know this
+        directive has the ngOnDestroy lifecycle hook, so we can hook into the
+        onDestroy to unsubscribe from @Outputs in the @DynamicOutput decorator
+         */
+    }
+
+    async setComponent(
+        componentTypeOrManifestId: string | Type<TComponent> | null | undefined
+    ): Promise<void> {
+        if (typeof componentTypeOrManifestId === 'string') {
+            this._componentType = await firstValueFrom(
+                this.rxDynamicComponentService.getComponent<TComponent>(
+                    componentTypeOrManifestId,
+                    this.config
+                )
+            );
+        } else {
+            this._componentType = componentTypeOrManifestId;
+        }
+
+        if (this._componentType) {
+            this.loadComponent(this._componentType);
+        }
+    }
 
     /**
      * Function that will load the new factory into the outlet
@@ -78,28 +116,15 @@ export class RxDynamicDirective<TComponent>
      * It will then create the component from the factory using the ViewContainerRef
      * @param componentType
      */
-    async loadComponent(
-        componentType: string | Type<TComponent> | null | undefined
-    ): Promise<void> {
-        if (typeof componentType === 'string') {
-            this._componentType = await firstValueFrom(
-                this.rxDynamicComponentService.getComponent<TComponent>(
-                    componentType,
-                    this.config
-                )
-            );
-        } else {
-            this._componentType = componentType;
-        }
-
+    loadComponent(componentType: Type<TComponent>): void {
         if (this.viewContainerRef) {
             if (this.replace) {
                 this.viewContainerRef.clear();
             }
 
             if (this._componentType) {
-                this._componentRef = this.viewContainerRef.createComponent(
-                    this._componentType,
+                const componentRef = this.viewContainerRef.createComponent(
+                    componentType,
                     {
                         index: this.insertAtEnd ? undefined : 0,
                         injector: this.injector,
@@ -112,8 +137,8 @@ export class RxDynamicDirective<TComponent>
             Register the ComponentRef so it's inputs are passed down and the outputs are bubbled up
              */
                 this.rxDynamicComponentRegister.registerComponentRef(
-                    this._componentType,
-                    this._componentRef,
+                    componentType,
+                    componentRef,
                     this._index
                 );
 

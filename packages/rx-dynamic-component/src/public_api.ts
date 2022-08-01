@@ -3,7 +3,6 @@ export { DynamicOutput } from './lib/dynamic-output';
 export {
     DynamicComponentManifest,
     DynamicComponentRootConfig,
-    DynamicManifestPreloadPriority,
     DYNAMIC_COMPONENT,
 } from './lib/manifest';
 export {

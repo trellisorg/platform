@@ -5,7 +5,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import {
-    DynamicManifestPreloadPriority,
     provideRxDynamicComponent,
     provideRxDynamicComponentManifests,
     RxDynamicDirective,
@@ -58,7 +57,7 @@ import { QueryParam2Module } from './query-param2/query-param2.module';
                             (m) => m.PreloadIdleModule
                         ),
                     preload: false,
-                    priority: DynamicManifestPreloadPriority.IDLE,
+                    priority: 'idle',
                 },
             ],
             preload: false,
@@ -94,7 +93,7 @@ import { QueryParam2Module } from './query-param2/query-param2.module';
                         (m) => m.PreloadImmediateModule
                     ),
                 preload: false,
-                priority: DynamicManifestPreloadPriority.IMMEDIATE,
+                priority: 'immediate',
             },
         ]),
     ],

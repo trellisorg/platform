@@ -11,8 +11,8 @@ import {
     Type,
 } from '@angular/core';
 import {
+    defer,
     firstValueFrom,
-    from,
     isObservable,
     Observable,
     of,
@@ -24,7 +24,6 @@ import { Logger } from './logger';
 import {
     DEFAULT_TIMEOUT,
     DynamicComponentManifest,
-    DynamicManifestPreloadPriority,
     DYNAMIC_COMPONENT,
     DYNAMIC_COMPONENT_CONFIG,
     DYNAMIC_MANIFEST_MAP,
@@ -81,7 +80,7 @@ export class RxDynamicComponentService {
 
         return isObservable(loadComponent)
             ? loadComponent
-            : from(Promise.resolve(loadComponent));
+            : defer(() => Promise.resolve(loadComponent));
     }
 
     /**
@@ -103,7 +102,7 @@ export class RxDynamicComponentService {
         return (
             isObservable(loadChildren)
                 ? loadChildren
-                : from(Promise.resolve(loadChildren))
+                : defer(() => Promise.resolve(loadChildren))
         ).pipe(
             switchMap((moduleOrFactory) => {
                 /**
@@ -113,7 +112,7 @@ export class RxDynamicComponentService {
                 if (moduleOrFactory instanceof NgModuleFactory) {
                     return of(moduleOrFactory);
                 } else if (this._compiler) {
-                    return from(
+                    return defer(() =>
                         this._compiler.compileModuleAsync(moduleOrFactory)
                     );
                 } else {
@@ -175,29 +174,15 @@ export class RxDynamicComponentService {
                     manifest.timeout ?? this.config.timeout ?? DEFAULT_TIMEOUT;
 
                 // If not specified the priority will always be IDLE
-                const priority: DynamicManifestPreloadPriority =
-                    manifest.priority ??
-                    this.config.priority ??
-                    DynamicManifestPreloadPriority.IDLE;
+                const priority =
+                    manifest.priority ?? this.config.priority ?? 'idle';
 
-                if (NgZone.isInAngularZone()) {
-                    this.logger.log(
-                        `Is in NgZone, loading ${manifest.componentId} outside of zone.`
-                    );
-                    await this._ngZone.runOutsideAngular(
-                        async () =>
-                            await firstValueFrom(
-                                this.loadWithOverrides(manifest, {
-                                    timeout,
-                                    priority,
-                                })
-                            )
-                    );
-                } else {
-                    await firstValueFrom(
-                        this.loadWithOverrides(manifest, { timeout, priority })
-                    );
-                }
+                await firstValueFrom(
+                    this.loadWithOverrides(manifest, {
+                        timeout,
+                        priority,
+                    })
+                );
             }
         }
     }
@@ -224,49 +209,63 @@ export class RxDynamicComponentService {
             );
         }
 
+        /*
+        Use the overrides first but fallback to the manifests defaults.
+         */
         const priority = overrides?.priority ?? manifest.priority;
         const timeout = overrides?.timeout ?? manifest.timeout;
 
-        if (
-            this.isBrowser &&
-            'requestIdleCallback' in window &&
-            priority === DynamicManifestPreloadPriority.IDLE
-        ) {
-            this.logger.log(
-                `requestIdleCallback is available, scheduling load for "${manifest.componentId}" with a timeout of ${timeout}ms`
-            );
+        /*
+        {@link https://angular.io/guide/zone#when-apps-update-html}
 
-            return new Observable<Type<TComponent>>((subscriber) => {
-                window.requestIdleCallback(
-                    async (idleDeadline) => {
-                        const timeRemaining = idleDeadline.timeRemaining();
-                        if (idleDeadline.didTimeout || timeRemaining > 0) {
-                            this.logger.log(
-                                `IdleDeadline for ${manifest.componentId} emitted. didTimeout: ${idleDeadline.didTimeout}, timeRemaining: ${timeRemaining}`
-                            );
-                            const component: Type<TComponent> =
-                                await firstValueFrom(
-                                    this.loadManifest(manifest)
-                                );
+        As per the Angular Docs:
 
-                            subscriber.next(component);
-                            subscriber.complete();
-                        }
-                    },
-                    {
-                        timeout,
-                    }
+        `MicroTasks, such as Promise.then(). Other asynchronous APIs return a Promise object (such as fetch), so the then() callback function can also update the data.`
+
+        This will trigger Zone lifecycle hooks. To get around this we run the entire loading of a manifest outside of Angular so that Zone does not trigger
+        unnecessarily due to promises being resolved.
+         */
+        return this._ngZone.runOutsideAngular(() => {
+            if (
+                this.isBrowser &&
+                'requestIdleCallback' in window &&
+                priority === 'idle'
+            ) {
+                this.logger.log(
+                    `requestIdleCallback is available, scheduling load for "${manifest.componentId}" with a timeout of ${timeout}ms`
                 );
-            });
-        }
+                return new Observable<Type<TComponent>>((subscriber) => {
+                    window.requestIdleCallback(
+                        async (idleDeadline) => {
+                            const timeRemaining = idleDeadline.timeRemaining();
+                            if (idleDeadline.didTimeout || timeRemaining > 0) {
+                                this.logger.log(
+                                    `IdleDeadline for ${manifest.componentId} emitted. didTimeout: ${idleDeadline.didTimeout}, timeRemaining: ${timeRemaining}`
+                                );
+                                const component: Type<TComponent> =
+                                    await firstValueFrom(
+                                        this.loadManifest(manifest)
+                                    );
 
-        if (priority === DynamicManifestPreloadPriority.IDLE) {
-            this.logger.log(
-                `requestIdleCallback is not available, loading ${manifest.componentId} immediately`
-            );
-        }
+                                subscriber.next(component);
+                                subscriber.complete();
+                            }
+                        },
+                        {
+                            timeout,
+                        }
+                    );
+                });
+            }
 
-        return this.loadManifest<TComponent>(manifest);
+            if (priority === 'idle') {
+                this.logger.log(
+                    `requestIdleCallback is not available, loading ${manifest.componentId} immediately`
+                );
+            }
+
+            return this.loadManifest<TComponent>(manifest);
+        });
     }
 
     /**

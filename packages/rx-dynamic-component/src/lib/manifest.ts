@@ -6,24 +6,13 @@ export type ManifestMap = Map<string, DynamicComponentManifest>;
 export const DEFAULT_TIMEOUT = 1_000;
 
 /**
- * Root configuration for RxDynamicComponent
- * devMode: disabling devMode will prevent console.warn's when an issue arises.
- * manifests: The manifests to store in a map which can be lazy loaded and inserted into the dom. This can be empty for the root
- * since manifests can be added with forFeature as well.
- */
-export const enum DynamicManifestPreloadPriority {
-    IMMEDIATE = 'immediate',
-    IDLE = 'idle',
-}
-
-/**
- * preload: Whether or not this manifest should be preloaded.
+ * preload: Whether this manifest should be preloaded.
  * priority: Either IDLE or IMMEDIATE, First checked at global config, then manifest, then defaults to IDLE
  * timeout: The amount of time in milliseconds to wait for an idle callback before triggering a load
  */
 export interface SharedManifestConfig {
     preload?: boolean;
-    priority?: DynamicManifestPreloadPriority;
+    priority?: 'idle' | 'immediate';
     timeout?: number;
 }
 

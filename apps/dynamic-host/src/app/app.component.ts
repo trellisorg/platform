@@ -17,9 +17,6 @@ import {
     styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-    readonly dynamicRemote$ =
-        this.rxDynamicComponentService.getComponent('dynamic-remote');
-
     readonly dynamicStandaloneComponentType$ =
         this.rxDynamicComponentService.getComponent('dynamic-standalone');
 
