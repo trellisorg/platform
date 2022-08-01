@@ -1,13 +1,30 @@
 <div style="border: red dashed 5px; padding: 5px">
     I am a host MFE that is loading a remote dynamically through
     rx-dynamic-component
-    <!--    <rx-dynamic-outlet [factory]="dynamicRemote$ | async"></rx-dynamic-outlet>-->
+    <div rxDynamic [load]="dynamicRemote$ | async"></div>
 </div>
-<div style="border: blue dashed 5px; margin-top: 5px">
-    <rx-dynamic-outlet [load]="dynamicStandalone$ | async"></rx-dynamic-outlet>
+<div style="border: blue dashed 5px; margin-top: 5px" *ngIf="show$ | async">
+    <div>
+        I will remove myself in 5 seconds to demonstrate unsubscribing outputs.
+    </div>
+    <div
+        rxDynamic
+        inputOutputAdapter
+        [name]="randomNameEverySecond$ | async"
+        (myName)="nameStreamFromOutput$.next($event)"
+        [load]="dynamicStandaloneComponentType$ | async"
+    ></div>
+    <div>I said my name was: {{ nameStreamFromOutput$ | async }}</div>
 </div>
 <div style="border: orange dashed 5px; margin-top: 5px">
-    <rx-dynamic-outlet [load]="dynamicModule$ | async"></rx-dynamic-outlet>
+    <div rxDynamic [load]="dynamicModule$ | async"></div>
+</div>
+<div style="border: purple dashed 5px; margin-top: 5px">
+    <div>
+        Loaded through the manifestId rather than passing in the ComponentType
+        directly.
+    </div>
+    <div rxDynamic load="dynamic-idle-standalone"></div>
 </div>
 <div style="border: red dashed 5px; margin-top: 5px">
     With lazy dynamic outlet, loaded once in view with intersection observer
@@ -17,17 +34,19 @@
 </div>
 <div style="border: black dashed 5px; margin-top: 5px">
     I am rendering components at the bottom
-    <rx-dynamic-outlet
+    <div
+        rxDynamic
         [load]="dynamicRenderedAt$ | async"
         [replace]="false"
         [insertAtEnd]="true"
-    ></rx-dynamic-outlet>
+    ></div>
 </div>
 <div style="border: blue dashed 5px; margin-top: 5px">
     I am rendering components at the top
-    <rx-dynamic-outlet
+    <div
+        rxDynamic
         [load]="dynamicRenderedAt$ | async"
         [replace]="false"
         [insertAtEnd]="false"
-    ></rx-dynamic-outlet>
+    ></div>
 </div>

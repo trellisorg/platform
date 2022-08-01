@@ -1,4 +1,5 @@
-export { DynamicOutletComponent } from './lib/dynamic-outlet/dynamic-outlet.component';
+export { DynamicInput } from './lib/dynamic-input';
+export { DynamicOutput } from './lib/dynamic-output';
 export {
     DynamicComponentManifest,
     DynamicComponentRootConfig,
@@ -10,3 +11,4 @@ export {
     provideRxDynamicComponentManifests,
 } from './lib/rx-dynamic-component.providers';
 export * from './lib/rx-dynamic-component.service';
+export { RxDynamicDirective } from './lib/rx-dynamic.directive';

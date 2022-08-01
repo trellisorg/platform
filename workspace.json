@@ -6,7 +6,6 @@
         "dns-validator": "packages/dns-validator",
         "dns-validator-demo": "apps/dns-validator-demo",
         "dynamic-host": "apps/dynamic-host",
-        "dynamic-remote": "apps/dynamic-remote",
         "google-places-autocomplete": "packages/google-places-autocomplete",
         "make-buildable": "packages/make-buildable",
         "nest-spectator": "packages/nest-spectator",

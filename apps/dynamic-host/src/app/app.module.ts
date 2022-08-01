@@ -1,18 +1,20 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {
-    DynamicOutletComponent,
     provideRxDynamicComponent,
+    RxDynamicDirective,
 } from '@trellisorg/rx-dynamic-component';
 import { LazyDynamicOutletComponent } from '@trellisorg/rx-dynamic-component/lazy';
 import { AppComponent } from './app.component';
+import { StandaloneAdapterDirective } from './standalone/standalone-adapter.directive';
 
 @NgModule({
     declarations: [AppComponent],
     imports: [
         BrowserModule,
-        DynamicOutletComponent,
+        RxDynamicDirective,
         LazyDynamicOutletComponent,
+        StandaloneAdapterDirective,
     ],
     providers: [
         provideRxDynamicComponent({
@@ -31,6 +33,13 @@ import { AppComponent } from './app.component';
                         import('./standalone/standalone.component').then(
                             (m) => m.StandaloneComponent
                         ),
+                },
+                {
+                    componentId: 'dynamic-idle-standalone',
+                    loadComponent: () =>
+                        import(
+                            './idle-load-standalone/idle-load-standalone.component'
+                        ).then((m) => m.IdleLoadStandaloneComponent),
                 },
                 {
                     componentId: 'dynamic-rendered-at',

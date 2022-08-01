@@ -6,11 +6,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import {
     DynamicManifestPreloadPriority,
-    DynamicOutletComponent,
     provideRxDynamicComponent,
     provideRxDynamicComponentManifests,
+    RxDynamicDirective,
 } from '@trellisorg/rx-dynamic-component';
-import { LazyDynamicOutletComponent } from '@trellisorg/rx-dynamic-component/lazy';
 import { AppComponent } from './app.component';
 import { DialogModule } from './dialog/dialog.module';
 import { QueryParam2Module } from './query-param2/query-param2.module';
@@ -19,9 +18,8 @@ import { QueryParam2Module } from './query-param2/query-param2.module';
     declarations: [AppComponent],
     imports: [
         BrowserModule,
-        DynamicOutletComponent,
-        LazyDynamicOutletComponent,
-        RouterModule.forRoot([]),
+        RxDynamicDirective,
+        RouterModule.forRoot([], { enableTracing: true }),
         FormsModule,
         MatBottomSheetModule,
         DialogModule,
@@ -59,11 +57,11 @@ import { QueryParam2Module } from './query-param2/query-param2.module';
                         import('./preload-idle/preload-idle.module').then(
                             (m) => m.PreloadIdleModule
                         ),
-                    preload: true,
+                    preload: false,
                     priority: DynamicManifestPreloadPriority.IDLE,
                 },
             ],
-            preload: true,
+            preload: false,
         }),
         provideRxDynamicComponentManifests([
             /**
@@ -95,7 +93,7 @@ import { QueryParam2Module } from './query-param2/query-param2.module';
                     import('./preload-immediate/preload-immediate.module').then(
                         (m) => m.PreloadImmediateModule
                     ),
-                preload: true,
+                preload: false,
                 priority: DynamicManifestPreloadPriority.IMMEDIATE,
             },
         ]),

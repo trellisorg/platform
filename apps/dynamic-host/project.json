@@ -43,10 +43,7 @@
                             "with": "apps/dynamic-host/src/environments/environment.prod.ts"
                         }
                     ],
-                    "outputHashing": "all",
-                    "customWebpackConfig": {
-                        "path": "apps/dynamic-host/webpack.prod.config.js"
-                    }
+                    "outputHashing": "all"
                 },
                 "development": {
                     "buildOptimizer": false,
@@ -60,7 +57,7 @@
             "defaultConfiguration": "production"
         },
         "serve": {
-            "executor": "@nrwl/angular:module-federation-dev-server",
+            "executor": "@nrwl/angular:webpack-server",
             "configurations": {
                 "production": {
                     "browserTarget": "dynamic-host:build:production"
@@ -71,7 +68,6 @@
             },
             "defaultConfiguration": "development",
             "options": {
-                "port": 4200,
                 "publicHost": "http://localhost:4200"
             }
         },

@@ -1,4 +1,1 @@
-<rx-dynamic-outlet
-    *ngIf="state$ | async"
-    [load]="factory$ | async"
-></rx-dynamic-outlet>
+<div rxDynamic *ngIf="state$ | async" [load]="factory$ | async"></div>

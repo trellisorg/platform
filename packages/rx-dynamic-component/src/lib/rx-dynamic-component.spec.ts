@@ -5,10 +5,10 @@ import {
     Spectator,
 } from '@ngneat/spectator/jest';
 import {
-    DynamicOutletComponent,
     DYNAMIC_COMPONENT,
     provideRxDynamicComponent,
     RxDynamicComponentService,
+    RxDynamicDirective,
 } from '@trellisorg/rx-dynamic-component';
 import { of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
@@ -16,9 +16,7 @@ import { switchMap } from 'rxjs/operators';
 @Component({
     // eslint-disable-next-line @angular-eslint/component-selector
     selector: 'container',
-    template: ` <rx-dynamic-outlet
-        [load]="factory$ | async"
-    ></rx-dynamic-outlet>`,
+    template: ` <div rxDynamic [load]="factory$ | async"></div>`,
     styles: [''],
 })
 class ContainerComponent {
@@ -60,7 +58,7 @@ describe('RxDynamicComponent', () => {
 
     const createComponent = createComponentFactory({
         component: ContainerComponent,
-        imports: [DynamicOutletComponent],
+        imports: [RxDynamicDirective],
         providers: [
             provideRxDynamicComponent({
                 devMode: true,

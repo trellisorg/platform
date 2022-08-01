@@ -9,7 +9,7 @@ import {
     ManifestMap,
     _FEATURE_DYNAMIC_COMPONENT_MANIFESTS,
 } from './manifest';
-import { RxDynamicComponentPreloaderService } from './rx-dynamic-component-preloader.service';
+import { RxDynamicComponentService } from './rx-dynamic-component.service';
 
 function _initialManifestMap(
     manifests: DynamicComponentManifest[]
@@ -25,8 +25,9 @@ function initializeEnvironmentManifests<T extends string = string>(
     return () => {
         const manifestMap: ManifestMap = inject(DYNAMIC_MANIFEST_MAP);
 
-        const rxDynamicComponentPreloaderService: RxDynamicComponentPreloaderService =
-            inject(RxDynamicComponentPreloaderService);
+        const rxDynamicComponentPreloaderService = inject(
+            RxDynamicComponentService
+        );
 
         manifests.forEach((manifest) => {
             manifestMap.set(manifest.componentId, manifest);

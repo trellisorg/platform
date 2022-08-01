@@ -2,7 +2,13 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RxDynamicComponentService } from '@trellisorg/rx-dynamic-component';
-import { filter, switchMap } from 'rxjs/operators';
+import {
+    distinctUntilChanged,
+    filter,
+    map,
+    switchMap,
+    tap,
+} from 'rxjs/operators';
 import { DialogComponent } from './dialog/dialog.component';
 
 @Component({
@@ -14,8 +20,11 @@ import { DialogComponent } from './dialog/dialog.component';
 export class AppComponent {
     readonly queryParamComponent$ = this._route.queryParams.pipe(
         filter((params) => !!params['query']),
-        switchMap((params) =>
-            this.rxDynamicComponentService.getComponent(params['query'])
+        map((params) => params['query']),
+        distinctUntilChanged(),
+        tap(console.log),
+        switchMap((manifestId) =>
+            this.rxDynamicComponentService.getComponent(manifestId)
         )
     );
 
@@ -29,7 +38,9 @@ export class AppComponent {
         private _router: Router,
         private _matBottomSheet: MatBottomSheet
     ) {
-        this.rxDynamicComponentService.loadManifest('service-preload');
+        // firstValueFrom(
+        //     this.rxDynamicComponentService.getComponent('service-preload')
+        // );
     }
 
     changeQueryParams($event: Event): void {

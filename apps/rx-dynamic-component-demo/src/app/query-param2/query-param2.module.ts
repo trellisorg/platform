@@ -22,7 +22,7 @@ import { QueryParam2Component } from './query-param2.component';
                     import('./feature-preload/feature-preload.module').then(
                         (m) => m.FeaturePreloadModule
                     ),
-                preload: true,
+                preload: false,
             },
         ]),
     ],

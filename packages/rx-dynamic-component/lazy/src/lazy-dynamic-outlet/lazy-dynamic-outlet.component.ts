@@ -1,6 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, Injector, Input, Type } from '@angular/core';
-import { DynamicOutletComponent } from '@trellisorg/rx-dynamic-component';
+import {
+    ChangeDetectorRef,
+    Component,
+    Injector,
+    Input,
+    Type,
+} from '@angular/core';
+import { RxDynamicDirective } from '@trellisorg/rx-dynamic-component';
 import { ObserveIntersectingDirective } from '../observer/observe-intersecting.directive';
 
 @Component({
@@ -10,23 +16,20 @@ import { ObserveIntersectingDirective } from '../observer/observe-intersecting.d
         rxObserveIntersecting
         [debounceTime]="debounceTime"
         [config]="lazyDynamicOutletConfig"
-        (visible)="intersected = true"
+        (visible)="elementIntersected()"
     >
-        <rx-dynamic-outlet
+        <div
+            rxDynamic
             *ngIf="intersected"
             [load]="load"
             [injector]="injector"
             [insertAtEnd]="insertAtEnd"
             [replace]="replace"
-        ></rx-dynamic-outlet>
+        ></div>
     </div> `,
     styleUrls: [],
     standalone: true,
-    imports: [
-        ObserveIntersectingDirective,
-        DynamicOutletComponent,
-        CommonModule,
-    ],
+    imports: [ObserveIntersectingDirective, CommonModule, RxDynamicDirective],
 })
 export class LazyDynamicOutletComponent<
     TComponent,
@@ -37,7 +40,7 @@ export class LazyDynamicOutletComponent<
         rootMargin: '0px',
     };
 
-    @Input() load?: Type<TComponentType> | null;
+    @Input() load?: TComponentType | null;
 
     @Input() debounceTime = 300;
 
@@ -58,11 +61,15 @@ export class LazyDynamicOutletComponent<
      */
     @Input() insertAtEnd = true;
 
-    intersected = false;
+    protected intersected = false;
+
+    constructor(private readonly changeDetectorRef: ChangeDetectorRef) {}
 
     elementIntersected(): void {
         if (!this.intersected) {
             this.intersected = true;
+
+            this.changeDetectorRef.markForCheck();
         }
     }
 }

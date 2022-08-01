@@ -20,13 +20,11 @@ export const enum DynamicManifestPreloadPriority {
  * preload: Whether or not this manifest should be preloaded.
  * priority: Either IDLE or IMMEDIATE, First checked at global config, then manifest, then defaults to IDLE
  * timeout: The amount of time in milliseconds to wait for an idle callback before triggering a load
- * cacheFactories: Whether this factory should be cached or if all factories can be cached
  */
 export interface SharedManifestConfig {
     preload?: boolean;
     priority?: DynamicManifestPreloadPriority;
     timeout?: number;
-    cacheComponents?: boolean;
 }
 
 /**
@@ -45,7 +43,6 @@ export interface DynamicComponentRootConfig<T extends string = string>
 export const defaultRootConfig: DynamicComponentRootConfig = {
     manifests: [],
     devMode: false,
-    cacheComponents: false,
     preload: false,
 };
 
@@ -54,9 +51,9 @@ export const defaultRootConfig: DynamicComponentRootConfig = {
  * componentId is used to find the correct module to load in the manifest map
  */
 export type LoadComponent =
-    | Type<unknown>
-    | Observable<Type<unknown>>
-    | Promise<Type<unknown>>;
+    | Type<any>
+    | Observable<Type<any>>
+    | Promise<Type<any>>;
 
 export type LoadComponentCallback = () => LoadComponent;
 
@@ -68,10 +65,6 @@ export type LoadModule =
 
 export type LoadModuleCallback = () => LoadModule;
 
-export type LoadModuleOrComponent =
-    | { loadChildren: LoadModuleCallback }
-    | { loadComponent: LoadComponentCallback };
-
 export type DynamicComponentManifest<T = string> = SharedManifestConfig & {
     componentId: T;
 } & (
@@ -82,17 +75,16 @@ export type DynamicComponentManifest<T = string> = SharedManifestConfig & {
 /**
  * The root configuration injection token
  */
-export const DYNAMIC_COMPONENT_CONFIG = new InjectionToken<any>(
-    'DYNAMIC_COMPONENT_CONFIG'
-);
+export const DYNAMIC_COMPONENT_CONFIG =
+    new InjectionToken<DynamicComponentRootConfig>('DYNAMIC_COMPONENT_CONFIG');
 
 /**
  * A feature injection token to allow the RxDynamicComponentFeatureModule to register each of the feature
  * manifests in the manifest map.
  */
-export const _FEATURE_DYNAMIC_COMPONENT_MANIFESTS = new InjectionToken<any>(
-    'FEATURE_DYNAMIC_COMPONENT_MANIFESTS'
-);
+export const _FEATURE_DYNAMIC_COMPONENT_MANIFESTS = new InjectionToken<
+    DynamicComponentManifest<unknown>[][]
+>('FEATURE_DYNAMIC_COMPONENT_MANIFESTS');
 
 /**
  * The libraries manifest, this is global across the application which feature manifests being added and removed during
@@ -105,4 +97,6 @@ export const DYNAMIC_MANIFEST_MAP = new InjectionToken<ManifestMap>(
 /**
  * Injection token used for telling the library what component in a lazy loaded module to use for rendering
  */
-export const DYNAMIC_COMPONENT = new InjectionToken<any>('DYNAMIC_COMPONENT');
+export const DYNAMIC_COMPONENT = new InjectionToken<Type<unknown>>(
+    'DYNAMIC_COMPONENT'
+);
