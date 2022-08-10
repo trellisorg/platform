@@ -1,27 +1,24 @@
 {
-    "$schema": "../../node_modules/nx/schemas/project-schema.json",
     "projectType": "application",
-    "sourceRoot": "apps/dynamic-host/src",
+    "sourceRoot": "apps/rx-dynamic-host/src",
     "prefix": "trellisorg",
     "targets": {
         "build": {
             "executor": "@nrwl/angular:webpack-browser",
             "outputs": ["{options.outputPath}"],
             "options": {
-                "outputPath": "dist/apps/dynamic-host",
-                "index": "apps/dynamic-host/src/index.html",
-                "main": "apps/dynamic-host/src/main.ts",
-                "polyfills": "apps/dynamic-host/src/polyfills.ts",
-                "tsConfig": "apps/dynamic-host/tsconfig.app.json",
+                "outputPath": "dist/apps/rx-dynamic-host",
+                "index": "apps/rx-dynamic-host/src/index.html",
+                "main": "apps/rx-dynamic-host/src/main.ts",
+                "polyfills": "apps/rx-dynamic-host/src/polyfills.ts",
+                "tsConfig": "apps/rx-dynamic-host/tsconfig.app.json",
                 "inlineStyleLanguage": "scss",
                 "assets": [
-                    "apps/dynamic-host/src/favicon.ico",
-                    "apps/dynamic-host/src/assets"
+                    "apps/rx-dynamic-host/src/favicon.ico",
+                    "apps/rx-dynamic-host/src/assets"
                 ],
-                "styles": ["apps/dynamic-host/src/styles.scss"],
-                "scripts": [],
-                "aot": true,
-                "buildLibsFromSource": true
+                "styles": ["apps/rx-dynamic-host/src/styles.scss"],
+                "scripts": []
             },
             "configurations": {
                 "production": {
@@ -39,8 +36,8 @@
                     ],
                     "fileReplacements": [
                         {
-                            "replace": "apps/dynamic-host/src/environments/environment.ts",
-                            "with": "apps/dynamic-host/src/environments/environment.prod.ts"
+                            "replace": "apps/rx-dynamic-host/src/environments/environment.ts",
+                            "with": "apps/rx-dynamic-host/src/environments/environment.prod.ts"
                         }
                     ],
                     "outputHashing": "all"
@@ -60,29 +57,30 @@
             "executor": "@nrwl/angular:webpack-server",
             "configurations": {
                 "production": {
-                    "browserTarget": "dynamic-host:build:production"
+                    "browserTarget": "rx-dynamic-host:build:production"
                 },
                 "development": {
-                    "browserTarget": "dynamic-host:build:development"
+                    "browserTarget": "rx-dynamic-host:build:development"
                 }
             },
             "defaultConfiguration": "development",
             "options": {
+                "port": 4200,
                 "publicHost": "http://localhost:4200"
             }
         },
         "extract-i18n": {
             "executor": "@angular-devkit/build-angular:extract-i18n",
             "options": {
-                "browserTarget": "dynamic-host:build"
+                "browserTarget": "rx-dynamic-host:build"
             }
         },
         "lint": {
             "executor": "@nrwl/linter:eslint",
             "options": {
                 "lintFilePatterns": [
-                    "apps/dynamic-host/**/*.ts",
-                    "apps/dynamic-host/**/*.html"
+                    "apps/rx-dynamic-host/**/*.ts",
+                    "apps/rx-dynamic-host/**/*.html"
                 ]
             }
         }

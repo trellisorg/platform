@@ -112,5 +112,6 @@
         "build": {
             "dependsOn": ["^build"]
         }
-    }
+    },
+    "defaultProject": "rx-dynamic-host"
 }
