@@ -10,7 +10,6 @@ import { filter } from 'rxjs/operators';
 import { Logger } from './logger';
 
 export interface DynamicOutput<T, TComponent> {
-    index: number;
     data: T;
     componentRef: ComponentRef<TComponent>;
 }
@@ -42,8 +41,7 @@ export class RxDynamicComponentRegister {
 
     registerComponentRef<TComponent = unknown>(
         component: Type<TComponent>,
-        componentRef: ComponentRef<TComponent>,
-        index: number
+        componentRef: ComponentRef<TComponent>
     ): void {
         const mirror = reflectComponentType(component);
 
@@ -83,7 +81,6 @@ export class RxDynamicComponentRegister {
                         this._events$.next({
                             output: output.propName,
                             value: {
-                                index,
                                 data: value,
                                 componentRef,
                             },

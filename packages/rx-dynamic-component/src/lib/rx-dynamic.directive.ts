@@ -27,18 +27,6 @@ export class RxDynamicDirective<TComponent>
     @Input() injector?: Injector;
 
     /**
-     * Whether the component should be replaced or added into the `ViewContainerRef` to be rendered
-     * alongside the previous dynamic components.
-     */
-    @Input() replace = true;
-
-    /**
-     * If `replace` is false then when inserting into the `ViewContainerRef` this will either create the component
-     * at the "start" or the "end".
-     */
-    @Input() insertAtEnd = true;
-
-    /**
      * The dynamic component to load. Will be either a manifestId or
      * @param componentType
      */
@@ -59,8 +47,6 @@ export class RxDynamicDirective<TComponent>
     private _load?: string | Type<TComponent> | null;
 
     private _componentType?: Type<TComponent> | null;
-
-    private _index = 0;
 
     private _initialized = false;
 
@@ -118,28 +104,22 @@ export class RxDynamicDirective<TComponent>
      */
     loadComponent(componentType: Type<TComponent>): void {
         if (this.viewContainerRef) {
-            if (this.replace) {
-                this.viewContainerRef.clear();
-            }
+            this.viewContainerRef.clear();
 
             if (this._componentType) {
                 const componentRef = this.viewContainerRef.createComponent(
                     componentType,
                     {
-                        index: this.insertAtEnd ? undefined : 0,
                         injector: this.injector,
                     }
                 );
-
-                this._index += 1;
 
                 /*
             Register the ComponentRef so it's inputs are passed down and the outputs are bubbled up
              */
                 this.rxDynamicComponentRegister.registerComponentRef(
                     componentType,
-                    componentRef,
-                    this._index
+                    componentRef
                 );
 
                 this.changeDetectorRef.markForCheck();
