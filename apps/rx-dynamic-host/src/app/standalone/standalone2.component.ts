@@ -20,6 +20,10 @@ export class Standalone2Component {
     @Input() set name(name: string | null) {
         this._name = name;
 
-        if (name) this.myName.emit(name);
+        if (name) {
+            setTimeout(() => {
+                this.myName.emit(name);
+            });
+        }
     }
 }
