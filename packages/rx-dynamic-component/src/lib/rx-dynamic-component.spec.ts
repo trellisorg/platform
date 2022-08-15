@@ -1,9 +1,5 @@
 import { Component, NgModule } from '@angular/core';
-import {
-    byText,
-    createComponentFactory,
-    Spectator,
-} from '@ngneat/spectator/jest';
+import { byText, createComponentFactory, Spectator } from '@ngneat/spectator/jest';
 import {
     DYNAMIC_COMPONENT,
     provideRxDynamicComponent,
@@ -16,14 +12,12 @@ import { switchMap } from 'rxjs/operators';
 @Component({
     // eslint-disable-next-line @angular-eslint/component-selector
     selector: 'container',
-    template: ` <div rxDynamic [load]="factory$ | async"></div>`,
+    template: ` <div [load]="factory$ | async" rxDynamic></div>`,
     styles: [''],
 })
 class ContainerComponent {
     readonly factory$ = of('dynamic-lazy-child1').pipe(
-        switchMap((componentId) =>
-            this.rxDynamicComponentService.getComponent(componentId)
-        )
+        switchMap((componentId) => this.rxDynamicComponentService.getComponent(componentId))
     );
 
     constructor(private rxDynamicComponentService: RxDynamicComponentService) {}

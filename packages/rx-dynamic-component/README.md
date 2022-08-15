@@ -1,13 +1,13 @@
 # @trellisorg/rx-dynamic-component
 
-A library for dynamically loading angular modules and components anywhere in the DOM from any observable in your
-application
+A library for dynamically loading angular modules and components anywhere in the DOM with support for Inputs and
+Outputs.
 
-Working example: check `apps/rx-dynamic-component-demo`
+Working example: check `apps/rx-dynamic-host`
 
-to run demo: `yarn nx serve rx-dynamic-component-demo` and navigate to `http://localhost:4200`
+to run demo: `yarn nx serve rx-dynamic-host` and navigate to `http://localhost:4200`
 
-> \*Note: If you are using Angular <14 you will need to install v0.1.9, if using Angular ^14 any version will work.
+> Note: If you are using Angular <14 you will need to install v0.1.9, if using Angular ^14 any version will work.
 
 ## Adding to your application:
 
@@ -46,7 +46,7 @@ is not able to resolve and know what to render
 ```typescript
 @Component({
     standalone: true,
-    // rest
+    //...
 })
 export class StandaloneComponent {}
 ```
@@ -62,18 +62,12 @@ const manifests: DynamicComponentManifest[] = [
     // Using dynamic import and module + token
     {
         componentId: 'query1',
-        loadChildren: () =>
-            import('./query-param1/query-param1.module').then(
-                (m) => m.QueryParam1Module
-            ),
+        loadChildren: () => import('./query-param1/query-param1.module').then((m) => m.QueryParam1Module),
     },
     // Using dynamic import and standalone component
     {
         componentId: 'standalone',
-        loadComponent: () =>
-            import('./standalone/standalone.component').then(
-                (m) => m.StandaloneComponent
-            ),
+        loadComponent: () => import('./standalone/standalone.component').then((m) => m.StandaloneComponent),
     },
     // Using direct module reference
     {
@@ -132,15 +126,10 @@ import { filter, switchMap } from 'rxjs/operators';
 export class AppComponent {
     queryParamComponent$ = this._route.queryParams.pipe(
         filter((params) => !!params['query']),
-        switchMap((params) =>
-            this.rxDynamicComponentService.getComponent(params['query'])
-        )
+        switchMap((params) => this.rxDynamicComponentService.getComponent(params['query']))
     );
 
-    constructor(
-        private _route: ActivatedRoute,
-        private rxDynamicComponentService: RxDynamicComponentService
-    ) {}
+    constructor(private _route: ActivatedRoute, private rxDynamicComponentService: RxDynamicComponentService) {}
 }
 ```
 
@@ -148,17 +137,17 @@ This will set up an observable that listens on query params and loads the correc
 is either `query1` or `query2`. The value you pass into `RxDynamicComponentService#getComponentFactory`
 must equal one of the `componentId`s from the manifest you provided.
 
-### (Optional) Import DynamicOutletComponent or LazyDynamicOutletComponent into the component you will be dynamically loading into
+### Import RxDynamicDirective into the component you will be dynamically loading into
 
-`rx-dynamic-component` provides a component that can be used that is setup with an internal `ViewContainerRef`
-for ease of use, but if you know what you are doing you can implement whatever sort of `ViewContainerRef` you want.
+`rx-dynamic-directive` provides a directive that can be used that is set up for ease of use, but if you know what you
+are doing you can implement whatever sort of outlet you want to render the component.
 
 ```typescript
 @NgModule({
     declarations: [AppComponent],
     imports: [
         // other imports
-        DynamicOutletComponent,
+        RxDynamicDirective,
     ],
     providers: [],
     bootstrap: [AppComponent],
@@ -168,48 +157,60 @@ export class AppModule {}
 
 ```angular2html
 <!--Will load the outlet as soon as the observable emits-->
-<rx-dynamic-outlet [load]='queryParamComponent$ | async'></rx-dynamic-outlet>
-<!--Will load the outlet as soon as the observable emits assuming the component is in view with IntersectionObserver-->
-<rx-lazy-dynamic-outlet [load]='queryParamComponent$ | async'></rx-lazy-dynamic-outlet>
+<div rxDynamic [load]='queryParamComponent$ | async'></div>
 ```
 
-With that when the query params `query` property is equal to one of the manifest entries the corresponding Angular
+When the query params `query` property is equal to one of the manifest entries the corresponding Angular
 component will be loaded into the DOM.
 
-### (Optional) Add custom lazy loading support to your elements with ObserveIntersectingDirective
+You can also load using the `manifestId` directly instead of a loaded component from a manifest from an observable.
 
 ```angular2html
-<!--Will only be loaded once the element is scrolled into view-->
-<div rxObserveIntersecting>
+
+<div rxDynamic
+     load='query1'>
 </div>
 ```
 
-Can be globally configured with the `INTERSECTION_OBSERVER_CONFIG` Injection token
+### Support for Inputs and Outputs
+
+This library provides two decorators:
+
+`@DynamicInput()` - Will pass inputs down into the dynamically rendered component
+`@DynamicOutput()` - Will emit outputs up from the dynamically rendered component
+
+This requires a bit of boilerplate and an adapter directive to support.
 
 ```typescript
-import { NgModule } from '@angular/core';
+import { Directive, EventEmitter, Input, Output } from '@angular/core';
+import { DynamicInput, DynamicOutput } from '@trellisorg/rx-dynamic-component';
 
-@NgModule({
-    providers: [
-        // Directly with injection token
-        {
-            provide: INTERSECTION_OBSERVER_CONFIG,
-            useValue: IntersectionObserverInit // See: https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/IntersectionObserver
-        },
-        // Or with provider function
-        provideIntersectionObserverConfig(IntersectionObserverInit)
-    ]
+@Directive({
+    standalone: true,
+    selector: '[inputOutputAdapter]',
 })
-AppModule {}
+export class StandaloneAdapterDirective implements OnDestroy {
+    @DynamicInput() @Input() myInput: string | null = '';
+
+    @DynamicOutput() @Output() myOutput = new EventEmitter<string>();
+}
 ```
 
-You can also pass in the a `Partial<IntersectionObserverInit>` object to the element itself
+#### Usage
 
 ```angular2html
-<!--Will only be loaded once the element is scrolled into view-->
-<div rxObserveIntersecting [config]='Partial<IntersectionObserverInit>'>
+
+<div rxDynamic
+     (myOutput)='myOutputCalled()'
+     inputOutputAdapter
+     myInput='Hello World'
+     load='query1'>
 </div>
 ```
+
+This will allow you to pass inputs in and listen on outputs for your dynamically rendered component, if your component
+changes (the `load` input changes) then the outputs will be unsubscribed from and will resubscribe to the new outputs on
+the newly rendered dynamic component. Inputs will also be set if that input exists on the rendered component.
 
 ### (Optional) Advanced manifest configuration
 
@@ -245,25 +246,15 @@ have already been downloaded to the browser.
 `preload` - Whether this manifest should be preloaded or not
 
 `priority` - Manifests can either be preloaded immediately or when the browser is idling as to not block the main
-thread. Values will either be `DynamicManifestPreloadPriority.IDLE` or `DynamicManifestPreloadPriority.IMMEDIATE`
-. `priority` will only be used if
-`preload: true`
+thread. Values will either be `'idle'` or `'immediate'`. `priority` will only be used if `preload: true`
 
 `timeout` - The timeout to configure for `window.requestIdleCallback` that will preload the manifest in the background
 when using `DynamicManifestPreloadPriority.IDLE`
 Reference: https://developer.mozilla.org/en-US/docs/Web/API/Window/requestIdleCallback, `timeout` is ignored
 if `preload: false` or `priority: 'immediate'`
 
-#### Caching
-
-`cacheFactories` - Will cache the `ComponentFactory` pulled from the manifest if set to true. Still a little buggy in
-certain cases but works for the majority.
-
 ### (Optional) Manually preload manifests
 
-The `RxDynamicComponentService` exposes a method:
+The `RxDynamicComponentService` exposes a method that can be called to force a preload for a manifest.
 
-`loadManifest(componentId: string, priority: DynamicManifestPreloadPriority = DynamicManifestPreloadPriority.IDLE)`
-
-that can be called to force a preload for a manifest. Global and Manifest configurations are ignored in this case and
-instead the values passed in will determine how to preload the manifest.
+`loadManifest(manifest: DynamicComponentManifest)`

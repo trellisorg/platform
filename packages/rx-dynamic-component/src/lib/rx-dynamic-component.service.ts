@@ -10,15 +10,7 @@ import {
     PLATFORM_ID,
     Type,
 } from '@angular/core';
-import {
-    defer,
-    firstValueFrom,
-    isObservable,
-    Observable,
-    of,
-    tap,
-    throwError,
-} from 'rxjs';
+import { defer, firstValueFrom, isObservable, Observable, of, tap, throwError } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 import { Logger } from './logger';
 import {
@@ -32,13 +24,8 @@ import {
     SharedManifestConfig,
 } from './manifest';
 
-function isPromiseOrObservable<T>(
-    promiseOrObservable: Promise<T> | Observable<T> | any
-): boolean {
-    return (
-        !!(promiseOrObservable as Promise<T>)?.then ||
-        isObservable(promiseOrObservable)
-    );
+function isPromiseOrObservable<T>(promiseOrObservable: Promise<T> | Observable<T> | any): boolean {
+    return !!(promiseOrObservable as Promise<T>)?.then || isObservable(promiseOrObservable);
 }
 
 @Injectable({
@@ -73,14 +60,10 @@ export class RxDynamicComponentService {
      * @param loadComponentCallback
      * @private
      */
-    private loadComponent<TComponent>(
-        loadComponentCallback: LoadComponentCallback
-    ): Observable<Type<TComponent>> {
+    private loadComponent<TComponent>(loadComponentCallback: LoadComponentCallback): Observable<Type<TComponent>> {
         const loadComponent = loadComponentCallback();
 
-        return isObservable(loadComponent)
-            ? loadComponent
-            : defer(() => Promise.resolve(loadComponent));
+        return isObservable(loadComponent) ? loadComponent : defer(() => Promise.resolve(loadComponent));
     }
 
     /**
@@ -99,11 +82,7 @@ export class RxDynamicComponentService {
         /**
          * Use Promise.resolve() as we are unsure if loadChildren is a function that returns a promise, observable or a value
          */
-        return (
-            isObservable(loadChildren)
-                ? loadChildren
-                : defer(() => Promise.resolve(loadChildren))
-        ).pipe(
+        return (isObservable(loadChildren) ? loadChildren : defer(() => Promise.resolve(loadChildren))).pipe(
             switchMap((moduleOrFactory) => {
                 /**
                  * If the app is not being run with AOT enabled then we may need to compile the module into a module factory
@@ -112,9 +91,7 @@ export class RxDynamicComponentService {
                 if (moduleOrFactory instanceof NgModuleFactory) {
                     return of(moduleOrFactory);
                 } else if (this._compiler) {
-                    return defer(() =>
-                        this._compiler.compileModuleAsync(moduleOrFactory)
-                    );
+                    return defer(() => this._compiler.compileModuleAsync(moduleOrFactory));
                 } else {
                     return throwError(
                         () =>
@@ -129,14 +106,10 @@ export class RxDynamicComponentService {
                  * By providing a DYNAMIC_COMPONENT injection in the module we are loading we know what component it is
                  * that should be rendered from the declarations array in the module
                  */
-                const dynamicComponentType =
-                    moduleRef.injector.get<Type<TComponent>>(DYNAMIC_COMPONENT);
+                const dynamicComponentType = moduleRef.injector.get<Type<TComponent>>(DYNAMIC_COMPONENT);
 
                 if (!dynamicComponentType) {
-                    return throwError(
-                        () =>
-                            `No dynamic component found with id: ${manifest.componentId}`
-                    );
+                    return throwError(() => `No dynamic component found with id: ${manifest.componentId}`);
                 }
 
                 return of(dynamicComponentType);
@@ -144,9 +117,7 @@ export class RxDynamicComponentService {
         );
     }
 
-    async processManifestPreloads(
-        manifests: DynamicComponentManifest[]
-    ): Promise<void> {
+    async processManifestPreloads(manifests: DynamicComponentManifest[]): Promise<void> {
         for (const manifest of manifests) {
             /*
              * Should preload the manifest if explicitly set or inherited from the global config.
@@ -160,22 +131,17 @@ export class RxDynamicComponentService {
              * so it will not try and load it again.
              */
             if (
-                (manifest.preload ||
-                    (manifest.preload !== false && this.config.preload)) &&
+                (manifest.preload || (manifest.preload !== false && this.config.preload)) &&
                 isPromiseOrObservable(
-                    'loadChildren' in manifest
-                        ? manifest.loadChildren()
-                        : manifest.loadComponent()
+                    'loadChildren' in manifest ? manifest.loadChildren() : manifest.loadComponent()
                 ) &&
                 !this.loaded.has(manifest.componentId)
             ) {
                 // Will default to a timeout of 1 second
-                const timeout =
-                    manifest.timeout ?? this.config.timeout ?? DEFAULT_TIMEOUT;
+                const timeout = manifest.timeout ?? this.config.timeout ?? DEFAULT_TIMEOUT;
 
                 // If not specified the priority will always be IDLE
-                const priority =
-                    manifest.priority ?? this.config.priority ?? 'idle';
+                const priority = manifest.priority ?? this.config.priority ?? 'idle';
 
                 await firstValueFrom(
                     this.loadWithOverrides(manifest, {
@@ -204,9 +170,7 @@ export class RxDynamicComponentService {
         reuse it.
          */
         if (this.loaded.has(manifest.componentId)) {
-            return of(
-                this.loaded.get(manifest.componentId) as Type<TComponent>
-            );
+            return of(this.loaded.get(manifest.componentId) as Type<TComponent>);
         }
 
         /*
@@ -226,11 +190,7 @@ export class RxDynamicComponentService {
         unnecessarily due to promises being resolved.
          */
         return this._ngZone.runOutsideAngular(() => {
-            if (
-                this.isBrowser &&
-                'requestIdleCallback' in window &&
-                priority === 'idle'
-            ) {
+            if (this.isBrowser && 'requestIdleCallback' in window && priority === 'idle') {
                 this.logger.log(
                     `requestIdleCallback is available, scheduling load for "${manifest.componentId}" with a timeout of ${timeout}ms`
                 );
@@ -242,10 +202,9 @@ export class RxDynamicComponentService {
                                 this.logger.log(
                                     `IdleDeadline for ${manifest.componentId} emitted. didTimeout: ${idleDeadline.didTimeout}, timeRemaining: ${timeRemaining}`
                                 );
-                                const component: Type<TComponent> =
-                                    await firstValueFrom(
-                                        this.loadManifest(manifest)
-                                    );
+                                const component: Type<TComponent> = await firstValueFrom(
+                                    this.loadManifest(manifest)
+                                );
 
                                 subscriber.next(component);
                                 subscriber.complete();
@@ -272,18 +231,14 @@ export class RxDynamicComponentService {
      * Loads the manifest conditionally on if it is loading standalone components or NgModules
      * @param manifest
      */
-    loadManifest<TComponent>(
-        manifest: DynamicComponentManifest
-    ): Observable<Type<TComponent>> {
+    loadManifest<TComponent>(manifest: DynamicComponentManifest): Observable<Type<TComponent>> {
         this.logger.log(`Loading ${manifest.componentId}`);
 
         return (
             'loadChildren' in manifest
                 ? this.loadModule<TComponent>(manifest, manifest.loadChildren)
                 : this.loadComponent<TComponent>(manifest.loadComponent)
-        ).pipe(
-            tap((component) => this.loaded.set(manifest.componentId, component))
-        );
+        ).pipe(tap((component) => this.loaded.set(manifest.componentId, component)));
     }
 
     /**
@@ -302,17 +257,13 @@ export class RxDynamicComponentService {
         manifestId: string,
         overrides?: Partial<SharedManifestConfig>
     ): Observable<Type<TComponent>> {
-        const manifest = this.manifests.get(
-            manifestId
-        ) as DynamicComponentManifest;
+        const manifest = this.manifests.get(manifestId) as DynamicComponentManifest;
 
         if (!manifest) {
             if (this.config.devMode) {
                 this.cannotFindManifest(manifestId);
             }
-            return throwError(
-                () => `No manifest found for componentId: ${manifestId}`
-            );
+            return throwError(() => `No manifest found for componentId: ${manifestId}`);
         }
 
         return this.loadWithOverrides<TComponent>(manifest, overrides).pipe(

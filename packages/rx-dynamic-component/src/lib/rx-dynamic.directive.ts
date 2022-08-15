@@ -18,36 +18,13 @@ import { RxDynamicComponentService } from './rx-dynamic-component.service';
     standalone: true,
     providers: [RxDynamicComponentRegister],
 })
-export class RxDynamicDirective<TComponent>
-    implements AfterViewInit, OnDestroy
-{
+export class RxDynamicDirective<TComponent> implements AfterViewInit, OnDestroy {
     /**
      * Custom injector that will be used in the dynamic component
      */
     @Input() injector?: Injector;
-
-    /**
-     * The dynamic component to load. Will be either a manifestId or
-     * @param componentType
-     */
-    @Input() set load(
-        componentType: string | Type<TComponent> | null | undefined
-    ) {
-        this._load = componentType;
-
-        if (this._initialized) {
-            this.setComponent(componentType);
-        }
-    }
-
-    @Input() config?: Partial<
-        Pick<SharedManifestConfig, 'timeout' | 'priority'>
-    >;
-
-    private _load?: string | Type<TComponent> | null;
-
+    @Input() config?: Partial<Pick<SharedManifestConfig, 'timeout' | 'priority'>>;
     private _componentType?: Type<TComponent> | null;
-
     private _initialized = false;
 
     constructor(
@@ -56,6 +33,20 @@ export class RxDynamicDirective<TComponent>
         private readonly rxDynamicComponentService: RxDynamicComponentService,
         private readonly changeDetectorRef: ChangeDetectorRef
     ) {}
+
+    private _load?: string | Type<TComponent> | null;
+
+    /**
+     * The dynamic component to load. Will be either a manifestId or
+     * @param componentType
+     */
+    @Input() set load(componentType: string | Type<TComponent> | null | undefined) {
+        this._load = componentType;
+
+        if (this._initialized) {
+            this.setComponent(componentType);
+        }
+    }
 
     ngAfterViewInit(): void {
         this._initialized = true;
@@ -74,15 +65,10 @@ export class RxDynamicDirective<TComponent>
          */
     }
 
-    async setComponent(
-        componentTypeOrManifestId: string | Type<TComponent> | null | undefined
-    ): Promise<void> {
+    async setComponent(componentTypeOrManifestId: string | Type<TComponent> | null | undefined): Promise<void> {
         if (typeof componentTypeOrManifestId === 'string') {
             this._componentType = await firstValueFrom(
-                this.rxDynamicComponentService.getComponent<TComponent>(
-                    componentTypeOrManifestId,
-                    this.config
-                )
+                this.rxDynamicComponentService.getComponent<TComponent>(componentTypeOrManifestId, this.config)
             );
         } else {
             this._componentType = componentTypeOrManifestId;
@@ -107,20 +93,14 @@ export class RxDynamicDirective<TComponent>
             this.viewContainerRef.clear();
 
             if (this._componentType) {
-                const componentRef = this.viewContainerRef.createComponent(
-                    componentType,
-                    {
-                        injector: this.injector,
-                    }
-                );
+                const componentRef = this.viewContainerRef.createComponent(componentType, {
+                    injector: this.injector,
+                });
 
                 /*
             Register the ComponentRef so it's inputs are passed down and the outputs are bubbled up
              */
-                this.rxDynamicComponentRegister.registerComponentRef(
-                    componentType,
-                    componentRef
-                );
+                this.rxDynamicComponentRegister.registerComponentRef(componentType, componentRef);
 
                 this.changeDetectorRef.markForCheck();
             }

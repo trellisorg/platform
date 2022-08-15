@@ -23,8 +23,7 @@ export interface SharedManifestConfig {
  *
  * TODO: allow for caching at the manifest level
  */
-export interface DynamicComponentRootConfig<T extends string = string>
-    extends SharedManifestConfig {
+export interface DynamicComponentRootConfig<T extends string = string> extends SharedManifestConfig {
     devMode?: boolean;
     manifests?: DynamicComponentManifest<T>[];
 }
@@ -39,10 +38,7 @@ export const defaultRootConfig: DynamicComponentRootConfig = {
  * DynamicComponentManifest is similar to how lazy loaded routes are configured with @angular/router
  * componentId is used to find the correct module to load in the manifest map
  */
-export type LoadComponent =
-    | Type<any>
-    | Observable<Type<any>>
-    | Promise<Type<any>>;
+export type LoadComponent = Type<any> | Observable<Type<any>> | Promise<Type<any>>;
 
 export type LoadComponentCallback = () => LoadComponent;
 
@@ -56,36 +52,28 @@ export type LoadModuleCallback = () => LoadModule;
 
 export type DynamicComponentManifest<T = string> = SharedManifestConfig & {
     componentId: T;
-} & (
-        | { loadChildren: LoadModuleCallback }
-        | { loadComponent: LoadComponentCallback }
-    );
+} & ({ loadChildren: LoadModuleCallback } | { loadComponent: LoadComponentCallback });
 
 /**
  * The root configuration injection token
  */
-export const DYNAMIC_COMPONENT_CONFIG =
-    new InjectionToken<DynamicComponentRootConfig>('DYNAMIC_COMPONENT_CONFIG');
+export const DYNAMIC_COMPONENT_CONFIG = new InjectionToken<DynamicComponentRootConfig>('DYNAMIC_COMPONENT_CONFIG');
 
 /**
  * A feature injection token to allow the RxDynamicComponentFeatureModule to register each of the feature
  * manifests in the manifest map.
  */
-export const _FEATURE_DYNAMIC_COMPONENT_MANIFESTS = new InjectionToken<
-    DynamicComponentManifest<unknown>[][]
->('FEATURE_DYNAMIC_COMPONENT_MANIFESTS');
+export const _FEATURE_DYNAMIC_COMPONENT_MANIFESTS = new InjectionToken<DynamicComponentManifest<unknown>[][]>(
+    'FEATURE_DYNAMIC_COMPONENT_MANIFESTS'
+);
 
 /**
  * The libraries manifest, this is global across the application which feature manifests being added and removed during
  * import and ngOnDestroy respectively.
  */
-export const DYNAMIC_MANIFEST_MAP = new InjectionToken<ManifestMap>(
-    'DYNAMIC_MANIFEST_MAP'
-);
+export const DYNAMIC_MANIFEST_MAP = new InjectionToken<ManifestMap>('DYNAMIC_MANIFEST_MAP');
 
 /**
  * Injection token used for telling the library what component in a lazy loaded module to use for rendering
  */
-export const DYNAMIC_COMPONENT = new InjectionToken<Type<unknown>>(
-    'DYNAMIC_COMPONENT'
-);
+export const DYNAMIC_COMPONENT = new InjectionToken<Type<unknown>>('DYNAMIC_COMPONENT');

@@ -11,23 +11,17 @@ import {
 } from './manifest';
 import { RxDynamicComponentService } from './rx-dynamic-component.service';
 
-function _initialManifestMap(
-    manifests: DynamicComponentManifest[]
-): ManifestMap {
+function _initialManifestMap(manifests: DynamicComponentManifest[]): ManifestMap {
     return new Map<string, DynamicComponentManifest>(
         manifests.map((manifest) => [manifest.componentId, manifest])
     );
 }
 
-function initializeEnvironmentManifests<T extends string = string>(
-    manifests: DynamicComponentManifest<T>[]
-) {
+function initializeEnvironmentManifests<T extends string = string>(manifests: DynamicComponentManifest<T>[]) {
     return () => {
         const manifestMap: ManifestMap = inject(DYNAMIC_MANIFEST_MAP);
 
-        const rxDynamicComponentPreloaderService = inject(
-            RxDynamicComponentService
-        );
+        const rxDynamicComponentPreloaderService = inject(RxDynamicComponentService);
 
         manifests.forEach((manifest) => {
             manifestMap.set(manifest.componentId, manifest);

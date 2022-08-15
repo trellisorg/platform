@@ -16,11 +16,6 @@
         "compilationMode": "partial",
         "enableResourceInlining": true
     },
-    "exclude": [
-        "test-setup.ts",
-        "**/*.spec.ts",
-        "**/*.test.ts",
-        "jest.config.ts"
-    ],
+    "exclude": ["test-setup.ts", "**/*.spec.ts", "**/*.test.ts", "jest.config.ts"],
     "include": ["./**/*.ts"]
 }

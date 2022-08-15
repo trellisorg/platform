@@ -3,11 +3,11 @@ import { faker } from '@faker-js/faker';
 
 @Component({
     selector: 'trellisorg-standalone',
-    template: `<p>{{ id }} standalone works! Current Input value: {{ name }}</p>`,
+    template: `<p>{{ id }} standalone2 works! Current Input value: {{ name }}</p>`,
     styles: [''],
     standalone: true,
 })
-export class StandaloneComponent {
+export class Standalone2Component {
     @Output() readonly myName = new EventEmitter<string>();
     protected id = `component${faker.color.human().toUpperCase()}`;
 

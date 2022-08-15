@@ -19,47 +19,27 @@
         "baseUrl": ".",
         "paths": {
             "@trellis/make-buildable": ["packages/make-buildable/src/index.ts"],
-            "@trellisorg/dns-validator": [
-                "packages/dns-validator/src/index.ts"
-            ],
-            "@trellisorg/google-places-autocomplete": [
-                "packages/google-places-autocomplete/src/index.ts"
-            ],
+            "@trellisorg/dns-validator": ["packages/dns-validator/src/index.ts"],
+            "@trellisorg/google-places-autocomplete": ["packages/google-places-autocomplete/src/index.ts"],
             "@trellisorg/google-places-autocomplete/jsonp": [
                 "packages/google-places-autocomplete/jsonp/src/index.ts"
             ],
             "@trellisorg/google-places-autocomplete/loader": [
                 "packages/google-places-autocomplete/loader/src/index.ts"
             ],
-            "@trellisorg/nest-spectator": [
-                "packages/nest-spectator/src/index.ts"
-            ],
-            "@trellisorg/nest-worker-threads": [
-                "packages/nest-worker-threads/src/index.ts"
-            ],
-            "@trellisorg/ngrx-data-websocket-client": [
-                "packages/ngrx-data-websocket/client/src/index.ts"
-            ],
-            "@trellisorg/ngrx-data-websocket-core": [
-                "packages/ngrx-data-websocket/core/src/index.ts"
-            ],
-            "@trellisorg/ngrx-data-websocket-server": [
-                "packages/ngrx-data-websocket/server/src/index.ts"
-            ],
-            "@trellisorg/ngrx-universal-rehydrate": [
-                "packages/ngrx-universal-rehydrate/src/index.ts"
-            ],
+            "@trellisorg/nest-spectator": ["packages/nest-spectator/src/index.ts"],
+            "@trellisorg/nest-worker-threads": ["packages/nest-worker-threads/src/index.ts"],
+            "@trellisorg/ngrx-data-websocket-client": ["packages/ngrx-data-websocket/client/src/index.ts"],
+            "@trellisorg/ngrx-data-websocket-core": ["packages/ngrx-data-websocket/core/src/index.ts"],
+            "@trellisorg/ngrx-data-websocket-server": ["packages/ngrx-data-websocket/server/src/index.ts"],
+            "@trellisorg/ngrx-universal-rehydrate": ["packages/ngrx-universal-rehydrate/src/index.ts"],
             "@trellisorg/ngrx-universal-rehydrate/server": [
                 "packages/ngrx-universal-rehydrate/server/src/index.ts"
             ],
             "@trellisorg/nx-betterer": ["packages/nx-betterer/src/index.ts"],
             "@trellisorg/nxls": ["packages/nxls/src/index.ts"],
-            "@trellisorg/rx-dynamic-component": [
-                "packages/rx-dynamic-component/src/index.ts"
-            ],
-            "@trellisorg/rx-dynamic-component/lazy": [
-                "packages/rx-dynamic-component/lazy/src/index.ts"
-            ],
+            "@trellisorg/rx-dynamic-component": ["packages/rx-dynamic-component/src/index.ts"],
+            "@trellisorg/rx-dynamic-component/lazy": ["packages/rx-dynamic-component/lazy/src/index.ts"],
             "@trellisorg/update": ["packages/update/src/index.ts"]
         }
     },

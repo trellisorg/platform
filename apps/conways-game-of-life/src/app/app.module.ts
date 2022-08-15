@@ -5,10 +5,7 @@ import { ReactiveComponentModule } from '@ngrx/component';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import {
-    provideRxDynamicComponent,
-    RxDynamicDirective,
-} from '@trellisorg/rx-dynamic-component';
+import { provideRxDynamicComponent, RxDynamicDirective } from '@trellisorg/rx-dynamic-component';
 import { AppComponent } from './app.component';
 import { GameEffects } from './state/game.effects';
 import { gameReducer, GAME_STATE } from './state/game.state';
@@ -33,15 +30,11 @@ import { gameReducer, GAME_STATE } from './state/game.state';
             manifests: [
                 {
                     componentId: 'dead',
-                    loadChildren: () =>
-                        import('./dead/dead.module').then((m) => m.DeadModule),
+                    loadChildren: () => import('./dead/dead.module').then((m) => m.DeadModule),
                 },
                 {
                     componentId: 'alive',
-                    loadChildren: () =>
-                        import('./alive/alive.module').then(
-                            (m) => m.AliveModule
-                        ),
+                    loadChildren: () => import('./alive/alive.module').then((m) => m.AliveModule),
                 },
             ],
         }),

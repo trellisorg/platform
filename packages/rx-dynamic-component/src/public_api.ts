@@ -1,10 +1,6 @@
 export { DynamicInput } from './lib/dynamic-input';
 export { DynamicOutput } from './lib/dynamic-output';
-export {
-    DynamicComponentManifest,
-    DynamicComponentRootConfig,
-    DYNAMIC_COMPONENT,
-} from './lib/manifest';
+export { DynamicComponentManifest, DynamicComponentRootConfig, DYNAMIC_COMPONENT } from './lib/manifest';
 export {
     provideRxDynamicComponent,
     provideRxDynamicComponentManifests,

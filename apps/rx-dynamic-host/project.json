@@ -13,10 +13,7 @@
                 "polyfills": "apps/rx-dynamic-host/src/polyfills.ts",
                 "tsConfig": "apps/rx-dynamic-host/tsconfig.app.json",
                 "inlineStyleLanguage": "scss",
-                "assets": [
-                    "apps/rx-dynamic-host/src/favicon.ico",
-                    "apps/rx-dynamic-host/src/assets"
-                ],
+                "assets": ["apps/rx-dynamic-host/src/favicon.ico", "apps/rx-dynamic-host/src/assets"],
                 "styles": ["apps/rx-dynamic-host/src/styles.scss"],
                 "scripts": []
             },
@@ -78,10 +75,7 @@
         "lint": {
             "executor": "@nrwl/linter:eslint",
             "options": {
-                "lintFilePatterns": [
-                    "apps/rx-dynamic-host/**/*.ts",
-                    "apps/rx-dynamic-host/**/*.html"
-                ]
+                "lintFilePatterns": ["apps/rx-dynamic-host/**/*.ts", "apps/rx-dynamic-host/**/*.html"]
             }
         }
     },
