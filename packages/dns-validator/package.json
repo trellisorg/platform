@@ -1,13 +1,13 @@
 {
     "name": "@trellisorg/dns-validator",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "peerDependencies": {
         "@angular/common": "^12 || ^13 || ^14",
-        "@angular/core": "^12 || ^13 || ^14"
+        "@angular/core": "^12 || ^13 || ^14",
+        "@ngrx/component-store": "^12 || ^13 || ^14"
     },
     "dependencies": {
-        "tslib": "^2.3.0",
-        "@ngrx/component-store": "^12 || ^13 || ^14"
+        "tslib": "^2.3.0"
     },
     "repository": {
         "url": "https://github.com/trellisorg/platform/tree/master/packages/dns-validator"
