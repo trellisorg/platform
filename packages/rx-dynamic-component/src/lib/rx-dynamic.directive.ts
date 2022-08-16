@@ -23,8 +23,11 @@ export class RxDynamicDirective<TComponent> implements AfterViewInit, OnDestroy 
      * Custom injector that will be used in the dynamic component
      */
     @Input() injector?: Injector;
+
     @Input() config?: Partial<Pick<SharedManifestConfig, 'timeout' | 'priority'>>;
+
     private _componentType?: Type<TComponent> | null;
+
     private _initialized = false;
 
     constructor(
@@ -32,7 +35,8 @@ export class RxDynamicDirective<TComponent> implements AfterViewInit, OnDestroy 
         private readonly rxDynamicComponentRegister: RxDynamicComponentRegister,
         private readonly rxDynamicComponentService: RxDynamicComponentService,
         private readonly changeDetectorRef: ChangeDetectorRef
-    ) {}
+    ) {
+    }
 
     private _load?: string | Type<TComponent> | null;
 

@@ -1,5 +1,4 @@
-import { ComponentRef, EventEmitter, Injectable, reflectComponentType, Type } from '@angular/core';
-import { faker } from '@faker-js/faker';
+import { ComponentRef, EventEmitter, Injectable, OnDestroy, reflectComponentType, Type } from '@angular/core';
 import { map, Observable, Subject, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { Logger } from './logger';
@@ -15,25 +14,28 @@ export interface DynamicOutputEmission<T, TComponent> {
 }
 
 @Injectable()
-export class RxDynamicComponentRegister {
-    private readonly id = `service${faker.random.alpha().toUpperCase()}`;
-
+export class RxDynamicComponentRegister implements OnDestroy {
     private readonly inputs = new Set<string>();
 
-    private readonly inputValues = new Map<string, any>();
+    private readonly inputValues = new Map<string, unknown>();
 
     private readonly outputs = new Set<string>();
+
+    private readonly _events$ = new Subject<DynamicOutputEmission<any, unknown>>();
 
     private _componentRef?: ComponentRef<unknown>;
 
     private _component?: Type<unknown>;
 
-    private readonly _events$ = new Subject<DynamicOutputEmission<any, unknown>>();
-
     readonly events$ = this._events$.asObservable();
 
-    constructor(private readonly logger: Logger) {
-        console.log(this.id);
+    readonly destroy$ = new Subject<void>();
+
+    constructor(private readonly logger: Logger) {}
+
+    ngOnDestroy(): void {
+        this.destroy$.next();
+        this.destroy$.complete();
     }
 
     registerComponentRef<TComponent = unknown>(
@@ -93,11 +95,6 @@ export class RxDynamicComponentRegister {
      * @param value
      */
     setInput<T = unknown>(input: string, value: T): void {
-        console.log(
-            `${this.id} Setting ${input} to ${value} for ${this._component?.name} ${
-                (this._componentRef?.instance as any).id
-            }`
-        );
         this.inputValues.set(input, value);
 
         if (

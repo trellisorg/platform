@@ -6,7 +6,7 @@ import { interval, map, startWith, Subject, timer } from 'rxjs';
 @Component({
     selector: 'trellisorg-root',
     template: `
-        <div style="border: blue dashed 5px; margin-top: 5px">
+        <div *ngIf="show$ | async" style="border: blue dashed 5px; margin-top: 5px">
             <div>I will remove myself in 5 seconds to demonstrate unsubscribing outputs.</div>
             <div
                 [name]="randomNameEverySecond$ | async"
