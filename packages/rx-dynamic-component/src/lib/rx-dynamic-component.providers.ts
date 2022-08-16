@@ -12,9 +12,7 @@ import {
 import { RxDynamicComponentService } from './rx-dynamic-component.service';
 
 function _initialManifestMap(manifests: DynamicComponentManifest[]): ManifestMap {
-    return new Map<string, DynamicComponentManifest>(
-        manifests.map((manifest) => [manifest.componentId, manifest])
-    );
+    return new Map<string, DynamicComponentManifest>(manifests.map((manifest) => [manifest.componentId, manifest]));
 }
 
 function initializeEnvironmentManifests<T extends string = string>(manifests: DynamicComponentManifest<T>[]) {

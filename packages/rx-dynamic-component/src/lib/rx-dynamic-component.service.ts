@@ -202,9 +202,7 @@ export class RxDynamicComponentService {
                                 this.logger.log(
                                     `IdleDeadline for ${manifest.componentId} emitted. didTimeout: ${idleDeadline.didTimeout}, timeRemaining: ${timeRemaining}`
                                 );
-                                const component: Type<TComponent> = await firstValueFrom(
-                                    this.loadManifest(manifest)
-                                );
+                                const component: Type<TComponent> = await firstValueFrom(this.loadManifest(manifest));
 
                                 subscriber.next(component);
                                 subscriber.complete();
@@ -218,9 +216,7 @@ export class RxDynamicComponentService {
             }
 
             if (priority === 'idle') {
-                this.logger.log(
-                    `requestIdleCallback is not available, loading ${manifest.componentId} immediately`
-                );
+                this.logger.log(`requestIdleCallback is not available, loading ${manifest.componentId} immediately`);
             }
 
             return this.loadManifest<TComponent>(manifest);

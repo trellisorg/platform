@@ -1,3 +1,4 @@
+/* eslint-disable */
 export default {
     displayName: 'conways-game-of-life',
 

@@ -20,8 +20,7 @@ import { StandaloneAdapterDirective } from './standalone/standalone-adapter.dire
             manifests: [
                 {
                     componentId: 'dynamic-standalone',
-                    loadComponent: () =>
-                        import('./standalone/standalone.component').then((m) => m.StandaloneComponent),
+                    loadComponent: () => import('./standalone/standalone.component').then((m) => m.StandaloneComponent),
                 },
                 {
                     componentId: 'dynamic-standalone2',
