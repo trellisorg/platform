@@ -30,15 +30,14 @@ export class RxDynamicDirective<TComponent> implements AfterViewInit, OnDestroy 
 
     private _initialized = false;
 
+    private _load?: string | Type<TComponent> | null;
+
     constructor(
         private readonly viewContainerRef: ViewContainerRef,
         private readonly rxDynamicComponentRegister: RxDynamicComponentRegister,
         private readonly rxDynamicComponentService: RxDynamicComponentService,
         private readonly changeDetectorRef: ChangeDetectorRef
-    ) {
-    }
-
-    private _load?: string | Type<TComponent> | null;
+    ) {}
 
     /**
      * The dynamic component to load. Will be either a manifestId or

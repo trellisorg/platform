@@ -1,27 +1,42 @@
 import { ComponentRef, EventEmitter, Injectable, OnDestroy, reflectComponentType, Type } from '@angular/core';
-import { map, Observable, Subject, Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { Subject, Subscription, takeUntil } from 'rxjs';
 import { Logger } from './logger';
 
-export interface DynamicOutput<T, TComponent> {
+export interface DynamicOutputPayload<T, TComponent> {
     data: T;
     componentRef: ComponentRef<TComponent>;
 }
 
 export interface DynamicOutputEmission<T, TComponent> {
     output: string;
-    value: DynamicOutput<T, TComponent>;
+    value: DynamicOutputPayload<T, TComponent>;
 }
 
 @Injectable()
 export class RxDynamicComponentRegister implements OnDestroy {
+    /**
+     * Set of all inputs that the current dynamically rendered component has (based on its reflection).
+     * @private
+     */
     private readonly inputs = new Set<string>();
 
-    private readonly inputValues = new Map<string, unknown>();
-
+    /**
+     * Set of all the outputs the current dynamically rendered component has (based on its reflection).
+     * @private
+     */
     private readonly outputs = new Set<string>();
 
-    private readonly _events$ = new Subject<DynamicOutputEmission<any, unknown>>();
+    /**
+     * The values each of the inputs that are set using the `@DynamicInput` decorator.
+     * @private
+     */
+    private readonly inputValues = new Map<string, unknown>();
+
+    /**
+     * Stream of all the outputs (EventEmitters) values that the dynamically rendered component emits.
+     * @private
+     */
+    private readonly _events$ = new Subject<DynamicOutputEmission<unknown, unknown>>();
 
     private _componentRef?: ComponentRef<unknown>;
 
@@ -38,10 +53,7 @@ export class RxDynamicComponentRegister implements OnDestroy {
         this.destroy$.complete();
     }
 
-    registerComponentRef<TComponent = unknown>(
-        component: Type<TComponent>,
-        componentRef: ComponentRef<TComponent>
-    ): void {
+    registerComponentRef<TComponent>(component: Type<TComponent>, componentRef: ComponentRef<TComponent>): void {
         const mirror = reflectComponentType(component);
 
         if (mirror) {
@@ -68,8 +80,13 @@ export class RxDynamicComponentRegister implements OnDestroy {
             const subscriptions: Subscription[] = [];
             mirror.outputs.forEach((output) => {
                 this.outputs.add(output.propName);
+
+                const emitter = (componentRef.instance as any)[output.templateName] as EventEmitter<
+                    DynamicOutputPayload<unknown, Type<unknown>>
+                >;
+
                 subscriptions.push(
-                    ((componentRef.instance as any)[output.templateName] as EventEmitter<any>).subscribe((value) =>
+                    emitter.pipe(takeUntil(this.destroy$)).subscribe((value) =>
                         this._events$.next({
                             output: output.propName,
                             value: {
@@ -82,7 +99,11 @@ export class RxDynamicComponentRegister implements OnDestroy {
             });
 
             this._componentRef.onDestroy(() => {
-                subscriptions.forEach((subscription) => subscription.unsubscribe());
+                subscriptions.forEach((subscription) => {
+                    if (!subscription.closed) {
+                        subscription.unsubscribe();
+                    }
+                });
             });
         } else {
             this.logger.error(`Could not determine mirror for ${component} to determine inputs and outputs`);
@@ -109,17 +130,5 @@ export class RxDynamicComponentRegister implements OnDestroy {
         } else {
             this.logger.warn(`${this._component} does not have an input configured with @Input called ${input}.`);
         }
-    }
-
-    /**
-     * Filter the output stream so only outputs that match a certain string make it through
-     * and are bubbled up to the template rendering the dynamic component.
-     * @param output
-     */
-    filterOutputs(output: string): Observable<DynamicOutput<any, unknown>> {
-        return this.events$.pipe(
-            filter((event) => event.output === output),
-            map((event) => event.value)
-        );
     }
 }

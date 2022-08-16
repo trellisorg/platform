@@ -10,18 +10,20 @@ import { interval, map, startWith, Subject, timer } from 'rxjs';
             <div>I will remove myself in 5 seconds to demonstrate unsubscribing outputs.</div>
             <div
                 [name]="randomNameEverySecond$ | async"
-                (myName)="nameStreamFromOutput$.next($event)"
+                (myName)="nameStreamFromOutput$.next($event.value.data)"
                 load="dynamic-standalone"
                 rxDynamic
-                inputOutputAdapter></div>
+                inputOutputAdapter
+            ></div>
             <div>I said my name was: {{ nameStreamFromOutput$ | async }}</div>
         </div>
         <div
             [name]="randomDogEverySecond$ | async"
-            (myName)="nameStreamFromOutput$.next($event)"
+            (myName)="nameStreamFromOutput2$.next($event.value.data)"
             load="dynamic-standalone2"
             rxDynamic
-            inputOutputAdapter></div>
+            inputOutputAdapter
+        ></div>
         <div style="border: orange dashed 5px; margin-top: 5px">
             <div [load]="dynamicModule$ | async" rxDynamic></div>
         </div>
@@ -43,6 +45,8 @@ export class AppComponent {
     readonly randomDogEverySecond$ = interval(1000).pipe(map(() => faker.animal.dog()));
 
     readonly nameStreamFromOutput$ = new Subject<string>();
+
+    readonly nameStreamFromOutput2$ = new Subject<string>();
 
     readonly show$ = timer(5000).pipe(
         map(() => false),
