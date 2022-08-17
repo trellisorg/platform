@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { faker } from '@faker-js/faker';
 import { RxDynamicComponentService } from '@trellisorg/rx-dynamic-component';
 import { interval, map, startWith, Subject, timer } from 'rxjs';
+import { DialogComponent } from './dialog/dialog.component';
 
 @Component({
     selector: 'trellisorg-root',
@@ -31,6 +33,7 @@ import { interval, map, startWith, Subject, timer } from 'rxjs';
             <div>Loaded through the manifestId rather than passing in the ComponentType directly.</div>
             <div [config]="{ priority: 'idle' }" rxDynamic load="dynamic-idle-standalone"></div>
         </div>
+        <button (click)="open()">Open</button>
     `,
     styles: [],
 })
@@ -53,5 +56,9 @@ export class AppComponent {
         startWith(true)
     );
 
-    constructor(private rxDynamicComponentService: RxDynamicComponentService) {}
+    constructor(private rxDynamicComponentService: RxDynamicComponentService, private matDialog: MatDialog) {}
+
+    open() {
+        this.matDialog.open(DialogComponent);
+    }
 }

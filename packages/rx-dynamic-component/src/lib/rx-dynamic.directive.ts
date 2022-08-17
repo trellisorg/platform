@@ -101,11 +101,14 @@ export class RxDynamicDirective<TComponent> implements AfterViewInit, OnDestroy 
                 });
 
                 /*
-            Register the ComponentRef so it's inputs are passed down and the outputs are bubbled up
-             */
+                Register the ComponentRef so it's inputs are passed down and the outputs are bubbled up
+                 */
                 this.rxDynamicComponentRegister.registerComponentRef(componentType, componentRef);
 
-                this.changeDetectorRef.markForCheck();
+                /*
+                TODO(jay): Figure out why this needs detectChanges for the dynamic component to show up in some cases
+                 */
+                componentRef.changeDetectorRef.detectChanges();
             }
         }
     }

@@ -18,7 +18,6 @@ import {
     DynamicComponentManifest,
     DYNAMIC_COMPONENT,
     DYNAMIC_COMPONENT_CONFIG,
-    DYNAMIC_MANIFEST_MAP,
     LoadComponentCallback,
     LoadModuleCallback,
     SharedManifestConfig,
@@ -28,11 +27,9 @@ function isPromiseOrObservable<T>(promiseOrObservable: Promise<T> | Observable<T
     return !!(promiseOrObservable as Promise<T>)?.then || isObservable(promiseOrObservable);
 }
 
-@Injectable({
-    providedIn: 'root',
-})
+@Injectable()
 export class RxDynamicComponentService {
-    private readonly manifests = inject(DYNAMIC_MANIFEST_MAP);
+    private readonly manifests = new Map<string, DynamicComponentManifest>();
 
     private readonly loaded = new Map<string, Type<unknown>>();
 
@@ -151,6 +148,16 @@ export class RxDynamicComponentService {
                 );
             }
         }
+    }
+
+    /**
+     * Adds manifests to this instance of the component service
+     * @param manifests
+     */
+    addManifests(manifests: DynamicComponentManifest[]): void {
+        manifests.forEach((manifest) => {
+            this.manifests.set(manifest.componentId, manifest);
+        });
     }
 
     /**
