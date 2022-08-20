@@ -1,5 +1,5 @@
 import type { Provider } from '@angular/core';
-import { Compiler, Injector, NgZone } from '@angular/core';
+import { Compiler, Injector, NgZone, Optional } from '@angular/core';
 import { Logger } from './logger';
 import {
     defaultRootConfig,
@@ -32,7 +32,7 @@ function provideRxDynamicComponentService<T extends string = string>(
             logger: Logger,
             injector: Injector,
             manifestMap: ManifestMap,
-            featureManifestMaps: DynamicComponentManifest<T>[][]
+            featureManifestMaps: DynamicComponentManifest<T>[][] | undefined | null
         ) => {
             const rxDynamicComponentPreloaderService = new RxDynamicComponentService(
                 compiler,
@@ -44,7 +44,7 @@ function provideRxDynamicComponentService<T extends string = string>(
             rxDynamicComponentPreloaderService.addManifests([
                 ...manifests,
                 ...manifestMap.values(),
-                ...featureManifestMaps[featureManifestMaps.length - 1],
+                ...(featureManifestMaps ? featureManifestMaps[featureManifestMaps.length - 1] : []),
             ]);
 
             // Send the manifests off to preload if they are configured to do so.
@@ -52,7 +52,14 @@ function provideRxDynamicComponentService<T extends string = string>(
 
             return rxDynamicComponentPreloaderService;
         },
-        deps: [Compiler, NgZone, Logger, Injector, DYNAMIC_MANIFEST_MAP, _FEATURE_DYNAMIC_COMPONENT_MANIFESTS],
+        deps: [
+            Compiler,
+            NgZone,
+            Logger,
+            Injector,
+            DYNAMIC_MANIFEST_MAP,
+            [new Optional(), _FEATURE_DYNAMIC_COMPONENT_MANIFESTS],
+        ],
     };
 }
 
