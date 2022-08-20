@@ -6,6 +6,7 @@
         "declaration": true,
         "declarationMap": true,
         "inlineSources": true,
+        "strict": true,
         "types": [],
         "lib": ["dom", "es2018", "es2020"]
     },
@@ -15,11 +16,6 @@
         "compilationMode": "partial",
         "enableResourceInlining": true
     },
-    "exclude": [
-        "test-setup.ts",
-        "**/*.spec.ts",
-        "**/*.test.ts",
-        "jest.config.ts"
-    ],
+    "exclude": ["test-setup.ts", "**/*.spec.ts", "**/*.test.ts", "jest.config.ts"],
     "include": ["./**/*.ts"]
 }

@@ -1,14 +1,10 @@
 import { Component, NgModule } from '@angular/core';
+import { byText, createComponentFactory, Spectator } from '@ngneat/spectator/jest';
 import {
-    byText,
-    createComponentFactory,
-    Spectator,
-} from '@ngneat/spectator/jest';
-import {
-    DynamicOutletComponent,
     DYNAMIC_COMPONENT,
     provideRxDynamicComponent,
     RxDynamicComponentService,
+    RxDynamicDirective,
 } from '@trellisorg/rx-dynamic-component';
 import { of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
@@ -16,16 +12,12 @@ import { switchMap } from 'rxjs/operators';
 @Component({
     // eslint-disable-next-line @angular-eslint/component-selector
     selector: 'container',
-    template: ` <rx-dynamic-outlet
-        [load]="factory$ | async"
-    ></rx-dynamic-outlet>`,
+    template: ` <div [load]="factory$ | async" rxDynamic></div>`,
     styles: [''],
 })
 class ContainerComponent {
     readonly factory$ = of('dynamic-lazy-child1').pipe(
-        switchMap((componentId) =>
-            this.rxDynamicComponentService.getComponent(componentId)
-        )
+        switchMap((componentId) => this.rxDynamicComponentService.getComponent(componentId))
     );
 
     constructor(private rxDynamicComponentService: RxDynamicComponentService) {}
@@ -60,7 +52,7 @@ describe('RxDynamicComponent', () => {
 
     const createComponent = createComponentFactory({
         component: ContainerComponent,
-        imports: [DynamicOutletComponent],
+        imports: [RxDynamicDirective],
         providers: [
             provideRxDynamicComponent({
                 devMode: true,

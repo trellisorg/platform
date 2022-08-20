@@ -5,8 +5,6 @@
         "conways-game-of-life": "apps/conways-game-of-life",
         "dns-validator": "packages/dns-validator",
         "dns-validator-demo": "apps/dns-validator-demo",
-        "dynamic-host": "apps/dynamic-host",
-        "dynamic-remote": "apps/dynamic-remote",
         "google-places-autocomplete": "packages/google-places-autocomplete",
         "make-buildable": "packages/make-buildable",
         "nest-spectator": "packages/nest-spectator",
@@ -22,7 +20,7 @@
         "nx-betterer": "packages/nx-betterer",
         "nxls": "packages/nxls",
         "rx-dynamic-component": "packages/rx-dynamic-component",
-        "rx-dynamic-component-demo": "apps/rx-dynamic-component-demo",
+        "rx-dynamic-host": "apps/rx-dynamic-host",
         "update": "packages/update"
     },
     "$schema": "./node_modules/nx/schemas/workspace-schema.json"

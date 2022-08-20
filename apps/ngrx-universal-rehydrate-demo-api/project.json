@@ -37,9 +37,7 @@
         "lint": {
             "executor": "@nrwl/linter:eslint",
             "options": {
-                "lintFilePatterns": [
-                    "apps/ngrx-universal-rehydrate-demo-api/**/*.ts"
-                ]
+                "lintFilePatterns": ["apps/ngrx-universal-rehydrate-demo-api/**/*.ts"]
             }
         },
         "test": {

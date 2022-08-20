@@ -1,5 +1,6 @@
 import type { Provider } from '@angular/core';
-import { ENVIRONMENT_INITIALIZER, inject } from '@angular/core';
+import { Compiler, Injector, NgZone, Optional } from '@angular/core';
+import { Logger } from './logger';
 import {
     defaultRootConfig,
     DynamicComponentManifest,
@@ -9,31 +10,56 @@ import {
     ManifestMap,
     _FEATURE_DYNAMIC_COMPONENT_MANIFESTS,
 } from './manifest';
-import { RxDynamicComponentPreloaderService } from './rx-dynamic-component-preloader.service';
+import { RxDynamicComponentService } from './rx-dynamic-component.service';
 
-function _initialManifestMap(
-    manifests: DynamicComponentManifest[]
-): ManifestMap {
-    return new Map<string, DynamicComponentManifest>(
-        manifests.map((manifest) => [manifest.componentId, manifest])
-    );
+function _initialManifestMap(manifests: DynamicComponentManifest[]): ManifestMap {
+    return new Map<string, DynamicComponentManifest>(manifests.map((manifest) => [manifest.componentId, manifest]));
 }
 
-function initializeEnvironmentManifests<T extends string = string>(
+/**
+ * Provides the RxDynamicComponentService wherever the manifests are registered. Manifests will be inherited down
+ * the injection tree so feature modules will have the same manifests as the root injector or any features above them.
+ * @param manifests
+ */
+function provideRxDynamicComponentService<T extends string = string>(
     manifests: DynamicComponentManifest<T>[]
-) {
-    return () => {
-        const manifestMap: ManifestMap = inject(DYNAMIC_MANIFEST_MAP);
+): Provider {
+    return {
+        provide: RxDynamicComponentService,
+        useFactory: (
+            compiler: Compiler,
+            ngZone: NgZone,
+            logger: Logger,
+            injector: Injector,
+            manifestMap: ManifestMap,
+            featureManifestMaps: DynamicComponentManifest<T>[][] | undefined | null
+        ) => {
+            const rxDynamicComponentPreloaderService = new RxDynamicComponentService(
+                compiler,
+                ngZone,
+                logger,
+                injector
+            );
 
-        const rxDynamicComponentPreloaderService: RxDynamicComponentPreloaderService =
-            inject(RxDynamicComponentPreloaderService);
+            rxDynamicComponentPreloaderService.addManifests([
+                ...manifests,
+                ...manifestMap.values(),
+                ...(featureManifestMaps ? featureManifestMaps[featureManifestMaps.length - 1] : []),
+            ]);
 
-        manifests.forEach((manifest) => {
-            manifestMap.set(manifest.componentId, manifest);
-        });
+            // Send the manifests off to preload if they are configured to do so.
+            rxDynamicComponentPreloaderService.processManifestPreloads(manifests);
 
-        // Send the manifests off to preload if they are configured to do so.
-        rxDynamicComponentPreloaderService.processManifestPreloads(manifests);
+            return rxDynamicComponentPreloaderService;
+        },
+        deps: [
+            Compiler,
+            NgZone,
+            Logger,
+            Injector,
+            DYNAMIC_MANIFEST_MAP,
+            [new Optional(), _FEATURE_DYNAMIC_COMPONENT_MANIFESTS],
+        ],
     };
 }
 
@@ -62,11 +88,7 @@ export function provideRxDynamicComponent<T extends string = string>(
             provide: DYNAMIC_MANIFEST_MAP,
             useValue: _initialManifestMap(manifests),
         },
-        {
-            provide: ENVIRONMENT_INITIALIZER,
-            useValue: initializeEnvironmentManifests(manifests),
-            multi: true,
-        },
+        provideRxDynamicComponentService(manifests),
     ];
 }
 
@@ -83,10 +105,6 @@ export function provideRxDynamicComponentManifests<T extends string = string>(
             useValue: manifests,
             multi: true,
         },
-        {
-            provide: ENVIRONMENT_INITIALIZER,
-            useValue: initializeEnvironmentManifests(manifests),
-            multi: true,
-        },
+        provideRxDynamicComponentService(manifests),
     ];
 }

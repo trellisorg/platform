@@ -7,9 +7,7 @@
         "lint": {
             "executor": "@nrwl/linter:eslint",
             "options": {
-                "lintFilePatterns": [
-                    "packages/ngrx-data-websocket/core/**/*.ts"
-                ]
+                "lintFilePatterns": ["packages/ngrx-data-websocket/core/**/*.ts"]
             }
         },
         "test": {

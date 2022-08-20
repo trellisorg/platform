@@ -30,10 +30,7 @@
         "lint": {
             "executor": "@nrwl/linter:eslint",
             "options": {
-                "lintFilePatterns": [
-                    "packages/dns-validator/**/*.ts",
-                    "packages/dns-validator/**/*.html"
-                ]
+                "lintFilePatterns": ["packages/dns-validator/**/*.ts", "packages/dns-validator/**/*.html"]
             }
         }
     },

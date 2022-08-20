@@ -16,9 +16,7 @@
                     "apps/ngrx-universal-rehydrate-demo/src/favicon.ico",
                     "apps/ngrx-universal-rehydrate-demo/src/assets"
                 ],
-                "styles": [
-                    "apps/ngrx-universal-rehydrate-demo/src/styles.scss"
-                ],
+                "styles": ["apps/ngrx-universal-rehydrate-demo/src/styles.scss"],
                 "scripts": [],
                 "vendorChunk": true,
                 "extractLicenses": false,

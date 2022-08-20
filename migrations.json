@@ -2,19 +2,19 @@
     "migrations": [
         {
             "cli": "nx",
-            "version": "14.3.4-beta.1",
-            "description": "Replace targetDependencies with targetDefaults",
-            "implementation": "./src/migrations/update-14-3-4/create-target-defaults",
-            "package": "nx",
-            "name": "14.3.4-create-target-defaults"
+            "version": "14.5.2-beta.0",
+            "description": "Update the @angular/cli package version to ~14.1.0.",
+            "factory": "./src/migrations/update-14-5-2/update-angular-cli",
+            "package": "@nrwl/angular",
+            "name": "update-angular-cli-version-14-1-0"
         },
         {
+            "version": "14.5.5-beta.0",
             "cli": "nx",
-            "version": "14.2.3-beta.0",
-            "description": "Adds @swc/core and @swc-node as a dev dep if you are using them (repeated due to bad version on earlier migration)",
-            "factory": "./src/migrations/update-14-1-9/add-swc-deps-if-needed",
-            "package": "@nrwl/nx-plugin",
-            "name": "add-swc-deps-again"
+            "description": "Exclude jest.config.ts from tsconfig where missing.",
+            "factory": "./src/migrations/update-14-0-0/update-jest-config-ext",
+            "package": "@nrwl/jest",
+            "name": "exclude-jest-config-from-ts-config"
         }
     ]
 }

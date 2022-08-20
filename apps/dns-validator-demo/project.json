@@ -13,10 +13,7 @@
                 "polyfills": "apps/dns-validator-demo/src/polyfills.ts",
                 "tsConfig": "apps/dns-validator-demo/tsconfig.app.json",
                 "inlineStyleLanguage": "scss",
-                "assets": [
-                    "apps/dns-validator-demo/src/favicon.ico",
-                    "apps/dns-validator-demo/src/assets"
-                ],
+                "assets": ["apps/dns-validator-demo/src/favicon.ico", "apps/dns-validator-demo/src/assets"],
                 "styles": ["apps/dns-validator-demo/src/styles.scss"],
                 "scripts": []
             },
@@ -74,10 +71,7 @@
         "lint": {
             "executor": "@nrwl/linter:eslint",
             "options": {
-                "lintFilePatterns": [
-                    "apps/dns-validator-demo/**/*.ts",
-                    "apps/dns-validator-demo/**/*.html"
-                ]
+                "lintFilePatterns": ["apps/dns-validator-demo/**/*.ts", "apps/dns-validator-demo/**/*.html"]
             }
         },
         "test": {

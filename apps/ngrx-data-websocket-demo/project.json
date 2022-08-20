@@ -17,10 +17,7 @@
                 "main": "apps/ngrx-data-websocket-demo/src/main.ts",
                 "polyfills": "apps/ngrx-data-websocket-demo/src/polyfills.ts",
                 "tsConfig": "apps/ngrx-data-websocket-demo/tsconfig.app.json",
-                "assets": [
-                    "apps/ngrx-data-websocket-demo/src/favicon.ico",
-                    "apps/ngrx-data-websocket-demo/src/assets"
-                ],
+                "assets": ["apps/ngrx-data-websocket-demo/src/favicon.ico", "apps/ngrx-data-websocket-demo/src/assets"],
                 "styles": ["apps/ngrx-data-websocket-demo/src/styles.scss"],
                 "scripts": [],
                 "vendorChunk": true,

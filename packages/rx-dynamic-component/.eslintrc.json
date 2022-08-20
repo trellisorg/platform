@@ -4,10 +4,7 @@
     "overrides": [
         {
             "files": ["*.ts"],
-            "extends": [
-                "plugin:@nrwl/nx/angular",
-                "plugin:@angular-eslint/template/process-inline-templates"
-            ],
+            "extends": ["plugin:@nrwl/nx/angular", "plugin:@angular-eslint/template/process-inline-templates"],
             "parserOptions": {
                 "project": ["packages/rx-dynamic-component/tsconfig.*?.json"]
             },
@@ -16,7 +13,7 @@
                     "error",
                     {
                         "type": "attribute",
-                        "prefix": "trellisorg",
+                        "prefix": "rx",
                         "style": "camelCase"
                     }
                 ],
@@ -24,7 +21,7 @@
                     "error",
                     {
                         "type": "element",
-                        "prefix": "trellisorg",
+                        "prefix": "rx",
                         "style": "kebab-case"
                     }
                 ]
