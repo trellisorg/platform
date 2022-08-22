@@ -8,6 +8,7 @@ import {
     provideRxDynamicComponent,
     provideRxDynamicComponentManifests,
     RxDynamicDirective,
+    RxDynamicLoadDirective,
 } from '@trellisorg/rx-dynamic-component';
 import { AppComponent } from './app.component';
 import { StandaloneAdapterDirective } from './standalone/standalone-adapter.directive';
@@ -21,6 +22,7 @@ import { StandaloneAdapterDirective } from './standalone/standalone-adapter.dire
         StandaloneAdapterDirective,
         MatDialogModule,
         BrowserAnimationsModule,
+        RxDynamicLoadDirective,
     ],
     providers: [
         provideRxDynamicComponent({
@@ -34,6 +36,12 @@ import { StandaloneAdapterDirective } from './standalone/standalone-adapter.dire
                     componentId: 'dynamic-standalone2',
                     loadComponent: () =>
                         import('./standalone/standalone2.component').then((m) => m.Standalone2Component),
+                },
+                {
+                    componentId: 'dynamic-event-load',
+                    loadComponent: () =>
+                        import('./load-events/event-standalone.component').then((m) => m.EventStandaloneComponent),
+                    preload: false,
                 },
             ],
         }),

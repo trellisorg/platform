@@ -34,6 +34,9 @@ import { DialogComponent } from './dialog/dialog.component';
             <div [config]="{ priority: 'idle' }" rxDynamic load="dynamic-idle-standalone"></div>
         </div>
         <button (click)="open()">Open</button>
+        <div style="border: green dashed 5px; margin-top: 5px" rxDynamicLoad manifestId="dynamic-event-load">
+            Hovering on me will preload a manifest
+        </div>
     `,
     styles: [],
 })
