@@ -1,5 +1,5 @@
 import type { Provider } from '@angular/core';
-import { Compiler, Injector, NgZone, Optional } from '@angular/core';
+import { Compiler, ENVIRONMENT_INITIALIZER, inject, Injector, NgZone, Optional } from '@angular/core';
 import { Logger } from './logger';
 import {
     defaultRootConfig,
@@ -47,9 +47,6 @@ function provideRxDynamicComponentService<T extends string = string>(
                 ...(featureManifestMaps ? featureManifestMaps[featureManifestMaps.length - 1] : []),
             ]);
 
-            // Send the manifests off to preload if they are configured to do so.
-            rxDynamicComponentPreloaderService.processManifestPreloads(manifests);
-
             return rxDynamicComponentPreloaderService;
         },
         deps: [
@@ -60,6 +57,21 @@ function provideRxDynamicComponentService<T extends string = string>(
             DYNAMIC_MANIFEST_MAP,
             [new Optional(), _FEATURE_DYNAMIC_COMPONENT_MANIFESTS],
         ],
+    };
+}
+
+/**
+ * Preload all the root manifests
+ * @param manifests
+ */
+function preloadManifests(manifests: DynamicComponentManifest[]) {
+    return {
+        provide: ENVIRONMENT_INITIALIZER,
+        multi: true,
+        useValue() {
+            // Send the manifests off to preload if they are configured to do so.
+            inject(RxDynamicComponentService).processManifestPreloads(manifests);
+        },
     };
 }
 
@@ -89,6 +101,7 @@ export function provideRxDynamicComponent<T extends string = string>(
             useValue: _initialManifestMap(manifests),
         },
         provideRxDynamicComponentService(manifests),
+        preloadManifests(manifests),
     ];
 }
 
@@ -106,5 +119,6 @@ export function provideRxDynamicComponentManifests<T extends string = string>(
             multi: true,
         },
         provideRxDynamicComponentService(manifests),
+        preloadManifests(manifests),
     ];
 }

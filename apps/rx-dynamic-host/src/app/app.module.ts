@@ -36,6 +36,7 @@ import { StandaloneAdapterDirective } from './standalone/standalone-adapter.dire
                         import('./standalone/standalone2.component').then((m) => m.Standalone2Component),
                 },
             ],
+            preload: true,
         }),
         provideRxDynamicComponentManifests([
             {
