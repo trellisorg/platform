@@ -258,3 +258,39 @@ if `preload: false` or `priority: 'immediate'`
 The `RxDynamicComponentService` exposes a method that can be called to force a preload for a manifest.
 
 `loadManifest(manifest: DynamicComponentManifest)`
+
+You can also preload a manifest by hooking into DOM events using the `rxDynamicLoad` directive. The directive can be
+attached to any DOM element and listen for an event to trigger a manifest preload.
+
+Simple example:
+
+```angular2html
+<div rxDynamicLoad manifests="my-dynamic-component-manifest-id">
+    Hovering on me will preload a manifest
+</div>
+```
+
+Hovering over this element will trigger manifest preload so that it is loaded already when you go to render it.
+
+You can also configure these template (and child template) wide by providing a manifestId or array of manifestIds.
+
+```typescript
+import { Component } from '@angular/core';
+import { provideRxDynamicEventLoadManifests } from '@trellisorg/rx-dynamic-component';
+
+@Component({
+    selector: 'my-selector',
+    template: `
+        <div rxDynamicLoad manifests="my-dynamic-component-manifest-id">Hovering on me will preload the manifest</div>
+
+        <div rxDynamicLoad manifests="my-dynamic-component-manifest-id">
+            Hovering on me will also preload the manifest!
+        </div>
+    `,
+    providers: [provideRxDynamicEventLoadManifests('my-dynamic-component-manifest-id')],
+})
+class MySelectorComponent {}
+```
+
+This will allow multiple elements to trigger the same manifest preload and you can reference your manifestIds in a type
+safe way in the provider function by importing it!

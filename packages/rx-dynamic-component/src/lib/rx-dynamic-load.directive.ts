@@ -1,8 +1,32 @@
-import { AfterViewInit, Directive, ElementRef, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
+import {
+    AfterViewInit,
+    Directive,
+    ElementRef,
+    EventEmitter,
+    inject,
+    InjectionToken,
+    Input,
+    OnDestroy,
+    Output,
+    Provider,
+} from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { Logger } from './logger';
 import type { SharedManifestConfig } from './manifest';
 import { RxDynamicComponentService } from './rx-dynamic-component.service';
+
+export const RX_DYNAMIC_EVENT_LOAD_MANIFESTS = new InjectionToken<string | string[]>('rx-dynamic-event-load-manifests');
+
+/**
+ * Provide the manifests that should be preloaded by the directive as the provider level instead of inside the template.
+ * @param manifests
+ */
+export function provideRxDynamicEventLoadManifests(manifests: string | string[]): Provider {
+    return {
+        provide: RX_DYNAMIC_EVENT_LOAD_MANIFESTS,
+        useValue: manifests,
+    };
+}
 
 export const DEFAULT_RX_DYNAMIC_LOAD_EVENTS = ['mouseover'];
 
@@ -20,7 +44,7 @@ const arraysEqual = (xs: string[], ys: string[]) => xs.length === ys.length && x
 export class RxDynamicLoadDirective implements AfterViewInit, OnDestroy {
     @Input() config?: Partial<Pick<SharedManifestConfig, 'timeout' | 'priority'>>;
 
-    @Input() manifestId?: string | null;
+    @Input() manifests?: string | string[] | null;
 
     @Input() set loadEvents(loadEvents: string[] | undefined | null) {
         const newEvents = loadEvents ?? DEFAULT_RX_DYNAMIC_LOAD_EVENTS;
@@ -34,13 +58,15 @@ export class RxDynamicLoadDirective implements AfterViewInit, OnDestroy {
         this._loadEvents = newEvents;
     }
 
-    @Output() readonly eventLoaded = new EventEmitter<DynamicEventLoaded>();
+    @Output() readonly manifestLoaded = new EventEmitter<DynamicEventLoaded>();
 
     private _loadEvents: string[] = DEFAULT_RX_DYNAMIC_LOAD_EVENTS;
 
     private abortController?: AbortController;
 
     private manifestsLoaded: Set<string> = new Set<string>();
+
+    private readonly rxDynamicEventLoadManifests = inject(RX_DYNAMIC_EVENT_LOAD_MANIFESTS, { optional: true });
 
     constructor(
         private readonly elementRef: ElementRef,
@@ -75,12 +101,16 @@ export class RxDynamicLoadDirective implements AfterViewInit, OnDestroy {
             (this.elementRef.nativeElement as EventTarget).addEventListener(
                 event,
                 () => {
-                    if (this.manifestId) {
-                        if (!this.manifestsLoaded.has(this.manifestId)) {
-                            this.loadManifest(this.manifestId, event);
-                        }
+                    const manifests = [this.manifests ?? [], this.rxDynamicEventLoadManifests ?? []].flat();
+
+                    if (manifests?.length) {
+                        manifests.forEach((manifestId) => {
+                            if (!this.manifestsLoaded.has(manifestId)) {
+                                this.loadManifest(manifestId, event);
+                            }
+                        });
                     } else {
-                        this.logger.error(`Missing manifestId`);
+                        this.logger.error(`No manifests to preload.`);
                         this.addListeners(loadEvents, signal);
                     }
                 },
@@ -101,7 +131,7 @@ export class RxDynamicLoadDirective implements AfterViewInit, OnDestroy {
         }
         await firstValueFrom(this.rxDynamicComponentService.getComponent(manifestId, this.config));
 
-        this.eventLoaded.emit({
+        this.manifestLoaded.emit({
             manifestId,
             event,
         });
