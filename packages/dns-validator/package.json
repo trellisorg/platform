@@ -1,6 +1,6 @@
 {
     "name": "@trellisorg/dns-validator",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "peerDependencies": {
         "@angular/common": "^12 || ^13 || ^14",
         "@angular/core": "^12 || ^13 || ^14",

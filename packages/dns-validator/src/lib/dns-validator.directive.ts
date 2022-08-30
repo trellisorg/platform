@@ -1,13 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import {
-    Directive,
-    ElementRef,
-    HostListener,
-    inject,
-    Injectable,
-    Input,
-    Renderer2,
-} from '@angular/core';
+import { Directive, ElementRef, HostListener, inject, Injectable, Input, Renderer2 } from '@angular/core';
 import { NgControl } from '@angular/forms';
 import { ComponentStore, tapResponse } from '@ngrx/component-store';
 import { debounceTime, map, Observable, switchMap } from 'rxjs';
@@ -42,9 +34,7 @@ class DnsValidatorStore extends ComponentStore<DnsValidatorState> {
 
     readonly response$ = this.select((state) => state.response);
 
-    readonly invalid$ = this.response$.pipe(
-        map((response) => response && response.Status !== 0)
-    );
+    readonly invalid$ = this.response$.pipe(map((response) => response && response.Status !== 0));
 
     readonly clear = this.updater((state) => ({
         ...state,
@@ -90,10 +80,7 @@ class DnsValidatorStore extends ComponentStore<DnsValidatorState> {
 
     private processStatus(status: DoHResponse['Status']): void {
         if (status === 0) {
-            this._renderer2.removeClass(
-                this.elementRef.nativeElement,
-                formClass
-            );
+            this._renderer2.removeClass(this.elementRef.nativeElement, formClass);
         } else {
             this._renderer2.addClass(this.elementRef.nativeElement, formClass);
         }
@@ -119,34 +106,28 @@ export class DnsValidatorDirective {
 
     private readonly config = inject(DNS_VALIDATOR_CONFIG, 8);
 
-    constructor(
-        private readonly ngControl: NgControl,
-        private readonly dnsValidatorStore: DnsValidatorStore
-    ) {
+    constructor(private readonly ngControl: NgControl, private readonly dnsValidatorStore: DnsValidatorStore) {
         this.dnsValidatorStore.setState({});
     }
 
-    private defaultTransform(value: string): string | undefined {
+    private defaultTransform(value: string | undefined | null): string | undefined {
+        if (!value) {
+            return undefined;
+        }
+
         return value.split('@').pop();
     }
 
     @HostListener('keyup')
     async validateDns(): Promise<void> {
-        const value = (
-            this.transformFn ??
-            this.config?.transformFn ??
-            this.defaultTransform
-        )(this.ngControl.value);
+        const value = (this.transformFn ?? this.config?.transformFn ?? this.defaultTransform)(this.ngControl.value);
 
         if (!value) {
             this.dnsValidatorStore.clear();
             return;
         }
 
-        if (
-            (this.requiredValid && this.ngControl.valid) ||
-            !this.requiredValid
-        ) {
+        if ((this.requiredValid && this.ngControl.valid) || !this.requiredValid) {
             this.dnsValidatorStore.queryDns({
                 ...this.query,
                 name: value,
