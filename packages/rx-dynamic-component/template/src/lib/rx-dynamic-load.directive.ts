@@ -10,10 +10,9 @@ import {
     Output,
     Provider,
 } from '@angular/core';
+import type { SharedManifestConfig } from '@trellisorg/rx-dynamic-component';
+import { Logger, RxDynamicComponentService } from '@trellisorg/rx-dynamic-component';
 import { firstValueFrom } from 'rxjs';
-import { Logger } from './logger';
-import type { SharedManifestConfig } from './manifest';
-import { RxDynamicComponentService } from './rx-dynamic-component.service';
 
 export const RX_DYNAMIC_EVENT_LOAD_MANIFESTS = new InjectionToken<string | string[]>('rx-dynamic-event-load-manifests');
 

@@ -22,7 +22,13 @@
             "options": {
                 "lintFilePatterns": [
                     "packages/rx-dynamic-component/src/**/*.ts",
-                    "packages/rx-dynamic-component/src/**/*.html"
+                    "packages/rx-dynamic-component/src/**/*.html",
+                    "packages/rx-dynamic-component/browser/**/*.ts",
+                    "packages/rx-dynamic-component/browser/**/*.html",
+                    "packages/rx-dynamic-component/server/**/*.ts",
+                    "packages/rx-dynamic-component/server/**/*.html",
+                    "packages/rx-dynamic-component/template/**/*.ts",
+                    "packages/rx-dynamic-component/template/**/*.html"
                 ]
             }
         },

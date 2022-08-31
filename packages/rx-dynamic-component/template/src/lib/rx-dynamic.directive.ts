@@ -1,8 +1,11 @@
-import { AfterViewInit, Directive, Injector, Input, OnDestroy, Type, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, Directive, inject, Injector, Input, OnDestroy, Type, ViewContainerRef } from '@angular/core';
+import {
+    RxDynamicComponentRegister,
+    RxDynamicComponentService,
+    RX_DYNAMIC_TRANSFER_SERVICE,
+    SharedManifestConfig,
+} from '@trellisorg/rx-dynamic-component';
 import { firstValueFrom } from 'rxjs';
-import type { SharedManifestConfig } from './manifest';
-import { RxDynamicComponentRegister } from './rx-dynamic-component.register';
-import { RxDynamicComponentService } from './rx-dynamic-component.service';
 
 @Directive({
     selector: '[rxDynamic]',
@@ -23,6 +26,8 @@ export class RxDynamicDirective<TComponent> implements AfterViewInit, OnDestroy 
 
     private _load?: string | Type<TComponent> | null;
 
+    private readonly rxDynamicTransfer = inject(RX_DYNAMIC_TRANSFER_SERVICE, { optional: true });
+
     constructor(
         private readonly viewContainerRef: ViewContainerRef,
         private readonly rxDynamicComponentRegister: RxDynamicComponentRegister,
@@ -35,6 +40,10 @@ export class RxDynamicDirective<TComponent> implements AfterViewInit, OnDestroy 
      */
     @Input() set load(componentType: string | Type<TComponent> | null | undefined) {
         this._load = componentType;
+
+        if (typeof componentType === 'string') {
+            this.rxDynamicTransfer?.markUsed(componentType);
+        }
 
         if (this._initialized) {
             this.setComponent(componentType);

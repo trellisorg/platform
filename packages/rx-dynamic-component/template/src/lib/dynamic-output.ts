@@ -1,7 +1,8 @@
 import { EventEmitter, inject } from '@angular/core';
+import type { DynamicOutputEmission } from '@trellisorg/rx-dynamic-component';
+import { RxDynamicComponentRegister } from '@trellisorg/rx-dynamic-component';
 import { takeUntil } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { DynamicOutputEmission, RxDynamicComponentRegister } from './rx-dynamic-component.register';
 
 /**
  * @description Wrap an @Output() EventEmitter in `@DynamicOutput()` to pass events up from a dynamically rendered
