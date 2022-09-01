@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { faker } from '@faker-js/faker';
-import { provideRxDynamicEventLoadManifests, RxDynamicComponentService } from '@trellisorg/rx-dynamic-component';
+import { RxDynamicComponentService } from '@trellisorg/rx-dynamic-component';
+import { provideRxDynamicEventLoadManifests } from '@trellisorg/rx-dynamic-component/template';
 import { interval, map, startWith, Subject, timer } from 'rxjs';
 import { DialogComponent } from './dialog/dialog.component';
 

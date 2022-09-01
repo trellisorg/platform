@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { provideRxDynamicComponentManifests, RxDynamicDirective } from '@trellisorg/rx-dynamic-component';
+import { provideRxDynamicComponentManifests } from '@trellisorg/rx-dynamic-component';
+import { RxDynamicDirective } from '@trellisorg/rx-dynamic-component/template';
 import { DialogService } from './dialog.service';
 
 @Component({

@@ -4,12 +4,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
-import {
-    provideRxDynamicComponent,
-    provideRxDynamicComponentManifests,
-    RxDynamicDirective,
-    RxDynamicLoadDirective,
-} from '@trellisorg/rx-dynamic-component';
+import { provideRxDynamicComponent, provideRxDynamicComponentManifests } from '@trellisorg/rx-dynamic-component';
+import { RxDynamicDirective, RxDynamicLoadDirective } from '@trellisorg/rx-dynamic-component/template';
 import { AppComponent } from './app.component';
 import { StandaloneAdapterDirective } from './standalone/standalone-adapter.directive';
 
