@@ -107,6 +107,9 @@ export function provideServerlessSharpLoader(config: ServerlessSharpLoaderConfig
                         preload.setAttribute('fetchpriority', 'high');
                         preload.href = url;
                         preload.as = 'image';
+                        /*
+                        TODO(jay): Not sure how best to determine this as we will not know what type it is and if it is if we are using `auto` or if the requested format cannot be served.
+                         */
                         preload.type = 'image/webp';
                         preload.id = urlId;
 
