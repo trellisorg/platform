@@ -1,6 +1,6 @@
 import { Directive, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 import type { DynamicOutputEmission } from '@trellisorg/rx-dynamic-component';
-import { DynamicInput, DynamicOutput } from '@trellisorg/rx-dynamic-component';
+import { DynamicInput, DynamicOutput } from '@trellisorg/rx-dynamic-component/template';
 
 @Directive({
     standalone: true,

@@ -1,5 +1,5 @@
 import { inject } from '@angular/core';
-import { RxDynamicComponentRegister } from './rx-dynamic-component.register';
+import { RxDynamicComponentRegister } from '@trellisorg/rx-dynamic-component';
 
 /**
  * @description Add @DynamicInput() to @Input()'s on a Directive to pass in input values to a dynamically rendered

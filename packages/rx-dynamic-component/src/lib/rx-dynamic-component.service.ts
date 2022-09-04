@@ -22,6 +22,7 @@ import {
     LoadModuleCallback,
     SharedManifestConfig,
 } from './manifest';
+import { RX_DYNAMIC_TRANSFER_SERVICE } from './rx-dynamic-transfer';
 
 function isPromiseOrObservable<T>(promiseOrObservable: Promise<T> | Observable<T> | any): boolean {
     return !!(promiseOrObservable as Promise<T>)?.then || isObservable(promiseOrObservable);
@@ -36,6 +37,8 @@ export class RxDynamicComponentService {
     private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
     private readonly config = inject(DYNAMIC_COMPONENT_CONFIG);
+
+    private readonly rxDynamicTransfer = inject(RX_DYNAMIC_TRANSFER_SERVICE, { optional: true });
 
     constructor(
         @Optional() private _compiler: Compiler,
@@ -127,18 +130,25 @@ export class RxDynamicComponentService {
              * or the module importing it is used multiple times this service will mark the componentId as preloaded already
              * so it will not try and load it again.
              */
-            if (
-                (manifest.preload || (manifest.preload !== false && this.config.preload)) &&
-                isPromiseOrObservable(
-                    'loadChildren' in manifest ? manifest.loadChildren() : manifest.loadComponent()
-                ) &&
-                !this.loaded.has(manifest.componentId)
-            ) {
+            const isValidLoader = isPromiseOrObservable(
+                'loadChildren' in manifest ? manifest.loadChildren() : manifest.loadComponent()
+            );
+
+            const wasUsedOnServer = !!this.rxDynamicTransfer?.wasUsed(manifest.componentId);
+
+            const shouldPreload =
+                manifest.preload || (manifest.preload !== false && this.config.preload) || wasUsedOnServer;
+
+            if (shouldPreload && isValidLoader && !this.loaded.has(manifest.componentId)) {
                 // Will default to a timeout of 1 second
                 const timeout = manifest.timeout ?? this.config.timeout ?? DEFAULT_TIMEOUT;
 
-                // If not specified the priority will always be IDLE
-                const priority = manifest.priority ?? this.config.priority ?? 'idle';
+                /*
+                If the component was used to render the page on the server then we will load this component immediately.
+
+                Otherwise, we traverse up the configuration tree for this component and default to `idle`.
+                 */
+                const priority = wasUsedOnServer ? 'immediate' : manifest.priority ?? this.config.priority ?? 'idle';
 
                 await firstValueFrom(
                     this.loadWithOverrides(manifest, {
@@ -160,32 +170,10 @@ export class RxDynamicComponentService {
         });
     }
 
-    /**
-     * Will load the manifest with the specified priority by leveraging window.requestIdleCallback
-     *
-     * If that is unable (SSR or no browser support) priority will default to IMMEDIATE and the manifest will be
-     * loaded right away
-     * @param manifest
-     * @param overrides
-     */
-    loadWithOverrides<TComponent = unknown>(
+    wrapLoad<TComponent = unknown>(
         manifest: DynamicComponentManifest,
-        overrides?: Partial<SharedManifestConfig>
+        { priority, timeout }: Pick<SharedManifestConfig, 'timeout' | 'priority'>
     ): Observable<Type<TComponent>> {
-        /*
-        If the cache of the loaded components has already loaded this one then
-        reuse it.
-         */
-        if (this.loaded.has(manifest.componentId)) {
-            return of(this.loaded.get(manifest.componentId) as Type<TComponent>);
-        }
-
-        /*
-        Use the overrides first but fallback to the manifests defaults.
-         */
-        const priority = overrides?.priority ?? manifest.priority;
-        const timeout = overrides?.timeout ?? manifest.timeout;
-
         /*
         {@link https://angular.io/guide/zone#when-apps-update-html}
 
@@ -231,6 +219,35 @@ export class RxDynamicComponentService {
     }
 
     /**
+     * Will load the manifest with the specified priority by leveraging window.requestIdleCallback
+     *
+     * If that is unable (SSR or no browser support) priority will default to IMMEDIATE and the manifest will be
+     * loaded right away
+     * @param manifest
+     * @param overrides
+     */
+    loadWithOverrides<TComponent = unknown>(
+        manifest: DynamicComponentManifest,
+        overrides?: Partial<SharedManifestConfig>
+    ): Observable<Type<TComponent>> {
+        /*
+        If the cache of the loaded components has already loaded this one then
+        reuse it.
+         */
+        if (this.loaded.has(manifest.componentId)) {
+            return of(this.loaded.get(manifest.componentId) as Type<TComponent>);
+        }
+
+        /*
+        Use the overrides first but fallback to the manifests defaults.
+         */
+        const priority = overrides?.priority ?? manifest.priority;
+        const timeout = overrides?.timeout ?? manifest.timeout;
+
+        return this.wrapLoad(manifest, { priority, timeout });
+    }
+
+    /**
      * Loads the manifest conditionally on if it is loading standalone components or NgModules
      * @param manifest
      */
@@ -268,6 +285,8 @@ export class RxDynamicComponentService {
             }
             return throwError(() => `No manifest found for componentId: ${manifestId}`);
         }
+
+        this.rxDynamicTransfer?.markUsed(manifestId);
 
         return this.loadWithOverrides<TComponent>(manifest, overrides).pipe(
             catchError((error) => {

@@ -56,7 +56,7 @@ The above code was generated using `yarn nx g c query-param1 --standalone`.
 ### Define your dynamic component manifests
 
 ```typescript
-import { DynamicComponentManifest } from './rx-dynamic-component.manifest';
+import { DynamicComponentManifest } from '@trellisorg/rx-dynamic-component';
 
 const manifests: DynamicComponentManifest[] = [
     // Using dynamic import and module + token
@@ -143,10 +143,12 @@ must equal one of the `componentId`s from the manifest you provided.
 are doing you can implement whatever sort of outlet you want to render the component.
 
 ```typescript
+import { RxDynamicDirective } from '@trellisorg/rx-dynamic-component/template';
+
 @NgModule({
     declarations: [AppComponent],
     imports: [
-        // other imports
+        // ...other imports
         RxDynamicDirective,
     ],
     providers: [],
@@ -183,7 +185,7 @@ This requires a bit of boilerplate and an adapter directive to support.
 
 ```typescript
 import { Directive, EventEmitter, Input, Output } from '@angular/core';
-import { DynamicInput, DynamicOutput } from '@trellisorg/rx-dynamic-component';
+import { DynamicInput, DynamicOutput } from '@trellisorg/rx-dynamic-component/template';
 
 @Directive({
     standalone: true,
@@ -199,7 +201,6 @@ export class StandaloneAdapterDirective implements OnDestroy {
 #### Usage
 
 ```angular2html
-
 <div rxDynamic
      (myOutput)='myOutputCalled()'
      inputOutputAdapter
@@ -212,7 +213,7 @@ This will allow you to pass inputs in and listen on outputs for your dynamically
 changes (the `load` input changes) then the outputs will be unsubscribed from and will resubscribe to the new outputs on
 the newly rendered dynamic component. Inputs will also be set if that input exists on the rendered component.
 
-### (Optional) Advanced manifest configuration
+### Advanced manifest configuration
 
 `rx-dynamic-component` provides the ability to preload manifests.
 
@@ -253,8 +254,45 @@ when using `DynamicManifestPreloadPriority.IDLE`
 Reference: https://developer.mozilla.org/en-US/docs/Web/API/Window/requestIdleCallback, `timeout` is ignored
 if `preload: false` or `priority: 'immediate'`
 
-### (Optional) Manually preload manifests
+### Manually preload manifests
 
 The `RxDynamicComponentService` exposes a method that can be called to force a preload for a manifest.
 
 `loadManifest(manifest: DynamicComponentManifest)`
+
+You can also preload a manifest by hooking into DOM events using the `rxDynamicLoad` directive. The directive can be
+attached to any DOM element and listen for an event to trigger a manifest preload.
+
+Simple example:
+
+```angular2html
+<div rxDynamicLoad manifests="my-dynamic-component-manifest-id">
+    Hovering on me will preload a manifest
+</div>
+```
+
+Hovering over this element will trigger manifest preload so that it is loaded already when you go to render it.
+
+You can also configure these template (and child template) wide by providing a manifestId or array of manifestIds.
+
+```typescript
+import { Component } from '@angular/core';
+import { provideRxDynamicEventLoadManifests } from '@trellisorg/rx-dynamic-component/template';
+
+@Component({
+    selector: 'my-selector',
+    template: `
+        <div rxDynamicLoad manifests="my-dynamic-component-manifest-id">Hovering on me will preload the manifest</div>
+
+        <div rxDynamicLoad manifests="my-dynamic-component-manifest-id">
+            Hovering on me will also preload the manifest!
+        </div>
+    `,
+    providers: [provideRxDynamicEventLoadManifests('my-dynamic-component-manifest-id')],
+    imports: [RxDynamicLoadDirective],
+})
+class MySelectorComponent {}
+```
+
+This will allow multiple elements to trigger the same manifest preload, and you can reference your manifestIds in a type
+safe way in the provider function by importing it!

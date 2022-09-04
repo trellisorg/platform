@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { faker } from '@faker-js/faker';
 import { RxDynamicComponentService } from '@trellisorg/rx-dynamic-component';
+import { provideRxDynamicEventLoadManifests } from '@trellisorg/rx-dynamic-component/template';
 import { interval, map, startWith, Subject, timer } from 'rxjs';
 import { DialogComponent } from './dialog/dialog.component';
 
@@ -34,13 +35,13 @@ import { DialogComponent } from './dialog/dialog.component';
             <div [config]="{ priority: 'idle' }" rxDynamic load="dynamic-idle-standalone"></div>
         </div>
         <button (click)="open()">Open</button>
+        <div style="border: green dashed 5px; margin-top: 5px" rxDynamicLoad>
+            Hovering on me will preload a manifest
+        </div>
     `,
-    styles: [],
+    providers: [provideRxDynamicEventLoadManifests('dynamic-event-load')],
 })
 export class AppComponent {
-    title = 'rx-dynamic-host';
-    readonly dynamicStandaloneComponentType$ = this.rxDynamicComponentService.getComponent('dynamic-standalone');
-
     readonly dynamicModule$ = this.rxDynamicComponentService.getComponent('dynamic-module');
 
     readonly randomNameEverySecond$ = interval(1000).pipe(map(() => faker.name.firstName()));

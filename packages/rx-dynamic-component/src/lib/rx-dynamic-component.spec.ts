@@ -4,8 +4,8 @@ import {
     DYNAMIC_COMPONENT,
     provideRxDynamicComponent,
     RxDynamicComponentService,
-    RxDynamicDirective,
 } from '@trellisorg/rx-dynamic-component';
+import { RxDynamicDirective } from '@trellisorg/rx-dynamic-component/template';
 import { of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
