@@ -1,0 +1,12 @@
+{
+    "name": "@trellisorg/serverless-sharp-loader",
+    "version": "0.0.1",
+    "peerDependencies": {
+        "@angular/common": "^14.0.0",
+        "@angular/core": "^14.0.0",
+        "md5": "~2"
+    },
+    "dependencies": {
+        "tslib": "^2.3.0"
+    }
+}
