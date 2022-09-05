@@ -1,6 +1,6 @@
 import { DOCUMENT, ImageLoader, ImageLoaderConfig, IMAGE_LOADER, isPlatformServer } from '@angular/common';
 import type { Provider } from '@angular/core';
-import { inject, InjectionToken, isDevMode, PLATFORM_ID } from '@angular/core';
+import { inject, InjectionToken, PLATFORM_ID } from '@angular/core';
 import md5 from 'md5';
 
 /**
@@ -44,8 +44,8 @@ function configureSecurity(assetUrl: URL, securityKey: string): string {
     return md5(`${securityKey}${assetUrl.pathname}?${assetUrl.searchParams.toString()}`);
 }
 
-function serverlessSharpImageLoader(config: ServerlessSharpLoaderConfig): ImageLoader {
-    return (imageLoaderConfig: ImageLoaderConfig): string => {
+function serverlessSharpImageLoader(config: ServerlessSharpLoaderConfig) {
+    return (imageLoaderConfig: ImageLoaderConfig) => {
         const srcUrl = new URL(imageLoaderConfig.src, config.baseUrl);
 
         const assetUrl = new URL(srcUrl.pathname, config.baseUrl);
@@ -67,7 +67,10 @@ function serverlessSharpImageLoader(config: ServerlessSharpLoaderConfig): ImageL
             assetUrl.searchParams.set('s', configureSecurity(assetUrl, config.parameters.s));
         }
 
-        return assetUrl.toString();
+        return {
+            src: assetUrl.toString(),
+            preload: srcUrl.hash === '#preload',
+        };
     };
 }
 
@@ -127,10 +130,15 @@ export function provideServerlessSharpLoader(config: ServerlessSharpLoaderConfig
             useFactory: (): ImageLoader => {
                 const { config, document, isServer } = injectLoaderProviders();
 
+                /*
+                Currently building the `ImageLoader` functionally manually but once
+                [this PR](https://github.com/angular/angular/pull/47340) is merged then we can use the `createImageLoader`
+                function to ensure that the right validations are happening on the `<img>` tag.
+                 */
                 return (imageConfig: ImageLoaderConfig) => {
                     const urlCreator = serverlessSharpImageLoader(config);
 
-                    const src = urlCreator(imageConfig);
+                    const { src, preload } = urlCreator(imageConfig);
 
                     /*
                     This is not entirely optimal because it will create a link tag in the server for every img
@@ -142,10 +150,11 @@ export function provideServerlessSharpLoader(config: ServerlessSharpLoaderConfig
 
                     Additionally, as of v14.2.0 the `NgOptimizedImage` while in dev mode does some additional checks,
                     one of which checks to see if there are preconnect links for images. This check uses `document`
-                    directly rather than injecting the `DOCUMENT` token which is SSR safe. This means we cannot add
-                    preconnect links while in dev mode, but can while in prod mode.
+                    directly rather than injecting the `DOCUMENT` token which is SSR safe.
+
+                    https://github.com/angular/angular/pull/47353
                      */
-                    if (isServer && isDevMode()) {
+                    if (isServer && preload) {
                         createLinkTag(src, document);
                     }
 
