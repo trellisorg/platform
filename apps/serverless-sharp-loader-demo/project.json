@@ -7,7 +7,7 @@
             "executor": "@angular-devkit/build-angular:browser",
             "outputs": ["{options.outputPath}"],
             "options": {
-                "outputPath": "dist/apps/serverless-sharp-loader-demo",
+                "outputPath": "dist/apps/serverless-sharp-loader-demo/browser",
                 "index": "apps/serverless-sharp-loader-demo/src/index.html",
                 "main": "apps/serverless-sharp-loader-demo/src/main.ts",
                 "polyfills": "apps/serverless-sharp-loader-demo/src/polyfills.ts",

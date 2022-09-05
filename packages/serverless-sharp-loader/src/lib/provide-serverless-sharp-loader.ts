@@ -1,6 +1,6 @@
 import { DOCUMENT, ImageLoader, ImageLoaderConfig, IMAGE_LOADER, isPlatformServer } from '@angular/common';
 import type { Provider } from '@angular/core';
-import { inject, InjectionToken, PLATFORM_ID } from '@angular/core';
+import { inject, InjectionToken, isDevMode, PLATFORM_ID } from '@angular/core';
 import md5 from 'md5';
 
 /**
@@ -85,41 +85,71 @@ function mergeConfigs(
     };
 }
 
+/**
+ * Construct the `<link>` tag that will be added to the `<head>` while rendering in the server. This will add the
+ * necessary properties to the link tag so that the images are preloaded
+ * @param url
+ * @param document
+ */
 function createLinkTag(url: string, document: Document): void {
     const preload = document.createElement('link');
     preload.setAttribute('fetchpriority', 'high');
+    preload.setAttribute('as', 'image');
     preload.href = url;
-    preload.as = 'image';
     preload.rel = 'preload';
 
     document.head.appendChild(preload);
+}
+
+function injectLoaderProviders() {
+    return {
+        document: inject(DOCUMENT),
+        isServer: isPlatformServer(inject(PLATFORM_ID)),
+        config: inject(SERVERLESS_SHARP_LOADER_CONFIG),
+    };
 }
 
 export function provideServerlessSharpLoader(config: ServerlessSharpLoaderConfig): Provider[] {
     return [
         {
             provide: SERVERLESS_SHARP_LOADER_CONFIG,
-            useFactory: () => {
-                return mergeConfigs(config, inject(SERVERLESS_SHARP_LOADER_CONFIG, { optional: true }));
-            },
+            useFactory: () =>
+                mergeConfigs(
+                    config,
+                    inject(SERVERLESS_SHARP_LOADER_CONFIG, {
+                        optional: true,
+                        skipSelf: true,
+                    })
+                ),
         },
         {
             provide: IMAGE_LOADER,
             useFactory: (): ImageLoader => {
-                const document = inject(DOCUMENT);
-
-                const isServer = isPlatformServer(inject(PLATFORM_ID));
+                const { config, document, isServer } = injectLoaderProviders();
 
                 return (imageConfig: ImageLoaderConfig) => {
-                    const urlCreator = serverlessSharpImageLoader(inject(SERVERLESS_SHARP_LOADER_CONFIG));
+                    const urlCreator = serverlessSharpImageLoader(config);
 
-                    const url = urlCreator(imageConfig);
+                    const src = urlCreator(imageConfig);
 
-                    if (isServer) {
-                        createLinkTag(url, document);
+                    /*
+                    This is not entirely optimal because it will create a link tag in the server for every img
+                    that is rendered using the `NgOptimizedImage` directive.
+
+                    This will be resolved (and this code can be removed) when/if this PR is merged into `@angular/common`
+
+                    https://github.com/angular/angular/pull/47343
+
+                    Additionally, as of v14.2.0 the `NgOptimizedImage` while in dev mode does some additional checks,
+                    one of which checks to see if there are preconnect links for images. This check uses `document`
+                    directly rather than injecting the `DOCUMENT` token which is SSR safe. This means we cannot add
+                    preconnect links while in dev mode, but can while in prod mode.
+                     */
+                    if (isServer && isDevMode()) {
+                        createLinkTag(src, document);
                     }
 
-                    return url;
+                    return src;
                 };
             },
         },
