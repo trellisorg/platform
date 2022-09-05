@@ -71,43 +71,52 @@ function serverlessSharpImageLoader(config: ServerlessSharpLoaderConfig): ImageL
     };
 }
 
+function mergeConfigs(
+    config: ServerlessSharpLoaderConfig,
+    parentConfig: ServerlessSharpLoaderConfig | null
+): ServerlessSharpLoaderConfig {
+    return {
+        ...(parentConfig ?? {}),
+        ...config,
+        parameters: {
+            ...(parentConfig?.parameters ?? {}),
+            ...(config.parameters ?? {}),
+        },
+    };
+}
+
+function createLinkTag(url: string, document: Document): void {
+    const preload = document.createElement('link');
+    preload.setAttribute('fetchpriority', 'high');
+    preload.href = url;
+    preload.as = 'image';
+    preload.rel = 'preload';
+
+    document.head.appendChild(preload);
+}
+
 export function provideServerlessSharpLoader(config: ServerlessSharpLoaderConfig): Provider[] {
     return [
         {
             provide: SERVERLESS_SHARP_LOADER_CONFIG,
-            useValue: config,
+            useFactory: () => {
+                return mergeConfigs(config, inject(SERVERLESS_SHARP_LOADER_CONFIG, { optional: true }));
+            },
         },
         {
             provide: IMAGE_LOADER,
             useFactory: (): ImageLoader => {
-                const parentConfig = inject(SERVERLESS_SHARP_LOADER_CONFIG, { optional: true });
-
                 const document = inject(DOCUMENT);
 
                 const isServer = isPlatformServer(inject(PLATFORM_ID));
 
-                const mergedConfig: ServerlessSharpLoaderConfig = {
-                    ...(parentConfig ?? {}),
-                    ...config,
-                    parameters: {
-                        ...(parentConfig?.parameters ?? {}),
-                        ...(config.parameters ?? {}),
-                    },
-                };
-
                 return (imageConfig: ImageLoaderConfig) => {
-                    const urlCreator = serverlessSharpImageLoader(mergedConfig);
+                    const urlCreator = serverlessSharpImageLoader(inject(SERVERLESS_SHARP_LOADER_CONFIG));
 
                     const url = urlCreator(imageConfig);
 
                     if (isServer) {
-                        const preload = document.createElement('link');
-                        preload.setAttribute('fetchpriority', 'high');
-                        preload.href = url;
-                        preload.as = 'image';
-                        preload.rel = 'preload';
-
-                        document.head.appendChild(preload);
+                        createLinkTag(url, document);
                     }
 
                     return url;
