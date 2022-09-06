@@ -1,0 +1,21 @@
+{
+    "name": "@trellisorg/serverless-sharp-loader",
+    "version": "1.0.1",
+    "repository": {
+        "url": "https://github.com/trellisorg/platform/tree/master/packages/serverless-sharp-loader"
+    },
+    "peerDependencies": {
+        "@angular/common": "^14.0.0",
+        "@angular/core": "^14.0.0",
+        "md5": "~2"
+    },
+    "dependencies": {
+        "tslib": "^2.3.0"
+    },
+    "homepage": "https://github.com/trellisorg/platform/tree/master/packages/serverless-sharp-loader",
+    "author": "Jay Bell <jay@trellis.org>",
+    "keywords": [
+        "angular",
+        "ng"
+    ]
+}

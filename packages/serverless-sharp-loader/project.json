@@ -1,0 +1,41 @@
+{
+    "projectType": "library",
+    "sourceRoot": "packages/serverless-sharp-loader/src",
+    "prefix": "trellisorg",
+    "targets": {
+        "build": {
+            "executor": "@nrwl/angular:package",
+            "outputs": ["dist/packages/serverless-sharp-loader"],
+            "options": {
+                "project": "packages/serverless-sharp-loader/ng-package.json"
+            },
+            "configurations": {
+                "production": {
+                    "tsConfig": "packages/serverless-sharp-loader/tsconfig.lib.prod.json"
+                },
+                "development": {
+                    "tsConfig": "packages/serverless-sharp-loader/tsconfig.lib.json"
+                }
+            },
+            "defaultConfiguration": "production"
+        },
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/packages/serverless-sharp-loader"],
+            "options": {
+                "jestConfig": "packages/serverless-sharp-loader/jest.config.ts",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": [
+                    "packages/serverless-sharp-loader/**/*.ts",
+                    "packages/serverless-sharp-loader/**/*.html"
+                ]
+            }
+        }
+    },
+    "tags": []
+}

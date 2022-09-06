@@ -1,0 +1,111 @@
+{
+    "projectType": "application",
+    "sourceRoot": "apps/serverless-sharp-loader-demo/src",
+    "prefix": "trellisorg",
+    "targets": {
+        "build": {
+            "executor": "@angular-devkit/build-angular:browser",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "dist/apps/serverless-sharp-loader-demo/browser",
+                "index": "apps/serverless-sharp-loader-demo/src/index.html",
+                "main": "apps/serverless-sharp-loader-demo/src/main.ts",
+                "polyfills": "apps/serverless-sharp-loader-demo/src/polyfills.ts",
+                "tsConfig": "apps/serverless-sharp-loader-demo/tsconfig.app.json",
+                "inlineStyleLanguage": "scss",
+                "assets": [
+                    "apps/serverless-sharp-loader-demo/src/favicon.ico",
+                    "apps/serverless-sharp-loader-demo/src/assets"
+                ],
+                "styles": ["apps/serverless-sharp-loader-demo/src/styles.scss"],
+                "scripts": [],
+                "allowedCommonJsDependencies": ["md5"]
+            },
+            "configurations": {
+                "production": {
+                    "fileReplacements": [
+                        {
+                            "replace": "apps/serverless-sharp-loader-demo/src/environments/environment.ts",
+                            "with": "apps/serverless-sharp-loader-demo/src/environments/environment.prod.ts"
+                        }
+                    ],
+                    "outputHashing": "all"
+                },
+                "development": {
+                    "buildOptimizer": false,
+                    "optimization": false,
+                    "vendorChunk": true,
+                    "extractLicenses": false,
+                    "sourceMap": true,
+                    "namedChunks": true
+                }
+            },
+            "defaultConfiguration": "production"
+        },
+        "serve": {
+            "executor": "@angular-devkit/build-angular:dev-server",
+            "configurations": {
+                "production": {
+                    "browserTarget": "serverless-sharp-loader-demo:build:production"
+                },
+                "development": {
+                    "browserTarget": "serverless-sharp-loader-demo:build:development"
+                }
+            },
+            "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+            "executor": "@angular-devkit/build-angular:extract-i18n",
+            "options": {
+                "browserTarget": "serverless-sharp-loader-demo:build"
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": [
+                    "apps/serverless-sharp-loader-demo/**/*.ts",
+                    "apps/serverless-sharp-loader-demo/**/*.html"
+                ]
+            }
+        },
+        "server": {
+            "executor": "@angular-devkit/build-angular:server",
+            "options": {
+                "outputPath": "dist/apps/serverless-sharp-loader-demo/server",
+                "main": "apps/serverless-sharp-loader-demo/server.ts",
+                "tsConfig": "apps/serverless-sharp-loader-demo/tsconfig.server.json",
+                "sourceMap": true,
+                "optimization": false
+            },
+            "configurations": {
+                "production": {
+                    "outputHashing": "media",
+                    "fileReplacements": [
+                        {
+                            "replace": "apps/serverless-sharp-loader-demo/src/environments/environment.ts",
+                            "with": "apps/serverless-sharp-loader-demo/src/environments/environment.prod.ts"
+                        }
+                    ],
+                    "sourceMap": false,
+                    "optimization": true
+                }
+            },
+            "defaultConfiguration": ""
+        },
+        "serve-ssr": {
+            "executor": "@nguniversal/builders:ssr-dev-server",
+            "options": {
+                "browserTarget": "serverless-sharp-loader-demo:build",
+                "serverTarget": "serverless-sharp-loader-demo:server"
+            },
+            "configurations": {
+                "production": {
+                    "browserTarget": "serverless-sharp-loader-demo:build:production",
+                    "serverTarget": "serverless-sharp-loader-demo:server:production"
+                }
+            }
+        }
+    },
+    "tags": []
+}

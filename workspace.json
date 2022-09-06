@@ -21,6 +21,8 @@
         "nxls": "packages/nxls",
         "rx-dynamic-component": "packages/rx-dynamic-component",
         "rx-dynamic-host": "apps/rx-dynamic-host",
+        "serverless-sharp-loader": "packages/serverless-sharp-loader",
+        "serverless-sharp-loader-demo": "apps/serverless-sharp-loader-demo",
         "update": "packages/update"
     },
     "$schema": "./node_modules/nx/schemas/workspace-schema.json"
