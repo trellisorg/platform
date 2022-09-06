@@ -34,6 +34,9 @@ import { bootstrapApplication } from '@angular/platform-browser';
     providers: [
         provideServerlessSharpLoader({
             baseUrl: '<CloudFront Distribution endpoint>',
+            parameters: {
+                auto: 'compress,format',
+            },
         }),
     ],
 })
@@ -46,6 +49,9 @@ bootstrapApplication(AppComponent, {
     providers: [
         provideServerlessSharpLoader({
             baseUrl: '<CloudFront Distribution endpoint>',
+            parameters: {
+                auto: 'compress,format',
+            },
         }),
     ],
 });
