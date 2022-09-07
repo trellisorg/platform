@@ -3702,6 +3702,17 @@
     semver "7.3.4"
     tslib "^2.3.0"
 
+"@nrwl/devkit@14.6.5":
+  version "14.6.5"
+  resolved "https://registry.yarnpkg.com/@nrwl/devkit/-/devkit-14.6.5.tgz#0d7842cdca638fcfe4df702132dd042b987792aa"
+  integrity sha512-vt2dv52C38msoiZi36pgdN5MC3G+vLEmwXtVsIEz5ZFG69jh1BKEaxHsZWbBM+uXdGYmDm9ffUlCENQ0ZP560A==
+  dependencies:
+    "@phenomnomnominal/tsquery" "4.1.1"
+    ejs "^3.1.7"
+    ignore "^5.0.4"
+    semver "7.3.4"
+    tslib "^2.3.0"
+
 "@nrwl/eslint-plugin-nx@14.6.4":
   version "14.6.4"
   resolved "https://registry.yarnpkg.com/@nrwl/eslint-plugin-nx/-/eslint-plugin-nx-14.6.4.tgz#524309ee26d696bb65aa1ea213380c15ffb48a85"
@@ -3722,6 +3733,25 @@
     "@jest/reporters" "28.1.1"
     "@jest/test-result" "28.1.1"
     "@nrwl/devkit" "14.6.4"
+    "@phenomnomnominal/tsquery" "4.1.1"
+    chalk "4.1.0"
+    dotenv "~10.0.0"
+    identity-obj-proxy "3.0.0"
+    jest-config "28.1.1"
+    jest-resolve "28.1.1"
+    jest-util "28.1.1"
+    resolve.exports "1.1.0"
+    rxjs "^6.5.4"
+    tslib "^2.3.0"
+
+"@nrwl/jest@14.6.5":
+  version "14.6.5"
+  resolved "https://registry.yarnpkg.com/@nrwl/jest/-/jest-14.6.5.tgz#e3394e9e6acaadeba0d2eb6c4184aaf99976ebac"
+  integrity sha512-mpZUKAMFn3W22UbWXCpspAkFHskNARJ57DDuTYHBAcHPnmNVzR570Quv0QKNPPjrYT36gJOGqAWA8VuyrvNzyQ==
+  dependencies:
+    "@jest/reporters" "28.1.1"
+    "@jest/test-result" "28.1.1"
+    "@nrwl/devkit" "14.6.5"
     "@phenomnomnominal/tsquery" "4.1.1"
     chalk "4.1.0"
     dotenv "~10.0.0"
@@ -13134,14 +13164,7 @@ rxjs@^5.5.6:
   dependencies:
     symbol-observable "1.0.1"
 
-rxjs@^7.5.1, rxjs@^7.5.5:
-  version "7.5.5"
-  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-7.5.5.tgz#2ebad89af0f560f460ad5cc4213219e1f7dd4e9f"
-  integrity sha512-sy+H0pQofO95VDmFLzyaw9xNJU4KTRSwQIGM6+iG3SypAtCiLDzpeG8sJrNCWn2Up9km+KhkvTdbkrdy+yzZdw==
-  dependencies:
-    tslib "^2.1.0"
-
-rxjs@~7.5.0:
+rxjs@^7.5.1, rxjs@^7.5.5, rxjs@~7.5.0:
   version "7.5.6"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-7.5.6.tgz#0446577557862afd6903517ce7cae79ecb9662bc"
   integrity sha512-dnyv2/YsXhnm461G+R/Pe5bWP41Nm6LBXEYWI6eiFP4fiwx6WRI/CD0zbdVAudd9xwLEF2IDcKXLHit0FYjUzw==
