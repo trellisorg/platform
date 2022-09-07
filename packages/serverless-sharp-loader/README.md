@@ -86,7 +86,8 @@ There are some caveats here:
    Running in prod mode with by calling `enableProdMode()` in your `main.ts` or, not adding the `priority` attribute
    to your images (although this goes against the suggested usage). Another option for this caveat is to always call
    `enableProdMode()` when rendering in Angular Universal by not conditionally calling it in your `main.server.ts`.
-   This will be a moot point when [this PR](https://github.com/angular/angular/pull/47353) is released.
+   This will be a moot point when [this PR](https://github.com/angular/angular/pull/47353) is released. (Note: As of
+   Angular v14.2.1 this is no longer an issue as the PR was released as part of v14.2.1)
 3. There is slightly less validation of the URL happening in this `IMAGE_LOADER` than in the default provided loaders
    in `@angular/common` because it is not being created the same way. This will be fixed after
    [this PR](https://github.com/angular/angular/pull/47340)
