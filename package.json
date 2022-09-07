@@ -96,7 +96,7 @@
         "@nrwl/nest": "14.6.4",
         "@nrwl/node": "14.6.4",
         "@nrwl/nx-cloud": "14.6.1",
-        "@nrwl/nx-plugin": "14.6.4",
+        "@nrwl/nx-plugin": "14.6.5",
         "@nrwl/workspace": "14.6.4",
         "@types/compression": "^1.7.2",
         "@types/google.maps": "3.50.0",
