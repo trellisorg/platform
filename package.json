@@ -95,7 +95,7 @@
         "@nrwl/js": "14.6.5",
         "@nrwl/nest": "14.6.5",
         "@nrwl/node": "14.6.5",
-        "@nrwl/nx-cloud": "14.6.1",
+        "@nrwl/nx-cloud": "14.6.2",
         "@nrwl/nx-plugin": "14.6.5",
         "@nrwl/workspace": "14.6.5",
         "@types/compression": "^1.7.2",
