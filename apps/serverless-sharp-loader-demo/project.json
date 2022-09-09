@@ -19,7 +19,10 @@
                 ],
                 "styles": ["apps/serverless-sharp-loader-demo/src/styles.scss"],
                 "scripts": [],
-                "allowedCommonJsDependencies": ["md5"]
+                "allowedCommonJsDependencies": ["md5"],
+                "outputHashing": "all",
+                "vendorChunk": true,
+                "namedChunks": false
             },
             "configurations": {
                 "production": {
@@ -28,16 +31,13 @@
                             "replace": "apps/serverless-sharp-loader-demo/src/environments/environment.ts",
                             "with": "apps/serverless-sharp-loader-demo/src/environments/environment.prod.ts"
                         }
-                    ],
-                    "outputHashing": "all"
+                    ]
                 },
                 "development": {
                     "buildOptimizer": false,
                     "optimization": false,
-                    "vendorChunk": true,
                     "extractLicenses": false,
-                    "sourceMap": true,
-                    "namedChunks": true
+                    "sourceMap": true
                 }
             },
             "defaultConfiguration": "production"
@@ -75,8 +75,7 @@
                 "outputPath": "dist/apps/serverless-sharp-loader-demo/server",
                 "main": "apps/serverless-sharp-loader-demo/server.ts",
                 "tsConfig": "apps/serverless-sharp-loader-demo/tsconfig.server.json",
-                "sourceMap": true,
-                "optimization": false
+                "sourceMap": true
             },
             "configurations": {
                 "production": {
@@ -89,6 +88,17 @@
                     ],
                     "sourceMap": false,
                     "optimization": true
+                },
+                "development": {
+                    "outputHashing": "media",
+                    "fileReplacements": [
+                        {
+                            "replace": "apps/serverless-sharp-loader-demo/src/environments/environment.ts",
+                            "with": "apps/serverless-sharp-loader-demo/src/environments/environment.prod.ts"
+                        }
+                    ],
+                    "sourceMap": false,
+                    "optimization": false
                 }
             },
             "defaultConfiguration": ""
@@ -96,8 +106,8 @@
         "serve-ssr": {
             "executor": "@nguniversal/builders:ssr-dev-server",
             "options": {
-                "browserTarget": "serverless-sharp-loader-demo:build",
-                "serverTarget": "serverless-sharp-loader-demo:server"
+                "browserTarget": "serverless-sharp-loader-demo:build:development",
+                "serverTarget": "serverless-sharp-loader-demo:server:development"
             },
             "configurations": {
                 "production": {

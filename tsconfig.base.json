@@ -34,6 +34,7 @@
             "@trellisorg/ngrx-universal-rehydrate/server": ["packages/ngrx-universal-rehydrate/server/src/index.ts"],
             "@trellisorg/nx-betterer": ["packages/nx-betterer/src/index.ts"],
             "@trellisorg/nxls": ["packages/nxls/src/index.ts"],
+            "@trellisorg/preload-chunks": ["packages/preload-chunks/src/index.ts"],
             "@trellisorg/rx-dynamic-component": ["packages/rx-dynamic-component/src/index.ts"],
             "@trellisorg/serverless-sharp-loader": ["packages/serverless-sharp-loader/src/index.ts"],
             "@trellisorg/update": ["packages/update/src/index.ts"]

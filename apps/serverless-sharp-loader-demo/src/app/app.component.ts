@@ -32,4 +32,11 @@ import { Component } from '@angular/core';
     `,
     styles: [``],
 })
-export class AppComponent {}
+export class AppComponent {
+    constructor() {
+        import('./dynamic.component');
+        import('./dynamic1.component');
+        import('./dynamic2.component');
+        import('./dynamic3.component');
+    }
+}

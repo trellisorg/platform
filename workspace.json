@@ -19,6 +19,7 @@
         "ngrx-universal-rehydrate-demo-api": "apps/ngrx-universal-rehydrate-demo-api",
         "nx-betterer": "packages/nx-betterer",
         "nxls": "packages/nxls",
+        "preload-chunks": "packages/preload-chunks",
         "rx-dynamic-component": "packages/rx-dynamic-component",
         "rx-dynamic-host": "apps/rx-dynamic-host",
         "serverless-sharp-loader": "packages/serverless-sharp-loader",
