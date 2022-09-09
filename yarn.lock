@@ -2534,10 +2534,10 @@
   dependencies:
     tslib "^2.0.0"
 
-"@ngrx/component@14.3.0":
-  version "14.3.0"
-  resolved "https://registry.yarnpkg.com/@ngrx/component/-/component-14.3.0.tgz#136b3dd2643f0055e6e1e5ae42b47440d05848a5"
-  integrity sha512-Mer3olNxuvi6xnFKcnhFVZVMM0U6LMfK8mIlhGEvbyjfuBFKNCFc5ySs6EhsGWLUkadWFjTz6sqAvko6Nz21Cg==
+"@ngrx/component@14.3.1":
+  version "14.3.1"
+  resolved "https://registry.yarnpkg.com/@ngrx/component/-/component-14.3.1.tgz#f080f79432bcc627e5233b57352a0d256b09ca2f"
+  integrity sha512-q6tEUfs7Pgl9yPjlxdAXR+HWvE6cbcrfMA4zTBOCUiqHyZzbocr0yhsEuO/zZhSGQvT5FphuQE+6BhU01eplBw==
   dependencies:
     tslib "^2.0.0"
 
