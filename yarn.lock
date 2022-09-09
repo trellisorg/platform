@@ -2527,10 +2527,10 @@
     replace-in-file "6.2.0"
     tslib "^2.1.0"
 
-"@ngrx/component-store@14.3.0":
-  version "14.3.0"
-  resolved "https://registry.yarnpkg.com/@ngrx/component-store/-/component-store-14.3.0.tgz#bcc755dc742c60c554614171f1c9f9b217814566"
-  integrity sha512-iD/gfgun+nnTWt7QmsBl28QQxwEWEKl7VGfAhFDvmO5x+kIr4k07U+8DColloVqrPUsR1GeaxLX4eb70mKm38w==
+"@ngrx/component-store@14.3.1":
+  version "14.3.1"
+  resolved "https://registry.yarnpkg.com/@ngrx/component-store/-/component-store-14.3.1.tgz#6b014a27b95ae8b4206e2fd90b754885c01fa14d"
+  integrity sha512-aRIlakt7AHm1sFaRDcMhJEZ4MBusBwc94P+wLiKGePiJQ+FZnLtcrrHnd7nxjbU7VKTzgt+th/+cG2lxV//KxQ==
   dependencies:
     tslib "^2.0.0"
 
