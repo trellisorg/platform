@@ -195,12 +195,12 @@
     "@angular-eslint/utils" "14.0.4"
     "@typescript-eslint/utils" "5.36.2"
 
-"@angular-eslint/template-parser@14.0.3":
-  version "14.0.3"
-  resolved "https://registry.yarnpkg.com/@angular-eslint/template-parser/-/template-parser-14.0.3.tgz#c90db2e1c1ae703cb9c28a9970963f5953c7642a"
-  integrity sha512-agUhRSkiB4n7CunB+jL1+1Wsvia1xnI3XhZTBKoGs4Q+DjEgZmd4xryy8snw31cQgqJMtlvyP4QTr2+cqrxAdQ==
+"@angular-eslint/template-parser@14.0.4":
+  version "14.0.4"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/template-parser/-/template-parser-14.0.4.tgz#6f19956295d80841318693d72e258b7b2c100f18"
+  integrity sha512-L7+VHWlIUiUml81q43tP/CZZhIDkbHoin2OH+0TEqeQuCcYZwZQfUBey0pmbzzhjZD2tV75QxlAUqFCuM85Tng==
   dependencies:
-    "@angular-eslint/bundled-angular-compiler" "14.0.3"
+    "@angular-eslint/bundled-angular-compiler" "14.0.4"
     eslint-scope "^5.1.0"
 
 "@angular-eslint/utils@14.0.4":
