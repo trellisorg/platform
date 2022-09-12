@@ -86,7 +86,7 @@
         "@hirez_io/observer-spy": "^2.2.0",
         "@nestjs/schematics": "9.0.3",
         "@nestjs/testing": "9.0.11",
-        "@nrwl/angular": "14.7.1",
+        "@nrwl/angular": "14.7.4",
         "@nrwl/cli": "14.7.1",
         "@nrwl/cypress": "14.7.1",
         "@nrwl/devkit": "14.7.1",
