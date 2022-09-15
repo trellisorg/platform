@@ -1,0 +1,45 @@
+{
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "packages/preload-chunks/src",
+    "projectType": "library",
+    "targets": {
+        "build": {
+            "executor": "@nrwl/js:tsc",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "dist/packages/preload-chunks",
+                "main": "packages/preload-chunks/src/index.ts",
+                "tsConfig": "packages/preload-chunks/tsconfig.lib.json",
+                "assets": ["packages/preload-chunks/*.md"]
+            }
+        },
+        "publish": {
+            "executor": "@nrwl/workspace:run-commands",
+            "options": {
+                "command": "node tools/scripts/publish.mjs preload-chunks {args.ver} {args.tag}"
+            },
+            "dependsOn": [
+                {
+                    "projects": "self",
+                    "target": "build"
+                }
+            ]
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": ["packages/preload-chunks/**/*.ts"]
+            }
+        },
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/packages/preload-chunks"],
+            "options": {
+                "jestConfig": "packages/preload-chunks/jest.config.ts",
+                "passWithNoTests": true
+            }
+        }
+    },
+    "tags": []
+}

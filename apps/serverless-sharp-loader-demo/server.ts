@@ -1,5 +1,6 @@
 import { APP_BASE_HREF } from '@angular/common';
 import { ngExpressEngine } from '@nguniversal/express-engine';
+import { provideChunkPreloader } from '@trellisorg/preload-chunks';
 import compression from 'compression';
 import * as express from 'express';
 import { existsSync } from 'fs';
@@ -21,6 +22,7 @@ export function app(): express.Express {
         'html',
         ngExpressEngine({
             bootstrap: AppServerModule,
+            providers: [provideChunkPreloader(join(__dirname, '../browser'))],
         })
     );
 
