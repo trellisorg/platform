@@ -6,13 +6,15 @@
     "generators": {},
     "targets": {
         "build": {
-            "executor": "@nrwl/node:webpack",
+            "executor": "@nrwl/webpack:webpack",
             "options": {
                 "outputPath": "dist/apps/api",
                 "main": "apps/api/src/main.ts",
                 "tsConfig": "apps/api/tsconfig.app.json",
                 "assets": ["apps/api/src/assets"],
-                "maxWorkers": 2
+                "maxWorkers": 2,
+                "target": "node",
+                "compiler": "tsc"
             },
             "configurations": {
                 "production": {
