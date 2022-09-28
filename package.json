@@ -103,7 +103,7 @@
         "@types/jest": "29.0.0",
         "@types/md5": "^2.3.2",
         "@types/node": "18.7.15",
-        "cypress": "^10.7.0",
+        "cypress": "^10.9.0",
         "eslint": "8.23.0",
         "eslint-config-prettier": "8.5.0",
         "eslint-plugin-cypress": "^2.10.3",
