@@ -1,12 +1,9 @@
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
-import { UseMemo, useMemo } from '@trellisorg/use-memo';
+import { useMemo } from '@trellisorg/use-memo';
 
 @Component({
     selector: 'trellisorg-root',
-    template: `
-        <div>{{ message() }}</div>
-        <div>{{ messageFn() }}</div>
-    `,
+    template: ` <div>{{ message() }}</div> `,
 })
 export class AppComponent {
     readonly message = useMemo(() => {
@@ -19,15 +16,6 @@ export class AppComponent {
 
         setInterval(() => {
             ref.detectChanges();
-
-            this.messageFn();
         }, 1000);
-    }
-
-    @UseMemo()
-    messageFn(): string {
-        console.log('Hello World Fn');
-
-        return 'Hello World Fn';
     }
 }

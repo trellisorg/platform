@@ -35,19 +35,3 @@ export const useMemo = (fn: MemoizableFunction, config: UseMemoConfig = {}) => {
 
     return memoize(config.limit ?? tokenConfig?.limit ?? 10)(fn);
 };
-
-/**
- * @description Method decorator for memoizing the result of a method on a class
- *
- * @param config
- * @constructor
- */
-export function UseMemo(config: UseMemoConfig = {}) {
-    return (target: unknown, propertyName: string, descriptor: TypedPropertyDescriptor<MemoizableFunction>) => {
-        const fn = descriptor.value as (...args: unknown[]) => unknown;
-
-        descriptor.value = memoize(config.limit ?? 10)(fn);
-
-        return descriptor;
-    };
-}
