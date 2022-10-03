@@ -1,5 +1,8 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const MapOrSimilar = require('map-or-similar');
+/**
+ * Credit goes to https://www.npmjs.com/package/memoizerific who's code was the base for this memoization implementation.
+ *
+ * It was converted to TS so that no CommonJS dependencies were included in the bundles of applications using this.
+ */
 
 export interface LRUPath {
     cacheItem: any;
@@ -9,7 +12,7 @@ export interface LRUPath {
 export type LRU = LRUPath[][];
 
 export function memoize(limit: number) {
-    const cache = new MapOrSimilar();
+    const cache = new Map();
     const lru: LRUPath[][] = [];
 
     return function (fn: (...args: unknown[]) => unknown) {
@@ -45,7 +48,7 @@ export function memoize(limit: number) {
                 isMemoized = false;
 
                 // make maps until last value
-                newMap = new MapOrSimilar();
+                newMap = new Map();
                 currentCache.set(args[i], newMap);
                 currentCache = newMap;
             }
