@@ -24,7 +24,9 @@
         "rx-dynamic-host": "apps/rx-dynamic-host",
         "serverless-sharp-loader": "packages/serverless-sharp-loader",
         "serverless-sharp-loader-demo": "apps/serverless-sharp-loader-demo",
-        "update": "packages/update"
+        "update": "packages/update",
+        "use-memo": "packages/use-memo",
+        "use-memo-demo": "apps/use-memo-demo"
     },
     "$schema": "./node_modules/nx/schemas/workspace-schema.json"
 }
