@@ -1,0 +1,23 @@
+{
+    "name": "@trellisorg/use-memo",
+    "version": "1.0.0",
+    "peerDependencies": {
+        "@angular/common": "^14",
+        "@angular/core": "^14",
+        "map-or-similar": "^1.5.0"
+    },
+    "dependencies": {
+        "tslib": "^2.3.0"
+    },
+    "repository": {
+        "url": "https://github.com/trellisorg/platform/tree/master/packages/use-memo"
+    },
+    "license": "MIT",
+    "homepage": "https://github.com/trellisorg/platform/tree/master/packages/use-memo",
+    "author": "Jay Bell <jay@trellis.org>",
+    "keywords": [
+        "angular",
+        "ng",
+        "memoization"
+    ]
+}

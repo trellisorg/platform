@@ -1,0 +1,39 @@
+{
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "projectType": "library",
+    "sourceRoot": "packages/use-memo/src",
+    "prefix": "trellisorg",
+    "targets": {
+        "build": {
+            "executor": "@nrwl/angular:package",
+            "outputs": ["dist/packages/use-memo"],
+            "options": {
+                "project": "packages/use-memo/ng-package.json"
+            },
+            "configurations": {
+                "production": {
+                    "tsConfig": "packages/use-memo/tsconfig.lib.prod.json"
+                },
+                "development": {
+                    "tsConfig": "packages/use-memo/tsconfig.lib.json"
+                }
+            },
+            "defaultConfiguration": "production"
+        },
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/packages/use-memo"],
+            "options": {
+                "jestConfig": "packages/use-memo/jest.config.ts",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": ["packages/use-memo/**/*.ts", "packages/use-memo/**/*.html"]
+            }
+        }
+    },
+    "tags": []
+}
