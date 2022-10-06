@@ -68,6 +68,10 @@ in your project.
 
 Use the [NgOptimizedImage](https://angular.io/api/common/NgOptimizedImage) directive as you normally would.
 
+If you want to use the `s` security parameter then you need to provide a `hashFn` when providing the config. This can be
+any function that will return a unique hash two libraries that work here are: `md5` and `ts-md5`. Check to see if your
+repo already has a hashing library installed, if so just use that one instead of adding another dependency.
+
 ## 4. Usage with Universal
 
 One benefit of using Angular Universal with this [Image Loader](https://angular.io/api/common/IMAGE_LOADER)

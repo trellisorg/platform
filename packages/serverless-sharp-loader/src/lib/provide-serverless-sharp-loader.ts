@@ -1,7 +1,11 @@
 import { DOCUMENT, ImageLoader, ImageLoaderConfig, IMAGE_LOADER, isPlatformServer } from '@angular/common';
 import type { Provider } from '@angular/core';
 import { inject, InjectionToken, PLATFORM_ID } from '@angular/core';
-import md5 from 'md5';
+
+/**
+ * @description A hashFn that can be used for configuring security.
+ */
+export type HashFn = (value: string) => string;
 
 /**
  * Configuration token for the library so that the config can be stored in the injector and merged throughout the tree
@@ -33,15 +37,20 @@ export interface ServerlessSharpLoaderConfig {
      * The Cloudfront Distribution URL
      */
     baseUrl: string;
+    /**
+     * @description Hashing function for security. Required is `#parameters.s` is set.
+     */
+    hashFn?: HashFn;
 }
 
 /**
  * Will hash and configure the security parameter if enabled within your distribution
  * @param assetUrl
  * @param securityKey
+ * @param hashFn
  */
-function configureSecurity(assetUrl: URL, securityKey: string): string {
-    return md5(`${securityKey}${assetUrl.pathname}?${assetUrl.searchParams.toString()}`);
+function configureSecurity(assetUrl: URL, securityKey: string, hashFn: HashFn): string {
+    return hashFn(`${securityKey}${assetUrl.pathname}?${assetUrl.searchParams.toString()}`);
 }
 
 function serverlessSharpImageLoader(config: ServerlessSharpLoaderConfig) {
@@ -63,8 +72,8 @@ function serverlessSharpImageLoader(config: ServerlessSharpLoaderConfig) {
             assetUrl.searchParams.set('w', imageLoaderConfig.width.toString());
         }
 
-        if (config.parameters?.s) {
-            assetUrl.searchParams.set('s', configureSecurity(assetUrl, config.parameters.s));
+        if (config.parameters?.s && config.hashFn) {
+            assetUrl.searchParams.set('s', configureSecurity(assetUrl, config.parameters.s, config.hashFn));
         }
 
         return {
