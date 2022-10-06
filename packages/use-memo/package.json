@@ -1,6 +1,6 @@
 {
     "name": "@trellisorg/use-memo",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "peerDependencies": {
         "@angular/common": "^14",
         "@angular/core": "^14"

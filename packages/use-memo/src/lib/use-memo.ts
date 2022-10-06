@@ -1,5 +1,6 @@
 import { inject, InjectionToken, Provider } from '@angular/core';
 import { memoize } from './memoize';
+import type { MemoizableFunction, MemoizedFunction } from './types';
 
 export interface UseMemoConfig {
     /**
@@ -7,15 +8,6 @@ export interface UseMemoConfig {
      */
     limit?: number;
 }
-
-export type MemoizedFunction<T extends (...args: any[]) => any> = T & {
-    limit: number;
-    wasMemoized: boolean;
-    cache: Map<any, any>;
-    lru: any;
-};
-
-export type MemoizableFunction = (...args: any[]) => any;
 
 export const USE_MEMO_CONFIG = new InjectionToken<UseMemoConfig>('[@trellisorg/use-memo] config');
 
@@ -37,8 +29,8 @@ export function configureUseMemo(config: UseMemoConfig): Provider {
  * @param fn
  * @param config
  */
-export const useMemo = <Fn extends MemoizableFunction>(fn: Fn, config: UseMemoConfig = {}) => {
+export const useMemo = <Fn extends MemoizableFunction>(fn: Fn, config: UseMemoConfig = {}): MemoizedFunction<Fn> => {
     const tokenConfig = inject(USE_MEMO_CONFIG, { optional: true });
 
-    return memoize(config.limit ?? tokenConfig?.limit ?? 10)(fn) as MemoizedFunction<Fn>;
+    return memoize(config.limit ?? tokenConfig?.limit ?? 10)(fn);
 };

@@ -2,7 +2,7 @@
  * Credit goes to https://www.npmjs.com/package/memoizerific who's code was the base for this memoization implementation.
  *
  * It was converted to TS so that no CommonJS dependencies were included in the bundles of applications using this.
- */
+ */ import type { MemoizableFunction, MemoizedFunction } from './types';
 
 export interface LRUPath {
     cacheItem: any;
@@ -15,7 +15,7 @@ export function memoize(limit: number) {
     const cache = new Map();
     const lru: LRUPath[][] = [];
 
-    return function (fn: (...args: unknown[]) => unknown) {
+    return function <Fn extends MemoizableFunction>(fn: Fn) {
         const memoizerific = function (...args: unknown[]) {
             let currentCache = cache;
             let newMap;
@@ -97,7 +97,7 @@ export function memoize(limit: number) {
         memoizerific.cache = cache;
         memoizerific.lru = lru;
 
-        return memoizerific;
+        return memoizerific as MemoizedFunction<Fn>;
     };
 }
 
