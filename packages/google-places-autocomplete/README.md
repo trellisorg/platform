@@ -9,9 +9,15 @@ Install: `yarn add @trellisorg/google-places-autocomplete`
 # Add to `AppModule`
 
 ```typescript
-import { providePlacesAutocomplete } from '@trellisorg/google-places-autocomplete';
+import {
+  PlacesAutocompleteModule,
+  providePlacesAutocomplete,
+} from '@trellisorg/google-places-autocomplete';
 
 @NgModule({
+    imports: [
+        PlacesAutocompleteModule,
+    ],
     providers: [
         // PlacesAutocompleteConfig
         providePlacesAutocomplete({
