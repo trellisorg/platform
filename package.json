@@ -73,7 +73,7 @@
     },
     "devDependencies": {
         "@angular-devkit/build-angular": "14.2.2",
-        "@angular-devkit/core": "14.2.1",
+        "@angular-devkit/core": "14.2.5",
         "@angular-devkit/schematics": "14.2.2",
         "@angular-eslint/eslint-plugin": "14.0.4",
         "@angular-eslint/eslint-plugin-template": "14.0.4",
