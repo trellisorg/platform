@@ -5,6 +5,7 @@ version: 2
 updates:
     # Enable version updates for npm
     - package-ecosystem:
+      rebase-strategy: "auto"
           'npm'
           # Look for `package.json` and `lock` files in the `root` directory
       directory:
