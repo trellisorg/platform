@@ -59,7 +59,7 @@
         "@typescript-eslint/eslint-plugin": "5.40.0",
         "@typescript-eslint/parser": "5.40.0",
         "compression": "^1.7.4",
-        "dotenv": "16.0.2",
+        "dotenv": "16.0.3",
         "jest-marbles": "3.0.3",
         "lodash.merge": "^4.6.2",
         "md5": "^2.3.0",
