@@ -99,7 +99,7 @@
         "@nrwl/nx-plugin": "14.8.4",
         "@nrwl/workspace": "14.8.4",
         "@types/compression": "^1.7.2",
-        "@types/google.maps": "3.50.0",
+        "@types/google.maps": "3.50.4",
         "@types/jest": "29.0.0",
         "@types/md5": "^2.3.2",
         "@types/node": "18.8.4",
