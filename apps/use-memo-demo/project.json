@@ -4,6 +4,15 @@
     "sourceRoot": "apps/use-memo-demo/src",
     "prefix": "trellisorg",
     "targets": {
+        "vite": {
+            "executor": "nx:run-commands",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "dist/apps/use-memo-demo",
+                "command": "vite build",
+                "cwd": "apps/use-memo-demo"
+            }
+        },
         "build": {
             "executor": "@angular-devkit/build-angular:browser",
             "outputs": ["{options.outputPath}"],
