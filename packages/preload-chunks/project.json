@@ -1,4 +1,5 @@
 {
+    "name": "preload-chunks",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
     "sourceRoot": "packages/preload-chunks/src",
     "projectType": "library",
