@@ -5,7 +5,7 @@
     "targets": {
         "build": {
             "executor": "@nrwl/angular:package",
-            "outputs": ["dist/packages/dns-validator"],
+            "outputs": ["{workspaceRoot}/dist/packages/dns-validator"],
             "options": {
                 "project": "packages/dns-validator/ng-package.json"
             },
@@ -21,7 +21,7 @@
         },
         "test": {
             "executor": "@nrwl/jest:jest",
-            "outputs": ["coverage/packages/dns-validator"],
+            "outputs": ["{workspaceRoot}/coverage/packages/dns-validator"],
             "options": {
                 "jestConfig": "packages/dns-validator/jest.config.ts",
                 "passWithNoTests": true

@@ -16,7 +16,7 @@
                 "jestConfig": "packages/ngrx-data-websocket/server/jest.config.ts",
                 "passWithNoTests": true
             },
-            "outputs": ["coverage/packages/ngrx-data-websocket/server"]
+            "outputs": ["{workspaceRoot}/coverage/packages/ngrx-data-websocket/server"]
         },
         "build": {
             "executor": "@nrwl/js:tsc",

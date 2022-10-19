@@ -7,18 +7,6 @@
     "affected": {
         "defaultBase": "master"
     },
-    "implicitDependencies": {
-        "workspace.json": "*",
-        "package.json": {
-            "dependencies": "*",
-            "devDependencies": "*"
-        },
-        "tsconfig.base.json": "*",
-        "tslint.json": "*",
-        ".eslintrc.json": "*",
-        "nx.json": "*",
-        "yarn.lock": "*"
-    },
     "tasksRunnerOptions": {
         "default": {
             "runner": "@nrwl/nx-cloud",
@@ -110,8 +98,28 @@
     "$schema": "./node_modules/nx/schemas/nx-schema.json",
     "targetDefaults": {
         "build": {
-            "dependsOn": ["^build"]
+            "dependsOn": ["^build"],
+            "inputs": ["production", "^production"]
+        },
+        "test": {
+            "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"]
         }
     },
-    "defaultProject": "rx-dynamic-host"
+    "defaultProject": "rx-dynamic-host",
+    "namedInputs": {
+        "default": ["{projectRoot}/**/*", "sharedGlobals"],
+        "sharedGlobals": [
+            "{workspaceRoot}/workspace.json",
+            "{workspaceRoot}/tsconfig.base.json",
+            "{workspaceRoot}/tslint.json",
+            "{workspaceRoot}/nx.json",
+            "{workspaceRoot}/yarn.lock"
+        ],
+        "production": [
+            "default",
+            "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
+            "!{projectRoot}/tsconfig.spec.json",
+            "!{projectRoot}/jest.config.[jt]s"
+        ]
+    }
 }

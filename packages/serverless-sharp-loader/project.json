@@ -5,7 +5,7 @@
     "targets": {
         "build": {
             "executor": "@nrwl/angular:package",
-            "outputs": ["dist/packages/serverless-sharp-loader"],
+            "outputs": ["{workspaceRoot}/dist/packages/serverless-sharp-loader"],
             "options": {
                 "project": "packages/serverless-sharp-loader/ng-package.json"
             },
@@ -21,7 +21,7 @@
         },
         "test": {
             "executor": "@nrwl/jest:jest",
-            "outputs": ["coverage/packages/serverless-sharp-loader"],
+            "outputs": ["{workspaceRoot}/coverage/packages/serverless-sharp-loader"],
             "options": {
                 "jestConfig": "packages/serverless-sharp-loader/jest.config.ts",
                 "passWithNoTests": true

@@ -16,7 +16,7 @@
                 "jestConfig": "packages/make-buildable/jest.config.ts",
                 "passWithNoTests": true
             },
-            "outputs": ["coverage/packages/make-buildable"]
+            "outputs": ["{workspaceRoot}/coverage/packages/make-buildable"]
         },
         "build": {
             "executor": "@nrwl/js:tsc",

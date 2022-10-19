@@ -22,7 +22,7 @@
         },
         "test": {
             "executor": "@nrwl/jest:jest",
-            "outputs": ["coverage/packages/nest-worker-threads"],
+            "outputs": ["{workspaceRoot}/coverage/packages/nest-worker-threads"],
             "options": {
                 "jestConfig": "packages/nest-worker-threads/jest.config.ts",
                 "passWithNoTests": true

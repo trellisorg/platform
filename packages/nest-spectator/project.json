@@ -11,7 +11,7 @@
         },
         "test": {
             "executor": "@nrwl/jest:jest",
-            "outputs": ["coverage/packages/nest-spectator"],
+            "outputs": ["{workspaceRoot}/coverage/packages/nest-spectator"],
             "options": {
                 "jestConfig": "packages/nest-spectator/jest.config.ts",
                 "passWithNoTests": true
