@@ -28,7 +28,7 @@
         },
         "test": {
             "executor": "@nrwl/jest:jest",
-            "outputs": ["coverage/packages/rx-dynamic-component"],
+            "outputs": ["{workspaceRoot}/coverage/packages/rx-dynamic-component"],
             "options": {
                 "jestConfig": "packages/rx-dynamic-component/jest.config.ts",
                 "passWithNoTests": true

@@ -51,7 +51,7 @@
             "defaultConfiguration": "production"
         },
         "serve": {
-            "executor": "@nrwl/angular:webpack-server",
+            "executor": "@nrwl/angular:webpack-dev-server",
             "configurations": {
                 "production": {
                     "browserTarget": "rx-dynamic-host:build:production"

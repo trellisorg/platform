@@ -49,7 +49,7 @@
                 "jestConfig": "apps/api/jest.config.ts",
                 "passWithNoTests": true
             },
-            "outputs": ["coverage/apps/api"]
+            "outputs": ["{workspaceRoot}/coverage/apps/api"]
         }
     },
     "tags": []

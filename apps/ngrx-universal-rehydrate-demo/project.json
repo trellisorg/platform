@@ -84,7 +84,7 @@
         },
         "test": {
             "executor": "@nrwl/jest:jest",
-            "outputs": ["coverage/apps/ngrx-universal-rehydrate-demo"],
+            "outputs": ["{workspaceRoot}/coverage/apps/ngrx-universal-rehydrate-demo"],
             "options": {
                 "jestConfig": "apps/ngrx-universal-rehydrate-demo/jest.config.ts",
                 "passWithNoTests": true

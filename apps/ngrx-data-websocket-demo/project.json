@@ -91,7 +91,7 @@
                 "jestConfig": "apps/ngrx-data-websocket-demo/jest.config.ts",
                 "passWithNoTests": true
             },
-            "outputs": ["coverage/apps/ngrx-data-websocket-demo"]
+            "outputs": ["{workspaceRoot}/coverage/apps/ngrx-data-websocket-demo"]
         }
     },
     "tags": []

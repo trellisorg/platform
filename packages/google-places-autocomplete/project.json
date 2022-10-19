@@ -6,7 +6,7 @@
     "targets": {
         "build": {
             "executor": "@nrwl/angular:package",
-            "outputs": ["dist/packages/google-places-autocomplete"],
+            "outputs": ["{workspaceRoot}/dist/packages/google-places-autocomplete"],
             "options": {
                 "project": "packages/google-places-autocomplete/ng-package.json"
             },

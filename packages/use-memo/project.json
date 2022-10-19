@@ -6,7 +6,7 @@
     "targets": {
         "build": {
             "executor": "@nrwl/angular:package",
-            "outputs": ["dist/packages/use-memo"],
+            "outputs": ["{workspaceRoot}/dist/packages/use-memo"],
             "options": {
                 "project": "packages/use-memo/ng-package.json"
             },
@@ -22,7 +22,7 @@
         },
         "test": {
             "executor": "@nrwl/jest:jest",
-            "outputs": ["coverage/packages/use-memo"],
+            "outputs": ["{workspaceRoot}/coverage/packages/use-memo"],
             "options": {
                 "jestConfig": "packages/use-memo/jest.config.ts",
                 "passWithNoTests": true

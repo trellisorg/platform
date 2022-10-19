@@ -76,7 +76,7 @@
         },
         "test": {
             "executor": "@nrwl/jest:jest",
-            "outputs": ["coverage/apps/dns-validator-demo"],
+            "outputs": ["{workspaceRoot}/coverage/apps/dns-validator-demo"],
             "options": {
                 "jestConfig": "apps/dns-validator-demo/jest.config.ts",
                 "passWithNoTests": true
