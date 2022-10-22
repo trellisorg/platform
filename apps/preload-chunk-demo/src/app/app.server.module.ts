@@ -11,10 +11,10 @@ import { AppModule } from './app.module';
     bootstrap: [AppComponent],
     providers: [
         provideChunkPreloader({
+            enabled: true,
             pathToBrowserFiles: join(__dirname, '../browser'),
             config: {
                 type: 'importMap',
-                max: 5,
             },
         }),
     ],
