@@ -11,6 +11,7 @@ export interface ImportMapConfig extends SharedConfig {
 }
 
 export interface PreloadChunksConfig {
+    enabled?: boolean;
     pathToBrowserFiles: string;
     config?: LinkPreloadConfig | ImportMapConfig;
 }
