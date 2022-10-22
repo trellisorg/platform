@@ -1,0 +1,128 @@
+{
+    "name": "preload-chunk-demo",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "projectType": "application",
+    "sourceRoot": "apps/preload-chunk-demo/src",
+    "prefix": "trellisorg",
+    "targets": {
+        "build": {
+            "executor": "@angular-devkit/build-angular:browser",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "dist/apps/preload-chunk-demo/browser",
+                "index": "apps/preload-chunk-demo/src/index.html",
+                "main": "apps/preload-chunk-demo/src/main.ts",
+                "polyfills": "apps/preload-chunk-demo/src/polyfills.ts",
+                "tsConfig": "apps/preload-chunk-demo/tsconfig.app.json",
+                "inlineStyleLanguage": "scss",
+                "assets": ["apps/preload-chunk-demo/src/favicon.ico", "apps/preload-chunk-demo/src/assets"],
+                "styles": ["apps/preload-chunk-demo/src/styles.scss"],
+                "scripts": []
+            },
+            "configurations": {
+                "production": {
+                    "budgets": [
+                        {
+                            "type": "initial",
+                            "maximumWarning": "500kb",
+                            "maximumError": "1mb"
+                        },
+                        {
+                            "type": "anyComponentStyle",
+                            "maximumWarning": "2kb",
+                            "maximumError": "4kb"
+                        }
+                    ],
+                    "fileReplacements": [
+                        {
+                            "replace": "apps/preload-chunk-demo/src/environments/environment.ts",
+                            "with": "apps/preload-chunk-demo/src/environments/environment.prod.ts"
+                        }
+                    ],
+                    "outputHashing": "all"
+                },
+                "development": {
+                    "buildOptimizer": false,
+                    "optimization": false,
+                    "vendorChunk": true,
+                    "extractLicenses": false,
+                    "sourceMap": true,
+                    "namedChunks": true
+                }
+            },
+            "defaultConfiguration": "production"
+        },
+        "serve": {
+            "executor": "@angular-devkit/build-angular:dev-server",
+            "configurations": {
+                "production": {
+                    "browserTarget": "preload-chunk-demo:build:production"
+                },
+                "development": {
+                    "browserTarget": "preload-chunk-demo:build:development"
+                }
+            },
+            "defaultConfiguration": "development"
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": ["apps/preload-chunk-demo/**/*.ts", "apps/preload-chunk-demo/**/*.html"]
+            }
+        },
+        "server": {
+            "executor": "@angular-devkit/build-angular:server",
+            "options": {
+                "outputPath": "dist/apps/preload-chunk-demo/server",
+                "main": "apps/preload-chunk-demo/server.ts",
+                "tsConfig": "apps/preload-chunk-demo/tsconfig.server.json",
+                "sourceMap": true
+            },
+            "configurations": {
+                "production": {
+                    "outputHashing": "media",
+                    "fileReplacements": [
+                        {
+                            "replace": "apps/preload-chunk-demo/src/environments/environment.ts",
+                            "with": "apps/preload-chunk-demo/src/environments/environment.prod.ts"
+                        }
+                    ],
+                    "sourceMap": false,
+                    "optimization": true
+                },
+                "development": {
+                    "outputHashing": "media",
+                    "fileReplacements": [
+                        {
+                            "replace": "apps/preload-chunk-demo/src/environments/environment.ts",
+                            "with": "apps/preload-chunk-demo/src/environments/environment.prod.ts"
+                        }
+                    ],
+                    "sourceMap": false,
+                    "optimization": false,
+                    "namedChunks": true
+                }
+            },
+            "defaultConfiguration": "production"
+        },
+        "serve-ssr": {
+            "executor": "@nguniversal/builders:ssr-dev-server",
+            "options": {
+                "browserTarget": "preload-chunk-demo:build:development",
+                "serverTarget": "preload-chunk-demo:server:development"
+            },
+            "configurations": {
+                "production": {
+                    "browserTarget": "preload-chunk-demo:build:production",
+                    "serverTarget": "preload-chunk-demo:server:production"
+                },
+                "development": {
+                    "browserTarget": "preload-chunk-demo:build:development",
+                    "serverTarget": "preload-chunk-demo:server:development"
+                }
+            },
+            "defaultConfiguration": "production"
+        }
+    },
+    "tags": []
+}

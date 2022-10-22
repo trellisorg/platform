@@ -1,18 +1,37 @@
 import { DOCUMENT } from '@angular/common';
-import { ENVIRONMENT_INITIALIZER, inject } from '@angular/core';
-import { readdirSync } from 'fs';
+import { ENVIRONMENT_INITIALIZER, inject, Provider } from '@angular/core';
+import { BEFORE_APP_SERIALIZED } from '@angular/platform-server';
+import { readdirSync, readFileSync } from 'fs';
 import { join } from 'path';
-
-/**
- * Matches chunks created by the Angular CLI.
- */
-const CHUNK_REGEX = /^[0-9]*.[a-z0-9]*.js$/;
+import type { PreloadChunksConfig } from './config';
+import { CHUNK_REGEX, IMPORT_MAP_CHUNKS } from './constants';
 
 /**
  * Global webpack variable that is available during SSR when Angular is being rendered by Universal. We know this exists
  * so we define it (although it's very hacky)
  */
-declare const __webpack_require__: { e: (moduleId: string) => unknown };
+declare const __webpack_require__: {
+    e: (moduleId: string) => unknown;
+    moduleContentMap: Map<string, string>;
+};
+
+__webpack_require__.moduleContentMap = new Map<string, string>();
+
+function readModuleContent(srcPath: string, pathToBrowserFiles: string): string {
+    const cache = __webpack_require__.moduleContentMap.get(srcPath);
+
+    if (cache) {
+        return cache;
+    }
+
+    const content = `data:text/javascript;charset=utf-8,${readFileSync(join(pathToBrowserFiles, srcPath), {
+        encoding: 'utf8',
+    })}`;
+
+    __webpack_require__.moduleContentMap.set(srcPath, content);
+
+    return content;
+}
 
 /**
  * Typically when building the server bundles hashes are not included in the file names like they are for the browser
@@ -38,32 +57,74 @@ function readChunkMap(pathToBrowserFiles: string): Record<string, string> {
     );
 }
 
+function _serializeImportMap(document: Document, importMapChunks: Map<string, string>): () => void {
+    return () => {
+        const script = document.createElement('script');
+        script.type = 'importmap';
+
+        script.text = JSON.stringify({
+            imports: Object.fromEntries(importMapChunks),
+        });
+
+        document.head.insertBefore(script, document.head.firstChild);
+    };
+}
+
 /**
  * A provider function to be used within the server so that any lazy chunk that is loaded and thus needed to render
  * the page that is sent to the client will have a `<link rel="modulepreload" href="<chunk path>">` tag in the SSR'd
  * documents `<head>`
  *
  * @param pathToBrowserFiles
+ * @param config
  */
-export function provideChunkPreloader(pathToBrowserFiles: string) {
+export function provideChunkPreloader({ pathToBrowserFiles, config }: PreloadChunksConfig): Provider[] {
     const moduleMap = readChunkMap(pathToBrowserFiles);
-    return {
-        provide: ENVIRONMENT_INITIALIZER,
-        useValue() {
-            const document = inject(DOCUMENT);
 
-            const originalE = __webpack_require__.e;
+    const useLinkPreload = config == null || config.type === 'link';
 
-            __webpack_require__.e = (moduleId: string) => {
-                const link = document.createElement('link');
-                link.rel = 'modulepreload';
-                link.href = moduleMap[moduleId];
-
-                document.head.appendChild(link);
-
-                return originalE(moduleId);
-            };
+    return [
+        {
+            provide: IMPORT_MAP_CHUNKS,
+            useValue: new Map<string, string>(),
         },
-        multi: true,
-    };
+        {
+            provide: ENVIRONMENT_INITIALIZER,
+            useValue() {
+                const document = inject(DOCUMENT);
+                const importMapChunks = inject(IMPORT_MAP_CHUNKS);
+
+                const originalE = __webpack_require__.e;
+
+                if (!useLinkPreload) {
+                    const beforeAppSerialized = inject(BEFORE_APP_SERIALIZED);
+
+                    beforeAppSerialized.push(_serializeImportMap(document, importMapChunks));
+                }
+
+                let preloadCount = 0;
+
+                __webpack_require__.e = (moduleId: string) => {
+                    const srcPath = moduleMap[moduleId];
+
+                    if (config?.max == null || preloadCount < config.max) {
+                        if (useLinkPreload) {
+                            const link = document.createElement('link');
+                            link.rel = 'modulepreload';
+                            link.href = srcPath;
+
+                            document.head.appendChild(link);
+                        } else {
+                            importMapChunks.set(`./${srcPath}`, readModuleContent(srcPath, pathToBrowserFiles));
+                        }
+                    }
+
+                    preloadCount += 1;
+
+                    return originalE(moduleId);
+                };
+            },
+            multi: true,
+        },
+    ];
 }
