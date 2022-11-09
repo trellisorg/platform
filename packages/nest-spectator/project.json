@@ -1,4 +1,5 @@
 {
+    "name": "nest-spectator",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
     "sourceRoot": "packages/nest-spectator/src",
     "projectType": "library",

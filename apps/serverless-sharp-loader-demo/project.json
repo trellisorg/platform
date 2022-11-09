@@ -1,4 +1,5 @@
 {
+    "name": "serverless-sharp-loader-demo",
     "projectType": "application",
     "sourceRoot": "apps/serverless-sharp-loader-demo/src",
     "prefix": "trellisorg",

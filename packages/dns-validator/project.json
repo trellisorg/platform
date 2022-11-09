@@ -1,4 +1,5 @@
 {
+    "name": "dns-validator",
     "projectType": "library",
     "sourceRoot": "packages/dns-validator/src",
     "prefix": "trellisorg",

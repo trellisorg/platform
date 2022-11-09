@@ -1,4 +1,5 @@
 {
+    "name": "rx-dynamic-host",
     "projectType": "application",
     "sourceRoot": "apps/rx-dynamic-host/src",
     "prefix": "trellisorg",

@@ -1,4 +1,5 @@
 {
+    "name": "use-memo",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
     "projectType": "library",
     "sourceRoot": "packages/use-memo/src",

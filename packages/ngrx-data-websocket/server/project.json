@@ -1,4 +1,5 @@
 {
+    "name": "ngrx-data-websocket-server",
     "$schema": "../../../node_modules/nx/schemas/project-schema.json",
     "sourceRoot": "packages/ngrx-data-websocket/server/src",
     "projectType": "library",

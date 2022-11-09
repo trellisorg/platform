@@ -1,4 +1,5 @@
 {
+    "name": "nest-worker-threads-demo",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
     "sourceRoot": "apps/nest-worker-threads-demo/src",
     "projectType": "application",
