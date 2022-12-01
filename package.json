@@ -79,7 +79,7 @@
         "@angular-eslint/template-parser": "14.1.2",
         "@angular/cli": "^14.2.6",
         "@angular/compiler-cli": "^14.2.6",
-        "@angular/language-service": "^14.2.6",
+        "@angular/language-service": "^15.0.2",
         "@babel/helper-get-function-arity": "^7.16.7",
         "@betterer/cli": "5.4.0",
         "@faker-js/faker": "7.5.0",
