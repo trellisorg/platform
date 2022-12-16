@@ -82,7 +82,7 @@
         "@angular/language-service": "15.0.4",
         "@babel/helper-get-function-arity": "^7.16.7",
         "@betterer/cli": "5.4.0",
-        "@faker-js/faker": "7.5.0",
+        "@faker-js/faker": "7.6.0",
         "@hirez_io/observer-spy": "^2.2.0",
         "@nestjs/schematics": "9.0.3",
         "@nestjs/testing": "9.1.4",
