@@ -113,7 +113,18 @@
                     "optimization": true
                 }
             },
-            "defaultConfiguration": ""
+            "defaultConfiguration": "",
+            "production": {
+                "outputHashing": "media",
+                "fileReplacements": [
+                    {
+                        "replace": "apps/ngrx-universal-rehydrate-demo/src/environments/environment.ts",
+                        "with": "apps/ngrx-universal-rehydrate-demo/src/environments/environment.prod.ts"
+                    }
+                ],
+                "sourceMap": false,
+                "optimization": true
+            }
         },
         "serve-ssr": {
             "executor": "@nguniversal/builders:ssr-dev-server",

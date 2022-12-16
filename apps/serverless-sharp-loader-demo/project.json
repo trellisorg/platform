@@ -102,7 +102,29 @@
                     "optimization": false
                 }
             },
-            "defaultConfiguration": ""
+            "defaultConfiguration": "",
+            "production": {
+                "outputHashing": "media",
+                "fileReplacements": [
+                    {
+                        "replace": "apps/serverless-sharp-loader-demo/src/environments/environment.ts",
+                        "with": "apps/serverless-sharp-loader-demo/src/environments/environment.prod.ts"
+                    }
+                ],
+                "sourceMap": false,
+                "optimization": true
+            },
+            "development": {
+                "outputHashing": "media",
+                "fileReplacements": [
+                    {
+                        "replace": "apps/serverless-sharp-loader-demo/src/environments/environment.ts",
+                        "with": "apps/serverless-sharp-loader-demo/src/environments/environment.prod.ts"
+                    }
+                ],
+                "sourceMap": false,
+                "optimization": false
+            }
         },
         "serve-ssr": {
             "executor": "@nguniversal/builders:ssr-dev-server",

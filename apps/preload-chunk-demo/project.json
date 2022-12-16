@@ -103,7 +103,30 @@
                     "namedChunks": true
                 }
             },
-            "defaultConfiguration": "production"
+            "defaultConfiguration": "production",
+            "production": {
+                "outputHashing": "media",
+                "fileReplacements": [
+                    {
+                        "replace": "apps/preload-chunk-demo/src/environments/environment.ts",
+                        "with": "apps/preload-chunk-demo/src/environments/environment.prod.ts"
+                    }
+                ],
+                "sourceMap": false,
+                "optimization": true
+            },
+            "development": {
+                "outputHashing": "media",
+                "fileReplacements": [
+                    {
+                        "replace": "apps/preload-chunk-demo/src/environments/environment.ts",
+                        "with": "apps/preload-chunk-demo/src/environments/environment.prod.ts"
+                    }
+                ],
+                "sourceMap": false,
+                "optimization": false,
+                "namedChunks": true
+            }
         },
         "serve-ssr": {
             "executor": "@nguniversal/builders:ssr-dev-server",

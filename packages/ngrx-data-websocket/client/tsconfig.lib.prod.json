@@ -3,5 +3,9 @@
     "angularCompilerOptions": {
         "compilationMode": "partial"
     },
-    "exclude": ["jest.config.ts"]
+    "exclude": ["jest.config.ts"],
+    "compilerOptions": {
+        "target": "ES2022",
+        "useDefineForClassFields": false
+    }
 }
