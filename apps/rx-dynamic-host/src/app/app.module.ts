@@ -46,10 +46,6 @@ import { StandaloneAdapterDirective } from './standalone/standalone-adapter.dire
                         (m) => m.IdleLoadStandaloneComponent
                     ),
             },
-            {
-                componentId: 'dynamic-module',
-                loadChildren: () => import('./dynamic-module/dynamic-module.module').then((m) => m.DynamicModuleModule),
-            },
         ]),
     ],
     bootstrap: [AppComponent],

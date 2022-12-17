@@ -1,6 +1,5 @@
 import type { Provider } from '@angular/core';
-import { Compiler, ENVIRONMENT_INITIALIZER, inject, Injector, NgZone, Optional } from '@angular/core';
-import { Logger } from './logger';
+import { ENVIRONMENT_INITIALIZER, inject } from '@angular/core';
 import {
     defaultRootConfig,
     DynamicComponentManifest,
@@ -23,41 +22,26 @@ function _initialManifestMap(manifests: DynamicComponentManifest[]): ManifestMap
  */
 function provideRxDynamicComponentService<T extends string = string>(
     manifests: DynamicComponentManifest<T>[]
-): Provider {
-    return {
-        provide: RxDynamicComponentService,
-        useFactory: (
-            compiler: Compiler,
-            ngZone: NgZone,
-            logger: Logger,
-            injector: Injector,
-            manifestMap: ManifestMap,
-            featureManifestMaps: DynamicComponentManifest<T>[][] | undefined | null
-        ) => {
-            const rxDynamicComponentPreloaderService = new RxDynamicComponentService(
-                compiler,
-                ngZone,
-                logger,
-                injector
-            );
+): Provider[] {
+    return [
+        RxDynamicComponentService,
+        {
+            provide: ENVIRONMENT_INITIALIZER,
+            multi: true,
+            useValue() {
+                const manifestMap = inject(DYNAMIC_MANIFEST_MAP);
+                const featureManifestMaps = inject(_FEATURE_DYNAMIC_COMPONENT_MANIFESTS, { optional: true });
 
-            rxDynamicComponentPreloaderService.addManifests([
-                ...manifests,
-                ...manifestMap.values(),
-                ...(featureManifestMaps ? featureManifestMaps[featureManifestMaps.length - 1] : []),
-            ]);
+                const rxDynamicComponentPreloaderService = inject(RxDynamicComponentService);
 
-            return rxDynamicComponentPreloaderService;
+                rxDynamicComponentPreloaderService.addManifests([
+                    ...manifests,
+                    ...manifestMap.values(),
+                    ...(featureManifestMaps ? featureManifestMaps[featureManifestMaps.length - 1] : []),
+                ]);
+            },
         },
-        deps: [
-            Compiler,
-            NgZone,
-            Logger,
-            Injector,
-            DYNAMIC_MANIFEST_MAP,
-            [new Optional(), _FEATURE_DYNAMIC_COMPONENT_MANIFESTS],
-        ],
-    };
+    ];
 }
 
 /**

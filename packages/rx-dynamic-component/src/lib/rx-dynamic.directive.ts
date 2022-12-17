@@ -1,13 +1,4 @@
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Directive,
-    Injector,
-    Input,
-    OnDestroy,
-    Type,
-    ViewContainerRef,
-} from '@angular/core';
+import { AfterViewInit, Directive, Injector, Input, OnDestroy, Type, ViewContainerRef } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import type { SharedManifestConfig } from './manifest';
 import { RxDynamicComponentRegister } from './rx-dynamic-component.register';
@@ -35,8 +26,7 @@ export class RxDynamicDirective<TComponent> implements AfterViewInit, OnDestroy 
     constructor(
         private readonly viewContainerRef: ViewContainerRef,
         private readonly rxDynamicComponentRegister: RxDynamicComponentRegister,
-        private readonly rxDynamicComponentService: RxDynamicComponentService,
-        private readonly changeDetectorRef: ChangeDetectorRef
+        private readonly rxDynamicComponentService: RxDynamicComponentService
     ) {}
 
     /**

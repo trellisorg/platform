@@ -1,6 +1,6 @@
 # @trellisorg/rx-dynamic-component
 
-A library for dynamically loading angular modules and components anywhere in the DOM with support for Inputs and
+A library for dynamically loading angular standalone components anywhere in the DOM with support for Inputs and
 Outputs.
 
 Working example: check `apps/rx-dynamic-host`
@@ -11,7 +11,7 @@ to run demo: `yarn nx serve rx-dynamic-host` and navigate to `http://localhost:4
 
 ## Adding to your application:
 
-### Define your modules and components to be lazy loaded
+### Define your standalone components to be lazy loaded
 
 #### With a Module and `DYNAMIC_COMPONENT` token
 
@@ -59,20 +59,10 @@ The above code was generated using `yarn nx g c query-param1 --standalone`.
 import { DynamicComponentManifest } from './rx-dynamic-component.manifest';
 
 const manifests: DynamicComponentManifest[] = [
-    // Using dynamic import and module + token
-    {
-        componentId: 'query1',
-        loadChildren: () => import('./query-param1/query-param1.module').then((m) => m.QueryParam1Module),
-    },
     // Using dynamic import and standalone component
     {
         componentId: 'standalone',
         loadComponent: () => import('./standalone/standalone.component').then((m) => m.StandaloneComponent),
-    },
-    // Using direct module reference
-    {
-        componentId: 'query1',
-        loadChildren: (m) => m.QueryParam1Module,
     },
 ];
 ```
