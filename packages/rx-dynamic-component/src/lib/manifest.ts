@@ -64,8 +64,3 @@ export const _FEATURE_DYNAMIC_COMPONENT_MANIFESTS = new InjectionToken<DynamicCo
  * import and ngOnDestroy respectively.
  */
 export const DYNAMIC_MANIFEST_MAP = new InjectionToken<ManifestMap>('DYNAMIC_MANIFEST_MAP');
-
-/**
- * Injection token used for telling the library what component in a lazy loaded module to use for rendering
- */
-export const DYNAMIC_COMPONENT = new InjectionToken<Type<unknown>>('DYNAMIC_COMPONENT');

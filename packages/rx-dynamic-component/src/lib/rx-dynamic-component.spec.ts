@@ -1,7 +1,6 @@
-import { Component, NgModule } from '@angular/core';
+import { Component } from '@angular/core';
 import { byText, createComponentFactory, Spectator } from '@ngneat/spectator/jest';
 import {
-    DYNAMIC_COMPONENT,
     provideRxDynamicComponent,
     RxDynamicComponentService,
     RxDynamicDirective,
@@ -27,24 +26,9 @@ class ContainerComponent {
     // eslint-disable-next-line @angular-eslint/component-selector
     selector: 'lazy-child1',
     template: ` <div data-testid="lazyChildDiv">lazyChildDiv</div>`,
-    styles: [''],
+    standalone: true,
 })
-class LazyChild1Component {
-    constructor() {}
-}
-
-@NgModule({
-    declarations: [LazyChild1Component],
-    exports: [LazyChild1Component],
-    providers: [
-        {
-            provide: DYNAMIC_COMPONENT,
-            useValue: LazyChild1Component,
-        },
-    ],
-    entryComponents: [LazyChild1Component],
-})
-class LazyChild1Module {}
+class LazyChild1Component {}
 
 describe('RxDynamicComponent', () => {
     let spectator: Spectator<ContainerComponent>;
@@ -59,7 +43,7 @@ describe('RxDynamicComponent', () => {
                 manifests: [
                     {
                         componentId: 'dynamic-lazy-child1',
-                        loadChildren: () => LazyChild1Module,
+                        loadComponent: () => LazyChild1Component,
                     },
                 ],
             }),
