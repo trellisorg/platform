@@ -3,7 +3,7 @@ import { byText, createComponentFactory, Spectator } from '@ngneat/spectator/jes
 import {
     provideRxDynamicComponent,
     RxDynamicComponentService,
-    RxDynamicLoadDirective,
+    RxDynamicDirective,
 } from '@trellisorg/rx-dynamic-component';
 import { of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
@@ -36,7 +36,7 @@ describe('RxDynamicComponent', () => {
 
     const createComponent = createComponentFactory({
         component: ContainerComponent,
-        imports: [RxDynamicLoadDirective],
+        imports: [RxDynamicDirective],
         providers: [
             provideRxDynamicComponent({
                 devMode: true,
