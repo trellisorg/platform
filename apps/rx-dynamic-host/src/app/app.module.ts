@@ -8,6 +8,7 @@ import {
     provideRxDynamicComponent,
     provideRxDynamicComponentManifests,
     RxDynamicDirective,
+    RxDynamicLoadDirective,
 } from '@trellisorg/rx-dynamic-component';
 import { AppComponent } from './app.component';
 import { StandaloneAdapterDirective } from './standalone/standalone-adapter.directive';
@@ -17,10 +18,12 @@ import { StandaloneAdapterDirective } from './standalone/standalone-adapter.dire
     imports: [
         BrowserModule,
         RouterModule.forRoot([], { initialNavigation: 'enabledBlocking' }),
-        RxDynamicDirective,
+        RxDynamicLoadDirective,
         StandaloneAdapterDirective,
         MatDialogModule,
         BrowserAnimationsModule,
+        RxDynamicDirective,
+        RxDynamicLoadDirective,
     ],
     providers: [
         provideRxDynamicComponent({
@@ -34,6 +37,11 @@ import { StandaloneAdapterDirective } from './standalone/standalone-adapter.dire
                     componentId: 'dynamic-standalone2',
                     loadComponent: () =>
                         import('./standalone/standalone2.component').then((m) => m.Standalone2Component),
+                },
+                {
+                    componentId: 'dynamic-load-on-click',
+                    loadComponent: () => import('./load-on-click.component').then((m) => m.LoadOnClickComponent),
+                    preload: false,
                 },
             ],
             preload: true,

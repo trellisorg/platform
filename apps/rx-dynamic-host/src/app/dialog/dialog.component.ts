@@ -1,12 +1,16 @@
 import { Component } from '@angular/core';
-import { provideRxDynamicComponentManifests, RxDynamicDirective } from '@trellisorg/rx-dynamic-component';
+import {
+    provideRxDynamicComponentManifests,
+    RxDynamicDirective,
+    RxDynamicLoadDirective,
+} from '@trellisorg/rx-dynamic-component';
 import { DialogService } from './dialog.service';
 
 @Component({
     selector: 'tr-dialog',
     template: `<div rxDynamic load="dialog-dynamic"></div>`,
     standalone: true,
-    imports: [RxDynamicDirective],
+    imports: [RxDynamicLoadDirective, RxDynamicDirective],
     providers: [
         provideRxDynamicComponentManifests([
             {
@@ -17,6 +21,4 @@ import { DialogService } from './dialog.service';
         DialogService,
     ],
 })
-export class DialogComponent {
-    constructor(dialogService: DialogService) {}
-}
+export class DialogComponent {}

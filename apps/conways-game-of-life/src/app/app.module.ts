@@ -5,7 +5,7 @@ import { LetModule, PushModule } from '@ngrx/component';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { provideRxDynamicComponent, RxDynamicDirective } from '@trellisorg/rx-dynamic-component';
+import { provideRxDynamicComponent, RxDynamicLoadDirective } from '@trellisorg/rx-dynamic-component';
 import { AppComponent } from './app.component';
 import { GameEffects } from './state/game.effects';
 import { gameReducer, GAME_STATE } from './state/game.state';
@@ -24,7 +24,7 @@ import { gameReducer, GAME_STATE } from './state/game.state';
         }),
         LetModule,
         PushModule,
-        RxDynamicDirective,
+        RxDynamicLoadDirective,
     ],
     providers: [
         provideRxDynamicComponent({
