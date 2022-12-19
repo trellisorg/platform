@@ -4,11 +4,11 @@ A graphql codegen plugin to set the field of the generated variables interface a
 by the client
 with [local-only fields](https://the-guild.dev/graphql/apollo-angular/docs/local-state/managing-state-with-field-policies#using-local-only-fields-as-graphql-variables).
 
-This plugin must be applied directly before the typescript-operations plugin as this plugin modifies the schema that the
+This plugin must be applied directly before the typescript-operations plugin as this plugin modifies the documents that the
 typescript-operations receives.
 
 The plugin `@trellisorg/graphql-codegen-restore-export-as-changes` should be added after the typescript-operations
-plugin to restore the schema for other operations such as typed-document-node.
+plugin to restore the documents for other plugins such as typed-document-node.
 
 ## Example
 
@@ -29,7 +29,7 @@ We have to specify the authorId as empty because it is required in the variables
 myService.watch({ authorId: '' }).valueChanges.pipe()
 ```
 
-However, with this plugin we can se tup the codegen to mark this variable as optional:
+However, with this plugin we can set up the codegen to mark this variable as optional:
 
 ```yaml
 overwrite: true
