@@ -45,7 +45,7 @@
         "@nestjs/core": "9.1.4",
         "@nestjs/platform-express": "9.1.4",
         "@nestjs/platform-socket.io": "9.1.4",
-        "@nestjs/websockets": "9.1.4",
+        "@nestjs/websockets": "9.2.1",
         "@ngneat/spectator": "11.2.1",
         "@ngrx/component": "15.0.0",
         "@ngrx/component-store": "15.0.0",
