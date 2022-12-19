@@ -25,6 +25,12 @@
             "@trellisorg/google-places-autocomplete/loader": [
                 "packages/google-places-autocomplete/loader/src/index.ts"
             ],
+            "@trellisorg/graphql-codegen-make-export-as-optional": [
+                "packages/graphql-codegen-make-export-as-optional/src/index.ts"
+            ],
+            "@trellisorg/graphql-codegen-restore-export-as-changes": [
+                "packages/graphql-codegen-restore-export-as-changes/src/index.ts"
+            ],
             "@trellisorg/nest-spectator": ["packages/nest-spectator/src/index.ts"],
             "@trellisorg/nest-worker-threads": ["packages/nest-worker-threads/src/index.ts"],
             "@trellisorg/ngrx-data-websocket-client": ["packages/ngrx-data-websocket/client/src/index.ts"],
