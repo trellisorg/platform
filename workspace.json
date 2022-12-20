@@ -6,6 +6,8 @@
         "dns-validator": "packages/dns-validator",
         "dns-validator-demo": "apps/dns-validator-demo",
         "google-places-autocomplete": "packages/google-places-autocomplete",
+        "graphql-codegen-make-export-as-optional": "packages/graphql-codegen-make-export-as-optional",
+        "graphql-codegen-restore-export-as-changes": "packages/graphql-codegen-restore-export-as-changes",
         "make-buildable": "packages/make-buildable",
         "nest-spectator": "packages/nest-spectator",
         "nest-worker-threads": "packages/nest-worker-threads",

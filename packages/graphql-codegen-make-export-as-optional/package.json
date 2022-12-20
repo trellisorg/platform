@@ -1,0 +1,25 @@
+{
+    "name": "@trellisorg/graphql-codegen-make-export-as-optional",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/trellisorg/platform",
+        "directory": "packages/graphql-codegen-make-export-as-optional"
+    },
+    "readme": "https://github.com/trellisorg/platform/tree/master/packages/graphql-codegen-make-export-as-optional",
+    "version": "1.0.0",
+    "license": "MIT",
+    "main": "src/index.js",
+    "dependencies": {
+        "tslib": "^2.3.0",
+        "lodash": "*"
+    },
+    "devDependencies": {
+        "@graphql-codegen/plugin-helpers": "^3.1.1"
+    },
+    "description": "GraphQL code generator plugin to mark typescript-operation variables as optional if they are referenced with an export(as) directive.",
+    "homepage": "https://github.com/trellisorg/platform/tree/master/packages/graphql-codegen-make-export-as-optional",
+    "author": {
+        "name": "Andrew Feltham",
+        "email": "andrew@trellis.org"
+    }
+}

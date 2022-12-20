@@ -1,0 +1,26 @@
+{
+    "name": "@trellisorg/graphql-codegen-restore-export-as-changes",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/trellisorg/platform",
+        "directory": "packages/graphql-codegen-restore-export-as-changes"
+    },
+    "readme": "https://github.com/trellisorg/platform/tree/master/packages/graphql-codegen-restore-export-as-changes",
+    "version": "1.0.0",
+    "license": "MIT",
+    "main": "src/index.js",
+    "dependencies": {
+        "lodash": "^*",
+        "tslib": "^2.3.0"
+    },
+    "devDependencies": {
+        "@graphql-codegen/plugin-helpers": "^3.1.1",
+        "@types/lodash": "*"
+    },
+    "description": "GraphQL code generator plugin that restores the changed made by the graphql-codegen-make-export-as-optional plugin.",
+    "homepage": "https://github.com/trellisorg/platform/tree/master/packages/graphql-codegen-restore-export-as-changes",
+    "author": {
+        "name": "Andrew Feltham",
+        "email": "andrew@trellis.org"
+    }
+}
