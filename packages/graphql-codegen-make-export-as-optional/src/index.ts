@@ -2,6 +2,8 @@ import type { PluginFunction, Types } from '@graphql-codegen/plugin-helpers';
 import type { OperationDefinitionNode, TypeNode } from 'graphql';
 import { set } from 'lodash';
 
+const rollbackPluginName = '@trellisorg/graphql-codegen-restore-export-as-changes';
+
 export interface OperationDefinitionVariableReplacement {
     documentIndex: number;
     value: TypeNode;
@@ -88,7 +90,6 @@ function replaceNonNullVariables(
  * @param replacements
  */
 function saveRollbackReplacements(allPlugins: Types.ConfiguredPlugin[], replacements: OperationDefinitionVariableReplacement[]) {
-    const rollbackPluginName = '@trellisorg/graphql-codegen-restore-export-as-changes';
     const plugin = allPlugins.find((obj) => Object.keys(obj).includes(rollbackPluginName));
     if (plugin) {
         plugin[rollbackPluginName] = {
