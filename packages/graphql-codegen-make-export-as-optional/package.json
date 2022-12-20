@@ -6,7 +6,7 @@
         "directory": "packages/graphql-codegen-make-export-as-optional"
     },
     "readme": "https://github.com/trellisorg/platform/tree/master/packages/graphql-codegen-make-export-as-optional",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "license": "MIT",
     "main": "src/index.js",
     "dependencies": {

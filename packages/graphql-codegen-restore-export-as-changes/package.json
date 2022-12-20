@@ -6,7 +6,7 @@
         "directory": "packages/graphql-codegen-restore-export-as-changes"
     },
     "readme": "https://github.com/trellisorg/platform/tree/master/packages/graphql-codegen-restore-export-as-changes",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "license": "MIT",
     "main": "src/index.js",
     "dependencies": {

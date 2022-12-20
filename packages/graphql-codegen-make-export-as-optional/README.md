@@ -58,7 +58,6 @@ generates:
             querySuffix: 'QueryService'
             mutationSuffix: 'MutationService'
             subscriptionSuffix: 'SubscriptionService'
-            namedClient: 'bullet'
             addExplicitOverride: true
         plugins:
             - 'typescript-apollo-angular'
