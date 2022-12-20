@@ -2881,14 +2881,14 @@
   dependencies:
     tslib "2.4.0"
 
-"@nestjs/websockets@9.1.4":
-  version "9.1.4"
-  resolved "https://registry.yarnpkg.com/@nestjs/websockets/-/websockets-9.1.4.tgz#9b612626433bdffa6ce232e641c74667afb0b3f7"
-  integrity sha512-tRiBVhBo41jsLsrQ1WMhO1EvDUSO2ydmCdB1x8pMC69bSCvEVj6VvL1/OJ2lP4j65g/4rFMtp5qBSlwPUuHqkw==
+"@nestjs/websockets@9.2.1":
+  version "9.2.1"
+  resolved "https://registry.yarnpkg.com/@nestjs/websockets/-/websockets-9.2.1.tgz#139e4d92e1a4ccbc37eaf954c19089d4607f6df5"
+  integrity sha512-3VYyjLybobsWp6fPtOIGmZL83nV0nzqs+A2KoMf6PxVuFQeTT+BYJqbYE3I1D2wE9d9m81U1efpIeOuL8CXRAQ==
   dependencies:
     iterare "1.2.1"
     object-hash "3.0.0"
-    tslib "2.4.0"
+    tslib "2.4.1"
 
 "@ngneat/spectator@11.2.1":
   version "11.2.1"
