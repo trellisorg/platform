@@ -3720,14 +3720,7 @@
   resolved "https://registry.yarnpkg.com/@types/json5/-/json5-0.0.29.tgz#ee28707ae94e11d2b827bcbe5270bcea7f3e71ee"
   integrity sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==
 
-"@types/lodash.set@^4.3.7":
-  version "4.3.7"
-  resolved "https://registry.yarnpkg.com/@types/lodash.set/-/lodash.set-4.3.7.tgz#784fccea3fbef4d0949d1897a780f592da700942"
-  integrity sha512-bS5Wkg/nrT82YUfkNYPSccFrNZRL+irl7Yt4iM6OTSQ0VZJED2oUIVm15NkNtUAQ8SRhCe+axqERUV6MJgkeEg==
-  dependencies:
-    "@types/lodash" "*"
-
-"@types/lodash@*", "@types/lodash@^4.14.191":
+"@types/lodash@^4.14.191":
   version "4.14.191"
   resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.191.tgz#09511e7f7cba275acd8b419ddac8da9a6a79e2fa"
   integrity sha512-BdZ5BCCvho3EIXw6wUCXHe7rS53AIDPLE+JzwgT+OsJk53oBfbSmZZ7CX4VaRoN78N+TJpFi9QPlfIVNmJYWxQ==
@@ -5863,10 +5856,10 @@ cuint@^0.2.2:
   resolved "https://registry.yarnpkg.com/cuint/-/cuint-0.2.2.tgz#408086d409550c2631155619e9fa7bcadc3b991b"
   integrity sha512-d4ZVpCW31eWwCMe1YT3ur7mUDnTXbgwyzaL320DrcRT45rfjYxkt5QWLrmOJ+/UEAI2+fQgKe/fCjR8l4TpRgw==
 
-cypress@^11.0.0:
-  version "11.2.0"
-  resolved "https://registry.yarnpkg.com/cypress/-/cypress-11.2.0.tgz#63edef8c387b687066c5493f6f0ad7b9ced4b2b7"
-  integrity sha512-u61UGwtu7lpsNWLUma/FKNOsrjcI6wleNmda/TyKHe0dOBcVjbCPlp1N6uwFZ0doXev7f/91YDpU9bqDCFeBLA==
+cypress@^12.1.0:
+  version "12.1.0"
+  resolved "https://registry.yarnpkg.com/cypress/-/cypress-12.1.0.tgz#1fdaa631bc30df466dc9505154616f4cf69dbd4b"
+  integrity sha512-7fz8N84uhN1+ePNDsfQvoWEl4P3/VGKKmAg+bJQFY4onhA37Ys+6oBkGbNdwGeC7n2QqibNVPhk8x3YuQLwzfw==
   dependencies:
     "@cypress/request" "^2.88.10"
     "@cypress/xvfb" "^1.2.4"
@@ -9184,11 +9177,6 @@ lodash.once@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/lodash.once/-/lodash.once-4.1.1.tgz#0dd3971213c7c56df880977d504c88fb471a97ac"
   integrity sha512-Sb487aTOCr9drQVL8pIxOzVhafOjZN9UU54hiN8PU3uAiSV7lx1yYNpbNmex2PK6dSJoNTSJUUswT651yww3Mg==
-
-lodash.set@^4.3.2:
-  version "4.3.2"
-  resolved "https://registry.yarnpkg.com/lodash.set/-/lodash.set-4.3.2.tgz#d8757b1da807dde24816b0d6a84bea1a76230b23"
-  integrity sha512-4hNPN5jlm/N/HLMCO43v8BXKq9Z7QdAGc/VGrRD61w8gN9g/6jF9A4L1pbUgBLCffi0w9VsXfTOij5x8iTyFvg==
 
 lodash.uniq@^4.5.0:
   version "4.5.0"
