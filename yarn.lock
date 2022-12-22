@@ -2831,17 +2831,17 @@
     tslib "2.4.1"
     uuid "9.0.0"
 
-"@nestjs/core@9.1.4":
-  version "9.1.4"
-  resolved "https://registry.yarnpkg.com/@nestjs/core/-/core-9.1.4.tgz#7d1ed6df9c4de6d955cacf60c18882c1ded01a83"
-  integrity sha512-S6KpGeKotPYh126hhRqYLhvg9lxSbAmGfEbK8m09crIK7CYP05t32KtT6n12xl5/iva1G4Ch87Z/3rYP76etUg==
+"@nestjs/core@9.2.1":
+  version "9.2.1"
+  resolved "https://registry.yarnpkg.com/@nestjs/core/-/core-9.2.1.tgz#598e51a421a0aaafc568c1a02499f7c1f9491caf"
+  integrity sha512-a9GkXuu8uXgNgCVW+17iI8kLCltO+HwHpU2IhR+32JKnN2WEQ1YEWU4t3GJ2MNq44YkjIw9zrKvFkjJBlYrNbQ==
   dependencies:
     "@nuxtjs/opencollective" "0.3.2"
     fast-safe-stringify "2.1.1"
     iterare "1.2.1"
     object-hash "3.0.0"
     path-to-regexp "3.2.0"
-    tslib "2.4.0"
+    tslib "2.4.1"
     uuid "9.0.0"
 
 "@nestjs/platform-express@9.1.4":
