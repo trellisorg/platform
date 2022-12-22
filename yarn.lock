@@ -2941,10 +2941,10 @@
     replace-in-file "6.2.0"
     tslib "^2.1.0"
 
-"@ngrx/component-store@15.0.0":
-  version "15.0.0"
-  resolved "https://registry.yarnpkg.com/@ngrx/component-store/-/component-store-15.0.0.tgz#fd8dbb69a6819a6e32e794ba887d04176c5581c6"
-  integrity sha512-j6Xdch4z54NCXYUKBAJYp2d3F7IObnqJ2dcsYqNhlXE5VUUtZPY1i75RJfMKuBCoSByRVnv1f/OkOxrPnvXp+g==
+"@ngrx/component-store@15.1.0":
+  version "15.1.0"
+  resolved "https://registry.yarnpkg.com/@ngrx/component-store/-/component-store-15.1.0.tgz#090969292965dfb57eba68c8989849645519991e"
+  integrity sha512-aqNxZHWdHAgnxz5cdBLKmWq83PVKw9F4ZMVddsZ7d8Ow2j3BWZiYP65hPVgVpzTHuigpE4OX0cutwGC38iu1GA==
   dependencies:
     tslib "^2.0.0"
 
