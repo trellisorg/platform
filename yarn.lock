@@ -2890,10 +2890,10 @@
     object-hash "3.0.0"
     tslib "2.4.1"
 
-"@ngneat/spectator@11.2.1":
-  version "11.2.1"
-  resolved "https://registry.yarnpkg.com/@ngneat/spectator/-/spectator-11.2.1.tgz#ca865200507c834b0dcd8b1e4443a260b002816e"
-  integrity sha512-XhrMZIHllnuOHX5LaAGO2MePIFQhvRiKduAIp8ATMpiW9wVv/huRiF4Vs8R8jn2ToQVckhsj3vvMNSet45lZAQ==
+"@ngneat/spectator@13.0.0":
+  version "13.0.0"
+  resolved "https://registry.yarnpkg.com/@ngneat/spectator/-/spectator-13.0.0.tgz#de85ce9f5b3b7b64d68c7645a7038dfe5806dd09"
+  integrity sha512-oDTBF6vWJjtXyEQcaqOFZWg9oRSqd3XKa6o5jpVFKNbb1sYvuLQzWwiilxvutHrsWPxtz7hf4AwuSNo+jXskCw==
   dependencies:
     "@testing-library/dom" "^8.11.0"
     jquery "3.6.0"
