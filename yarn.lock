@@ -3188,6 +3188,17 @@
     semver "7.3.4"
     tslib "^2.3.0"
 
+"@nrwl/devkit@15.4.0":
+  version "15.4.0"
+  resolved "https://registry.yarnpkg.com/@nrwl/devkit/-/devkit-15.4.0.tgz#241b3f3fa67b48cf72b99f0c23e44ee98454339c"
+  integrity sha512-aLMg4DBfstmJRFavH1SFBMdso1IVDewLsZi9xq3R+ISWP+AK9sf0JvhYqam9jRf8DSW8GLbp2ziPbnnv+d+uHw==
+  dependencies:
+    "@phenomnomnominal/tsquery" "4.1.1"
+    ejs "^3.1.7"
+    ignore "^5.0.4"
+    semver "7.3.4"
+    tslib "^2.3.0"
+
 "@nrwl/eslint-plugin-nx@15.3.3":
   version "15.3.3"
   resolved "https://registry.yarnpkg.com/@nrwl/eslint-plugin-nx/-/eslint-plugin-nx-15.3.3.tgz#7095aa90e1ac5cae222a17228f0ff4d0a371c267"
@@ -3207,6 +3218,24 @@
     "@jest/reporters" "28.1.1"
     "@jest/test-result" "28.1.1"
     "@nrwl/devkit" "15.3.3"
+    "@phenomnomnominal/tsquery" "4.1.1"
+    chalk "4.1.0"
+    dotenv "~10.0.0"
+    identity-obj-proxy "3.0.0"
+    jest-config "28.1.1"
+    jest-resolve "28.1.1"
+    jest-util "28.1.1"
+    resolve.exports "1.1.0"
+    tslib "^2.3.0"
+
+"@nrwl/jest@15.4.0":
+  version "15.4.0"
+  resolved "https://registry.yarnpkg.com/@nrwl/jest/-/jest-15.4.0.tgz#2d545a3d751b4e3c4319ec64b3d7fbaf89d48358"
+  integrity sha512-5QPRobK3AAwgYw8peJBBNjpRfguE5lkXnWUhqnBeKoe9xOg5hEK2Or7zJbp1A85dpGTHxr9isvd0ebk0CwhUMg==
+  dependencies:
+    "@jest/reporters" "28.1.1"
+    "@jest/test-result" "28.1.1"
+    "@nrwl/devkit" "15.4.0"
     "@phenomnomnominal/tsquery" "4.1.1"
     chalk "4.1.0"
     dotenv "~10.0.0"
