@@ -1,7 +1,6 @@
 /* eslint-disable */
 export default {
-    name: 'make-buildable',
-
+    displayName: 'make-buildable',
     transform: {
         '^.+\\.[tj]sx?$': 'ts-jest',
     },
