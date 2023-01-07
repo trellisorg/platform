@@ -9,15 +9,12 @@ import {
     Tree,
     url,
 } from '@angular-devkit/schematics';
-import { offsetFromRoot, readNxJson } from '@nrwl/devkit';
-import {
-    readJsonInTree,
-    readWorkspace,
-    updateJsonInTree,
-    updateWorkspaceInTree,
-} from '@nrwl/workspace';
+import { offsetFromRoot } from '@nrwl/devkit';
+import { readJsonInTree, readWorkspace, updateJsonInTree, updateWorkspaceInTree } from '@nrwl/workspace';
 import { checkProjectExists } from '@nrwl/workspace/src/utils/rules/check-project-exists';
+import { readFileSync } from 'fs';
 import * as merge from 'lodash.merge';
+import { join } from 'path';
 import type { MakeBuildableSchematicSchema } from './schema';
 
 interface NormalizedSchema extends MakeBuildableSchematicSchema {
@@ -42,14 +39,9 @@ const parseVersionRegex = /\d+\.\d+\.\d+/;
 
 function getVersions(host: Tree): Versions {
     const packageJson = readJsonInTree(host, 'package.json');
-    const nrwlWorkspace =
-        packageJson.devDependencies['@nrwl/workspace'].match(
-            parseVersionRegex
-        )[0];
-    const angular =
-        packageJson.dependencies['@angular/core']?.match(parseVersionRegex)[0];
-    const tsLib =
-        packageJson.dependencies['tslib']?.match(parseVersionRegex)[0];
+    const nrwlWorkspace = packageJson.devDependencies['@nrwl/workspace'].match(parseVersionRegex)[0];
+    const angular = packageJson.dependencies['@angular/core']?.match(parseVersionRegex)[0];
+    const tsLib = packageJson.dependencies['tslib']?.match(parseVersionRegex)[0];
     return {
         angular,
         tsLib,
@@ -57,17 +49,9 @@ function getVersions(host: Tree): Versions {
     };
 }
 
-function createAngularBuildTarget(
-    projectName: string,
-    root: string,
-    configurations: string[],
-    nxVersion: number
-): any {
+function createAngularBuildTarget(projectName: string, root: string, configurations: string[], nxVersion: number): any {
     return {
-        builder:
-            nxVersion >= 11
-                ? '@nrwl/angular:ng-packagr-lite'
-                : '@nrwl/angular:package',
+        builder: nxVersion >= 11 ? '@nrwl/angular:ng-packagr-lite' : '@nrwl/angular:package',
         options: {
             tsConfig: `${root}/tsconfig.lib.json`,
             project: `${root}/ng-package.json`,
@@ -137,12 +121,7 @@ function updateWorkspace(schema: NormalizedSchema, nxVersion: number) {
         const root = project.root;
 
         project.architect.build = isAngular
-            ? createAngularBuildTarget(
-                  schema.projectName,
-                  root,
-                  schema.configurations,
-                  nxVersion
-              )
+            ? createAngularBuildTarget(schema.projectName, root, schema.configurations, nxVersion)
             : createNodeBuildTarget(schema.projectName, root);
 
         return workspace;
@@ -197,13 +176,8 @@ export default function (options: MakeBuildableSchematicSchema): Rule {
     return (host: Tree, context: SchematicContext) => {
         const workspace = readWorkspace(host);
         const versions = getVersions(host);
-        const npmScope = readNxJson().npmScope;
-        const normalizedOptions = normalizeOptions(
-            options,
-            workspace,
-            versions,
-            npmScope
-        );
+        const npmScope = JSON.parse(readFileSync(join(process.cwd(), 'nx.json'), { encoding: 'utf-8' })).npmScope;
+        const normalizedOptions = normalizeOptions(options, workspace, versions, npmScope);
 
         return chain([
             checkProjectExists(options),

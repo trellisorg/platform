@@ -41,9 +41,7 @@ export function isCompilerFlagSet(
 ): boolean {
     const rootFlagSet = tsConfigBase.compilerOptions?.[flag];
 
-    const tsConfigLibJson = readTsConfig(
-        join(project.data.root, `tsconfig.${type}.json`)
-    );
+    const tsConfigLibJson = readTsConfig(join(project.data.root, `tsconfig.${type}.json`));
     const tsConfigJson = readTsConfig(join(project.data.root, 'tsconfig.json'));
 
     const libFlagSet = tsConfigLibJson?.compilerOptions?.[flag];
@@ -61,5 +59,5 @@ export function isCompilerFlagSet(
  * @param project
  */
 export function isBuildable(project: ProjectGraphProjectNode): boolean {
-    return !!project.data.targets?.build;
+    return !!project.data.targets?.['build'];
 }
