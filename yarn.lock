@@ -2930,10 +2930,10 @@
   dependencies:
     tslib "^2.0.0"
 
-"@ngrx/component@15.0.0":
-  version "15.0.0"
-  resolved "https://registry.yarnpkg.com/@ngrx/component/-/component-15.0.0.tgz#6c2b60bfc1618f06274eddf868ac38f8a9d749e3"
-  integrity sha512-Qp8BUuZexUXuFNNOGfr2o1xePQTWrQQPImOwZZG4e2jrd6Eh/OBNX64PtX2ql/voxEunB4GbF7L6UMpF6J/KHg==
+"@ngrx/component@15.3.0":
+  version "15.3.0"
+  resolved "https://registry.yarnpkg.com/@ngrx/component/-/component-15.3.0.tgz#632b22fac3f994f73a8d793ffa0fe18deff484eb"
+  integrity sha512-n35I8fWe8g/OFOrBN3OwiFcVYp6d80wFLc/OlPQudxBBJJCgPkv6lBQfEAQEZp69PiS4lvZadbdJ/DdZmS0SsQ==
   dependencies:
     tslib "^2.0.0"
 

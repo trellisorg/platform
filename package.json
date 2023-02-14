@@ -47,7 +47,7 @@
         "@nestjs/platform-socket.io": "9.1.4",
         "@nestjs/websockets": "9.2.1",
         "@ngneat/spectator": "13.0.0",
-        "@ngrx/component": "15.0.0",
+        "@ngrx/component": "15.3.0",
         "@ngrx/component-store": "15.1.0",
         "@ngrx/data": "15.0.0",
         "@ngrx/effects": "15.0.0",
