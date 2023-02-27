@@ -12,22 +12,34 @@ describe('Circular Deps', () => {
         [app1]: {
             type: 'app',
             name: app1,
-            data: {},
+            data: {
+                root: '',
+                files: [],
+            },
         },
         [lib1]: {
             type: 'lib',
             name: lib2,
-            data: {},
+            data: {
+                root: '',
+                files: [],
+            },
         },
         [lib2]: {
             type: 'lib',
             name: lib2,
-            data: {},
+            data: {
+                root: '',
+                files: [],
+            },
         },
         [lib3]: {
             type: 'lib',
             name: lib3,
-            data: {},
+            data: {
+                root: '',
+                files: [],
+            },
         },
     };
 

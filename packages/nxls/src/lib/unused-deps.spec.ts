@@ -9,12 +9,18 @@ describe('Unused Deps', () => {
         [app1]: {
             type: 'app',
             name: app1,
-            data: {},
+            data: {
+                root: '',
+                files: [],
+            },
         },
         [lib1]: {
             type: 'lib',
             name: lib1,
-            data: {},
+            data: {
+                root: '',
+                files: [],
+            },
         },
     };
 
