@@ -2,11 +2,7 @@ import { createProjectGraphAsync } from '@nrwl/devkit';
 import * as yargs from 'yargs';
 import { calcDependencyOverlap } from './calc-dependency-overlap';
 import { findCircularDependencies } from './circular-deps';
-import {
-    findAllDependencyChains,
-    findDependencies,
-    findDependents,
-} from './find-dep-chain';
+import { findAllDependencyChains, findDependencies, findDependents } from './find-dep-chain';
 import { listProjects } from './list';
 import { findUnusedDependencies } from './unused-deps';
 
@@ -45,9 +41,7 @@ yargs
 
             records.forEach(({ outerDep, innerDep, percent }) => {
                 console.log(
-                    `${outerDep} shares ${
-                        Math.round(percent * 100 * 100) / 100
-                    }% of it's deps with ${innerDep}`
+                    `${outerDep} shares ${Math.round(percent * 100 * 100) / 100}% of it's deps with ${innerDep}`
                 );
             });
         }
@@ -78,22 +72,15 @@ yargs
             },
         },
         (args) => {
-            if (
-                args.source?.length &&
-                (args.dependencies != null || args.dependents != null)
-            ) {
+            if (args.source?.length && (args.dependencies != null || args.dependents != null)) {
                 // TODO: use chalk to display an error
-                console.error(
-                    '--source cannot be used with --dependencies or --dependencies'
-                );
+                console.error('--source cannot be used with --dependencies or --dependencies');
                 return;
             }
 
             if (args.dependencies != null && args.dependents != null) {
                 // TODO: use chalk to display an error
-                console.error(
-                    'Please either either `--dependants or `--dependencies but not both.'
-                );
+                console.error('Please either either `--dependants or `--dependencies but not both.');
                 return;
             }
 
@@ -104,9 +91,7 @@ yargs
             } else if (args.dependents) {
                 chains = findDependents(args);
             } else {
-                chains = findAllDependencyChains(args).map((chain) =>
-                    chain.join(' -> ')
-                );
+                chains = findAllDependencyChains(args as unknown as any).map((chain) => chain.join(' -> '));
             }
 
             chains.forEach((chain) => {
@@ -146,14 +131,9 @@ yargs
         },
         async (args) => {
             const projectGraph = await createProjectGraphAsync();
-            const projects = listProjects(args, projectGraph.nodes);
+            const projects = listProjects(args as unknown as any, projectGraph.nodes);
             projects.forEach((project) => {
-                console.log(
-                    `${project.name}`,
-                    args.countDependents
-                        ? ` used ${project.numDependents} times.`
-                        : ''
-                );
+                console.log(`${project.name}`, args.countDependents ? ` used ${project.numDependents} times.` : '');
             });
         }
     )
@@ -188,7 +168,7 @@ yargs
             },
         },
         async (args) => {
-            const unusedDeps = await findUnusedDependencies(args);
+            const unusedDeps = await findUnusedDependencies(args as unknown as any);
 
             console.log('Unused Deps', unusedDeps);
         }
@@ -218,7 +198,7 @@ yargs
             },
         },
         async (args) => {
-            const circularDeps = await findCircularDependencies(args);
+            const circularDeps = await findCircularDependencies(args as unknown as any);
 
             if (circularDeps.length)
                 circularDeps.forEach((value) => {
