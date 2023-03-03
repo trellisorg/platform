@@ -102,7 +102,7 @@
         "@nrwl/workspace": "15.7.2",
         "@schematics/angular": "~15.1.0",
         "@types/compression": "^1.7.2",
-        "@types/google.maps": "3.50.4",
+        "@types/google.maps": "3.52.1",
         "@types/jest": "28.1.1",
         "@types/lodash": "^4.14.191",
         "@types/md5": "^2.3.2",
