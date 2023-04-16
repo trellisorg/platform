@@ -1,9 +1,9 @@
 {
     "name": "@trellisorg/use-memo",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "peerDependencies": {
-        "@angular/common": "^14",
-        "@angular/core": "^14"
+        "@angular/common": "^14 || ^15 || ^16",
+        "@angular/core": "^14 || ^15 || ^16"
     },
     "dependencies": {
         "tslib": "^2.3.0"

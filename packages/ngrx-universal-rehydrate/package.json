@@ -1,16 +1,16 @@
 {
     "name": "@trellisorg/ngrx-universal-rehydrate",
-    "version": "0.0.14",
+    "version": "0.0.15",
     "repository": {
         "url": "https://github.com/trellisorg/platform/tree/master/packages/ngrx-universal-rehydrate"
     },
     "license": "MIT",
     "peerDependencies": {
-        "@angular/common": "^9 || ^10 || ^11 || ^12 || ^13 || ^14",
-        "@angular/core": "^9 || ^10 || ^11 || ^12 || ^13 || ^14",
-        "@angular/platform-browser": "^9 || ^10 || ^11 || ^12 || ^13 || ^14",
-        "@angular/platform-server": "^9 || ^10 || ^11 || ^12 || ^13 || ^14",
-        "@ngrx/store": "^9 || ^10 || ^11 || ^12 || ^13 || ^14",
+        "@angular/common": "^9 || ^10 || ^11 || ^12 || ^13 || ^14 || ^15 || ^16",
+        "@angular/core": "^9 || ^10 || ^11 || ^12 || ^13 || ^14 || ^15 || ^16",
+        "@angular/platform-browser": "^9 || ^10 || ^11 || ^12 || ^13 || ^14 || ^15 || ^16",
+        "@angular/platform-server": "^9 || ^10 || ^11 || ^12 || ^13 || ^14 || ^15 || ^16",
+        "@ngrx/store": "^9 || ^10 || ^11 || ^12 || ^13 || ^14 || ^15 || ^16",
         "rxjs": "^6.5.5 || ^7.5.0"
     },
     "dependencies": {

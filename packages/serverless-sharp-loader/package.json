@@ -1,12 +1,12 @@
 {
     "name": "@trellisorg/serverless-sharp-loader",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "repository": {
         "url": "https://github.com/trellisorg/platform/tree/master/packages/serverless-sharp-loader"
     },
     "peerDependencies": {
-        "@angular/common": "^14.0.0",
-        "@angular/core": "^14.0.0"
+        "@angular/common": "^14 || ^15 || ^16",
+        "@angular/core": "^14 || ^15 || ^16"
     },
     "dependencies": {
         "tslib": "^2.3.0"

@@ -1,5 +1,9 @@
 {
     "name": "@trellisorg/preload-chunks",
-    "version": "1.0.0",
-    "type": "commonjs"
+    "version": "1.0.1",
+    "type": "commonjs",
+    "peerDependencies": {
+        "@angular/common": "^14 || ^15 || ^16",
+        "@angular/core": "^14 || ^15 || ^16"
+    }
 }
