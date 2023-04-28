@@ -1,4 +1,4 @@
-import { InjectionToken, NgModuleFactory, Type } from '@angular/core';
+import { InjectionToken, Type } from '@angular/core';
 import type { Observable } from 'rxjs';
 
 export type ManifestMap = Map<string, DynamicComponentManifest>;
@@ -42,17 +42,9 @@ export type LoadComponent = Type<any> | Observable<Type<any>> | Promise<Type<any
 
 export type LoadComponentCallback = () => LoadComponent;
 
-export type LoadModule =
-    | Type<any>
-    | NgModuleFactory<any>
-    | Observable<Type<any>>
-    | Promise<NgModuleFactory<any> | Type<any>>;
-
-export type LoadModuleCallback = () => LoadModule;
-
 export type DynamicComponentManifest<T = string> = SharedManifestConfig & {
     componentId: T;
-} & ({ loadChildren: LoadModuleCallback } | { loadComponent: LoadComponentCallback });
+} & { loadComponent: LoadComponentCallback };
 
 /**
  * The root configuration injection token
@@ -63,7 +55,7 @@ export const DYNAMIC_COMPONENT_CONFIG = new InjectionToken<DynamicComponentRootC
  * A feature injection token to allow the RxDynamicComponentFeatureModule to register each of the feature
  * manifests in the manifest map.
  */
-export const _FEATURE_DYNAMIC_COMPONENT_MANIFESTS = new InjectionToken<DynamicComponentManifest<unknown>[][]>(
+export const _FEATURE_DYNAMIC_COMPONENT_MANIFESTS = new InjectionToken<DynamicComponentManifest[][]>(
     'FEATURE_DYNAMIC_COMPONENT_MANIFESTS'
 );
 
@@ -72,8 +64,3 @@ export const _FEATURE_DYNAMIC_COMPONENT_MANIFESTS = new InjectionToken<DynamicCo
  * import and ngOnDestroy respectively.
  */
 export const DYNAMIC_MANIFEST_MAP = new InjectionToken<ManifestMap>('DYNAMIC_MANIFEST_MAP');
-
-/**
- * Injection token used for telling the library what component in a lazy loaded module to use for rendering
- */
-export const DYNAMIC_COMPONENT = new InjectionToken<Type<unknown>>('DYNAMIC_COMPONENT');

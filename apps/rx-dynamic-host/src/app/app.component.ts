@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { faker } from '@faker-js/faker';
-import { RxDynamicComponentService } from '@trellisorg/rx-dynamic-component';
+import { DynamicEventLoaded, RxDynamicComponentService } from '@trellisorg/rx-dynamic-component';
 import { interval, map, startWith, Subject, timer } from 'rxjs';
 import { DialogComponent } from './dialog/dialog.component';
 
@@ -34,13 +34,18 @@ import { DialogComponent } from './dialog/dialog.component';
             <div [config]="{ priority: 'idle' }" rxDynamic load="dynamic-idle-standalone"></div>
         </div>
         <button (click)="open()">Open</button>
+        <button
+            [loadEvents]="['mouseover']"
+            (manifestLoaded)="manifestLoaded($event)"
+            rxDynamicLoad
+            manifests="dynamic-load-on-click"
+        >
+            Load Manifest
+        </button>
     `,
     styles: [],
 })
 export class AppComponent {
-    title = 'rx-dynamic-host';
-    readonly dynamicStandaloneComponentType$ = this.rxDynamicComponentService.getComponent('dynamic-standalone');
-
     readonly dynamicModule$ = this.rxDynamicComponentService.getComponent('dynamic-module');
 
     readonly randomNameEverySecond$ = interval(1000).pipe(map(() => faker.name.firstName()));
@@ -60,5 +65,9 @@ export class AppComponent {
 
     open() {
         this.matDialog.open(DialogComponent);
+    }
+
+    manifestLoaded($event: DynamicEventLoaded): void {
+        console.log($event);
     }
 }

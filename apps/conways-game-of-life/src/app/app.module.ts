@@ -31,11 +31,11 @@ import { gameReducer, GAME_STATE } from './state/game.state';
             manifests: [
                 {
                     componentId: 'dead',
-                    loadChildren: () => import('./dead/dead.module').then((m) => m.DeadModule),
+                    loadComponent: () => import('./dead.component').then((m) => m.DeadComponent),
                 },
                 {
                     componentId: 'alive',
-                    loadChildren: () => import('./alive/alive.module').then((m) => m.AliveModule),
+                    loadComponent: () => import('./alive.component').then((m) => m.AliveComponent),
                 },
             ],
         }),
