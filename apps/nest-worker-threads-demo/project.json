@@ -22,7 +22,7 @@
             }
         },
         "serve": {
-            "executor": "@nrwl/node:node",
+            "executor": "@nx/node:node",
             "options": {
                 "buildTarget": "nest-worker-threads-demo:build"
             }

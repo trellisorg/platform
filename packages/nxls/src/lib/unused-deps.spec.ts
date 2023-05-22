@@ -1,4 +1,4 @@
-import type { ProjectGraphProjectNode } from '@nrwl/devkit';
+import type { ProjectGraphProjectNode } from '@nx/devkit';
 import { _findUnusedDependencies } from './unused-deps';
 
 describe('Unused Deps', () => {

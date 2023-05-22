@@ -4,14 +4,9 @@
     "overrides": [
         {
             "files": ["*.ts"],
-            "extends": [
-                "plugin:@nrwl/nx/angular",
-                "plugin:@angular-eslint/template/process-inline-templates"
-            ],
+            "extends": ["plugin:@nx/angular", "plugin:@angular-eslint/template/process-inline-templates"],
             "parserOptions": {
-                "project": [
-                    "packages/ngrx-data-websocket/client/tsconfig.*?.json"
-                ]
+                "project": ["packages/ngrx-data-websocket/client/tsconfig.*?.json"]
             },
             "rules": {
                 "@angular-eslint/directive-selector": [
@@ -34,7 +29,7 @@
         },
         {
             "files": ["*.html"],
-            "extends": ["plugin:@nrwl/nx/angular-template"],
+            "extends": ["plugin:@nx/angular-template"],
             "rules": {}
         }
     ]

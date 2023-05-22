@@ -1,11 +1,12 @@
 {
     "name": "rx-dynamic-host",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
     "projectType": "application",
     "sourceRoot": "apps/rx-dynamic-host/src",
     "prefix": "trellisorg",
     "targets": {
         "build": {
-            "executor": "@nrwl/angular:webpack-browser",
+            "executor": "@nx/angular:webpack-browser",
             "outputs": ["{options.outputPath}"],
             "options": {
                 "outputPath": "dist/apps/rx-dynamic-host",
@@ -52,7 +53,7 @@
             "defaultConfiguration": "production"
         },
         "serve": {
-            "executor": "@nrwl/angular:webpack-dev-server",
+            "executor": "@nx/angular:webpack-dev-server",
             "configurations": {
                 "production": {
                     "browserTarget": "rx-dynamic-host:build:production"

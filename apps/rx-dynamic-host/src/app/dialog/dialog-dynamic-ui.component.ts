@@ -6,6 +6,6 @@ import { Component, Input } from '@angular/core';
     standalone: true,
     imports: [],
 })
-export class DialogDynamicComponentUi {
+export class DialogDynamicUiComponent {
     @Input() value: number | undefined | null = 0;
 }

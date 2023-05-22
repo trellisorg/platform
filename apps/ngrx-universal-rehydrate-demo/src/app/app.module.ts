@@ -1,10 +1,7 @@
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
 import { Inject, NgModule, PLATFORM_ID } from '@angular/core';
-import {
-    BrowserModule,
-    BrowserTransferStateModule,
-} from '@angular/platform-browser';
+import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { EffectsModule } from '@ngrx/effects';
 import { Store, StoreModule } from '@ngrx/store';
@@ -32,23 +29,16 @@ import { loadData, titleReducer } from './store';
             disableWarnings: false,
         }),
         StoreDevtoolsModule.instrument({}),
-        BrowserTransferStateModule,
         HttpClientModule,
         HttpClientJsonpModule,
         RouterModule.forRoot([
             {
                 path: 'feature1',
-                loadChildren: () =>
-                    import('./feature1/feature1.module').then(
-                        (m) => m.Feature1Module
-                    ),
+                loadChildren: () => import('./feature1/feature1.module').then((m) => m.Feature1Module),
             },
             {
                 path: 'feature2',
-                loadChildren: () =>
-                    import('./feature2/feature2.module').then(
-                        (m) => m.Feature2Module
-                    ),
+                loadChildren: () => import('./feature2/feature2.module').then((m) => m.Feature2Module),
             },
         ]),
     ],

@@ -6,7 +6,7 @@
     "prefix": "trellis",
     "targets": {
         "build": {
-            "executor": "@nrwl/angular:package",
+            "executor": "@nx/angular:package",
             "options": {
                 "tsConfig": "packages/ngrx-data-websocket/client/tsconfig.lib.json",
                 "project": "packages/ngrx-data-websocket/client/ng-package.json"
@@ -28,7 +28,7 @@
             }
         },
         "test": {
-            "executor": "@nrwl/jest:jest",
+            "executor": "@nx/jest:jest",
             "options": {
                 "jestConfig": "packages/ngrx-data-websocket/client/jest.config.ts",
                 "passWithNoTests": true

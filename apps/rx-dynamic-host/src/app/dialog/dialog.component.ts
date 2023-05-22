@@ -17,6 +17,4 @@ import { DialogService } from './dialog.service';
         DialogService,
     ],
 })
-export class DialogComponent {
-    constructor(dialogService: DialogService) {}
-}
+export class DialogComponent {}

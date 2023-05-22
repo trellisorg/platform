@@ -6,9 +6,5 @@ import { nextGeneration } from './game.state';
 
 @Injectable()
 export class GameEffects {
-    gameIteration$ = createEffect(() =>
-        interval(500).pipe(map(() => nextGeneration()))
-    );
-
-    constructor() {}
+    readonly gameIteration$ = createEffect(() => interval(500).pipe(map(() => nextGeneration())));
 }

@@ -5,7 +5,7 @@
     "projectType": "library",
     "targets": {
         "build": {
-            "executor": "@nrwl/js:tsc",
+            "executor": "@nx/js:tsc",
             "outputs": ["{options.outputPath}"],
             "options": {
                 "outputPath": "dist/packages/preload-chunks",
@@ -21,7 +21,6 @@
             },
             "dependsOn": [
                 {
-                    "projects": "self",
                     "target": "build"
                 }
             ]
@@ -34,7 +33,7 @@
             }
         },
         "test": {
-            "executor": "@nrwl/jest:jest",
+            "executor": "@nx/jest:jest",
             "outputs": ["{workspaceRoot}/coverage/packages/preload-chunks"],
             "options": {
                 "jestConfig": "packages/preload-chunks/jest.config.ts",

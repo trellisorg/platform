@@ -6,7 +6,7 @@
     "prefix": "trellisorg",
     "targets": {
         "build": {
-            "executor": "@nrwl/angular:package",
+            "executor": "@nx/angular:package",
             "outputs": ["{workspaceRoot}/dist/packages/google-places-autocomplete"],
             "options": {
                 "project": "packages/google-places-autocomplete/ng-package.json"

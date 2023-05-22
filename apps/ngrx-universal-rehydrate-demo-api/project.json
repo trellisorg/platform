@@ -32,7 +32,7 @@
             }
         },
         "serve": {
-            "executor": "@nrwl/node:node",
+            "executor": "@nx/node:node",
             "options": {
                 "buildTarget": "ngrx-universal-rehydrate-demo-api:build"
             }
@@ -44,7 +44,7 @@
             }
         },
         "test": {
-            "executor": "@nrwl/jest:jest",
+            "executor": "@nx/jest:jest",
             "outputs": ["{workspaceRoot}/coverage/apps/ngrx-universal-rehydrate-demo-api"],
             "options": {
                 "jestConfig": "apps/ngrx-universal-rehydrate-demo-api/jest.config.ts",

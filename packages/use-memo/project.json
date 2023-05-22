@@ -6,7 +6,7 @@
     "prefix": "trellisorg",
     "targets": {
         "build": {
-            "executor": "@nrwl/angular:package",
+            "executor": "@nx/angular:package",
             "outputs": ["{workspaceRoot}/dist/packages/use-memo"],
             "options": {
                 "project": "packages/use-memo/ng-package.json"
@@ -22,7 +22,7 @@
             "defaultConfiguration": "production"
         },
         "test": {
-            "executor": "@nrwl/jest:jest",
+            "executor": "@nx/jest:jest",
             "outputs": ["{workspaceRoot}/coverage/packages/use-memo"],
             "options": {
                 "jestConfig": "packages/use-memo/jest.config.ts",

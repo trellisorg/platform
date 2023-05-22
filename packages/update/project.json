@@ -6,7 +6,7 @@
     "prefix": "trellisorg",
     "targets": {
         "build": {
-            "executor": "@nrwl/angular:package",
+            "executor": "@nx/angular:package",
             "outputs": ["{workspaceRoot}/dist/packages/update"],
             "options": {
                 "project": "packages/update/ng-package.json"
@@ -22,7 +22,7 @@
             "defaultConfiguration": "production"
         },
         "test": {
-            "executor": "@nrwl/jest:jest",
+            "executor": "@nx/jest:jest",
             "outputs": ["{workspaceRoot}/coverage/packages/update"],
             "options": {
                 "jestConfig": "packages/update/jest.config.ts",

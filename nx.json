@@ -9,7 +9,7 @@
     },
     "tasksRunnerOptions": {
         "default": {
-            "runner": "@nrwl/nx-cloud",
+            "runner": "nx-cloud",
             "options": {
                 "accessToken": "NTIxYmI5NTktYTY3Yy00MzA0LWIxZTQtZDZiNGUxNzNiNjhjfHJlYWQ=",
                 "cacheableOperations": ["build", "test", "lint", "e2e"],
@@ -21,19 +21,9 @@
         }
     },
     "cli": {
-        "schematicCollections": ["@nrwl/angular"]
+        "schematicCollections": ["@nx/angular"]
     },
     "generators": {
-        "@nrwl/workspace": {
-            "library": {
-                "linter": "eslint"
-            }
-        },
-        "@nrwl/cypress": {
-            "cypress-project": {
-                "linter": "eslint"
-            }
-        },
         "@nrwl/react": {
             "application": {
                 "linter": "eslint"
@@ -55,24 +45,6 @@
                 "linter": "eslint"
             }
         },
-        "@nrwl/node": {
-            "application": {
-                "linter": "eslint"
-            },
-            "library": {
-                "linter": "eslint"
-            }
-        },
-        "@nrwl/nx-plugin": {
-            "plugin": {
-                "linter": "eslint"
-            }
-        },
-        "@nrwl/nest": {
-            "application": {
-                "linter": "eslint"
-            }
-        },
         "@nrwl/express": {
             "application": {
                 "linter": "eslint"
@@ -81,18 +53,46 @@
                 "linter": "eslint"
             }
         },
-        "@nrwl/angular:application": {
+        "@nx/angular:application": {
             "style": "scss",
             "linter": "eslint",
             "unitTestRunner": "jest",
             "e2eTestRunner": "cypress"
         },
-        "@nrwl/angular:library": {
+        "@nx/angular:library": {
             "linter": "eslint",
             "unitTestRunner": "jest"
         },
-        "@nrwl/angular:component": {
+        "@nx/angular:component": {
             "style": "css"
+        },
+        "@nx/workspace": {
+            "library": {
+                "linter": "eslint"
+            }
+        },
+        "@nx/cypress": {
+            "cypress-project": {
+                "linter": "eslint"
+            }
+        },
+        "@nx/plugin": {
+            "plugin": {
+                "linter": "eslint"
+            }
+        },
+        "@nx/node": {
+            "application": {
+                "linter": "eslint"
+            },
+            "library": {
+                "linter": "eslint"
+            }
+        },
+        "@nx/nest": {
+            "application": {
+                "linter": "eslint"
+            }
         }
     },
     "$schema": "./node_modules/nx/schemas/nx-schema.json",

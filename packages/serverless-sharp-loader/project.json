@@ -1,11 +1,12 @@
 {
     "name": "serverless-sharp-loader",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
     "projectType": "library",
     "sourceRoot": "packages/serverless-sharp-loader/src",
     "prefix": "trellisorg",
     "targets": {
         "build": {
-            "executor": "@nrwl/angular:package",
+            "executor": "@nx/angular:package",
             "outputs": ["{workspaceRoot}/dist/packages/serverless-sharp-loader"],
             "options": {
                 "project": "packages/serverless-sharp-loader/ng-package.json"
@@ -21,7 +22,7 @@
             "defaultConfiguration": "production"
         },
         "test": {
-            "executor": "@nrwl/jest:jest",
+            "executor": "@nx/jest:jest",
             "outputs": ["{workspaceRoot}/coverage/packages/serverless-sharp-loader"],
             "options": {
                 "jestConfig": "packages/serverless-sharp-loader/jest.config.ts",

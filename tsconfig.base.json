@@ -8,6 +8,7 @@
         "allowSyntheticDefaultImports": true,
         "emitDecoratorMetadata": true,
         "importsNotUsedAsValues": "error",
+        "ignoreDeprecations": "5.0",
         "experimentalDecorators": true,
         "importHelpers": true,
         "target": "es2020",

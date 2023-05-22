@@ -3,6 +3,7 @@
     "version": "1.0.5",
     "peerDependencies": {
         "@angular/common": "^12 || ^13 || ^14 || ^15 || ^16",
+        "@angular/forms": "^12 || ^13 || ^14 || ^15 || ^16",
         "@angular/core": "^12 || ^13 || ^14 || ^15 || ^16",
         "@ngrx/component-store": "^12 || ^13 || ^14 || ^15 || ^16"
     },

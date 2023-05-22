@@ -1,4 +1,4 @@
-import type { ProjectGraph, ProjectGraphProjectNode } from '@nrwl/devkit';
+import type { ProjectGraph, ProjectGraphProjectNode } from '@nx/devkit';
 
 export interface NxBettererContext {
     plainWorkspaceJson: { projects: Record<string, string | any> };

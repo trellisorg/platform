@@ -77,7 +77,7 @@
             }
         },
         "test": {
-            "executor": "@nrwl/jest:jest",
+            "executor": "@nx/jest:jest",
             "outputs": ["{workspaceRoot}/coverage/apps/conways-game-of-life"],
             "options": {
                 "jestConfig": "apps/conways-game-of-life/jest.config.ts",

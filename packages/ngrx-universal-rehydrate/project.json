@@ -6,7 +6,7 @@
     "prefix": "trellisorg",
     "targets": {
         "build": {
-            "executor": "@nrwl/angular:package",
+            "executor": "@nx/angular:package",
             "options": {
                 "tsConfig": "packages/ngrx-universal-rehydrate/tsconfig.lib.json",
                 "project": "packages/ngrx-universal-rehydrate/ng-package.json"
@@ -27,7 +27,7 @@
             }
         },
         "test": {
-            "executor": "@nrwl/jest:jest",
+            "executor": "@nx/jest:jest",
             "outputs": ["{workspaceRoot}/coverage/packages/ngrx-universal-rehydrate"],
             "options": {
                 "jestConfig": "packages/ngrx-universal-rehydrate/jest.config.ts",

@@ -1,4 +1,4 @@
-import type { ProjectGraphProjectNode } from '@nrwl/devkit';
+import type { ProjectGraphProjectNode } from '@nx/devkit';
 import { execSync } from 'child_process';
 import { readFileSync } from 'fs';
 import type { Dependencies, Framework, NxDepGraph, NxDepsJson } from './types';
@@ -33,10 +33,7 @@ export function readOrGenerateDepFile(): NxDepsJson {
  * @param outerDeps
  * @param innerDeps
  */
-export function percentSubSet(
-    outerDeps: string[],
-    innerDeps: string[]
-): number {
+export function percentSubSet(outerDeps: string[], innerDeps: string[]): number {
     let count = 0;
 
     innerDeps.forEach((dep) => {
@@ -76,37 +73,25 @@ export function filterProjects(
     let filtered = Object.entries(projects);
 
     if (buildable != null) {
-        filtered = filtered.filter(
-            ([, config]) => !!config.data.targets['build'] === buildable
-        );
+        filtered = filtered.filter(([, config]) => !!config.data.targets['build'] === buildable);
     }
 
     if (projectType != null) {
-        filtered = filtered.filter(
-            ([, config]) =>
-                config.data.projectType === projectTypeMap[projectType]
-        );
+        filtered = filtered.filter(([, config]) => config.data.projectType === projectTypeMap[projectType]);
     }
 
     if (frameworks?.length) {
         filtered = filtered.filter(
             ([, config]) =>
                 config.data.targets['build'] &&
-                frameworks.some((framework) =>
-                    new RegExp(framework).test(
-                        config.data.targets['build'].executor
-                    )
-                )
+                frameworks.some((framework) => new RegExp(framework).test(config.data.targets['build'].executor))
         );
     }
 
     return filtered.map(([name]) => name);
 }
 
-export function filterDependencyGraph(
-    dependencies: Dependencies,
-    projects: string[]
-): Dependencies {
+export function filterDependencyGraph(dependencies: Dependencies, projects: string[]): Dependencies {
     return projects.reduce(
         (prev, cur) => ({
             ...prev,

@@ -1,4 +1,4 @@
-import { createProjectGraphAsync } from '@nrwl/devkit';
+import { createProjectGraphAsync } from '@nx/devkit';
 import * as yargs from 'yargs';
 import { calcDependencyOverlap } from './calc-dependency-overlap';
 import { findCircularDependencies } from './circular-deps';

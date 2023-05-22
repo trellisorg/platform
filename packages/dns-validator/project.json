@@ -1,11 +1,12 @@
 {
     "name": "dns-validator",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
     "projectType": "library",
     "sourceRoot": "packages/dns-validator/src",
     "prefix": "trellisorg",
     "targets": {
         "build": {
-            "executor": "@nrwl/angular:package",
+            "executor": "@nx/angular:package",
             "outputs": ["{workspaceRoot}/dist/packages/dns-validator"],
             "options": {
                 "project": "packages/dns-validator/ng-package.json"
@@ -21,7 +22,7 @@
             "defaultConfiguration": "production"
         },
         "test": {
-            "executor": "@nrwl/jest:jest",
+            "executor": "@nx/jest:jest",
             "outputs": ["{workspaceRoot}/coverage/packages/dns-validator"],
             "options": {
                 "jestConfig": "packages/dns-validator/jest.config.ts",

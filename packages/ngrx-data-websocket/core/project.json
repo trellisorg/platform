@@ -12,7 +12,7 @@
             }
         },
         "test": {
-            "executor": "@nrwl/jest:jest",
+            "executor": "@nx/jest:jest",
             "options": {
                 "jestConfig": "packages/ngrx-data-websocket/core/jest.config.ts",
                 "passWithNoTests": true
@@ -20,7 +20,7 @@
             "outputs": ["{workspaceRoot}/coverage/packages/ngrx-data-websocket/core"]
         },
         "build": {
-            "executor": "@nrwl/js:tsc",
+            "executor": "@nx/js:tsc",
             "options": {
                 "outputPath": "dist/packages/ngrx-data-websocket/core",
                 "tsConfig": "packages/ngrx-data-websocket/core/tsconfig.lib.json",

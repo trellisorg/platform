@@ -88,7 +88,8 @@
                         }
                     ],
                     "sourceMap": false,
-                    "optimization": true
+                    "optimization": true,
+                    "buildOptimizer": true
                 },
                 "development": {
                     "outputHashing": "media",
@@ -100,7 +101,8 @@
                     ],
                     "sourceMap": false,
                     "optimization": false,
-                    "namedChunks": true
+                    "namedChunks": true,
+                    "buildOptimizer": false
                 }
             },
             "defaultConfiguration": "production",

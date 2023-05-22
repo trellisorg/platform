@@ -1,8 +1,8 @@
 import { Component, Injectable, Input } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { subscribeSpyTo } from '@hirez_io/observer-spy';
-import { Update } from '@trellisorg/update';
 import { BehaviorSubject } from 'rxjs';
+import { Update } from './update';
 
 @Injectable()
 class Store {

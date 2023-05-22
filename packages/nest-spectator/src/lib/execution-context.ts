@@ -1,11 +1,7 @@
 import type { ExecutionContext } from '@nestjs/common';
-import type {
-    HttpArgumentsHost,
-    Type,
-    WsArgumentsHost,
-} from '@nestjs/common/interfaces';
+import type { HttpArgumentsHost, Type, WsArgumentsHost } from '@nestjs/common/interfaces';
 import type { RpcArgumentsHost } from '@nestjs/common/interfaces/features/arguments-host.interface';
-import { createSpyObject, SpyObject } from './mock';
+import { SpyObject, createSpyObject } from './mock';
 
 /**
  * These classes are part of the private API and should not be used
@@ -48,7 +44,9 @@ class MockExecutionContext implements ExecutionContext {
         return;
     }
 
+    // eslint-disable-next-line @typescript-eslint/ban-types
     getHandler(): Function {
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
         return () => {};
     }
 
@@ -77,26 +75,18 @@ class MockExecutionContext implements ExecutionContext {
     }
 }
 
-export function mockHttpArgumentsHost(
-    host?: Partial<HttpArgumentsHost>
-): SpyObject<HttpArgumentsHost> {
+export function mockHttpArgumentsHost(host?: Partial<HttpArgumentsHost>): SpyObject<HttpArgumentsHost> {
     return createSpyObject(MockHttpArgumentsHost, host);
 }
 
-export function mockWsArgumentHost(
-    host?: Partial<WsArgumentsHost>
-): SpyObject<WsArgumentsHost> {
+export function mockWsArgumentHost(host?: Partial<WsArgumentsHost>): SpyObject<WsArgumentsHost> {
     return createSpyObject(MockWsArgumentHost, host);
 }
 
-export function mockRpcArgumentsHost(
-    host?: Partial<RpcArgumentsHost>
-): SpyObject<RpcArgumentsHost> {
+export function mockRpcArgumentsHost(host?: Partial<RpcArgumentsHost>): SpyObject<RpcArgumentsHost> {
     return createSpyObject(MockRpcArgumentHost, host);
 }
 
-export function mockExecutionContext(
-    context?: Partial<ExecutionContext>
-): SpyObject<ExecutionContext> {
+export function mockExecutionContext(context?: Partial<ExecutionContext>): SpyObject<ExecutionContext> {
     return createSpyObject(MockExecutionContext, context);
 }

@@ -1,4 +1,4 @@
-import { ProjectGraphProjectNode, readJsonFile } from '@nrwl/devkit';
+import { ProjectGraphProjectNode, readJsonFile } from '@nx/devkit';
 import { join } from 'path';
 import type { TsConfig } from './types';
 

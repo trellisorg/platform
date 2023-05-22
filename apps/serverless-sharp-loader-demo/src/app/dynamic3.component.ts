@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-    selector: 'tr-dynamic3-component',
+    selector: 'trellisorg-dynamic3-component',
     standalone: true,
     template: ` I am dynamic3 `,
 })

@@ -1,5 +1,6 @@
 {
     "name": "serverless-sharp-loader-demo",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
     "projectType": "application",
     "sourceRoot": "apps/serverless-sharp-loader-demo/src",
     "prefix": "trellisorg",
@@ -88,7 +89,8 @@
                         }
                     ],
                     "sourceMap": false,
-                    "optimization": true
+                    "optimization": true,
+                    "buildOptimizer": true
                 },
                 "development": {
                     "outputHashing": "media",
@@ -99,7 +101,8 @@
                         }
                     ],
                     "sourceMap": false,
-                    "optimization": false
+                    "optimization": false,
+                    "buildOptimizer": false
                 }
             },
             "defaultConfiguration": "",

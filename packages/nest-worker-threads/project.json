@@ -5,7 +5,7 @@
     "projectType": "library",
     "targets": {
         "build": {
-            "executor": "@nrwl/js:tsc",
+            "executor": "@nx/js:tsc",
             "outputs": ["{options.outputPath}"],
             "options": {
                 "outputPath": "dist/packages/nest-worker-threads",
@@ -22,7 +22,7 @@
             }
         },
         "test": {
-            "executor": "@nrwl/jest:jest",
+            "executor": "@nx/jest:jest",
             "outputs": ["{workspaceRoot}/coverage/packages/nest-worker-threads"],
             "options": {
                 "jestConfig": "packages/nest-worker-threads/jest.config.ts",

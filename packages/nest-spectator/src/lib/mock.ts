@@ -9,13 +9,13 @@ type Writable<T> = { -readonly [P in keyof T]: T[P] };
 /**
  * @publicApi
  */
-export type BaseSpyObject<T> = T &
-    { [P in keyof T]: T[P] extends Function ? T[P] & CompatibleSpy : T[P] } & {
-        /**
-         * Casts to type without readonly properties
-         */
-        castToWritable(): Writable<T>;
-    };
+export type BaseSpyObject<T> = T & // eslint-disable-next-line @typescript-eslint/ban-types
+{ [P in keyof T]: T[P] extends Function ? T[P] & CompatibleSpy : T[P] } & {
+    /**
+     * Casts to type without readonly properties
+     */
+    castToWritable(): Writable<T>;
+};
 
 /**
  * @publicApi
@@ -31,6 +31,7 @@ export interface CompatibleSpy extends jasmine.Spy {
      * By chaining the spy with and.callFake, all calls to the spy will delegate to the supplied
      * function.
      */
+    // eslint-disable-next-line @typescript-eslint/ban-types
     andCallFake(fn: Function): this;
 
     /**
@@ -42,11 +43,9 @@ export interface CompatibleSpy extends jasmine.Spy {
 /**
  * @publicApi
  */
-export type SpyObject<T> = BaseSpyObject<T> &
-    {
-        [P in keyof T]: T[P] &
-            (T[P] extends (...args: any[]) => infer R ? jest.Mock<R> : T[P]);
-    };
+export type SpyObject<T> = BaseSpyObject<T> & {
+    [P in keyof T]: T[P] & (T[P] extends (...args: any[]) => infer R ? jest.Mock<R> : T[P]);
+};
 
 /**
  * @internal
@@ -54,6 +53,7 @@ export type SpyObject<T> = BaseSpyObject<T> &
 export function installProtoMethods<T>(
     mock: any,
     proto: any,
+    // eslint-disable-next-line @typescript-eslint/ban-types
     createSpyFn: Function
 ): void {
     if (proto === null || proto === Object.prototype) {
@@ -67,12 +67,9 @@ export function installProtoMethods<T>(
             continue;
         }
 
-        if (
-            typeof descriptor.value === 'function' &&
-            key !== 'constructor' &&
-            typeof mock[key] === 'undefined'
-        ) {
+        if (typeof descriptor.value === 'function' && key !== 'constructor' && typeof mock[key] === 'undefined') {
             mock[key] = createSpyFn(key);
+            // eslint-disable-next-line no-prototype-builtins
         } else if (descriptor.get && !mock.hasOwnProperty(key)) {
             Object.defineProperty(mock, key, {
                 set: (value) => (mock[`_${key}`] = value),
@@ -99,6 +96,7 @@ export function createSpyObject<T>(
         const jestFn = jest.fn();
         const newSpy: CompatibleSpy = jestFn as any;
 
+        // eslint-disable-next-line @typescript-eslint/ban-types
         newSpy.andCallFake = (fn: Function) => {
             jestFn.mockImplementation(fn as (...args: any[]) => any);
 
@@ -122,10 +120,7 @@ export function createSpyObject<T>(
 /**
  * @publicApi
  */
-export function mockProvider<T>(
-    type: Type<T>,
-    properties?: Partial<Record<keyof T, any>>
-): FactoryProvider {
+export function mockProvider<T>(type: Type<T>, properties?: Partial<Record<keyof T, any>>): FactoryProvider {
     return {
         provide: type,
         useFactory: () => createSpyObject(type, properties),

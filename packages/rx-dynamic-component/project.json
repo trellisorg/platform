@@ -6,7 +6,7 @@
     "prefix": "trellisorg",
     "targets": {
         "build": {
-            "executor": "@nrwl/angular:package",
+            "executor": "@nx/angular:package",
             "options": {
                 "tsConfig": "packages/rx-dynamic-component/tsconfig.lib.json",
                 "project": "packages/rx-dynamic-component/ng-package.json"
@@ -28,7 +28,7 @@
             }
         },
         "test": {
-            "executor": "@nrwl/jest:jest",
+            "executor": "@nx/jest:jest",
             "outputs": ["{workspaceRoot}/coverage/packages/rx-dynamic-component"],
             "options": {
                 "jestConfig": "packages/rx-dynamic-component/jest.config.ts",

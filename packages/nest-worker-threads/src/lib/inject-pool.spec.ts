@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
-import { getPoolToken, InjectPool } from '@trellisorg/nest-worker-threads';
+import { InjectPool } from './inject-pool';
+import { getPoolToken } from './tokens';
 
 const token = 'MockPool';
 

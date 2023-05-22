@@ -84,7 +84,7 @@
             }
         },
         "test": {
-            "executor": "@nrwl/jest:jest",
+            "executor": "@nx/jest:jest",
             "outputs": ["{workspaceRoot}/coverage/apps/ngrx-universal-rehydrate-demo"],
             "options": {
                 "jestConfig": "apps/ngrx-universal-rehydrate-demo/jest.config.ts",
@@ -98,7 +98,8 @@
                 "main": "apps/ngrx-universal-rehydrate-demo/server.ts",
                 "tsConfig": "apps/ngrx-universal-rehydrate-demo/tsconfig.server.json",
                 "sourceMap": true,
-                "optimization": false
+                "optimization": false,
+                "buildOptimizer": false
             },
             "configurations": {
                 "production": {
@@ -110,7 +111,8 @@
                         }
                     ],
                     "sourceMap": false,
-                    "optimization": true
+                    "optimization": true,
+                    "buildOptimizer": true
                 }
             },
             "defaultConfiguration": "",

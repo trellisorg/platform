@@ -4,8 +4,8 @@
     "type": "commonjs",
     "license": "MIT",
     "peerDependencies": {
-        "@nrwl/devkit": "^12 || ^13",
-        "@betterer/cli": "^5"
+        "@betterer/cli": "^5",
+        "@nx/devkit": "^12 || ^13"
     },
     "repository": {
         "type": "git",

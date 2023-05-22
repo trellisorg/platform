@@ -1,13 +1,11 @@
 import { Component, NgModule } from '@angular/core';
-import { byText, createComponentFactory, Spectator } from '@ngneat/spectator/jest';
-import {
-    DYNAMIC_COMPONENT,
-    provideRxDynamicComponent,
-    RxDynamicComponentService,
-    RxDynamicDirective,
-} from '@trellisorg/rx-dynamic-component';
+import { Spectator, byText, createComponentFactory } from '@ngneat/spectator/jest';
 import { of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { DYNAMIC_COMPONENT } from './manifest';
+import { provideRxDynamicComponent } from './rx-dynamic-component.providers';
+import { RxDynamicComponentService } from './rx-dynamic-component.service';
+import { RxDynamicDirective } from './rx-dynamic.directive';
 
 @Component({
     // eslint-disable-next-line @angular-eslint/component-selector
@@ -29,9 +27,7 @@ class ContainerComponent {
     template: ` <div data-testid="lazyChildDiv">lazyChildDiv</div>`,
     styles: [''],
 })
-class LazyChild1Component {
-    constructor() {}
-}
+class LazyChild1Component {}
 
 @NgModule({
     declarations: [LazyChild1Component],
@@ -42,7 +38,6 @@ class LazyChild1Component {
             useValue: LazyChild1Component,
         },
     ],
-    entryComponents: [LazyChild1Component],
 })
 class LazyChild1Module {}
 

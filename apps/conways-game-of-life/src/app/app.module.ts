@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
-import { LetModule, PushModule } from '@ngrx/component';
+import { LetDirective, PushPipe } from '@ngrx/component';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { provideRxDynamicComponent, RxDynamicDirective } from '@trellisorg/rx-dynamic-component';
+import { RxDynamicDirective, provideRxDynamicComponent } from '@trellisorg/rx-dynamic-component';
 import { AppComponent } from './app.component';
 import { GameEffects } from './state/game.effects';
-import { gameReducer, GAME_STATE } from './state/game.state';
+import { GAME_STATE, gameReducer } from './state/game.state';
 
 @NgModule({
     declarations: [AppComponent],
@@ -22,8 +22,8 @@ import { gameReducer, GAME_STATE } from './state/game.state';
         StoreDevtoolsModule.instrument({
             logOnly: false,
         }),
-        LetModule,
-        PushModule,
+        LetDirective,
+        PushPipe,
         RxDynamicDirective,
     ],
     providers: [

@@ -1,5 +1,5 @@
-import type { ProjectGraphProjectNode } from '@nrwl/devkit';
-import { createProjectGraphAsync } from '@nrwl/devkit';
+import type { ProjectGraphProjectNode } from '@nx/devkit';
+import { createProjectGraphAsync } from '@nx/devkit';
 import type { Dependencies, FilterableCommand } from './types';
 import { filterDependencyGraph, filterProjects } from './util';
 
@@ -14,10 +14,7 @@ export function _findUnusedDependencies(
 ): string[] {
     const filteredProjects = filterProjects(config, projects);
 
-    const filteredDependencies: Dependencies = filterDependencyGraph(
-        dependencies,
-        filteredProjects
-    );
+    const filteredDependencies: Dependencies = filterDependencyGraph(dependencies, filteredProjects);
 
     const usedDeps = new Set<string>();
 
@@ -30,9 +27,7 @@ export function _findUnusedDependencies(
     const unusedDeps = new Set<string>();
 
     Object.keys(filteredDependencies)
-        .filter((project) =>
-            config.excludeExternal ? !project.startsWith('npm:') : true
-        )
+        .filter((project) => (config.excludeExternal ? !project.startsWith('npm:') : true))
         .forEach((project) => {
             if (!usedDeps.has(project) && projects[project]?.type !== 'app') {
                 unusedDeps.add(project);
@@ -42,14 +37,8 @@ export function _findUnusedDependencies(
     return [...unusedDeps];
 }
 
-export async function findUnusedDependencies(
-    config: FindUnusedConfig
-): Promise<string[]> {
+export async function findUnusedDependencies(config: FindUnusedConfig): Promise<string[]> {
     const projectGraph = await createProjectGraphAsync();
 
-    return _findUnusedDependencies(
-        projectGraph.dependencies,
-        projectGraph.nodes,
-        config
-    );
+    return _findUnusedDependencies(projectGraph.dependencies, projectGraph.nodes, config);
 }

@@ -87,7 +87,7 @@
             }
         },
         "test": {
-            "executor": "@nrwl/jest:jest",
+            "executor": "@nx/jest:jest",
             "options": {
                 "jestConfig": "apps/ngrx-data-websocket-demo/jest.config.ts",
                 "passWithNoTests": true

@@ -1,4 +1,4 @@
-import type { ProjectGraphProjectNode } from '@nrwl/devkit';
+import type { ProjectGraphProjectNode } from '@nx/devkit';
 import type { FilterableCommand } from './types';
 import { filterProjects, readOrGenerateDepFile } from './util';
 
