@@ -28,6 +28,9 @@ class MockWsArgumentHost implements WsArgumentsHost {
     getClient<T = any>(): T {
         return;
     }
+    getPattern(): string {
+        return '';
+    }
 }
 
 class MockRpcArgumentHost implements RpcArgumentsHost {

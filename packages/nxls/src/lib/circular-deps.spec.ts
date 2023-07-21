@@ -14,7 +14,6 @@ describe('Circular Deps', () => {
             name: app1,
             data: {
                 root: '',
-                files: [],
             },
         },
         [lib1]: {
@@ -22,7 +21,6 @@ describe('Circular Deps', () => {
             name: lib2,
             data: {
                 root: '',
-                files: [],
             },
         },
         [lib2]: {
@@ -30,7 +28,6 @@ describe('Circular Deps', () => {
             name: lib2,
             data: {
                 root: '',
-                files: [],
             },
         },
         [lib3]: {
@@ -38,7 +35,6 @@ describe('Circular Deps', () => {
             name: lib3,
             data: {
                 root: '',
-                files: [],
             },
         },
     };
