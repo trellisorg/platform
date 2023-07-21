@@ -27,7 +27,7 @@ export class PgNotifyExplorer implements OnModuleInit {
         this.explore();
     }
 
-    explore(): void {
+    private explore(): void {
         const providers: InstanceWrapper[] = this.discoveryService.getProviders().filter((wrapper) =>
             this.metadataAccessor.isChannel(
                 // See {@link https://github.com/nestjs/bull/blob/master/packages/bull/lib/bull.explorer.ts#L38}
@@ -62,7 +62,7 @@ export class PgNotifyExplorer implements OnModuleInit {
         });
     }
 
-    handleNotification(
+    private handleNotification(
         instance: any,
         key: string,
         { type, lockExpiry, eventIdKey }: PgNotificationOptions,
