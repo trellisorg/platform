@@ -1,0 +1,10 @@
+{
+    "name": "@trellisorg/nest-pg-notify",
+    "version": "0.0.1",
+    "type": "commonjs",
+    "peerDependencies": {
+        "pg-notify": "^0.0.21",
+        "ioredis": "^5",
+        "redlock": "^5.0.0-beta.2 || ^4"
+    }
+}
