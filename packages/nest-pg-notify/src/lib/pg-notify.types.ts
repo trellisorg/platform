@@ -15,24 +15,33 @@ export interface PgChannelOptions {
     name: string;
 }
 
+// pg/pg-notify
+export type PgOptions = {
+    connectionConfig?: ClientConfig;
+    options?: Options;
+};
+
+export type PgConfig = Subscriber | PgOptions;
+
+// Redis
 export type PgNotifyRedisOptions = ConstructorParameters<typeof Redis>;
 
-type PgNotifyRedlockOptions = ConstructorParameters<typeof Redlock>;
+export type PgNotifyRedisConfig = Redis | PgNotifyRedisOptions;
+
+// Redlock
+type RelockConstructorParams = ConstructorParameters<typeof Redlock>;
+
+export type PgNotifyRedlockOptions = {
+    settings?: RelockConstructorParams[1];
+    scripts?: RelockConstructorParams[2];
+};
+
+export type PgNotifyRedlockConfig = Redlock | PgNotifyRedlockOptions;
 
 export interface PgNotifyConfig {
-    pg:
-        | Subscriber
-        | {
-              connectionConfig?: ClientConfig;
-              options?: Options;
-          };
-    ioredis?: Redis | PgNotifyRedisOptions;
-    redlock?:
-        | Redlock
-        | {
-              settings?: PgNotifyRedlockOptions[1];
-              scripts?: PgNotifyRedlockOptions[2];
-          };
+    pg: PgConfig;
+    ioredis?: PgNotifyRedisConfig;
+    redlock?: PgNotifyRedlockConfig;
 }
 
 export type PgNotifyAsyncConfiguration = Pick<ModuleMetadata, 'imports'> &
