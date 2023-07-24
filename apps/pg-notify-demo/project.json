@@ -1,0 +1,64 @@
+{
+    "name": "pg-notify-demo",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "apps/pg-notify-demo/src",
+    "projectType": "application",
+    "targets": {
+        "build": {
+            "executor": "@nx/webpack:webpack",
+            "outputs": ["{options.outputPath}"],
+            "defaultConfiguration": "production",
+            "options": {
+                "target": "node",
+                "compiler": "tsc",
+                "outputPath": "dist/apps/pg-notify-demo",
+                "main": "apps/pg-notify-demo/src/main.ts",
+                "tsConfig": "apps/pg-notify-demo/tsconfig.app.json",
+                "assets": ["apps/pg-notify-demo/src/assets"],
+                "isolatedConfig": true,
+                "webpackConfig": "apps/pg-notify-demo/webpack.config.js"
+            },
+            "configurations": {
+                "development": {},
+                "production": {}
+            }
+        },
+        "serve": {
+            "executor": "@nx/js:node",
+            "defaultConfiguration": "development",
+            "options": {
+                "buildTarget": "pg-notify-demo:build"
+            },
+            "configurations": {
+                "development": {
+                    "buildTarget": "pg-notify-demo:build:development"
+                },
+                "production": {
+                    "buildTarget": "pg-notify-demo:build:production"
+                }
+            }
+        },
+        "lint": {
+            "executor": "@nx/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": ["apps/pg-notify-demo/**/*.ts"]
+            }
+        },
+        "test": {
+            "executor": "@nx/jest:jest",
+            "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+            "options": {
+                "jestConfig": "apps/pg-notify-demo/jest.config.ts",
+                "passWithNoTests": true
+            },
+            "configurations": {
+                "ci": {
+                    "ci": true,
+                    "codeCoverage": true
+                }
+            }
+        }
+    },
+    "tags": []
+}
