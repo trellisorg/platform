@@ -63,7 +63,7 @@
         "node-worker-threads-pool": "^1.5.1",
         "reflect-metadata": "^0.1.13",
         "rxjs": "^7.8.1",
-        "socket.io-client": "^4.6.1",
+        "socket.io-client": "^4.7.1",
         "tslib": "^2.5.2",
         "yargs": "^17.7.2",
         "zone.js": "0.13.0"
