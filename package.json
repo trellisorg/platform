@@ -109,7 +109,7 @@
         "eslint": "^8.41.0",
         "eslint-config-prettier": "^8.8.0",
         "eslint-plugin-cypress": "^2.13.3",
-        "graphql": "^16.6.0",
+        "graphql": "^16.8.1",
         "jest": "29.5.0",
         "jest-environment-jsdom": "29.5.0",
         "jest-marbles": "^3.0.3",
