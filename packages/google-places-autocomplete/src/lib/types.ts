@@ -2,9 +2,7 @@ import { InjectionToken } from '@angular/core';
 
 type AutocompleteOptions = google.maps.places.AutocompleteOptions;
 
-export type MapsSdkFactory = (
-    config: PlacesAutocompleteConfig
-) => Promise<typeof google>;
+export type MapsSdkFactory = (config: PlacesAutocompleteConfig) => Promise<typeof google>;
 
 export const GOOGLE_MAPS_SDK_SCRIPT_ID = 'google-maps-js-sdk';
 
@@ -13,13 +11,7 @@ export interface LoaderOptions {
     client: string;
     version: string;
     id: string;
-    libraries: (
-        | 'drawing'
-        | 'geometry'
-        | 'localContext'
-        | 'places'
-        | 'visualization'
-    )[];
+    libraries: ('drawing' | 'geometry' | 'places' | 'visualization')[];
     language: string;
     region: string;
 }
@@ -41,9 +33,6 @@ export const defaultOptions: AutocompleteOptions = {
     types: ['address'],
 };
 
-export const GOOGLE_MAPS_SDK_CONFIG =
-    new InjectionToken<PlacesAutocompleteConfig>('GOOGLE_MAPS_SDK_CONFIG');
+export const GOOGLE_MAPS_SDK_CONFIG = new InjectionToken<PlacesAutocompleteConfig>('GOOGLE_MAPS_SDK_CONFIG');
 
-export const GOOGLE_MAPS_SDK_FACTORY = new InjectionToken<MapsSdkFactory>(
-    'GOOGLE_MAPS_SDK'
-);
+export const GOOGLE_MAPS_SDK_FACTORY = new InjectionToken<MapsSdkFactory>('GOOGLE_MAPS_SDK');

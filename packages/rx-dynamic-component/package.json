@@ -1,15 +1,15 @@
 {
     "name": "@trellisorg/rx-dynamic-component",
-    "version": "0.3.6",
+    "version": "0.3.7",
     "repository": {
         "url": "https://github.com/trellisorg/platform/tree/master/packages/rx-dynamic-component"
     },
     "license": "MIT",
     "peerDependencies": {
-        "@angular/common": "^14 || ^15 || ^16",
-        "@angular/core": "^14 || ^15 || ^16",
-        "@angular/cdk": "^14 || ^15 || ^16",
-        "@angular/router": "^14 || ^15 || ^16",
+        "@angular/common": "^14 || ^15 || ^16 || ^17",
+        "@angular/core": "^14 || ^15 || ^16 || ^17",
+        "@angular/cdk": "^14 || ^15 || ^16 || ^17",
+        "@angular/router": "^14 || ^15 || ^16 || ^17",
         "rxjs": "^7"
     },
     "dependencies": {

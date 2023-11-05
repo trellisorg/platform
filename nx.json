@@ -1,5 +1,4 @@
 {
-    "npmScope": "trellisorg",
     "workspaceLayout": {
         "appsDir": "apps",
         "libsDir": "packages"
@@ -9,14 +8,10 @@
     },
     "tasksRunnerOptions": {
         "default": {
-            "runner": "nx-cloud",
             "options": {
-                "accessToken": "NTIxYmI5NTktYTY3Yy00MzA0LWIxZTQtZDZiNGUxNzNiNjhjfHJlYWQ=",
-                "cacheableOperations": ["build", "test", "lint", "e2e"],
                 "canTrackAnalytics": false,
                 "showUsageWarnings": true,
-                "selectivelyHashTsConfig": false,
-                "parallel": 2
+                "selectivelyHashTsConfig": false
             }
         }
     },
@@ -99,10 +94,18 @@
     "targetDefaults": {
         "build": {
             "dependsOn": ["^build"],
-            "inputs": ["production", "^production"]
+            "inputs": ["production", "^production"],
+            "cache": true
         },
         "test": {
-            "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"]
+            "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"],
+            "cache": true
+        },
+        "lint": {
+            "cache": true
+        },
+        "e2e": {
+            "cache": true
         }
     },
     "defaultProject": "rx-dynamic-host",
@@ -122,5 +125,7 @@
             "!{projectRoot}/jest.config.[jt]s",
             "!{projectRoot}/src/test-setup.[jt]s"
         ]
-    }
+    },
+    "nxCloudAccessToken": "NTIxYmI5NTktYTY3Yy00MzA0LWIxZTQtZDZiNGUxNzNiNjhjfHJlYWQ=",
+    "parallel": 2
 }
