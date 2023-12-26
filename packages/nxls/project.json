@@ -14,8 +14,7 @@
             "executor": "@nx/jest:jest",
             "outputs": ["{workspaceRoot}/coverage/packages/nxls"],
             "options": {
-                "jestConfig": "packages/nxls/jest.config.ts",
-                "passWithNoTests": true
+                "jestConfig": "packages/nxls/jest.config.ts"
             }
         },
         "build": {

@@ -21,6 +21,7 @@ import { GAME_STATE, gameReducer } from './state/game.state';
         EffectsModule.forRoot([GameEffects]),
         StoreDevtoolsModule.instrument({
             logOnly: false,
+            connectInZone: true,
         }),
         LetDirective,
         PushPipe,

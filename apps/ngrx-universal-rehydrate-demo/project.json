@@ -60,18 +60,18 @@
         "serve": {
             "executor": "@angular-devkit/build-angular:dev-server",
             "options": {
-                "browserTarget": "ngrx-universal-rehydrate-demo:build"
+                "buildTarget": "ngrx-universal-rehydrate-demo:build"
             },
             "configurations": {
                 "production": {
-                    "browserTarget": "ngrx-universal-rehydrate-demo:build:production"
+                    "buildTarget": "ngrx-universal-rehydrate-demo:build:production"
                 }
             }
         },
         "extract-i18n": {
             "executor": "@angular-devkit/build-angular:extract-i18n",
             "options": {
-                "browserTarget": "ngrx-universal-rehydrate-demo:build"
+                "buildTarget": "ngrx-universal-rehydrate-demo:build"
             }
         },
         "lint": {
@@ -87,8 +87,7 @@
             "executor": "@nx/jest:jest",
             "outputs": ["{workspaceRoot}/coverage/apps/ngrx-universal-rehydrate-demo"],
             "options": {
-                "jestConfig": "apps/ngrx-universal-rehydrate-demo/jest.config.ts",
-                "passWithNoTests": true
+                "jestConfig": "apps/ngrx-universal-rehydrate-demo/jest.config.ts"
             }
         },
         "server": {
@@ -129,7 +128,7 @@
             }
         },
         "serve-ssr": {
-            "executor": "@nguniversal/builders:ssr-dev-server",
+            "executor": "@angular-devkit/build-angular:ssr-dev-server",
             "options": {
                 "browserTarget": "ngrx-universal-rehydrate-demo:build",
                 "serverTarget": "ngrx-universal-rehydrate-demo:server"

@@ -28,7 +28,7 @@ import { loadData, titleReducer } from './store';
             stores: ['root'],
             disableWarnings: false,
         }),
-        StoreDevtoolsModule.instrument({}),
+        StoreDevtoolsModule.instrument({ connectInZone: true }),
         HttpClientModule,
         HttpClientJsonpModule,
         RouterModule.forRoot([

@@ -14,8 +14,7 @@
             "executor": "@nx/jest:jest",
             "outputs": ["{workspaceRoot}/coverage/packages/nest-spectator"],
             "options": {
-                "jestConfig": "packages/nest-spectator/jest.config.ts",
-                "passWithNoTests": true
+                "jestConfig": "packages/nest-spectator/jest.config.ts"
             }
         },
         "build": {

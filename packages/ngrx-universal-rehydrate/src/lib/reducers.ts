@@ -1,5 +1,5 @@
 import { isPlatformBrowser } from '@angular/common';
-import type { TransferState } from '@angular/platform-browser';
+import type { TransferState } from '@angular/core';
 import { INIT, MetaReducer } from '@ngrx/store';
 import { REHYDRATE_TRANSFER_STATE } from './tokens';
 import type { RehydrationRootConfig } from './utils';
@@ -18,10 +18,7 @@ export function browserRehydrateReducer(
          * This will grab from the transferred state all of the state keys created by this library for the root
          * and any features that were added
          */
-        const statesTransferred = _transferStateService.get(
-            REHYDRATE_TRANSFER_STATE,
-            undefined
-        );
+        const statesTransferred = _transferStateService.get(REHYDRATE_TRANSFER_STATE, undefined);
 
         /**
          * Only return a reducer that will attempt to rehydrate the state if there were states transferred to begin with
@@ -29,12 +26,7 @@ export function browserRehydrateReducer(
         if (statesTransferred) {
             return (reducer) => (state, action) => {
                 if (action.type === INIT) {
-                    const merged =
-                        mergeStates(
-                            state,
-                            statesTransferred,
-                            config.mergeStrategy
-                        ) || {};
+                    const merged = mergeStates(state, statesTransferred, config.mergeStrategy) || {};
 
                     return reducer(merged, action);
                 }

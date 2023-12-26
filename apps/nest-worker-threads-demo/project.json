@@ -18,7 +18,8 @@
                     }
                 ],
                 "target": "node",
-                "compiler": "tsc"
+                "compiler": "tsc",
+                "isolatedConfig": false
             }
         },
         "serve": {

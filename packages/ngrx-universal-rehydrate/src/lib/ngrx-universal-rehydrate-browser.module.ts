@@ -1,18 +1,12 @@
 import { isPlatformServer } from '@angular/common';
-import {
-    Inject,
-    Injector,
-    ModuleWithProviders,
-    NgModule,
-    PLATFORM_ID,
-} from '@angular/core';
-import { TransferState } from '@angular/platform-browser';
+import { Inject, Injector, ModuleWithProviders, NgModule, PLATFORM_ID, TransferState } from '@angular/core';
+
 import { META_REDUCERS, Store } from '@ngrx/store';
 import { browserRehydrateReducer } from './reducers';
 import { RehydrationLogger } from './rehydration-logger';
-import { addSlice, RehydrateStoreModule } from './store';
+import { RehydrateStoreModule, addSlice } from './store';
 import { FEATURE_STORES, REHYDRATE_ROOT_CONFIG } from './tokens';
-import { defaultRehydrationRootConfig, RehydrationRootConfig } from './utils';
+import { RehydrationRootConfig, defaultRehydrationRootConfig } from './utils';
 
 @NgModule({
     imports: [RehydrateStoreModule],
@@ -43,8 +37,7 @@ export class NgrxUniversalRehydrateBrowserFeatureModule {
         @Inject(PLATFORM_ID) platformId: Object,
         private _store: Store
     ) {
-        if (isPlatformServer(platformId))
-            this._store.dispatch(addSlice({ slices: stores }));
+        if (isPlatformServer(platformId)) this._store.dispatch(addSlice({ slices: stores }));
     }
 }
 

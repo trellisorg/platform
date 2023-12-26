@@ -32,7 +32,7 @@ import { AppComponent } from './app.component';
                 },
             },
         }),
-        StoreDevtoolsModule.instrument({}),
+        StoreDevtoolsModule.instrument({ connectInZone: true }),
         HttpClientModule,
         HttpClientJsonpModule,
         NgrxDataWebsocketClientModule.forRoot({

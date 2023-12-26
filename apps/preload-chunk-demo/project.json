@@ -56,10 +56,10 @@
             "executor": "@angular-devkit/build-angular:dev-server",
             "configurations": {
                 "production": {
-                    "browserTarget": "preload-chunk-demo:build:production"
+                    "buildTarget": "preload-chunk-demo:build:production"
                 },
                 "development": {
-                    "browserTarget": "preload-chunk-demo:build:development"
+                    "buildTarget": "preload-chunk-demo:build:development"
                 }
             },
             "defaultConfiguration": "development"
@@ -131,7 +131,7 @@
             }
         },
         "serve-ssr": {
-            "executor": "@nguniversal/builders:ssr-dev-server",
+            "executor": "@angular-devkit/build-angular:ssr-dev-server",
             "options": {
                 "browserTarget": "preload-chunk-demo:build:development",
                 "serverTarget": "preload-chunk-demo:server:development"

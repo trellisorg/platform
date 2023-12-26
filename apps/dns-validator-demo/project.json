@@ -56,10 +56,10 @@
             "executor": "@angular-devkit/build-angular:dev-server",
             "configurations": {
                 "production": {
-                    "browserTarget": "dns-validator-demo:build:production"
+                    "buildTarget": "dns-validator-demo:build:production"
                 },
                 "development": {
-                    "browserTarget": "dns-validator-demo:build:development"
+                    "buildTarget": "dns-validator-demo:build:development"
                 }
             },
             "defaultConfiguration": "development"
@@ -67,7 +67,7 @@
         "extract-i18n": {
             "executor": "@angular-devkit/build-angular:extract-i18n",
             "options": {
-                "browserTarget": "dns-validator-demo:build"
+                "buildTarget": "dns-validator-demo:build"
             }
         },
         "lint": {
@@ -80,8 +80,7 @@
             "executor": "@nx/jest:jest",
             "outputs": ["{workspaceRoot}/coverage/apps/dns-validator-demo"],
             "options": {
-                "jestConfig": "apps/dns-validator-demo/jest.config.ts",
-                "passWithNoTests": true
+                "jestConfig": "apps/dns-validator-demo/jest.config.ts"
             }
         }
     },

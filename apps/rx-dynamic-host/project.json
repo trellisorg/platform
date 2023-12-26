@@ -53,13 +53,13 @@
             "defaultConfiguration": "production"
         },
         "serve": {
-            "executor": "@nx/angular:webpack-dev-server",
+            "executor": "@nx/angular:dev-server",
             "configurations": {
                 "production": {
-                    "browserTarget": "rx-dynamic-host:build:production"
+                    "buildTarget": "rx-dynamic-host:build:production"
                 },
                 "development": {
-                    "browserTarget": "rx-dynamic-host:build:development"
+                    "buildTarget": "rx-dynamic-host:build:development"
                 }
             },
             "defaultConfiguration": "development",
@@ -71,7 +71,7 @@
         "extract-i18n": {
             "executor": "@angular-devkit/build-angular:extract-i18n",
             "options": {
-                "browserTarget": "rx-dynamic-host:build"
+                "buildTarget": "rx-dynamic-host:build"
             }
         },
         "lint": {

@@ -25,8 +25,7 @@
             "executor": "@nx/jest:jest",
             "outputs": ["{workspaceRoot}/coverage/packages/use-memo"],
             "options": {
-                "jestConfig": "packages/use-memo/jest.config.ts",
-                "passWithNoTests": true
+                "jestConfig": "packages/use-memo/jest.config.ts"
             }
         },
         "lint": {

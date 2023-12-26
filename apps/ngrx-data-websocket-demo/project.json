@@ -63,18 +63,18 @@
         "serve": {
             "executor": "@angular-devkit/build-angular:dev-server",
             "options": {
-                "browserTarget": "ngrx-data-websocket-demo:build"
+                "buildTarget": "ngrx-data-websocket-demo:build"
             },
             "configurations": {
                 "production": {
-                    "browserTarget": "ngrx-data-websocket-demo:build:production"
+                    "buildTarget": "ngrx-data-websocket-demo:build:production"
                 }
             }
         },
         "extract-i18n": {
             "executor": "@angular-devkit/build-angular:extract-i18n",
             "options": {
-                "browserTarget": "ngrx-data-websocket-demo:build"
+                "buildTarget": "ngrx-data-websocket-demo:build"
             }
         },
         "lint": {
@@ -89,8 +89,7 @@
         "test": {
             "executor": "@nx/jest:jest",
             "options": {
-                "jestConfig": "apps/ngrx-data-websocket-demo/jest.config.ts",
-                "passWithNoTests": true
+                "jestConfig": "apps/ngrx-data-websocket-demo/jest.config.ts"
             },
             "outputs": ["{workspaceRoot}/coverage/apps/ngrx-data-websocket-demo"]
         }

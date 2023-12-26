@@ -31,8 +31,7 @@
             "executor": "@nx/jest:jest",
             "outputs": ["{workspaceRoot}/coverage/packages/rx-dynamic-component"],
             "options": {
-                "jestConfig": "packages/rx-dynamic-component/jest.config.ts",
-                "passWithNoTests": true
+                "jestConfig": "packages/rx-dynamic-component/jest.config.ts"
             }
         }
     },

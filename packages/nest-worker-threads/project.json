@@ -25,8 +25,7 @@
             "executor": "@nx/jest:jest",
             "outputs": ["{workspaceRoot}/coverage/packages/nest-worker-threads"],
             "options": {
-                "jestConfig": "packages/nest-worker-threads/jest.config.ts",
-                "passWithNoTests": true
+                "jestConfig": "packages/nest-worker-threads/jest.config.ts"
             }
         }
     },

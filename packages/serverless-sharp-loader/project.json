@@ -25,8 +25,7 @@
             "executor": "@nx/jest:jest",
             "outputs": ["{workspaceRoot}/coverage/packages/serverless-sharp-loader"],
             "options": {
-                "jestConfig": "packages/serverless-sharp-loader/jest.config.ts",
-                "passWithNoTests": true
+                "jestConfig": "packages/serverless-sharp-loader/jest.config.ts"
             }
         },
         "lint": {

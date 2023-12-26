@@ -1,11 +1,8 @@
-import { Inject, ModuleWithProviders, NgModule, Optional } from '@angular/core';
-import { TransferState } from '@angular/platform-browser';
+import { Inject, ModuleWithProviders, NgModule, Optional, TransferState } from '@angular/core';
+
 import { BEFORE_APP_SERIALIZED } from '@angular/platform-server';
 import { Store } from '@ngrx/store';
-import {
-    REHYDRATE_TRANSFER_STATE,
-    selectStateToTransfer,
-} from '@trellisorg/ngrx-universal-rehydrate';
+import { REHYDRATE_TRANSFER_STATE, selectStateToTransfer } from '@trellisorg/ngrx-universal-rehydrate';
 import { take } from 'rxjs/operators';
 
 /**
@@ -14,16 +11,9 @@ import { take } from 'rxjs/operators';
  * @param transferState
  * @param existing The existing callback for serializing the TransferState
  */
-export function serializeRehydrateStateFactory(
-    store: Store,
-    transferState: TransferState,
-    existing: () => void
-) {
+export function serializeRehydrateStateFactory(store: Store, transferState: TransferState, existing: () => void) {
     return async () => {
-        const state = await store
-            .select(selectStateToTransfer)
-            .pipe(take(1))
-            .toPromise();
+        const state = await store.select(selectStateToTransfer).pipe(take(1)).toPromise();
 
         if (state) {
             transferState.set(REHYDRATE_TRANSFER_STATE, state);
@@ -59,11 +49,7 @@ export class NgrxUniversalRehydrateServerModule {
             callbacks.find((c) => c.toString().includes(`appId + '-state'`));
 
         if (serializeStateCallback) {
-            callbacks[0] = serializeRehydrateStateFactory(
-                _store,
-                _transferState,
-                serializeStateCallback
-            );
+            callbacks[0] = serializeRehydrateStateFactory(_store, _transferState, serializeStateCallback);
         }
     }
 

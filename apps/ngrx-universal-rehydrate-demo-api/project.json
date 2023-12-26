@@ -15,7 +15,8 @@
                 "assets": ["apps/ngrx-universal-rehydrate-demo-api/src/assets"],
                 "maxWorkers": 2,
                 "target": "node",
-                "compiler": "tsc"
+                "compiler": "tsc",
+                "isolatedConfig": false
             },
             "configurations": {
                 "production": {
@@ -47,8 +48,7 @@
             "executor": "@nx/jest:jest",
             "outputs": ["{workspaceRoot}/coverage/apps/ngrx-universal-rehydrate-demo-api"],
             "options": {
-                "jestConfig": "apps/ngrx-universal-rehydrate-demo-api/jest.config.ts",
-                "passWithNoTests": true
+                "jestConfig": "apps/ngrx-universal-rehydrate-demo-api/jest.config.ts"
             }
         }
     },

@@ -36,8 +36,7 @@
             "executor": "@nx/jest:jest",
             "outputs": ["{workspaceRoot}/coverage/packages/preload-chunks"],
             "options": {
-                "jestConfig": "packages/preload-chunks/jest.config.ts",
-                "passWithNoTests": true
+                "jestConfig": "packages/preload-chunks/jest.config.ts"
             }
         }
     },

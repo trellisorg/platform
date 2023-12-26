@@ -3,7 +3,7 @@ import { ENVIRONMENT_INITIALIZER, inject, Provider } from '@angular/core';
 import { BEFORE_APP_SERIALIZED } from '@angular/platform-server';
 import type { PreloadChunksConfig } from './config';
 import { IMPORT_MAP_CHUNKS } from './constants';
-import { readChunkMap, readModuleContent, webpackRequire, _serializeImportMap } from './patch-webpack';
+import { _serializeImportMap, readChunkMap, readModuleContent, webpackRequire } from './patch-webpack';
 
 /**
  * A provider function to be used within the server so that any lazy chunk that is loaded and thus needed to render
@@ -39,7 +39,7 @@ export function provideChunkPreloader({ pathToBrowserFiles, config, enabled = tr
                 if (!useLinkPreload) {
                     const beforeAppSerialized = inject(BEFORE_APP_SERIALIZED);
 
-                    beforeAppSerialized.push(_serializeImportMap(document, importMapChunks));
+                    (beforeAppSerialized as unknown as any[]).push(_serializeImportMap(document, importMapChunks));
                 }
 
                 let preloadCount = 0;

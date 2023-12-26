@@ -56,10 +56,10 @@
             "executor": "@angular-devkit/build-angular:dev-server",
             "configurations": {
                 "production": {
-                    "browserTarget": "conways-game-of-life:build:production"
+                    "buildTarget": "conways-game-of-life:build:production"
                 },
                 "development": {
-                    "browserTarget": "conways-game-of-life:build:development"
+                    "buildTarget": "conways-game-of-life:build:development"
                 }
             },
             "defaultConfiguration": "development"
@@ -67,7 +67,7 @@
         "extract-i18n": {
             "executor": "@angular-devkit/build-angular:extract-i18n",
             "options": {
-                "browserTarget": "conways-game-of-life:build"
+                "buildTarget": "conways-game-of-life:build"
             }
         },
         "lint": {
@@ -80,8 +80,7 @@
             "executor": "@nx/jest:jest",
             "outputs": ["{workspaceRoot}/coverage/apps/conways-game-of-life"],
             "options": {
-                "jestConfig": "apps/conways-game-of-life/jest.config.ts",
-                "passWithNoTests": true
+                "jestConfig": "apps/conways-game-of-life/jest.config.ts"
             }
         }
     },

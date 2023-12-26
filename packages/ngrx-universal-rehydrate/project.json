@@ -30,8 +30,7 @@
             "executor": "@nx/jest:jest",
             "outputs": ["{workspaceRoot}/coverage/packages/ngrx-universal-rehydrate"],
             "options": {
-                "jestConfig": "packages/ngrx-universal-rehydrate/jest.config.ts",
-                "passWithNoTests": true
+                "jestConfig": "packages/ngrx-universal-rehydrate/jest.config.ts"
             }
         }
     },

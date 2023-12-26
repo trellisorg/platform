@@ -15,7 +15,7 @@
     "dependencies": {
         "tslib": "^2.0.0",
         "yargs": "^17.0.1",
-        "@nx/workspace": "^13 || ^14"
+        "nx": "^17"
     },
     "description": "Nrwl Nx plugin for listing information about your repository. Find unused libraries, circular dependencies and query your dep graph.",
     "homepage": "https://github.com/trellisorg/platform/tree/master/packages/nxls",

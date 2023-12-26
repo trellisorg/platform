@@ -15,7 +15,8 @@
                 "assets": ["apps/api/src/assets"],
                 "maxWorkers": 2,
                 "target": "node",
-                "compiler": "tsc"
+                "compiler": "tsc",
+                "isolatedConfig": false
             },
             "configurations": {
                 "production": {
@@ -47,8 +48,7 @@
         "test": {
             "executor": "@nx/jest:jest",
             "options": {
-                "jestConfig": "apps/api/jest.config.ts",
-                "passWithNoTests": true
+                "jestConfig": "apps/api/jest.config.ts"
             },
             "outputs": ["{workspaceRoot}/coverage/apps/api"]
         }
