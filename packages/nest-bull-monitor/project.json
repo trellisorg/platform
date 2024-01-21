@@ -8,11 +8,11 @@
             "executor": "@nx/js:tsc",
             "outputs": ["{options.outputPath}"],
             "options": {
-                "outputPath": "dist/libs/nest-bull-monitor",
-                "tsConfig": "libs/nest-bull-monitor/tsconfig.lib.json",
-                "packageJson": "libs/nest-bull-monitor/package.json",
-                "main": "libs/nest-bull-monitor/src/index.ts",
-                "assets": ["libs/nest-bull-monitor/*.md"]
+                "outputPath": "dist/packages/nest-bull-monitor",
+                "tsConfig": "packages/nest-bull-monitor/tsconfig.lib.json",
+                "packageJson": "packages/nest-bull-monitor/package.json",
+                "main": "packages/nest-bull-monitor/src/index.ts",
+                "assets": ["packages/nest-bull-monitor/*.md"]
             }
         },
         "publish": {

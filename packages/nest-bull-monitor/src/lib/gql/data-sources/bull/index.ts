@@ -1,4 +1,4 @@
-import isNil from 'lodash/isNil';
+import { isNil } from 'lodash';
 import redisInfo from 'redis-info';
 import { PowerSearch } from '../../../data-search';
 import { BullMonitorError } from '../../../errors';

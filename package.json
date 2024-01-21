@@ -113,7 +113,7 @@
         "@types/compression": "^1.7.2",
         "@types/google.maps": "3.53.5",
         "@types/jest": "29.5.1",
-        "@types/lodash": "^4.14.194",
+        "@types/lodash": "^4.14.202",
         "@types/md5": "^2.3.2",
         "@types/node": "18.16.9",
         "@types/redis-info": "^3.0.3",

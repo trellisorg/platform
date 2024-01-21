@@ -1,5 +1,5 @@
 import { BullModule } from '@nestjs/bull';
-import { Module } from '@nestjs/common';
+import { Injectable, Module, type NestMiddleware } from '@nestjs/common';
 import { NestBullMonitorModule } from '@trellisorg/nest-bull-monitor';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -14,6 +14,13 @@ import { StoryGateway } from './story.gateway';
     exports: [BullModule],
 })
 class Queues {}
+
+@Injectable()
+export class CookieAuthMiddleware implements NestMiddleware {
+    use(req: any, res: any, next: (error?: any) => void): any {
+        next();
+    }
+}
 
 @Module({
     imports: [
@@ -34,6 +41,7 @@ class Queues {}
                 maxMetrics: 100,
             },
             imports: [Queues],
+            middlewareConsumers: [CookieAuthMiddleware],
         }),
     ],
     controllers: [AppController],

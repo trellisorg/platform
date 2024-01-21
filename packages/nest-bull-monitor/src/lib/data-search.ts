@@ -1,6 +1,6 @@
 import jsonata from 'jsonata';
-import isempty from 'lodash/isEmpty';
-import type { Readable } from 'stream';
+import { isEmpty } from 'lodash';
+import type { Readable } from 'node:stream';
 import { DEFAULT_DATA_SEARCH_SCAN_COUNT } from './constants';
 import type { Job, JobStatus, Queue } from './queue';
 import type { Maybe } from './typings/utils';
@@ -68,7 +68,7 @@ export class PowerSearch {
         try {
             const result = expr.evaluate(job.rawJob);
             if (!result) return false;
-            return typeof result === 'object' ? !isempty(result) : !!result;
+            return typeof result === 'object' ? !isEmpty(result) : !!result;
         } catch (_e) {
             return false;
         }
@@ -147,7 +147,7 @@ class ListIterator extends AbstractIterator {
         while (true) {
             try {
                 const ids = this._nextChunk;
-                if (isempty(ids)) {
+                if (isEmpty(ids)) {
                     return;
                 }
                 const jobs = await this._extractJobs(ids);

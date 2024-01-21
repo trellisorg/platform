@@ -1,8 +1,8 @@
 import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@apollo/server/express4';
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
-import Express from 'express';
-import type { Server as HttpServer } from 'http';
+import { Router } from 'express';
+import type { Server as HttpServer } from 'node:http';
 import { BullMonitor } from '../main';
 
 export type InitParams = {
@@ -11,14 +11,16 @@ export type InitParams = {
 };
 
 export class BullMonitorExpress extends BullMonitor<ApolloServer, any> {
-    router?: Express.Router;
+    router?: Router;
 
     async init({ httpServer }: InitParams = {}) {
-        const router = Express.Router();
+        const router = Router();
+
         router.get('/', (_req, res) => {
             res.type('html');
             res.send(this.renderUi());
         });
+
         this.createServer(ApolloServer, httpServer && [ApolloServerPluginDrainHttpServer({ httpServer })]);
 
         if (!this.server) {
@@ -27,7 +29,7 @@ export class BullMonitorExpress extends BullMonitor<ApolloServer, any> {
 
         await this.startServer();
 
-        (router as Express.Express).use(
+        router.use(
             '/',
             expressMiddleware(this.server, {
                 context: async () => ({

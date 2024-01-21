@@ -1,6 +1,4 @@
-import { getQueueToken as getBullQueueToken } from '@nestjs/bull';
-import { getQueueToken as getBullMQQueueToken } from '@nestjs/bullmq';
-import type { ModuleMetadata } from '@nestjs/common';
+import type { ModuleMetadata, Type } from '@nestjs/common';
 import {
     Inject,
     Injectable,
@@ -11,8 +9,6 @@ import {
 } from '@nestjs/common';
 import type { Queue as BullQueue } from 'bull';
 import type { Queue as BullMQQueue } from 'bullmq';
-import { BullAdapter } from '../bull-adapter';
-import { BullMQAdapter } from '../bullmq-adapter';
 import { BullMonitorExpress } from '../express/bull-monitor-express';
 import type { Queue } from '../queue';
 import type { Config } from '../typings/config';
@@ -25,6 +21,8 @@ export interface NestBullMonitorConfig extends Omit<Config, 'queues'> {
     bullQueues?: string[];
     bullMQQueues?: string[];
     imports: ModuleMetadata['imports'];
+    // eslint-disable-next-line @typescript-eslint/ban-types
+    middlewareConsumers?: (Type | Function)[];
 }
 
 @Injectable()
@@ -41,9 +39,15 @@ class NestBullMonitorService extends BullMonitorExpress {
     }
 }
 
+const LazyBullAdapter = (queue: BullQueue) => import('../bull-adapter').then((m) => new m.BullAdapter(queue));
+const LazyBullMQAdapter = (queue: BullMQQueue) => import('../bullmq-adapter').then((m) => new m.BullMQAdapter(queue));
+
+const LazyGetBullQueueToken = () => import('@nestjs/bull').then((m) => m.getQueueToken);
+const LazyGetBullMQQueueToken = () => import('@nestjs/bullmq').then((m) => m.getQueueToken);
+
 @Module({})
 export class NestBullMonitorModule implements NestModule {
-    static forRoot(config: NestBullMonitorConfig): DynamicModule {
+    static async forRoot(config: NestBullMonitorConfig): Promise<DynamicModule> {
         const { bullQueues, bullMQQueues, imports, ...rest } = config;
 
         return {
@@ -52,13 +56,14 @@ export class NestBullMonitorModule implements NestModule {
             providers: [
                 {
                     provide: BULL_QUEUES,
-                    useFactory: (...queues: BullQueue[]) => queues.map((queue) => new BullAdapter(queue)),
-                    inject: bullQueues?.map(getBullQueueToken) ?? [],
+                    useFactory: (...queues: BullQueue[]) => Promise.all(queues.map((queue) => LazyBullAdapter(queue))),
+                    inject: bullQueues?.map(await LazyGetBullQueueToken()) ?? [],
                 },
                 {
                     provide: BULL_MQ_QUEUES,
-                    useFactory: (...queues: BullMQQueue[]) => queues.map((queue) => new BullMQAdapter(queue)),
-                    inject: bullMQQueues?.map(getBullMQQueueToken) ?? [],
+                    useFactory: (...queues: BullMQQueue[]) =>
+                        Promise.all(queues.map((queue) => LazyBullMQAdapter(queue))),
+                    inject: bullMQQueues?.map(await LazyGetBullMQQueueToken()) ?? [],
                 },
                 {
                     provide: CONFIG,
@@ -71,7 +76,10 @@ export class NestBullMonitorModule implements NestModule {
         };
     }
 
-    constructor(private readonly nestBullMonitorService: NestBullMonitorService) {}
+    constructor(
+        private readonly nestBullMonitorService: NestBullMonitorService,
+        @Inject(CONFIG) private readonly config: NestBullMonitorConfig
+    ) {}
 
     async configure(consumer: MiddlewareConsumer): Promise<void> {
         await this.nestBullMonitorService.init();
@@ -80,6 +88,8 @@ export class NestBullMonitorModule implements NestModule {
             throw new Error(`Router was not instantiated correctly.`);
         }
 
-        consumer.apply(this.nestBullMonitorService.router).forRoutes('/bull-monitor');
+        consumer
+            .apply(...(this.config.middlewareConsumers ?? []), this.nestBullMonitorService.router)
+            .forRoutes('/bull-monitor');
     }
 }

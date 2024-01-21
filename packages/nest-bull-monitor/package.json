@@ -1,8 +1,24 @@
 {
     "name": "@trellisorg/nest-bull-monitor",
-    "version": "0.0.1",
+    "version": "1.0.8",
     "dependencies": {
-        "tslib": "^2.3.0"
+        "@graphql-tools/utils": "^10.0.12",
+        "graphql-scalars": "^1.22.4",
+        "tslib": "^2.3.0",
+        "toad-scheduler": "^3.0.0",
+        "jsonata": "^2.0.3",
+        "lodash": "^4.17.21",
+        "ioredis": "^5.3.2",
+        "redis-info": "^3.1.0"
+    },
+    "peerDependencies": {
+        "@apollo/server": "^4.0.0",
+        "@nestjs/common": "^10.0.0",
+        "@nestjs/bull": "^10.0.0",
+        "@nestjs/bullmq": "^10.0.0",
+        "bull": "^4.0.0",
+        "bullmq": "^5.0.0",
+        "express": "^4.0.0"
     },
     "type": "commonjs",
     "main": "./src/index.js",

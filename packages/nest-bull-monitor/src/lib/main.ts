@@ -1,5 +1,4 @@
 import type { ApolloServer, ApolloServerOptions, BaseContext } from '@apollo/server';
-import { startStandaloneServer } from '@apollo/server/standalone';
 import { DEFAULT_METRICS_CONFIG, DEFAULT_ROOT_CONFIG } from './constants';
 import { BullDataSource, MetricsDataSource, PoliciesDataSource } from './gql/data-sources';
 import { resolvers } from './gql/resolvers';
@@ -18,6 +17,7 @@ export abstract class BullMonitor<TServer extends ApolloServer, TContext extends
     protected constructor(config: Config) {
         this.config = this._normalizeConfig(config);
         this._ui = new UI();
+
         this._initQueues(this.config.queues);
         if (this.config.metrics) {
             this._initMetricsCollector();
@@ -83,7 +83,7 @@ export abstract class BullMonitor<TServer extends ApolloServer, TContext extends
             throw new Error('Server was not created. Make sure you call `createServer` first.');
         }
 
-        return await startStandaloneServer(this.server, {});
+        return await this.server.start();
     }
 
     protected renderUi() {

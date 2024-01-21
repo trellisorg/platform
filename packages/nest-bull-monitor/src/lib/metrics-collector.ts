@@ -1,6 +1,4 @@
-import isEmpty from 'lodash/isEmpty';
-import round from 'lodash/round';
-import sum from 'lodash/sum';
+import { isEmpty, round, sum } from 'lodash';
 import {
     ToadScheduler as Scheduler,
     SimpleIntervalJob as SchedulerJob,
@@ -21,36 +19,49 @@ type TMetrics = {
 
 export class MetricsCollector {
     private _processingTimeGauge: Map<string, number[]> = new Map();
+
     private _queues: Queue[];
+
     private _scheduler: Scheduler;
-    private _schedulerJob: SchedulerJob;
+
+    private _schedulerJob?: SchedulerJob;
+
     private _isActive = false;
 
     constructor(queues: Queue[], private _config: Required<MetricsConfig>) {
         this._scheduler = new Scheduler();
         this._queues = queues.filter((q) => !_config.blacklist.includes(q.name));
     }
+
     startCollecting(): void {
         this._maybeCreateSchedulerJob();
-        this._scheduler.addSimpleIntervalJob(this._schedulerJob);
+
+        if (this._schedulerJob) {
+            this._scheduler.addSimpleIntervalJob(this._schedulerJob);
+        }
+
         this._attachCompletionCbs();
         this._isActive = true;
     }
+
     stopCollecting(): void {
         this._scheduler.stop();
         this._detachCompletionCbs();
         this._isActive = false;
     }
+
     async extract(queue: string, start = 0, end = -1): Promise<TMetrics[]> {
         const key = this._buildPersistKey(queue);
         const client = await this._redisClient;
         const metrics = await client.lrange(key, start, end);
         return metrics.map(JsonService.maybeParse).filter(Boolean);
     }
+
     async clear(queue: string): Promise<void> {
         const client = await this._redisClient;
         await client.del(this._buildPersistKey(queue));
     }
+
     async clearAll(): Promise<void> {
         const client = await this._redisClient;
         const pipeline = client.pipeline();
@@ -59,6 +70,7 @@ export class MetricsCollector {
         });
         await pipeline.exec();
     }
+
     set queues(queues: Queue[]) {
         this._queues = queues.filter((q) => !this._config.blacklist.includes(q.name));
         const queuesSet = new Set(this._queues.map(({ id }) => id));
@@ -78,6 +90,7 @@ export class MetricsCollector {
             this._schedulerJob = new SchedulerJob(this._config.collectInterval, task);
         }
     }
+
     private _taskFn = async () => {
         try {
             const metrics = await this._collect();
@@ -86,6 +99,7 @@ export class MetricsCollector {
             console.error('[bull-monitor] metrics collector error: ', e);
         }
     };
+
     private async _collect(): Promise<TMetrics[]> {
         const timestamp = Date.now();
         return await Promise.all(
@@ -101,6 +115,7 @@ export class MetricsCollector {
             })
         );
     }
+
     private async _persist(metrics: TMetrics[]) {
         const client = await this._redisClient;
         const lpopPipeline = client.pipeline();
@@ -115,6 +130,7 @@ export class MetricsCollector {
         );
         await lpopPipeline.exec();
     }
+
     private _attachCompletionCbs() {
         this._detachCompletionCbs();
         for (const queue of this._queues) {
@@ -122,11 +138,13 @@ export class MetricsCollector {
             queue.onGlobalJobCompletion = cb;
         }
     }
+
     private _detachCompletionCbs() {
         for (const queue of this._queues) {
             queue.onGlobalJobCompletion = null;
         }
     }
+
     private async _onJobComplete(queue: Queue, jobId: JobId) {
         const job = await queue.getJob(jobId);
         if (!job?.finishedOn || !job.processedOn) {
@@ -141,6 +159,7 @@ export class MetricsCollector {
             stats.push(dur);
         }
     }
+
     private _extractProcessingTime(
         queue: string
     ): Pick<TMetrics, 'processingTime' | 'processingTimeMax' | 'processingTimeMin'> {
@@ -152,12 +171,15 @@ export class MetricsCollector {
             processingTimeMax: this._normalizeProcessingTime(Math.max(...stats!)),
         };
     }
+
     private _normalizeProcessingTime(time: number) {
         return round(time, 2);
     }
+
     private _buildPersistKey(queue: string) {
         return this._config.redisPrefix + queue;
     }
+
     private get _redisClient() {
         return this._queues[0].client;
     }
