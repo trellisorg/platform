@@ -40,6 +40,8 @@
             "@trellisorg/ngrx-universal-rehydrate": ["packages/ngrx-universal-rehydrate/src/index.ts"],
             "@trellisorg/ngrx-universal-rehydrate/server": ["packages/ngrx-universal-rehydrate/server/src/index.ts"],
             "@trellisorg/ngx-hono-ssr": ["packages/ngx-hono-ssr/src/index.ts"],
+            "@trellisorg/ngx-hono-ssr/bun": ["packages/ngx-hono-ssr/bun/src/index.ts"],
+            "@trellisorg/ngx-hono-ssr/node": ["packages/ngx-hono-ssr/node/src/index.ts"],
             "@trellisorg/nx-betterer": ["packages/nx-betterer/src/index.ts"],
             "@trellisorg/nxls": ["packages/nxls/src/index.ts"],
             "@trellisorg/preload-chunks": ["packages/preload-chunks/src/index.ts"],
