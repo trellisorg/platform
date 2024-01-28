@@ -14,12 +14,10 @@ jobs:
         steps:
             - checkout
             - node/install:
-                  install-yarn: true
-                  node-version: '18'
-            - node/install-packages:
-                  pkg-manager: yarn
-                  include-branch-in-cache-key: false
-                  cache-version: v4
+                  node-version: '20'
+            - run:
+                  name: Install Packages
+                  command: curl -fsSL https://bun.sh/install | bash && bun install --frozen-lockfile
             - run:
                   name: Run tests
                   command: yarn nx affected:test --parallel << parameters.flags >>
