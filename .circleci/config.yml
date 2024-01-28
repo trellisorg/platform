@@ -10,7 +10,7 @@ jobs:
                 type: string
                 default: ''
         docker:
-            - image: cimg/node:21
+            - image: cimg/node:21.6.1
         steps:
             - checkout
             - node/install:
