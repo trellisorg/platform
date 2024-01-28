@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
     node: circleci/node@5.0.2
+    bun-orb: cmgriffing/bun-orb@0.0.28
 
 jobs:
     build-and-test:
@@ -15,9 +16,7 @@ jobs:
             - checkout
             - node/install:
                   node-version: '21'
-            - run:
-                  name: Install Bun
-                  command: curl -fsSL https://bun.sh/install | bash
+            - bun-orb/setup
             - restore_cache:
                   keys:
                       - v1-dependencies-bun-{{ checksum "bun.lockb" }}
