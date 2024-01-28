@@ -122,7 +122,8 @@
             "{workspaceRoot}/tsconfig.base.json",
             "{workspaceRoot}/tslint.json",
             "{workspaceRoot}/nx.json",
-            "{workspaceRoot}/yarn.lock"
+            "{workspaceRoot}/yarn.lock",
+            "{workspaceRoot}/bun.lockb"
         ],
         "production": [
             "default",
