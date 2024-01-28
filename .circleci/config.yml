@@ -16,8 +16,20 @@ jobs:
             - node/install:
                   node-version: '20'
             - run:
+                  name: Install Bun
+                  command: curl -fsSL https://bun.sh/install | bash
+            - restore_cache:
+                  keys:
+                      - v1-dependencies-bun-{{ checksum "bun.lockb" }}
+                      - v1-dependencies-bun-
+            - run:
                   name: Install Packages
-                  command: curl -fsSL https://bun.sh/install | bash && bun install --frozen-lockfile
+                  command: bun install --frozen-lockfile --cache-dir ~/.cache.bun
+            - save_cache:
+                  name: Save Bun Package Cache
+                  key: v1-dependencies-bun-{{ checksum "bun.lockb" }}
+                  paths:
+                      - ~/.cache/bun
             - run:
                   name: Run tests
                   command: yarn nx affected:test --parallel << parameters.flags >>
