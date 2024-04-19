@@ -16,7 +16,6 @@ jobs:
             - checkout
             - bun/install
             - node/install:
-                  install-yarn: true
                   node-version: '18'
             - restore_cache:
                   keys:
@@ -31,10 +30,10 @@ jobs:
                       - node_modules
             - run:
                   name: Run tests
-                  command: yarn nx affected:test --parallel << parameters.flags >>
+                  command: bun run nx affected:test --parallel << parameters.flags >>
             - run:
                   name: Build
-                  command: yarn nx affected:build << parameters.flags >> --parallel
+                  command: bun run nx affected:build << parameters.flags >> --parallel
 
 workflows:
     run:
