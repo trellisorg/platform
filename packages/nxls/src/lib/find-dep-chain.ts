@@ -1,5 +1,5 @@
+import { createProjectGraphAsync } from '@nx/devkit';
 import type { Dependencies, NxDepsJson } from './types';
-import { readOrGenerateDepFile } from './util';
 
 export interface FindDependencyConfig {
     target: string;
@@ -26,9 +26,9 @@ function checkDependency(
 
     // If npm dependency then there is not a node, and we want to skip adding
     // it to alreadyVisited as we'd like to visit the target npm node again.
-    if(currentSource.startsWith('npm:')) {
-        if(currentSource.split('npm:')[1] === target) {
-            chains.push([...depsPath])
+    if (currentSource.startsWith('npm:')) {
+        if (currentSource.split('npm:')[1] === target) {
+            chains.push([...depsPath]);
         } else {
             // We don't need to visit this npm node again, it's not our target.
             alreadyVisited.add(currentSource);
@@ -44,20 +44,12 @@ function checkDependency(
      Npm dependencies don't have a node in the depTree so the index may be
      undefined.
     */
-    if(node) {
+    if (node) {
         node.forEach((dep) => {
             if (dep.target === target) {
                 chains.push([...depsPath, target]);
             } else {
-                chains.push(
-                    ...checkDependency(
-                        depTree,
-                        dep.target,
-                        target,
-                        depsPath,
-                        alreadyVisited
-                    )
-                );
+                chains.push(...checkDependency(depTree, dep.target, target, depsPath, alreadyVisited));
             }
         });
     }
@@ -65,14 +57,14 @@ function checkDependency(
     return chains;
 }
 
-export function findDependencies({ target }: FindDependencyConfig): string[] {
-    const dependencies = readOrGenerateDepFile().dependencies;
-    return Object.values(dependencies[target]).map((dep) => dep.target);
+export async function findDependencies({ target }: FindDependencyConfig): Promise<string[]> {
+    const projectGraph = await createProjectGraphAsync();
+    return Object.values(projectGraph.dependencies[target]).map((dep) => dep.target);
 }
 
-export function findDependents({ target }: FindDependencyConfig): string[] {
-    const dependencies = readOrGenerateDepFile().dependencies;
-    return Object.entries(dependencies).reduce((prev, [project, deps]) => {
+export async function findDependents({ target }: FindDependencyConfig): Promise<string[]> {
+    const projectGraph = await createProjectGraphAsync();
+    return Object.entries(projectGraph.dependencies).reduce((prev, [project, deps]) => {
         if (deps.find((dep) => dep.target === target)) {
             return [project, ...prev];
         }
@@ -81,19 +73,14 @@ export function findDependents({ target }: FindDependencyConfig): string[] {
     }, []);
 }
 
-export function findAllDependencyChains({
-    source,
-    target,
-}: FindDependencyChainConfig): string[][] {
-    const dependencies = readOrGenerateDepFile().dependencies;
-    return _findAllDependencyChains({ source, target }, dependencies);
+export async function findAllDependencyChains({ source, target }: FindDependencyChainConfig): Promise<string[][]> {
+    const projectGraph = await createProjectGraphAsync();
+    return _findAllDependencyChains({ source, target }, projectGraph.dependencies);
 }
 
 export function _findAllDependencyChains(
     { source, target }: FindDependencyChainConfig,
     dependencies: Dependencies
 ): string[][] {
-    return source
-        .map((source) => checkDependency(dependencies, source, target, []))
-        .flat();
+    return source.map((source) => checkDependency(dependencies, source, target, [])).flat();
 }

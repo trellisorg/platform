@@ -3,9 +3,6 @@
         "appsDir": "apps",
         "libsDir": "packages"
     },
-    "affected": {
-        "defaultBase": "master"
-    },
     "tasksRunnerOptions": {
         "default": {
             "options": {
@@ -122,7 +119,8 @@
             "{workspaceRoot}/tsconfig.base.json",
             "{workspaceRoot}/tslint.json",
             "{workspaceRoot}/nx.json",
-            "{workspaceRoot}/yarn.lock"
+            "{workspaceRoot}/yarn.lock",
+            "{workspaceRoot}/bun.lockb"
         ],
         "production": [
             "default",
@@ -136,5 +134,7 @@
         ]
     },
     "nxCloudAccessToken": "NTIxYmI5NTktYTY3Yy00MzA0LWIxZTQtZDZiNGUxNzNiNjhjfHJlYWQ=",
-    "parallel": 2
+    "parallel": 2,
+    "useInferencePlugins": false,
+    "defaultBase": "master"
 }

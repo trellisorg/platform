@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
     node: circleci/node@5.0.2
+    bun-orb: cmgriffing/bun-orb@0.0.28
 
 jobs:
     build-and-test:
@@ -13,13 +14,21 @@ jobs:
             image: ubuntu-2004:202010-01
         steps:
             - checkout
+            - bun-orb/setup
             - node/install:
                   install-yarn: true
                   node-version: '18'
-            - node/install-packages:
-                  pkg-manager: yarn
-                  include-branch-in-cache-key: false
-                  cache-version: v4
+            - restore_cache:
+                  keys:
+                      - v1-bun-deps-{{ checksum "bun.lockb" }}
+                      - v1-bun-deps-
+            - run: |
+                  bun install
+            - save_cache:
+                  key: v1-bun-deps-{{ checksum "bun.lockb" }}
+                  paths:
+                      - ~/.bun/install/cache
+                      - node_modules
             - run:
                   name: Run tests
                   command: yarn nx affected:test --parallel << parameters.flags >>

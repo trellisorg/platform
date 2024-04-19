@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { faker } from '@faker-js/faker';
 import { RxDynamicComponentService } from '@trellisorg/rx-dynamic-component';
 import { interval, map, startWith, Subject, timer } from 'rxjs';

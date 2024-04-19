@@ -6,7 +6,7 @@
         "directory": "packages/nxls"
     },
     "readme": "https://github.com/trellisorg/platform/tree/master/packages/nxls",
-    "version": "0.0.19",
+    "version": "0.0.21",
     "license": "MIT",
     "bin": {
         "nxls": "bin/nxls.js"
@@ -15,7 +15,8 @@
     "dependencies": {
         "tslib": "^2.0.0",
         "yargs": "^17.0.1",
-        "nx": "^17"
+        "nx": "^17",
+        "@nx/devkit": "^17"
     },
     "description": "Nrwl Nx plugin for listing information about your repository. Find unused libraries, circular dependencies and query your dep graph.",
     "homepage": "https://github.com/trellisorg/platform/tree/master/packages/nxls",

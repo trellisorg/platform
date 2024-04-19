@@ -71,7 +71,7 @@ yargs
                 demandOptions: false,
             },
         },
-        (args) => {
+        async (args) => {
             if (args.source?.length && (args.dependencies != null || args.dependents != null)) {
                 // TODO: use chalk to display an error
                 console.error('--source cannot be used with --dependencies or --dependencies');
@@ -87,11 +87,11 @@ yargs
             let chains: string[] = [];
 
             if (args.dependencies != null) {
-                chains = findDependencies(args);
+                chains = await findDependencies(args);
             } else if (args.dependents) {
-                chains = findDependents(args);
+                chains = await findDependents(args);
             } else {
-                chains = findAllDependencyChains(args as unknown as any).map((chain) => chain.join(' -> '));
+                chains = (await findAllDependencyChains(args as unknown as any)).map((chain) => chain.join(' -> '));
             }
 
             chains.forEach((chain) => {
