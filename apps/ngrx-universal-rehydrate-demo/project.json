@@ -6,56 +6,21 @@
     "prefix": "trellisorg",
     "targets": {
         "build": {
-            "executor": "@angular-devkit/build-angular:browser",
+            "executor": "@angular-devkit/build-angular:application",
+            "outputs": ["{options.outputPath}"],
             "options": {
-                "outputPath": "dist/apps/ngrx-universal-rehydrate-demo/browser",
+                "assets": ["apps/ngrx-universal-rehydrate-demo/src/assets"],
+                "browser": "apps/ngrx-universal-rehydrate-demo/src/main.ts",
+                "extractLicenses": true,
                 "index": "apps/ngrx-universal-rehydrate-demo/src/index.html",
-                "main": "apps/ngrx-universal-rehydrate-demo/src/main.ts",
-                "polyfills": "apps/ngrx-universal-rehydrate-demo/src/polyfills.ts",
-                "tsConfig": "apps/ngrx-universal-rehydrate-demo/tsconfig.app.json",
-                "assets": [
-                    "apps/ngrx-universal-rehydrate-demo/src/favicon.ico",
-                    "apps/ngrx-universal-rehydrate-demo/src/assets"
-                ],
+                "inlineStyleLanguage": "scss",
+                "outputHashing": "all",
+                "outputPath": "dist/apps/ngrx-universal-rehydrate-demo",
+                "polyfills": ["zone.js"],
+                "prerender": false,
                 "styles": ["apps/ngrx-universal-rehydrate-demo/src/styles.scss"],
-                "scripts": [],
-                "vendorChunk": true,
-                "extractLicenses": false,
-                "buildOptimizer": false,
-                "sourceMap": true,
-                "optimization": false,
-                "namedChunks": true
-            },
-            "configurations": {
-                "production": {
-                    "fileReplacements": [
-                        {
-                            "replace": "apps/ngrx-universal-rehydrate-demo/src/environments/environment.ts",
-                            "with": "apps/ngrx-universal-rehydrate-demo/src/environments/environment.prod.ts"
-                        }
-                    ],
-                    "optimization": true,
-                    "outputHashing": "all",
-                    "sourceMap": false,
-                    "namedChunks": false,
-                    "extractLicenses": true,
-                    "vendorChunk": false,
-                    "buildOptimizer": true,
-                    "budgets": [
-                        {
-                            "type": "initial",
-                            "maximumWarning": "2mb",
-                            "maximumError": "5mb"
-                        },
-                        {
-                            "type": "anyComponentStyle",
-                            "maximumWarning": "6kb",
-                            "maximumError": "10kb"
-                        }
-                    ]
-                }
-            },
-            "defaultConfiguration": ""
+                "tsConfig": "apps/ngrx-universal-rehydrate-demo/tsconfig.app.json"
+            }
         },
         "serve": {
             "executor": "@angular-devkit/build-angular:dev-server",
