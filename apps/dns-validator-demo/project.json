@@ -24,15 +24,9 @@
         },
         "serve": {
             "executor": "@angular-devkit/build-angular:dev-server",
-            "configurations": {
-                "production": {
-                    "buildTarget": "dns-validator-demo:build:production"
-                },
-                "development": {
-                    "buildTarget": "dns-validator-demo:build:development"
-                }
-            },
-            "defaultConfiguration": "development"
+            "options": {
+                "buildTarget": "dns-validator-demo:build"
+            }
         },
         "extract-i18n": {
             "executor": "@angular-devkit/build-angular:extract-i18n",

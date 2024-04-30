@@ -24,15 +24,9 @@
         },
         "serve": {
             "executor": "@angular-devkit/build-angular:dev-server",
-            "configurations": {
-                "production": {
-                    "buildTarget": "conways-game-of-life:build:production"
-                },
-                "development": {
-                    "buildTarget": "conways-game-of-life:build:development"
-                }
-            },
-            "defaultConfiguration": "development"
+            "options": {
+                "buildTarget": "conways-game-of-life:build"
+            }
         },
         "extract-i18n": {
             "executor": "@angular-devkit/build-angular:extract-i18n",

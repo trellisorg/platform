@@ -24,15 +24,9 @@
         },
         "serve": {
             "executor": "@angular-devkit/build-angular:dev-server",
-            "configurations": {
-                "production": {
-                    "buildTarget": "use-memo-demo:build:production"
-                },
-                "development": {
-                    "buildTarget": "use-memo-demo:build:development"
-                }
-            },
-            "defaultConfiguration": "development"
+            "options": {
+                "buildTarget": "use-memo-demo:build"
+            }
         }
     },
     "tags": []

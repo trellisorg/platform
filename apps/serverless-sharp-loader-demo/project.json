@@ -24,15 +24,9 @@
         },
         "serve": {
             "executor": "@angular-devkit/build-angular:dev-server",
-            "configurations": {
-                "production": {
-                    "buildTarget": "serverless-sharp-loader-demo:build:production"
-                },
-                "development": {
-                    "buildTarget": "serverless-sharp-loader-demo:build:development"
-                }
-            },
-            "defaultConfiguration": "development"
+            "options": {
+                "buildTarget": "serverless-sharp-loader-demo:build"
+            }
         },
         "extract-i18n": {
             "executor": "@angular-devkit/build-angular:extract-i18n",

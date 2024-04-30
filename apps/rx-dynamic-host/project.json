@@ -24,18 +24,10 @@
         },
         "serve": {
             "executor": "@nx/angular:dev-server",
-            "configurations": {
-                "production": {
-                    "buildTarget": "rx-dynamic-host:build:production"
-                },
-                "development": {
-                    "buildTarget": "rx-dynamic-host:build:development"
-                }
-            },
-            "defaultConfiguration": "development",
             "options": {
                 "port": 4200,
-                "publicHost": "http://localhost:4200"
+                "publicHost": "http://localhost:4200",
+                "buildTarget": "rx-dynamic-host:build:development"
             }
         },
         "extract-i18n": {

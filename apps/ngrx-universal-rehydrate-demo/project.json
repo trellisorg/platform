@@ -26,11 +26,6 @@
             "executor": "@angular-devkit/build-angular:dev-server",
             "options": {
                 "buildTarget": "ngrx-universal-rehydrate-demo:build"
-            },
-            "configurations": {
-                "production": {
-                    "buildTarget": "ngrx-universal-rehydrate-demo:build:production"
-                }
             }
         },
         "extract-i18n": {
