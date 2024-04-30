@@ -70,12 +70,12 @@ export class AdvisoryLock {
 
     async withLock<ReturnType>(
         lockName: string,
-        retryableFn: LockedFunction<ReturnType>,
+        lockedFunction: LockedFunction<ReturnType>,
         retryOptions: Partial<RetryOptions> = {},
     ): Promise<ReturnType> {
         const unlockFn = await this.lock(lockName, retryOptions);
 
-        return retryableFn().finally(() => unlockFn());
+        return lockedFunction().finally(() => unlockFn());
     }
 
     async tryLock(lockName: string): Promise<void> {
