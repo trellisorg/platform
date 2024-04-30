@@ -44,6 +44,7 @@
             "@trellisorg/ngx-hono-ssr/node": ["packages/ngx-hono-ssr/node/src/index.ts"],
             "@trellisorg/nx-betterer": ["packages/nx-betterer/src/index.ts"],
             "@trellisorg/nxls": ["packages/nxls/src/index.ts"],
+            "@trellisorg/advisory-lock": ["packages/advisory-lock/src/index.ts"],
             "@trellisorg/preload-chunks": ["packages/preload-chunks/src/index.ts"],
             "@trellisorg/rx-dynamic-component": ["packages/rx-dynamic-component/src/index.ts"],
             "@trellisorg/serverless-sharp-loader": ["packages/serverless-sharp-loader/src/index.ts"],
