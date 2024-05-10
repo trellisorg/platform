@@ -1,0 +1,28 @@
+{
+    "name": "distributed-lock",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "packages/distributed-lock/src",
+    "projectType": "library",
+    "targets": {
+        "build": {
+            "executor": "@nx/js:swc",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "dist/packages/distributed-lock",
+                "tsConfig": "packages/distributed-lock/tsconfig.lib.json",
+                "packageJson": "packages/distributed-lock/package.json",
+                "main": "packages/distributed-lock/src/index.ts",
+                "assets": ["packages/distributed-lock/*.md"]
+            }
+        },
+        "publish": {
+            "command": "node tools/scripts/publish.mjs advisory-lock {args.ver} {args.tag}",
+            "dependsOn": ["build"]
+        },
+        "lint": {
+            "executor": "@nx/eslint:lint",
+            "outputs": ["{options.outputFile}"]
+        }
+    },
+    "tags": []
+}

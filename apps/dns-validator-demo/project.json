@@ -6,63 +6,27 @@
     "prefix": "trellisorg",
     "targets": {
         "build": {
-            "executor": "@angular-devkit/build-angular:browser",
+            "executor": "@angular-devkit/build-angular:application",
             "outputs": ["{options.outputPath}"],
             "options": {
-                "outputPath": "dist/apps/dns-validator-demo",
+                "assets": ["apps/dns-validator-demo/src/assets"],
+                "browser": "apps/dns-validator-demo/src/main.ts",
+                "extractLicenses": true,
                 "index": "apps/dns-validator-demo/src/index.html",
-                "main": "apps/dns-validator-demo/src/main.ts",
-                "polyfills": "apps/dns-validator-demo/src/polyfills.ts",
-                "tsConfig": "apps/dns-validator-demo/tsconfig.app.json",
                 "inlineStyleLanguage": "scss",
-                "assets": ["apps/dns-validator-demo/src/favicon.ico", "apps/dns-validator-demo/src/assets"],
+                "outputHashing": "all",
+                "outputPath": "dist/apps/dns-validator-demo",
+                "polyfills": ["zone.js"],
+                "prerender": false,
                 "styles": ["apps/dns-validator-demo/src/styles.scss"],
-                "scripts": []
-            },
-            "configurations": {
-                "production": {
-                    "budgets": [
-                        {
-                            "type": "initial",
-                            "maximumWarning": "500kb",
-                            "maximumError": "1mb"
-                        },
-                        {
-                            "type": "anyComponentStyle",
-                            "maximumWarning": "2kb",
-                            "maximumError": "4kb"
-                        }
-                    ],
-                    "fileReplacements": [
-                        {
-                            "replace": "apps/dns-validator-demo/src/environments/environment.ts",
-                            "with": "apps/dns-validator-demo/src/environments/environment.prod.ts"
-                        }
-                    ],
-                    "outputHashing": "all"
-                },
-                "development": {
-                    "buildOptimizer": false,
-                    "optimization": false,
-                    "vendorChunk": true,
-                    "extractLicenses": false,
-                    "sourceMap": true,
-                    "namedChunks": true
-                }
-            },
-            "defaultConfiguration": "production"
+                "tsConfig": "apps/dns-validator-demo/tsconfig.app.json"
+            }
         },
         "serve": {
             "executor": "@angular-devkit/build-angular:dev-server",
-            "configurations": {
-                "production": {
-                    "buildTarget": "dns-validator-demo:build:production"
-                },
-                "development": {
-                    "buildTarget": "dns-validator-demo:build:development"
-                }
-            },
-            "defaultConfiguration": "development"
+            "options": {
+                "buildTarget": "dns-validator-demo:build"
+            }
         },
         "extract-i18n": {
             "executor": "@angular-devkit/build-angular:extract-i18n",

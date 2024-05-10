@@ -6,55 +6,27 @@
     "prefix": "trellisorg",
     "targets": {
         "build": {
-            "executor": "@angular-devkit/build-angular:browser",
+            "executor": "@angular-devkit/build-angular:application",
             "outputs": ["{options.outputPath}"],
             "options": {
-                "outputPath": "dist/apps/serverless-sharp-loader-demo/browser",
+                "assets": ["apps/serverless-sharp-loader-demo/src/assets"],
+                "browser": "apps/serverless-sharp-loader-demo/src/main.ts",
+                "extractLicenses": true,
                 "index": "apps/serverless-sharp-loader-demo/src/index.html",
-                "main": "apps/serverless-sharp-loader-demo/src/main.ts",
-                "polyfills": "apps/serverless-sharp-loader-demo/src/polyfills.ts",
-                "tsConfig": "apps/serverless-sharp-loader-demo/tsconfig.app.json",
                 "inlineStyleLanguage": "scss",
-                "assets": [
-                    "apps/serverless-sharp-loader-demo/src/favicon.ico",
-                    "apps/serverless-sharp-loader-demo/src/assets"
-                ],
-                "styles": ["apps/serverless-sharp-loader-demo/src/styles.scss"],
-                "scripts": [],
-                "allowedCommonJsDependencies": ["md5"],
                 "outputHashing": "all",
-                "vendorChunk": true,
-                "namedChunks": false
-            },
-            "configurations": {
-                "production": {
-                    "fileReplacements": [
-                        {
-                            "replace": "apps/serverless-sharp-loader-demo/src/environments/environment.ts",
-                            "with": "apps/serverless-sharp-loader-demo/src/environments/environment.prod.ts"
-                        }
-                    ]
-                },
-                "development": {
-                    "buildOptimizer": false,
-                    "optimization": false,
-                    "extractLicenses": false,
-                    "sourceMap": true
-                }
-            },
-            "defaultConfiguration": "production"
+                "outputPath": "dist/apps/serverless-sharp-loader-demo",
+                "polyfills": ["zone.js"],
+                "prerender": false,
+                "styles": ["apps/serverless-sharp-loader-demo/src/styles.scss"],
+                "tsConfig": "apps/serverless-sharp-loader-demo/tsconfig.app.json"
+            }
         },
         "serve": {
             "executor": "@angular-devkit/build-angular:dev-server",
-            "configurations": {
-                "production": {
-                    "buildTarget": "serverless-sharp-loader-demo:build:production"
-                },
-                "development": {
-                    "buildTarget": "serverless-sharp-loader-demo:build:development"
-                }
-            },
-            "defaultConfiguration": "development"
+            "options": {
+                "buildTarget": "serverless-sharp-loader-demo:build"
+            }
         },
         "extract-i18n": {
             "executor": "@angular-devkit/build-angular:extract-i18n",
