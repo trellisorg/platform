@@ -1,13 +1,9 @@
 import { Client, type QueryResult } from 'pg';
 import promiseRetry from 'promise-retry';
 import sql from 'sql-template-tag';
-import type {
-    AdvisoryLockFunction,
-    AdvisoryLockOptions,
-    LockedFunction,
-    RetryOptions,
-    UnlockFn,
-} from './advisory-lock-options';
+import { DistributedLock } from '../distributed-lock';
+import type { RetryOptions, UnlockFn } from '../lock-options';
+import type { AdvisoryLockFunction, AdvisoryLockOptions } from './advisory-lock-options';
 import { toAdvisoryLockHash } from './to-advisory-lock-hash';
 
 /**
@@ -15,10 +11,12 @@ import { toAdvisoryLockHash } from './to-advisory-lock-hash';
  *
  * Original logic courtesy of {@link https://github.com/kolesnikovde/pg-advisory-locks/tree/master}
  */
-export class AdvisoryLock {
+export class AdvisoryLock extends DistributedLock {
     readonly #client: Client;
 
-    constructor(private readonly options: AdvisoryLockOptions) {
+    protected constructor(protected override readonly options: AdvisoryLockOptions) {
+        super(options);
+
         if (options.pg instanceof Client) {
             this.#client = options.pg;
         } else {
@@ -31,7 +29,7 @@ export class AdvisoryLock {
      * 32bit integer and use a sql tagged template to format the query.
      */
     #runOperation({ lockName, lockFn }: { lockName: string; lockFn: AdvisoryLockFunction }): Promise<QueryResult> {
-        const advisoryLockId = toAdvisoryLockHash(`${this.options.lockPrefix}${lockName}`);
+        const advisoryLockId = toAdvisoryLockHash(`${this.prefix}${lockName}`);
 
         return this.#client.query(sql`SELECT ${lockFn} (${advisoryLockId});`);
     }
@@ -48,8 +46,11 @@ export class AdvisoryLock {
         return promiseRetry((retry) => this.#runOperation({ lockFn, lockName }).catch(retry), retryOptions);
     }
 
-    async lock(lockName: string, retryOptions: Partial<RetryOptions> = {}): Promise<UnlockFn> {
-        const lock = await this.#runOperationWithRetry({
+    async lock(
+        lockName: string,
+        { retryOptions = {} }: { retryOptions?: Partial<RetryOptions>; lockTimeout?: number },
+    ): Promise<{ unlock: UnlockFn; lockValue?: string }> {
+        await this.#runOperationWithRetry({
             lockName,
             lockFn: 'pg_advisory_lock',
             retryOptions: {
@@ -58,39 +59,19 @@ export class AdvisoryLock {
             },
         });
 
-        return () => this.unlock(lockName);
+        return {
+            unlock: () => this.unlock(lockName),
+        };
     }
 
     async unlock(lockName: string): Promise<void> {
-        const unlocked = await this.#runOperation({
+        await this.#runOperation({
             lockName,
             lockFn: 'pg_advisory_unlock',
         });
     }
 
-    async withLock<ReturnType>(
-        lockName: string,
-        lockedFunction: LockedFunction<ReturnType>,
-        retryOptions: Partial<RetryOptions> = {},
-    ): Promise<ReturnType> {
-        const unlockFn = await this.lock(lockName, retryOptions);
-
-        return lockedFunction().finally(() => unlockFn());
-    }
-
     async tryLock(lockName: string): Promise<void> {
         await this.#runOperation({ lockName, lockFn: 'pg_try_advisory_lock' });
-    }
-
-    /**
-     * Creates a child Mutex that can inherit options and build onto the lock prefix. Child locks will always use the
-     * postgres connection from the parent.
-     */
-    implement(options: Omit<AdvisoryLockOptions, 'pg'>): AdvisoryLock {
-        return new AdvisoryLock({
-            ...options,
-            pg: this.#client,
-            lockPrefix: [this.options.lockPrefix, options.lockPrefix].filter(Boolean).join(),
-        });
     }
 }
