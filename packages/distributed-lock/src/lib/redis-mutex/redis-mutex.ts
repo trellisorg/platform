@@ -24,7 +24,7 @@ export class RedisMutex extends DistributedLock {
         if (options.client instanceof Redis) {
             this.#client = options.client;
         } else {
-            this.#client = new Redis(...options.client);
+            this.#client = new Redis(options.client);
         }
 
         this.#acquireScript = options.fifo ? acquireWithFifoScript : acquireScript;
@@ -36,7 +36,7 @@ export class RedisMutex extends DistributedLock {
 
         const response = await this.#client.eval(checkLockScript, 1, lockKey);
 
-        if (response === 'OK') {
+        if (response === 'AVAILABLE') {
             return;
         }
 
@@ -51,7 +51,7 @@ export class RedisMutex extends DistributedLock {
 
     async lock(
         lockName: string,
-        { retryOptions = {}, lockTimeout }: { retryOptions?: Partial<RetryOptions>; lockTimeout?: number },
+        { retryOptions = {}, lockTimeout }: { retryOptions?: Partial<RetryOptions>; lockTimeout?: number } = {},
     ): Promise<RedisMutexLockReturnValue> {
         const { nextIdKey, lockKey, lastOutIdKey } = this.#lockIds(lockName);
 

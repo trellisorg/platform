@@ -5,11 +5,11 @@ local lockKey = KEYS[1]
 
 local lockValue = redis.call('GET', lockKey)
 
-if lockValue == nil then
-    return nil
+if not lockValue then
+    return "AVAILABLE"
 end
 
-return "OK"
+return "LOCKED"
 `;
 
 // Check if the lock key is empty, set it with the provided value and timeout (if provided)
