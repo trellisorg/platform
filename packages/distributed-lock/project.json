@@ -1,18 +1,18 @@
 {
-    "name": "advisory-lock",
+    "name": "distributed-lock",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
-    "sourceRoot": "packages/advisory-lock/src",
+    "sourceRoot": "packages/distributed-lock/src",
     "projectType": "library",
     "targets": {
         "build": {
             "executor": "@nx/js:swc",
             "outputs": ["{options.outputPath}"],
             "options": {
-                "outputPath": "dist/packages/advisory-lock",
-                "tsConfig": "packages/advisory-lock/tsconfig.lib.json",
-                "packageJson": "packages/advisory-lock/package.json",
-                "main": "packages/advisory-lock/src/index.ts",
-                "assets": ["packages/advisory-lock/*.md"]
+                "outputPath": "dist/packages/distributed-lock",
+                "tsConfig": "packages/distributed-lock/tsconfig.lib.json",
+                "packageJson": "packages/distributed-lock/package.json",
+                "main": "packages/distributed-lock/src/index.ts",
+                "assets": ["packages/distributed-lock/*.md"]
             }
         },
         "publish": {
