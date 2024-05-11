@@ -1,19 +1,9 @@
-import { BullModule } from '@nestjs/bull';
 import { Injectable, Module, type NestMiddleware } from '@nestjs/common';
-import { NestBullMonitorModule } from '@trellisorg/nest-bull-monitor';
+import { DistributedLockModule } from '@trellisorg/distributed-lock/nest';
+import { redisMutexLockAdapter } from '@trellisorg/distributed-lock/redis-mutex';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { StoryGateway } from './story.gateway';
-
-@Module({
-    imports: [
-        BullModule.registerQueue({
-            name: 'sample',
-        }),
-    ],
-    exports: [BullModule],
-})
-class Queues {}
 
 @Injectable()
 export class CookieAuthMiddleware implements NestMiddleware {
@@ -24,28 +14,21 @@ export class CookieAuthMiddleware implements NestMiddleware {
 
 @Module({
     imports: [
-        BullModule.forRoot({
-            redis: {
-                host: 'localhost',
-                port: 6379,
-            },
-        }),
-        Queues,
-        NestBullMonitorModule.forRoot({
-            bullQueues: ['sample'],
-            metrics: {
-                redisPrefix: 'bull-monitor',
-                collectInterval: {
-                    minutes: 1,
+        DistributedLockModule.forRoot({
+            config: {
+                lockPrefix: 'redis',
+                client: {
+                    host: 'localhost',
+                    port: 6379,
                 },
-                maxMetrics: 100,
+                fifo: true,
+                retryOptions: {},
+                lockTimeout: 10_000,
             },
-            imports: [Queues],
-            middlewareConsumers: [CookieAuthMiddleware],
+            adapter: redisMutexLockAdapter,
         }),
     ],
     controllers: [AppController],
     providers: [AppService, StoryGateway],
-    exports: [BullModule],
 })
 export class AppModule {}

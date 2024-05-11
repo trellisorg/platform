@@ -1,5 +1,5 @@
+import type { LockOptions } from '@trellisorg/distributed-lock';
 import type { Client, ClientConfig } from 'pg';
-import type { LockOptions } from '../lock-options';
 
 export type AdvisoryLockFunction = 'pg_advisory_lock' | 'pg_advisory_unlock' | 'pg_try_advisory_lock';
 

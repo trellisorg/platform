@@ -1,6 +1,6 @@
+import type { LockOptions } from '@trellisorg/distributed-lock';
 import type Redis from 'ioredis';
 import type { RedisOptions } from 'ioredis';
-import type { LockOptions } from '../lock-options';
 
 export interface RedisMutexLockOptions extends LockOptions {
     /**

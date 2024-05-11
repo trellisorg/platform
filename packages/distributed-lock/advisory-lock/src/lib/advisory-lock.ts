@@ -1,8 +1,7 @@
+import { DistributedLock, type RetryOptions, type UnlockFn } from '@trellisorg/distributed-lock';
 import { Client, type QueryResult } from 'pg';
 import promiseRetry from 'promise-retry';
 import sql from 'sql-template-tag';
-import { DistributedLock } from '../distributed-lock';
-import type { RetryOptions, UnlockFn } from '../lock-options';
 import type { AdvisoryLockFunction, AdvisoryLockOptions } from './advisory-lock-options';
 import { toAdvisoryLockHash } from './to-advisory-lock-hash';
 

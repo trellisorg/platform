@@ -1,6 +1,6 @@
-import { RedisMutex } from '@trellisorg/distributed-lock';
 import { randomUUID } from 'node:crypto';
 import { describe, expect, it } from 'vitest';
+import { RedisMutex } from './redis-mutex';
 
 describe('RedisMutex', () => {
     const mutex = new RedisMutex({

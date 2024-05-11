@@ -1,10 +1,9 @@
 /** Original source: {@link https://github.com/AmrSaber/simple-redis-mutex/blob/master/src/index.js} */
 
+import { DistributedLock, type RetryOptions, type UnlockFn } from '@trellisorg/distributed-lock';
 import Redis from 'ioredis';
 import { randomUUID } from 'node:crypto';
 import promiseRetry from 'promise-retry';
-import { DistributedLock } from '../distributed-lock';
-import type { RetryOptions, UnlockFn } from '../lock-options';
 import { acquireScript, acquireWithFifoScript, checkLockScript, releaseScript, releaseWithFifoScript } from './lua';
 import type { RedisMutexLockOptions } from './redis-mutex-lock-options';
 

@@ -19,7 +19,7 @@ export abstract class DistributedLock {
     async withLock<ReturnType>(
         lockName: string,
         lockedFunction: LockedFunction<ReturnType>,
-        options: { retryOptions?: Partial<RetryOptions>; lockTimeout?: number },
+        options: { retryOptions?: Partial<RetryOptions>; lockTimeout?: number } = {},
     ): Promise<ReturnType> {
         const { unlock } = await this.lock(lockName, options);
 

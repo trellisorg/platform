@@ -1,8 +1,11 @@
 import { Injectable } from '@nestjs/common';
+import { DistributedLock } from '@trellisorg/distributed-lock';
 
 @Injectable()
 export class AppService {
-    getData(): { message: string } {
-        return { message: 'Welcome to api!' };
+    constructor(private readonly lock: DistributedLock) {}
+
+    getData() {
+        return this.lock.withLock('getData', async () => ({ message: 'Welcome to api!' }));
     }
 }
