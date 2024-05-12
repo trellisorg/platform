@@ -33,24 +33,24 @@ jobs:
                       - ~/.cache/bun
             - run:
                   name: Run tests
-                  command: yarn nx affected:test --parallel << parameters.flags >> --head << parameters.head >>
+                  command: yarn nx affected:test --parallel << parameters.flags >> --head << parameters.head >> --base master
             - run:
                   name: Build
-                  command: yarn nx affected:build << parameters.flags >> --parallel --head << parameters.head >>
+                  command: yarn nx affected:build << parameters.flags >> --parallel --head << parameters.head >> --base master
 
 workflows:
     run:
         jobs:
             - build-and-test:
                   name: build-and-test-pr
-                  head: 'HEAD'
+                  head: HEAD
                   filters:
                       branches:
                           ignore: master
             - build-and-test:
                   name: build-and-test-master
                   flags: '--all'
-                  head: 'HEAD~1'
+                  head: HEAD~1
                   filters:
                       branches:
                           only: master
