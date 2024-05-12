@@ -1,6 +1,6 @@
 import type promiseRetry from 'promise-retry';
-export type UnlockFn = () => Promise<void>;
 
+export type UnlockFn = () => Promise<void>;
 export type RetryOptions = Parameters<typeof promiseRetry>[0];
 export type LockedFunction<ReturnType> = (...args: unknown[]) => Promise<ReturnType>;
 
