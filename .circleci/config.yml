@@ -11,9 +11,9 @@ jobs:
             - image: cimg/node:22.1.0
         steps:
             - checkout
+            - bun-orb/setup
             - node/install:
                   node-version: '22'
-            - bun-orb/setup
             - restore_cache:
                   keys:
                       - v1-dependencies-bun-{{ checksum "bun.lockb" }}
