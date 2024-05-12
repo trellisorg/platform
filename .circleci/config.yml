@@ -8,11 +8,11 @@ jobs:
     build-and-test:
         parameters:
         docker:
-            - image: cimg/node:21.6.1
+            - image: cimg/node:22
         steps:
             - checkout
             - node/install:
-                  node-version: '21'
+                  node-version: '22'
             - bun-orb/setup
             - restore_cache:
                   keys:
@@ -28,10 +28,10 @@ jobs:
                       - ~/.cache/bun
             - run:
                   name: Run tests
-                  command: yarn nx run-many --parallel --all
+                  command: yarn nx run-many --parallel --all -t test
             - run:
                   name: Build
-                  command: yarn nx run-many --parallel --all
+                  command: yarn nx run-many --parallel --all -t build
 
 workflows:
     run:
