@@ -8,7 +8,7 @@ jobs:
     build-and-test:
         parameters:
         docker:
-            - image: cimg/node:22
+            - image: cimg/node:22.1.0
         steps:
             - checkout
             - node/install:
