@@ -7,11 +7,6 @@ orbs:
 jobs:
     build-and-test:
         parameters:
-            head:
-                type: string
-            flags:
-                type: string
-                default: ''
         docker:
             - image: cimg/node:21.6.1
         steps:
