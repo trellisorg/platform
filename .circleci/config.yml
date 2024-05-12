@@ -9,10 +9,9 @@ jobs:
         parameters:
         docker:
             - image: cimg/node:22.1.0
+            - image: cimg/redis:6.2.6
         steps:
             - checkout
-            - setup_remote_docker
-            - run: docker-compose up -d
             - bun-orb/setup
             - node/install:
                   node-version: '22'
@@ -31,7 +30,6 @@ jobs:
             - run:
                   name: Run tests
                   command: yarn nx run-many --parallel --all -t test
-            - run: docker-compose down -d
             - run:
                   name: Build
                   command: yarn nx run-many --parallel --all -t build
