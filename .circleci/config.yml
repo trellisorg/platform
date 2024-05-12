@@ -11,6 +11,8 @@ jobs:
             - image: cimg/node:22.1.0
         steps:
             - checkout
+            - setup_remote_docker
+            - run: docker compose up -d
             - bun-orb/setup
             - node/install:
                   node-version: '22'
