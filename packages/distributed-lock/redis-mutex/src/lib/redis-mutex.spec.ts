@@ -1,5 +1,6 @@
+import { shuffle } from 'lodash';
 import { randomUUID } from 'node:crypto';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { RedisMutex } from './redis-mutex';
 
 describe('RedisMutex', () => {
@@ -12,6 +13,34 @@ describe('RedisMutex', () => {
         lockPrefix: 'vitest',
         retryOptions: {},
         lockTimeout: 10_000,
+    });
+
+    it('should process locks in fifo order', async () => {
+        const lock = randomUUID();
+        const fn = vi.fn();
+
+        async function myFunction(param: number) {
+            fn(param);
+        }
+
+        const { unlock } = await mutex.lock(lock);
+
+        await myFunction(-1);
+
+        const locks = new Array(1000)
+            .fill(0)
+            .map((_, index) => index)
+            .map((num) => myFunction(num));
+
+        await unlock();
+
+        await Promise.all(shuffle(locks));
+
+        expect(fn).toHaveBeenNthCalledWith(1, -1);
+
+        for (let x = 0; x < 100; x++) {
+            expect(fn).toHaveBeenNthCalledWith(2 + x, x);
+        }
     });
 
     it('should unlock correctly using returned unlock function', async () => {
