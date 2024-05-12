@@ -118,7 +118,6 @@
             "inputs": ["default", "^production"]
         }
     },
-    "defaultProject": "rx-dynamic-host",
     "namedInputs": {
         "default": ["{projectRoot}/**/*", "sharedGlobals"],
         "sharedGlobals": [
