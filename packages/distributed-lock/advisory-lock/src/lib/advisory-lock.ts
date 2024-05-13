@@ -1,7 +1,6 @@
 import { DistributedLock, type RetryOptions, type UnlockFn } from '@trellisorg/distributed-lock';
 import { Client, type QueryResult } from 'pg';
 import promiseRetry from 'promise-retry';
-import sql from 'sql-template-tag';
 import type { AdvisoryLockFunction, AdvisoryLockOptions } from './advisory-lock-options';
 import { toAdvisoryLockHash } from './to-advisory-lock-hash';
 
@@ -13,7 +12,7 @@ import { toAdvisoryLockHash } from './to-advisory-lock-hash';
 export class AdvisoryLock extends DistributedLock {
     readonly #client: Client;
 
-    protected constructor(protected override readonly options: AdvisoryLockOptions) {
+    constructor(protected override readonly options: AdvisoryLockOptions) {
         super(options);
 
         if (options.pg instanceof Client) {
@@ -30,7 +29,7 @@ export class AdvisoryLock extends DistributedLock {
     #runOperation({ lockName, lockFn }: { lockName: string; lockFn: AdvisoryLockFunction }): Promise<QueryResult> {
         const advisoryLockId = toAdvisoryLockHash(`${this.prefix}${lockName}`);
 
-        return this.#client.query(sql`SELECT ${lockFn} (${advisoryLockId});`);
+        return this.#client.query(`SELECT $1 ($2);`, [lockFn, advisoryLockId]);
     }
 
     #runOperationWithRetry({

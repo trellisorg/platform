@@ -1,4 +1,5 @@
 import { Injectable, Module, type NestMiddleware } from '@nestjs/common';
+import { advisoryLockAdapter } from '@trellisorg/distributed-lock/advisory-lock';
 import { DistributedLockModule } from '@trellisorg/distributed-lock/nest';
 import { redisMutexLockAdapter } from '@trellisorg/distributed-lock/redis-mutex';
 import { AppController } from './app.controller';
@@ -14,19 +15,47 @@ export class CookieAuthMiddleware implements NestMiddleware {
 
 @Module({
     imports: [
-        DistributedLockModule.forRoot({
-            config: {
-                lockPrefix: 'redis',
-                client: {
-                    host: 'localhost',
-                    port: 6379,
+        DistributedLockModule.register([
+            {
+                config: {
+                    lockPrefix: 'redis',
+                    client: {
+                        host: 'localhost',
+                        port: 6379,
+                    },
+                    retryOptions: {},
+                    lockTimeout: 10_000,
+                    fifo: true,
                 },
-                fifo: true,
-                retryOptions: {},
-                lockTimeout: 10_000,
+                adapter: redisMutexLockAdapter,
+                name: 'redis',
             },
-            adapter: redisMutexLockAdapter,
-        }),
+        ]),
+        DistributedLockModule.inherit([
+            {
+                config: {
+                    lockPrefix: 'redis',
+                    lockTimeout: 10_000,
+                    fifo: true,
+                },
+                name: 'redis2',
+                inheritFrom: 'redis',
+            },
+        ]),
+        DistributedLockModule.registerAsync([
+            {
+                useFactory: () => ({
+                    config: {
+                        lockPrefix: 'redis',
+                        retryOptions: {},
+                        lockTimeout: 10_000,
+                        pg: 'postgres://localhost:5432',
+                    },
+                    adapter: advisoryLockAdapter,
+                }),
+                name: 'advisory',
+            },
+        ]),
     ],
     controllers: [AppController],
     providers: [AppService, StoryGateway],

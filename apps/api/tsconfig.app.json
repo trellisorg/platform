@@ -4,7 +4,7 @@
         "outDir": "../../dist/out-tsc",
         "types": ["node"],
         "emitDecoratorMetadata": true,
-        "target": "es2021"
+        "target": "esnext"
     },
     "exclude": ["**/*.spec.ts", "**/*.test.ts", "jest.config.ts"],
     "include": ["**/*.ts"]

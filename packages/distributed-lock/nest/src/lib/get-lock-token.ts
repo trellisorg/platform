@@ -1,3 +1,3 @@
 export function getLockToken(name: string): string {
-    return `${name}DistributedLock`;
+    return `@trellisorg/distributed-lock:${name}DistributedLock:token`;
 }
