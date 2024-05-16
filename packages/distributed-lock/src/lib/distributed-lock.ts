@@ -1,5 +1,9 @@
 import type { LockOptions, LockedFunction, RetryOptions, UnlockFn } from './lock-options';
 
+/**
+ * The base class defining the functionality for a lock. Both Redis and Advisory locks will use this class so the
+ * underlying implementation can be swapped out without any impact to the user.
+ */
 export abstract class DistributedLock {
     protected readonly prefix: string;
 
@@ -9,17 +13,15 @@ export abstract class DistributedLock {
 
     abstract lock(
         lockName: string,
-        { retryOptions = {}, lockTimeout }: { retryOptions?: Partial<RetryOptions>; lockTimeout?: number },
+        { retryOptions = {}, lockTimeout }: { retryOptions?: Partial<RetryOptions>; lockTimeout?: number }
     ): Promise<{ unlock: UnlockFn; lockValue?: string }>;
 
-    abstract unlock(lockName: string, lockValue?: string): Promise<void>;
-
-    abstract tryLock(lockName: string): Promise<void>;
+    abstract checkLock(lockName: string | string[]): Promise<void>;
 
     async withLock<ReturnType>(
         lockName: string,
         lockedFunction: LockedFunction<ReturnType>,
-        options: { retryOptions?: Partial<RetryOptions>; lockTimeout?: number } = {},
+        options: { retryOptions?: Partial<RetryOptions>; lockTimeout?: number } = {}
     ): Promise<ReturnType> {
         const { unlock } = await this.lock(lockName, options);
 

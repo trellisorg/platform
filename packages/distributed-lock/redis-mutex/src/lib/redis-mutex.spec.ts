@@ -1,85 +1,140 @@
 import { shuffle } from 'lodash';
 import { randomUUID } from 'node:crypto';
-import { describe, expect, it, vi } from 'vitest';
+import { beforeAll, describe, expect, it, vi } from 'vitest';
+import { LockError } from './lock-error';
 import { RedisMutex } from './redis-mutex';
 
 describe('RedisMutex', () => {
-    const mutex = new RedisMutex({
-        client: {
-            host: 'localhost',
-            port: 6379,
-        },
-        fifo: true,
-        lockPrefix: 'vitest',
-        retryOptions: {},
-        lockTimeout: 10_000,
+    let mutex: RedisMutex;
+
+    describe('FIFO', () => {
+        beforeAll(() => {
+            mutex = new RedisMutex({
+                client: {
+                    host: 'localhost',
+                    port: 6379,
+                },
+                fifo: true,
+                lockPrefix: 'vitest',
+                retryOptions: {},
+                lockTimeout: 10_000,
+            });
+        });
+
+        it('should process locks in fifo order', async () => {
+            const lock = randomUUID();
+            const fn = vi.fn();
+
+            async function myFunction(param: number) {
+                fn(param);
+            }
+
+            const { unlock } = await mutex.lock(lock);
+
+            await myFunction(-1);
+
+            const locks = new Array(1000)
+                .fill(0)
+                .map((_, index) => index)
+                .map((num) => myFunction(num));
+
+            await unlock();
+
+            await Promise.all(shuffle(locks));
+
+            expect(fn).toHaveBeenNthCalledWith(1, -1);
+
+            for (let x = 0; x < 100; x++) {
+                expect(fn).toHaveBeenNthCalledWith(2 + x, x);
+            }
+        });
+
+        it('should unlock correctly using returned unlock function', async () => {
+            const lock = randomUUID();
+
+            const { unlock } = await mutex.lock(lock);
+
+            await expect(mutex.checkLock(lock)).rejects.toThrowError();
+
+            await unlock();
+
+            await mutex.checkLock(lock);
+        });
+
+        it('should correctly return the lock is currently taken', async () => {
+            const lock = randomUUID();
+
+            const { unlock } = await mutex.lock(lock);
+
+            await expect(mutex.checkLock(lock)).rejects.toThrowError();
+
+            await unlock();
+        });
+
+        it('should correctly return the lock is currently not taken', async () => {
+            const lock = randomUUID();
+
+            await mutex.checkLock(lock);
+        });
     });
 
-    it('should process locks in fifo order', async () => {
-        const lock = randomUUID();
-        const fn = vi.fn();
+    describe('First Come First Serve', () => {
+        beforeAll(() => {
+            mutex = new RedisMutex({
+                client: {
+                    host: 'localhost',
+                    port: 6379,
+                },
+                fifo: false,
+                lockPrefix: 'vitest',
+                retryOptions: {},
+                lockTimeout: 10_000,
+            });
+        });
 
-        async function myFunction(param: number) {
-            fn(param);
-        }
+        it('should unlock correctly using returned unlock function', async () => {
+            const lock = randomUUID();
 
-        const { unlock } = await mutex.lock(lock);
+            const { unlock } = await mutex.lock(lock);
 
-        await myFunction(-1);
+            await expect(mutex.checkLock(lock)).rejects.toThrowError();
 
-        const locks = new Array(1000)
-            .fill(0)
-            .map((_, index) => index)
-            .map((num) => myFunction(num));
+            await unlock();
 
-        await unlock();
+            await mutex.checkLock(lock);
+        });
 
-        await Promise.all(shuffle(locks));
+        it('should return partial lock error', async () => {
+            const resource1 = randomUUID();
+            const resource2 = randomUUID();
+            const resource3 = randomUUID();
 
-        expect(fn).toHaveBeenNthCalledWith(1, -1);
+            const { unlock } = await mutex.lock([resource1, resource2]);
 
-        for (let x = 0; x < 100; x++) {
-            expect(fn).toHaveBeenNthCalledWith(2 + x, x);
-        }
-    });
+            await expect(mutex.checkLock([resource1, resource3])).rejects.toThrowError(
+                new LockError({
+                    name: 'PARTIAL_LOCK',
+                    message: `One of ${[resource1, resource3].join(',')} is currently acquired by another process.`,
+                })
+            );
 
-    it('should unlock correctly using returned unlock function', async () => {
-        const lock = randomUUID();
+            await unlock();
+        });
 
-        const { unlock } = await mutex.lock(lock);
+        it('should correctly return the lock is currently taken', async () => {
+            const lock = randomUUID();
 
-        await expect(mutex.tryLock(lock)).rejects.toThrowError();
+            const { unlock } = await mutex.lock(lock);
 
-        await unlock();
+            await expect(mutex.checkLock(lock)).rejects.toThrowError();
 
-        await mutex.tryLock(lock);
-    });
+            await unlock();
+        });
 
-    it('should unlock correctly using class unlock function', async () => {
-        const lock = randomUUID();
+        it('should correctly return the lock is currently not taken', async () => {
+            const lock = randomUUID();
 
-        const { lockValue } = await mutex.lock(lock);
-
-        await expect(mutex.tryLock(lock)).rejects.toThrowError();
-
-        await mutex.unlock(lock, lockValue);
-
-        await mutex.tryLock(lock);
-    });
-
-    it('should correctly return the lock is currently taken', async () => {
-        const lock = randomUUID();
-
-        const { unlock } = await mutex.lock(lock);
-
-        await expect(mutex.tryLock(lock)).rejects.toThrowError();
-
-        await unlock();
-    });
-
-    it('should correctly return the lock is currently not taken', async () => {
-        const lock = randomUUID();
-
-        await mutex.tryLock(lock);
+            await mutex.checkLock(lock);
+        });
     });
 });

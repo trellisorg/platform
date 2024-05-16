@@ -69,7 +69,7 @@ export class AdvisoryLock extends DistributedLock {
         });
     }
 
-    async tryLock(lockName: string): Promise<void> {
+    async checkLock(lockName: string): Promise<void> {
         await this.#runOperation({ lockName, lockFn: 'pg_try_advisory_lock' });
     }
 }

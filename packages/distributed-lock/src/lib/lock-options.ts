@@ -15,7 +15,7 @@ export interface LockOptions {
 
     /**
      * An optional lock prefix that will be included as a prefix to the key used to acquire locks on. If no prefix is
-     * define then `@trellisorg/distributed-lock` will be used.
+     * defined then `@trellisorg/distributed-lock` will be used.
      */
     lockPrefix: string;
 
