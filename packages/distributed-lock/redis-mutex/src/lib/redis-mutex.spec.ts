@@ -18,6 +18,7 @@ describe('RedisMutex', () => {
                 lockPrefix: 'vitest',
                 retryOptions: {},
                 lockTimeout: 10_000,
+                automaticExtensionThreshold: 500,
             });
         });
 
@@ -89,7 +90,16 @@ describe('RedisMutex', () => {
                 lockPrefix: 'vitest',
                 retryOptions: {},
                 lockTimeout: 10_000,
+                automaticExtensionThreshold: 500,
             });
+        });
+
+        it('should run the function within the lock', async () => {
+            const resource = randomUUID();
+
+            const fn = async () => 1;
+
+            await expect(mutex.withLock(resource, fn)).resolves.toEqual(1);
         });
 
         it('should unlock correctly using returned unlock function', async () => {

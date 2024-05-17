@@ -2,7 +2,12 @@
  * Original source: {@link https://github.com/AmrSaber/simple-redis-mutex/blob/master/src/index.js}
  */
 
-import { DistributedLock, type RetryOptions, type UnlockFn } from '@trellisorg/distributed-lock';
+import {
+    DistributedLock,
+    type LockOptions,
+    type LockReturnValue,
+    type RetryOptions,
+} from '@trellisorg/distributed-lock';
 import Redis from 'ioredis';
 import { createHash, randomUUID } from 'node:crypto';
 import promiseRetry from 'promise-retry';
@@ -11,14 +16,11 @@ import {
     acquireScript,
     acquireWithFifoScript,
     checkLockScript,
+    extendScript,
     releaseScript,
     releaseWithFifoScript,
 } from './lua';
 import type { RedisMutexLockOptions } from './redis-mutex-lock-options';
-
-interface RedisMutexLockReturnValue {
-    unlock: UnlockFn;
-}
 
 interface LuaScript {
     /**
@@ -55,18 +57,22 @@ export class RedisMutex extends DistributedLock {
     readonly #acquireScript: LuaScript;
     readonly #releaseScript: LuaScript;
     readonly #checkLockScript: LuaScript;
+    readonly #extendScript: LuaScript;
+    readonly #fifo: boolean;
 
-    constructor(protected override readonly options: RedisMutexLockOptions) {
-        super(options);
+    constructor(protected override readonly _options: RedisMutexLockOptions) {
+        super(_options);
 
-        if (options.client instanceof Redis) {
-            this.#client = options.client;
+        if (_options.client instanceof Redis) {
+            this.#client = _options.client;
         } else {
-            this.#client = new Redis(options.client);
+            this.#client = new Redis(_options.client);
         }
 
-        const acquire = options.fifo ? acquireWithFifoScript : acquireScript;
-        const release = options.fifo ? releaseWithFifoScript : releaseScript;
+        this.#fifo = _options.fifo;
+
+        const acquire = _options.fifo ? acquireWithFifoScript : acquireScript;
+        const release = _options.fifo ? releaseWithFifoScript : releaseScript;
 
         this.#acquireScript = {
             source: acquire,
@@ -79,6 +85,10 @@ export class RedisMutex extends DistributedLock {
         this.#checkLockScript = {
             source: checkLockScript,
         };
+
+        this.#extendScript = {
+            source: extendScript,
+        };
     }
 
     /**
@@ -90,7 +100,7 @@ export class RedisMutex extends DistributedLock {
     async checkLock(resources: string | string[]): Promise<void> {
         let _resources = [resources].flat();
 
-        if (this.options.fifo) {
+        if (this.#fifo) {
             _resources = [_resources.join('|')];
         }
 
@@ -114,17 +124,21 @@ export class RedisMutex extends DistributedLock {
      * Acquire a lock synchronously, this will return an unlock function that must be called after work has been
      * completed.
      *
-     * @param resource - The resource to lock on, this can be one or more resources. If the lock is a FIFO queue
+     * @param resources - The resource to lock on, this can be one or more resources. If the lock is a FIFO queue
      *   then the resources will be joined by a pipe as multi-resource locking is not supported in FIFO locks.
-     * @param retryOptions - The options to pass along to {@link promiseRetry} to determine backoff and retries.
-     *   This is optional and will be merged over top of the retry options configured at the lock level.
-     * @param lockTimeout - The time it will take the lock to time out and throw an error. Optional and will
-     *   override whatever was configured at the lock level.
+     * @param options - The {@link LockOptions} to override the options configured at the Lock level.
      */
     async lock(
-        resource: string | string[],
-        { retryOptions = {}, lockTimeout }: { retryOptions?: Partial<RetryOptions>; lockTimeout?: number } = {}
-    ): Promise<RedisMutexLockReturnValue> {
+        resources: string | string[],
+        options: { retryOptions?: Partial<RetryOptions>; lockTimeout?: number } = {}
+    ): Promise<LockReturnValue> {
+        return this._lock(resources, {
+            ...this.options,
+            ...options,
+        });
+    }
+
+    protected async _lock(resource: string | string[], lockOptions: LockOptions): Promise<LockReturnValue> {
         const resources: string[] = [resource].flat();
 
         // An array of flattened tuples, first being the lockKey, the second being the lock value
@@ -133,7 +147,7 @@ export class RedisMutex extends DistributedLock {
         let id = 0;
         let lastIdKey = '0';
 
-        if (this.options.fifo) {
+        if (this.#fifo) {
             const { nextIdKey, lockKey, lastOutIdKey } = this.#lockIds(resources.join('|'));
 
             lastIdKey = lastOutIdKey;
@@ -153,46 +167,57 @@ export class RedisMutex extends DistributedLock {
             }
         }
 
-        const timeoutMillis = lockTimeout ?? this.options.lockTimeout;
-
         const hash = await this.#getScriptHash(this.#acquireScript);
 
         /*
         Acquire the lock using the retry options defined at the instance and call level merged together.
          */
-        await promiseRetry(
-            async (retry) => {
-                try {
-                    const response = await this.#client.evalsha(
-                        hash,
-                        keyArgs.length,
-                        ...keyArgs,
-                        lastIdKey,
-                        timeoutMillis,
-                        id
-                    );
+        const expiration = await promiseRetry<number>(async (retry) => {
+            try {
+                const response = await this.#client.evalsha(
+                    hash,
+                    keyArgs.length,
+                    ...keyArgs,
+                    lastIdKey,
+                    lockOptions.lockTimeout,
+                    id
+                );
 
-                    if (response === 'OK') {
-                        return;
-                    } else {
-                        retry(new Error(`Unable to acquire lock`));
-                    }
-                } catch (e) {
-                    retry(e);
+                const expiration = Date.now() + lockOptions.lockTimeout;
+
+                if (response === 'OK') {
+                    // The date that this lock will expire.
+                    return expiration;
+                } else {
+                    return retry(new Error(`Unable to acquire lock`));
                 }
-            },
-            {
-                ...this.options.retryOptions,
-                ...retryOptions,
+            } catch (e) {
+                return retry(e);
             }
-        );
+        }, lockOptions.retryOptions);
 
         const releaseHash = await this.#getScriptHash(this.#releaseScript);
+        const extendHash = await this.#getScriptHash(this.#extendScript);
+
+        const unlock = async () => {
+            await this.#client.evalsha(releaseHash, keyArgs.length, ...keyArgs, lastIdKey);
+        };
+
+        // Build the {@link extend} function that can be used to extend the expiration of the lock using the same arguments it was initialized with.
+        const extend = async () => {
+            await this.#client.evalsha(extendHash, keyArgs.length, ...keyArgs, lockOptions.lockTimeout);
+
+            return {
+                unlock,
+                expiration,
+                extend,
+            };
+        };
 
         return {
-            unlock: async () => {
-                await this.#client.evalsha(releaseHash, keyArgs.length, ...keyArgs, lastIdKey);
-            },
+            extend,
+            unlock,
+            expiration,
         };
     }
 

@@ -3,12 +3,34 @@
  */
 
 // language=lua
+export const extendScript = `
+local timeout = ARGV[1]
+
+-- Check to see if all keys are either still acquired or not acquired by something else
+for i, key in ipairs(KEYS) do
+  local currentValue = redis.call("GET", key)
+  if i % 2 == 1 then
+      if currentValue ~= nil and currentValue ~= KEYS[i + 1] then
+        return "LOST_PARTIAL_LOCK"
+      end
+  end
+end
+
+-- Update or set the timeout of each key provided to the new timeout
+for i, key in ipairs(KEYS) do
+  if i % 2 == 1 then
+      redis.call("SET", key, KEYS[i + 1], "NX", "PX", timeout)
+  end
+end
+`;
+
+// language=lua
 export const checkLockScript = `
 local hasUnlocked = 0
 local hasLocked = 0
 
 for i, key in ipairs(KEYS) do
-  local locked = redis.call("exists", key)
+  local locked = redis.call("EXISTS", key)
 
   if locked == 1 then
     hasLocked = 1
@@ -31,7 +53,7 @@ return "AVAILABLE"
 // language=lua
 export const acquireScript = `
 for i, key in ipairs(KEYS) do
-  if i % 2 == 1 and redis.call("exists", key) == 1 then
+  if i % 2 == 1 and redis.call("EXISTS", key) == 1 then
       return 0
   end
 end
