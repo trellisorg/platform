@@ -3,9 +3,6 @@
         "appsDir": "apps",
         "libsDir": "packages"
     },
-    "affected": {
-        "defaultBase": "master"
-    },
     "tasksRunnerOptions": {
         "default": {
             "options": {
@@ -140,5 +137,7 @@
         ]
     },
     "nxCloudAccessToken": "NTIxYmI5NTktYTY3Yy00MzA0LWIxZTQtZDZiNGUxNzNiNjhjfHJlYWQ=",
-    "parallel": 2
+    "parallel": 2,
+    "useInferencePlugins": false,
+    "defaultBase": "master"
 }
