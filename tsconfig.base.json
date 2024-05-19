@@ -22,10 +22,11 @@
             "@trellisorg/distributed-lock": ["packages/distributed-lock/src/index.ts"],
             "@trellisorg/distributed-lock/nest": ["packages/distributed-lock/nest/src/index.ts"],
             "@trellisorg/distributed-lock/redis-mutex": ["packages/distributed-lock/redis-mutex/src/index.ts"],
-            "@trellisorg/distributed-lock/advisory-lock": ["packages/distributed-lock/advisory-lock/src/index.ts"],
             "@trellisorg/dns-validator": ["packages/dns-validator/src/index.ts"],
             "@trellisorg/google-places-autocomplete": ["packages/google-places-autocomplete/src/index.ts"],
-            "@trellisorg/google-places-autocomplete/jsonp": ["packages/google-places-autocomplete/jsonp/src/index.ts"],
+            "@trellisorg/google-places-autocomplete/jsonp": [
+                "packages/google-places-autocomplete/jsonp/src/index.ts"
+            ],
             "@trellisorg/google-places-autocomplete/loader": [
                 "packages/google-places-autocomplete/loader/src/index.ts"
             ],
@@ -42,7 +43,9 @@
             "@trellisorg/ngrx-data-websocket-core": ["packages/ngrx-data-websocket/core/src/index.ts"],
             "@trellisorg/ngrx-data-websocket-server": ["packages/ngrx-data-websocket/server/src/index.ts"],
             "@trellisorg/ngrx-universal-rehydrate": ["packages/ngrx-universal-rehydrate/src/index.ts"],
-            "@trellisorg/ngrx-universal-rehydrate/server": ["packages/ngrx-universal-rehydrate/server/src/index.ts"],
+            "@trellisorg/ngrx-universal-rehydrate/server": [
+                "packages/ngrx-universal-rehydrate/server/src/index.ts"
+            ],
             "@trellisorg/ngx-hono-ssr": ["packages/ngx-hono-ssr/src/index.ts"],
             "@trellisorg/ngx-hono-ssr/bun": ["packages/ngx-hono-ssr/bun/src/index.ts"],
             "@trellisorg/ngx-hono-ssr/node": ["packages/ngx-hono-ssr/node/src/index.ts"],

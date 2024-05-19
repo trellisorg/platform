@@ -102,6 +102,16 @@ describe('RedisMutex', () => {
             await expect(mutex.withLock(resource, fn)).resolves.toEqual(1);
         });
 
+        it('should keep extending the lock until it is done', async () => {
+            const resource = randomUUID();
+
+            const fn = async () => await new Promise((resolve) => setTimeout(() => resolve(1), 500));
+
+            await expect(
+                mutex.withLock(resource, fn, { automaticExtensionThreshold: 100, lockTimeout: 200 })
+            ).resolves.toEqual(1);
+        });
+
         it('should unlock correctly using returned unlock function', async () => {
             const lock = randomUUID();
 

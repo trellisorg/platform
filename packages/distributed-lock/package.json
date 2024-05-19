@@ -2,6 +2,6 @@
     "name": "@trellisorg/distributed-lock",
     "version": "1.0.0",
     "dependencies": {
-        "@swc/helpers": "^0.5.11"
+        "tslib": "^2"
     }
 }

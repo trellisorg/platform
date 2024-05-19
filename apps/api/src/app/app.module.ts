@@ -1,5 +1,4 @@
 import { Injectable, Module, type NestMiddleware } from '@nestjs/common';
-import { advisoryLockAdapter } from '@trellisorg/distributed-lock/advisory-lock';
 import { DistributedLockModule } from '@trellisorg/distributed-lock/nest';
 import { redisMutexLockAdapter } from '@trellisorg/distributed-lock/redis-mutex';
 import { AppController } from './app.controller';
@@ -40,20 +39,6 @@ export class CookieAuthMiddleware implements NestMiddleware {
                 },
                 name: 'redis2',
                 inheritFrom: 'redis',
-            },
-        ]),
-        DistributedLockModule.registerAsync([
-            {
-                useFactory: () => ({
-                    config: {
-                        lockPrefix: 'redis',
-                        retryOptions: {},
-                        lockTimeout: 10_000,
-                        pg: 'postgres://localhost:5432',
-                    },
-                    adapter: advisoryLockAdapter,
-                }),
-                name: 'advisory',
             },
         ]),
     ],

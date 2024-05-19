@@ -5,7 +5,7 @@
     "projectType": "library",
     "targets": {
         "build": {
-            "executor": "@nx/js:swc",
+            "executor": "@nx/js:tsc",
             "outputs": ["{options.outputPath}"],
             "options": {
                 "outputPath": "dist/packages/distributed-lock",
@@ -14,7 +14,10 @@
                 "main": "packages/distributed-lock/src/index.ts",
                 "assets": ["packages/distributed-lock/*.md"],
                 "generateExportsField": true,
-                "additionalEntryPoints": ["packages/distributed-lock/nest/src/index.ts"]
+                "additionalEntryPoints": [
+                    "packages/distributed-lock/nest/src/index.ts",
+                    "packages/distributed-lock/redis-mutex/src/index.ts"
+                ]
             }
         },
         "publish": {
