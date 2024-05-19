@@ -1,7 +1,10 @@
 {
     "name": "@trellisorg/distributed-lock",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "dependencies": {
         "tslib": "^2"
+    },
+    "peerDependencies": {
+        "ioredis": "^5.3.2"
     }
 }

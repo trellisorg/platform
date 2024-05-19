@@ -113,6 +113,11 @@
         "@nx/vite:test": {
             "cache": true,
             "inputs": ["default", "^production"]
+        },
+        "@nx/js:tsc": {
+            "cache": true,
+            "dependsOn": ["^build"],
+            "inputs": ["production", "^production"]
         }
     },
     "namedInputs": {
@@ -139,5 +144,10 @@
     "nxCloudAccessToken": "NTIxYmI5NTktYTY3Yy00MzA0LWIxZTQtZDZiNGUxNzNiNjhjfHJlYWQ=",
     "parallel": 2,
     "useInferencePlugins": false,
-    "defaultBase": "master"
+    "defaultBase": "master",
+    "release": {
+        "version": {
+            "preVersionCommand": "npx nx run-many -t build"
+        }
+    }
 }

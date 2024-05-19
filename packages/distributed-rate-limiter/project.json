@@ -1,0 +1,44 @@
+{
+    "name": "distributed-rate-limiter",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "packages/distributed-rate-limiter/src",
+    "projectType": "library",
+    "release": {
+        "version": {
+            "generatorOptions": {
+                "packageRoot": "dist/{projectRoot}",
+                "currentVersionResolver": "git-tag"
+            }
+        }
+    },
+    "tags": [],
+    "targets": {
+        "build": {
+            "executor": "@nx/js:tsc",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "dist/packages/distributed-rate-limiter",
+                "main": "packages/distributed-rate-limiter/src/index.ts",
+                "tsConfig": "packages/distributed-rate-limiter/tsconfig.lib.json",
+                "assets": ["packages/distributed-rate-limiter/*.md"],
+                "generateExportsField": true,
+                "additionalEntryPoints": ["packages/distributed-rate-limiter/nest/src/index.ts"]
+            }
+        },
+        "nx-release-publish": {
+            "options": {
+                "packageRoot": "dist/{projectRoot}"
+            }
+        },
+        "lint": {
+            "executor": "@nx/eslint:lint"
+        },
+        "test": {
+            "executor": "@nx/vite:test",
+            "outputs": ["{options.reportsDirectory}"],
+            "options": {
+                "reportsDirectory": "../../coverage/packages/distributed-rate-limiter"
+            }
+        }
+    }
+}

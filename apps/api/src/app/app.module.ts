@@ -1,6 +1,7 @@
 import { Injectable, Module, type NestMiddleware } from '@nestjs/common';
 import { DistributedLockModule } from '@trellisorg/distributed-lock/nest';
 import { redisMutexLockAdapter } from '@trellisorg/distributed-lock/redis-mutex';
+import { DistributedRateLimiterModule } from '@trellisorg/distributed-rate-limiter/nest';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { StoryGateway } from './story.gateway';
@@ -41,6 +42,17 @@ export class CookieAuthMiddleware implements NestMiddleware {
                 inheritFrom: 'redis',
             },
         ]),
+        DistributedRateLimiterModule.forRoot([
+            {
+                config: {},
+                name: 'rateLimiter',
+            },
+        ]),
+        DistributedRateLimiterModule.forFeature({
+            config: {},
+            name: 'rateLimiter2',
+            inheritFrom: 'rateLimiter',
+        }),
     ],
     controllers: [AppController],
     providers: [AppService, StoryGateway],

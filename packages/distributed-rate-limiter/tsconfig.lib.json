@@ -6,6 +6,6 @@
         "declaration": true,
         "types": ["node"]
     },
-    "exclude": ["vitest.config.ts", "src/**/*.spec.ts", "nest/**/*.spec.ts", "redis-mutex/**/*.spec.ts"],
-    "include": ["src/**/*.ts", "nest/**/*.ts", "redis-mutex/**/*.ts"]
+    "exclude": ["vitest.config.ts", "src/**/*.spec.ts", "nest/**/*.spec.ts"],
+    "include": ["src/**/*.ts", "nest/**/*.ts"]
 }
