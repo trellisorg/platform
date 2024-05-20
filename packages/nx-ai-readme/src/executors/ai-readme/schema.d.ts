@@ -32,4 +32,20 @@ export interface AiReadmeExecutorSchema {
      * `{projectRoot}/package.json`
      */
     pathToReadme?: string;
+
+    /**
+     * What model from the Gemini family to use, will default to: gemini-1.5-flash-latest.
+     */
+    model: string;
+
+    /**
+     * Configure the temperature of the model, will default to: 0.
+     */
+    temperature: number;
+
+    /**
+     * The key in process.env the apiKey for Gemini is stored in. If this is left out it will be undefined and pull
+     * the default based on the @google/generative-ai package.
+     */
+    apiKey?: string;
 }

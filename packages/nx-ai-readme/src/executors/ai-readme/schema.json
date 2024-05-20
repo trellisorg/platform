@@ -30,7 +30,22 @@
             "type": "string",
             "default": "README.md",
             "description": "The path to the readme file that will be written to when the generation is completed, this defaults to `{projectRoot}/package.json`"
+        },
+        "model": {
+            "type": "string",
+            "default": "gemini-1.5-flash-latest",
+            "description": "The model from the Gemini family to use for generating the readme."
+        },
+        "temperature": {
+            "type": "number",
+            "default": 0,
+            "description": "Configure the temperature of the model, will default to: 0"
+        },
+        "apiKey": {
+            "type": "string",
+            "description": "The key in process.env the apiKey for Gemini is stored in. If this is left out it will be undefined and pull the default based on the @google/generative-ai package.",
+            "default": "AI_README_API_KEY"
         }
     },
-    "required": []
+    "required": ["model", "temperature", "projectFiles", "instructions", "pathToReadme", "temperature"]
 }

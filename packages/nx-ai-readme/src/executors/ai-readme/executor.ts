@@ -12,17 +12,21 @@ import type { ExecutorContext } from 'nx/src/config/misc-interfaces';
 import type { AiReadmeExecutorSchema } from './schema';
 import { systemInstruction } from './system-instruction';
 
-const ai = new GoogleGenerativeAI(process.env['AI_README_API_KEY']);
-
-const fileManager = new GoogleAIFileManager(process.env['AI_README_API_KEY']);
-
-const model = ai.getGenerativeModel({
-    model: 'gemini-1.5-flash-latest',
-    systemInstruction,
-});
-
+/**
+ * Nx Executor that will take in all source, config, test files (among anything else you want) to generate a
+ * README.md for your project.
+ */
 export default async function runExecutor(options: AiReadmeExecutorSchema, context: ExecutorContext) {
     console.log('Executor ran for AiReadme', options);
+
+    const ai = new GoogleGenerativeAI(options.apiKey ? process.env['AI_README_API_KEY'] : undefined);
+
+    const fileManager = new GoogleAIFileManager(options.apiKey ? process.env['AI_README_API_KEY'] : undefined);
+
+    const model = ai.getGenerativeModel({
+        model: options.model,
+        systemInstruction,
+    });
 
     const projectConfig = context.projectGraph?.nodes[context.projectName ?? ''].data;
 
@@ -141,12 +145,26 @@ export default async function runExecutor(options: AiReadmeExecutorSchema, conte
                 parts,
             },
         ],
+        generationConfig: {
+            temperature: options.temperature,
+        },
     });
 
     logger.log('Deleting files used to generated README.');
     await Promise.all(files.map((file) => fileManager.deleteFile(file.metadata.file.name)));
 
-    writeFileSync(join(projectConfig.root, options.pathToReadme ?? 'README.md'), result.response.text());
+    let readme = result.response.text().trim().split('\n');
+
+    console.log(readme[0]);
+    if (readme[0].startsWith('```markdown')) {
+        readme = readme.slice(1);
+    }
+
+    if (readme[readme.length - 1].startsWith('```')) {
+        readme = readme.slice(0, readme.length - 1);
+    }
+
+    writeFileSync(join(projectConfig.root, options.pathToReadme ?? 'README.md'), readme.join('\n').trim());
 
     return {
         success: true,

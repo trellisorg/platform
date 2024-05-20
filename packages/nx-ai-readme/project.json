@@ -56,6 +56,7 @@
         "generate-readme": {
             "executor": "@trellisorg/nx-ai-readme:ai-readme",
             "options": {
+                "temperature": 1,
                 "projectFiles": ["**/*.ts", "**/*.json"],
                 "instructions": "Write a README.md file in Markdown that clearly explains how to use the library @trellisorg/nx-ai-readme. Provide sections for: installation, setup, configuration options, usage and all other relevant information a developer would need to use the library, An example structure/layout will be provided along with all source files and relevant example files for the project. This is an Nx executor that can be used within an Nx monorepo to generate README files, show how to use it within an Nx workspace."
             }
