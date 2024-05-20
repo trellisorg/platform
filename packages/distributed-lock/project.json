@@ -34,6 +34,12 @@
             "options": {
                 "reportsDirectory": "../../coverage/packages/distributed-lock"
             }
+        },
+        "generate-readme": {
+            "executor": "@trellisorg/nx-ai-readme:ai-readme",
+            "options": {
+                "include": ["apps/api/src/app/**/*.ts"]
+            }
         }
     },
     "tags": []

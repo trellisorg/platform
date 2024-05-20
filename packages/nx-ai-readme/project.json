@@ -1,0 +1,64 @@
+{
+    "name": "nx-ai-readme",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "packages/nx-ai-readme/src",
+    "projectType": "library",
+    "release": {
+        "version": {
+            "generatorOptions": {
+                "packageRoot": "dist/{projectRoot}",
+                "currentVersionResolver": "git-tag"
+            }
+        }
+    },
+    "tags": [],
+    "targets": {
+        "build": {
+            "executor": "@nx/js:tsc",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "dist/packages/nx-ai-readme",
+                "main": "packages/nx-ai-readme/src/index.ts",
+                "tsConfig": "packages/nx-ai-readme/tsconfig.lib.json",
+                "assets": [
+                    "packages/nx-ai-readme/*.md",
+                    {
+                        "input": "./packages/nx-ai-readme/src",
+                        "glob": "**/!(*.ts)",
+                        "output": "./src"
+                    },
+                    {
+                        "input": "./packages/nx-ai-readme/src",
+                        "glob": "**/*.d.ts",
+                        "output": "./src"
+                    },
+                    {
+                        "input": "./packages/nx-ai-readme",
+                        "glob": "generators.json",
+                        "output": "."
+                    },
+                    {
+                        "input": "./packages/nx-ai-readme",
+                        "glob": "executors.json",
+                        "output": "."
+                    }
+                ]
+            }
+        },
+        "nx-release-publish": {
+            "options": {
+                "packageRoot": "dist/{projectRoot}"
+            }
+        },
+        "lint": {
+            "executor": "@nx/eslint:lint"
+        },
+        "generate-readme": {
+            "executor": "@trellisorg/nx-ai-readme:ai-readme",
+            "options": {
+                "projectFiles": ["**/*.ts", "**/*.json"],
+                "instructions": "Write a README.md file in Markdown that clearly explains how to use the library @trellisorg/nx-ai-readme. Provide sections for: installation, setup, configuration options, usage and all other relevant information a developer would need to use the library, An example structure/layout will be provided along with all source files and relevant example files for the project. This is an Nx executor that can be used within an Nx monorepo to generate README files, show how to use it within an Nx workspace."
+            }
+        }
+    }
+}
