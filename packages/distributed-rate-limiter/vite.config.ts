@@ -17,7 +17,7 @@ export default defineConfig({
         globals: true,
         cache: { dir: '../../node_modules/.vitest/packages/distributed-rate-limiter' },
         environment: 'node',
-        include: ['src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
+        include: ['{src,nest,axios}/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
         reporters: ['default'],
         coverage: { reportsDirectory: '../../coverage/packages/distributed-rate-limiter', provider: 'v8' },
     },

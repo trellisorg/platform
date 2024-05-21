@@ -2,6 +2,7 @@ import { Injectable, Module, type NestMiddleware } from '@nestjs/common';
 import { DistributedLockModule } from '@trellisorg/distributed-lock/nest';
 import { redisMutexLockAdapter } from '@trellisorg/distributed-lock/redis-mutex';
 import { DistributedRateLimiterModule } from '@trellisorg/distributed-rate-limiter/nest';
+import { axiosRetry429 } from '../../../../packages/distributed-rate-limiter/axios/src';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { StoryGateway } from './story.gateway';
@@ -44,7 +45,12 @@ export class CookieAuthMiddleware implements NestMiddleware {
         ]),
         DistributedRateLimiterModule.forRoot([
             {
-                config: {},
+                config: {
+                    retryFunctions: [
+                        // Wait to retry for the amount of time defined in the retry-after response header of the error.
+                        axiosRetry429({ retryAfter: (error) => error.response.headers['retry-after'] }),
+                    ],
+                },
                 name: 'rateLimiter',
             },
         ]),

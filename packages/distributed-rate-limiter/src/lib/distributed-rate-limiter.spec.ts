@@ -1,11 +1,11 @@
 import { randomUUID } from 'node:crypto';
-import { beforeAll, describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { DistributedRateLimiter } from './distributed-rate-limiter';
 
 describe('DistributedRateLimiter', () => {
     let rateLimiter: DistributedRateLimiter;
 
-    beforeAll(() => {
+    beforeEach(() => {
         rateLimiter = new DistributedRateLimiter({
             rateLimiterPrefix: '@trellisorg/distributed-rate-limiter',
             retryOptions: {},
@@ -20,6 +20,32 @@ describe('DistributedRateLimiter', () => {
 
     it('should work when no calls have been made', async () => {
         await expect(rateLimiter.limit(randomUUID())).resolves.toEqual(undefined);
+    });
+
+    it('should rate limit using withLimit', async () => {
+        await expect(rateLimiter.withLimit(randomUUID(), () => Promise.resolve(true))).resolves.toEqual(true);
+    });
+
+    it('should retry the function call once', async () => {
+        vi.spyOn(rateLimiter, 'limit');
+
+        let count = 0;
+
+        const fn = () => {
+            count++;
+
+            if (count > 1) {
+                return Promise.resolve(true);
+            }
+
+            throw new Error();
+        };
+
+        await expect(
+            rateLimiter.withLimit(randomUUID(), fn, [(error) => error instanceof Error])
+        ).resolves.toEqual(true);
+
+        expect(rateLimiter.limit).toHaveBeenCalledTimes(2);
     });
 
     it('should timeout because the capacity does not refresh soon enough', async () => {

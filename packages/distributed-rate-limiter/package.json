@@ -1,6 +1,6 @@
 {
     "name": "@trellisorg/distributed-rate-limiter",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "repository": {
         "url": "https://github.com/trellisorg/platform/tree/master/packages/distributed-rate-limiter"
     },

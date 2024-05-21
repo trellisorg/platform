@@ -2,7 +2,12 @@ import Redis from 'ioredis';
 import { createHash, randomUUID } from 'node:crypto';
 import promiseRetry from 'promise-retry';
 import { limitScript, type LuaScript } from './lua';
-import { defaultRateLimiterOptions, type DistributedRateLimiterOptions } from './rate-limit-options';
+import {
+    defaultRateLimiterOptions,
+    type DistributedRateLimiterOptions,
+    type ShouldRetry,
+    type WithLimitFn,
+} from './rate-limit-options';
 
 export class DistributedRateLimiter {
     readonly #client: Redis;
@@ -21,6 +26,35 @@ export class DistributedRateLimiter {
         this.limitScript = {
             source: limitScript,
         };
+    }
+
+    /**
+     * Run a function within a rate limit function that will allow retrying the function based on the validity of
+     * the retryFunctions.
+     */
+    async withLimit<T>(resource: string, fn: WithLimitFn<T>, retryFunctions?: ShouldRetry[]): Promise<T> {
+        await this.limit(resource);
+
+        const shouldRetryFns = retryFunctions ?? this.#options.retryFunctions;
+
+        return shouldRetryFns.length === 0
+            ? fn()
+            : promiseRetry(async (retry) => {
+                  try {
+                      return await fn();
+                  } catch (e) {
+                      const shouldRetry = await Promise.any(shouldRetryFns.map((f) => f(e)));
+
+                      if (shouldRetry) {
+                          // Limit the call again when retrying it.
+                          await this.limit(resource);
+
+                          return retry(e);
+                      }
+
+                      throw e;
+                  }
+              }, this.#options.retryOptions);
     }
 
     /**
@@ -45,7 +79,7 @@ export class DistributedRateLimiter {
             }
 
             return retry(new Error(response as string));
-        });
+        }, this.#options.retryOptions);
     }
 
     /**

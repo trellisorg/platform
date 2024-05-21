@@ -3,6 +3,8 @@ import type { RedisOptions } from 'ioredis';
 import type promiseRetry from 'promise-retry';
 
 export type RetryOptions = Parameters<typeof promiseRetry>[0];
+export type ShouldRetry = (error: unknown) => boolean | Promise<boolean>;
+export type WithLimitFn<T> = () => Promise<T>;
 
 export interface DistributedRateLimiterOptions {
     /**
@@ -42,6 +44,14 @@ export interface DistributedRateLimiterOptions {
      * Defaults to: 10.
      */
     maximum: number;
+
+    /**
+     * A series of functions that will be run on errors thrown by the limited function when using the `withLimit`
+     * function of the `DistributedRateLimiter` class.
+     *
+     * If any of these functions return true, the function will be run again after awaiting rate limit.
+     */
+    retryFunctions: ShouldRetry[];
 }
 
 export const defaultRateLimiterOptions: DistributedRateLimiterOptions = {
@@ -53,4 +63,5 @@ export const defaultRateLimiterOptions: DistributedRateLimiterOptions = {
     rateLimiterPrefix: '@trellisorg/distributed-rate-limiter',
     window: 1_000,
     maximum: 10,
+    retryFunctions: [],
 };

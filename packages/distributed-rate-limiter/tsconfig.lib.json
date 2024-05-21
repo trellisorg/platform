@@ -6,6 +6,6 @@
         "declaration": true,
         "types": ["node"]
     },
-    "exclude": ["vitest.config.ts", "src/**/*.spec.ts", "nest/**/*.spec.ts"],
-    "include": ["src/**/*.ts", "nest/**/*.ts"]
+    "exclude": ["vitest.config.ts", "src/**/*.spec.ts", "nest/**/*.spec.ts", "axios/**/*.spec.ts"],
+    "include": ["src/**/*.ts", "nest/**/*.ts", "axios/**/*.ts"]
 }
