@@ -20,10 +20,10 @@
         "baseUrl": ".",
         "paths": {
             "@trellisorg/distributed-lock": ["packages/distributed-lock/src/index.ts"],
-            "@trellisorg/distributed-lock/nest": ["packages/distributed-lock/nest/src/index.ts"],
-            "@trellisorg/distributed-lock/redis-mutex": ["packages/distributed-lock/redis-mutex/src/index.ts"],
+            "@trellisorg/distributed-lock/nest": ["packages/distributed-lock/nest/index.ts"],
+            "@trellisorg/distributed-lock/redis-mutex": ["packages/distributed-lock/redis-mutex/index.ts"],
             "@trellisorg/distributed-rate-limiter": ["packages/distributed-rate-limiter/src/index.ts"],
-            "@trellisorg/distributed-rate-limiter/nest": ["packages/distributed-rate-limiter/nest/src/index.ts"],
+            "@trellisorg/distributed-rate-limiter/nest": ["packages/distributed-rate-limiter/nest/index.ts"],
             "@trellisorg/dns-validator": ["packages/dns-validator/src/index.ts"],
             "@trellisorg/google-places-autocomplete": ["packages/google-places-autocomplete/src/index.ts"],
             "@trellisorg/google-places-autocomplete/jsonp": [

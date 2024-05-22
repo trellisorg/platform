@@ -53,3 +53,7 @@ export interface LockReturnValue {
      */
     expiration: number;
 }
+
+export type WithLockOptions = Partial<
+    Pick<LockOptions, 'retryOptions' | 'lockTimeout' | 'automaticExtensionThreshold'>
+>;

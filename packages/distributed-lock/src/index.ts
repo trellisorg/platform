@@ -1,2 +1,9 @@
 export { DistributedLock } from './lib/distributed-lock';
-export type { LockOptions, LockReturnValue, LockedFunction, RetryOptions, UnlockFn } from './lib/lock-options';
+export type {
+    LockOptions,
+    LockReturnValue,
+    LockedFunction,
+    RetryOptions,
+    UnlockFn,
+    WithLockOptions,
+} from './lib/lock-options';

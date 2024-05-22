@@ -1,6 +1,6 @@
 {
     "name": "@trellisorg/distributed-lock",
-    "version": "1.0.3",
+    "version": "1.0.8",
     "repository": {
         "url": "https://github.com/trellisorg/platform/tree/master/packages/distributed-lock"
     },
@@ -20,5 +20,9 @@
         "lock",
         "distributed",
         "nest"
-    ]
+    ],
+    "exports": {
+        "./nest": "./nest/index.js",
+        "./redis-mutex": "./redis-mutex/index.js"
+    }
 }

@@ -1,6 +1,6 @@
 {
     "name": "@trellisorg/distributed-rate-limiter",
-    "version": "1.0.3",
+    "version": "1.0.6",
     "repository": {
         "url": "https://github.com/trellisorg/platform/tree/master/packages/distributed-rate-limiter"
     },
@@ -23,5 +23,9 @@
         "rate-limit",
         "distributed",
         "nest"
-    ]
+    ],
+    "exports": {
+        "./nest": "./nest/index.js",
+        "./axios": "./axios/index.js"
+    }
 }

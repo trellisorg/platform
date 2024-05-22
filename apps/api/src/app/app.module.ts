@@ -2,7 +2,7 @@ import { Injectable, Module, type NestMiddleware } from '@nestjs/common';
 import { DistributedLockModule } from '@trellisorg/distributed-lock/nest';
 import { redisMutexLockAdapter } from '@trellisorg/distributed-lock/redis-mutex';
 import { DistributedRateLimiterModule } from '@trellisorg/distributed-rate-limiter/nest';
-import { axiosRetry429 } from '../../../../packages/distributed-rate-limiter/axios/src';
+import { axiosRetry429 } from '../../../../packages/distributed-rate-limiter/axios';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { StoryGateway } from './story.gateway';

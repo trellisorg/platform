@@ -13,11 +13,7 @@
                 "packageJson": "packages/distributed-lock/package.json",
                 "main": "packages/distributed-lock/src/index.ts",
                 "assets": ["packages/distributed-lock/*.md"],
-                "generateExportsField": true,
-                "additionalEntryPoints": [
-                    "packages/distributed-lock/nest/src/index.ts",
-                    "packages/distributed-lock/redis-mutex/src/index.ts"
-                ]
+                "generateExportsField": true
             }
         },
         "publish": {
