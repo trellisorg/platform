@@ -34,7 +34,8 @@
         "generate-readme": {
             "executor": "@trellisorg/nx-ai-readme:ai-readme",
             "options": {
-                "include": ["apps/api/src/app/**/*.ts"]
+                "include": ["apps/api/src/app/**/*.ts"],
+                "instructions": "Write a README.md file in Markdown that clearly explains how to use the library @trellisorg/distributed-lock. Provide sections for: installation, setup, configuration options, usage and all other relevant information a developer would need to use the library, An example structure/layout will be provided along with all source files and relevant example files for the project. This library to meant for doing distributed locks using Redis to ensure that resources are not operated on at the same time in a distributed system. Clearly show examples of how to use the library for both simple standalone typescript setups as well as NestJS examples. Be sure to show examples of different configuration options and what the options are for configs,"
             }
         }
     },

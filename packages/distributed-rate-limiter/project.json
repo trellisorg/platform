@@ -43,7 +43,7 @@
             "executor": "@trellisorg/nx-ai-readme:ai-readme",
             "options": {
                 "include": ["apps/api/src/app/**/*.ts"],
-                "instructions": "Write a README.md file in Markdown that clearly explains how to use the library @trellisorg/nx-ai-readme. Provide sections for: installation, setup, configuration options, usage and all other relevant information a developer would need to use the library, An example structure/layout will be provided along with all source files and relevant example files for the project. This library to meant for doing distributed rate limiting using Redis to ensure that rate limits are not exceeded for internal or external services. Clearly show examples of how to use the library for both simple standalone typescript setups as well as NestJS examples. Be sure to show examples of different configuration options and what the options are for configs,"
+                "instructions": "Write a README.md file in Markdown that clearly explains how to use the library @trellisorg/distributed-rate-limiter. Provide sections for: installation, setup, configuration options, usage and all other relevant information a developer would need to use the library, An example structure/layout will be provided along with all source files and relevant example files for the project. This library to meant for doing distributed rate limiting using Redis to ensure that rate limits are not exceeded for internal or external services. Clearly show examples of how to use the library for both simple standalone typescript setups as well as NestJS examples. Be sure to show examples of different configuration options and what the options are for configs,"
             }
         }
     }

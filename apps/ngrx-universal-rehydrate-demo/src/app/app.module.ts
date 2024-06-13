@@ -1,5 +1,5 @@
 import { isPlatformBrowser } from '@angular/common';
-import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, withJsonpSupport } from '@angular/common/http';
 import { Inject, NgModule, PLATFORM_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
@@ -13,6 +13,7 @@ import { loadData, titleReducer } from './store';
 
 @NgModule({
     declarations: [AppComponent],
+    bootstrap: [AppComponent],
     imports: [
         BrowserModule.withServerTransition({ appId: 'serverApp' }),
         StoreModule.forRoot(
@@ -29,8 +30,6 @@ import { loadData, titleReducer } from './store';
             disableWarnings: false,
         }),
         StoreDevtoolsModule.instrument({ connectInZone: true }),
-        HttpClientModule,
-        HttpClientJsonpModule,
         RouterModule.forRoot([
             {
                 path: 'feature1',
@@ -42,8 +41,7 @@ import { loadData, titleReducer } from './store';
             },
         ]),
     ],
-    providers: [],
-    bootstrap: [AppComponent],
+    providers: [provideHttpClient(withInterceptorsFromDi(), withJsonpSupport())],
 })
 export class AppModule {
     constructor(

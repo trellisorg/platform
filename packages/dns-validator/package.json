@@ -1,11 +1,12 @@
 {
     "name": "@trellisorg/dns-validator",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "peerDependencies": {
-        "@angular/common": "^12 || ^13 || ^14 || ^15 || ^16 || ^17",
-        "@angular/forms": "^12 || ^13 || ^14 || ^15 || ^16 || ^17",
-        "@angular/core": "^12 || ^13 || ^14 || ^15 || ^16 || ^17",
-        "@ngrx/component-store": "^12 || ^13 || ^14 || ^15 || ^16 || ^17"
+        "@angular/common": "^18",
+        "@angular/forms": "^18",
+        "@angular/core": "^18",
+        "@ngrx/component-store": "^18",
+        "@ngrx/operators": "^18"
     },
     "dependencies": {
         "tslib": "^2.3.0"

@@ -1,5 +1,5 @@
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, withJsonpSupport } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -16,6 +16,7 @@ import { AppComponent } from './app.component';
 
 @NgModule({
     declarations: [AppComponent],
+    bootstrap: [AppComponent],
     imports: [
         BrowserModule,
         RouterModule.forRoot([], {
@@ -33,8 +34,6 @@ import { AppComponent } from './app.component';
             },
         }),
         StoreDevtoolsModule.instrument({ connectInZone: true }),
-        HttpClientModule,
-        HttpClientJsonpModule,
         NgrxDataWebsocketClientModule.forRoot({
             host: 'http://localhost:80',
         }),
@@ -43,7 +42,6 @@ import { AppComponent } from './app.component';
         MatInputModule,
         BrowserAnimationsModule,
     ],
-    providers: [],
-    bootstrap: [AppComponent],
+    providers: [provideHttpClient(withInterceptorsFromDi(), withJsonpSupport())],
 })
 export class AppModule {}

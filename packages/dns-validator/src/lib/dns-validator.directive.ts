@@ -1,8 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Directive, ElementRef, HostListener, inject, Injectable, Input, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, HostListener, Injectable, Input, Renderer2, inject } from '@angular/core';
 import { NgControl } from '@angular/forms';
-import { ComponentStore, tapResponse } from '@ngrx/component-store';
-import { debounceTime, map, Observable, switchMap } from 'rxjs';
+import { ComponentStore } from '@ngrx/component-store';
+import { tapResponse } from '@ngrx/operators';
+import { debounceTime, map, switchMap, type Observable } from 'rxjs';
 import { DNS_VALIDATOR_CONFIG } from './dns-validator.config';
 
 type DoHBoolean = boolean | '1' | '0' | 0 | 1;
@@ -30,7 +31,7 @@ interface DnsValidatorState {
 
 @Injectable()
 class DnsValidatorStore extends ComponentStore<DnsValidatorState> {
-    private readonly config = inject(DNS_VALIDATOR_CONFIG, 8);
+    private readonly config = inject(DNS_VALIDATOR_CONFIG, { optional: true });
 
     readonly response$ = this.select((state) => state.response);
 
@@ -106,7 +107,10 @@ export class DnsValidatorDirective {
 
     private readonly config = inject(DNS_VALIDATOR_CONFIG, 8);
 
-    constructor(private readonly ngControl: NgControl, private readonly dnsValidatorStore: DnsValidatorStore) {
+    constructor(
+        private readonly ngControl: NgControl,
+        private readonly dnsValidatorStore: DnsValidatorStore
+    ) {
         this.dnsValidatorStore.setState({});
     }
 
@@ -120,7 +124,9 @@ export class DnsValidatorDirective {
 
     @HostListener('keyup')
     async validateDns(): Promise<void> {
-        const value = (this.transformFn ?? this.config?.transformFn ?? this.defaultTransform)(this.ngControl.value);
+        const value = (this.transformFn ?? this.config?.transformFn ?? this.defaultTransform)(
+            this.ngControl.value
+        );
 
         if (!value) {
             this.dnsValidatorStore.clear();

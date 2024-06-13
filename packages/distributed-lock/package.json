@@ -1,6 +1,6 @@
 {
     "name": "@trellisorg/distributed-lock",
-    "version": "1.0.8",
+    "version": "1.0.9",
     "repository": {
         "url": "https://github.com/trellisorg/platform/tree/master/packages/distributed-lock"
     },
