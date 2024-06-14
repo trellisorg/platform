@@ -10,9 +10,13 @@ class Store {
 
     readonly counter2$ = new BehaviorSubject<number>(0);
 
+    readonly notDefined$ = new BehaviorSubject<number | undefined>(undefined);
+
     readonly setCounter = (value: number) => this.counter$.next(value);
 
     readonly setCounterTwo = (value: number) => this.counter2$.next(value);
+
+    readonly setNotDefined = (value: number) => this.notDefined$.next(value);
 }
 
 @Component({
@@ -30,9 +34,11 @@ class Store {
     providers: [Store],
 })
 class TestComponent {
-    @Input() @Update(Store) counter = 0;
+    @Input() counter = 0;
 
-    @Input() @Update(Store, 'setCounterTwo') counterTwo = 0;
+    @Input() counterTwo = 0;
+
+    @Input() @Update(Store) notDefined?: number;
 
     readonly counter$ = this.store.counter$;
 
@@ -60,6 +66,8 @@ describe('Update', () => {
         expect(store).toBeDefined();
 
         expect(subscribeSpyTo(store.counter$).getLastValue()).toEqual(0);
+
+        expect(component.counter).toBe(0);
     });
 
     it('should update the store value', () => {
@@ -68,6 +76,8 @@ describe('Update', () => {
         fixture.detectChanges();
 
         expect(subscribeSpyTo(store.counter$).getLastValue()).toEqual(1);
+
+        expect(component.counter).toBe(1);
     });
 
     it('should update the store value with renamed setter', () => {
@@ -76,5 +86,19 @@ describe('Update', () => {
         fixture.detectChanges();
 
         expect(subscribeSpyTo(store.counter2$).getLastValue()).toEqual(1);
+
+        expect(component.counterTwo).toBe(1);
+    });
+
+    it.only('should update a property when it is not initialized', () => {
+        expect(component.notDefined).not.toBeDefined();
+
+        component.notDefined = 1;
+
+        fixture.detectChanges();
+
+        expect(subscribeSpyTo(store.notDefined$).getLastValue()).toEqual(1);
+
+        expect(component.notDefined).toBe(1);
     });
 });
