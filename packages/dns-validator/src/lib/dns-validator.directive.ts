@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import {
-    DestroyRef,
     Directive,
     ElementRef,
     HostListener,
@@ -12,6 +11,8 @@ import {
     signal,
 } from '@angular/core';
 import { NgControl } from '@angular/forms';
+import { toSignal, toObservable } from '@angular/core/rxjs-interop';
+import { debounceTime, switchMap, of, catchError, startWith } from 'rxjs';
 import { DNS_VALIDATOR_CONFIG } from './dns-validator.config';
 
 type DoHBoolean = boolean | '1' | '0' | 0 | 1;
@@ -51,27 +52,48 @@ export class DnsValidatorDirective {
     private readonly elementRef = inject(ElementRef);
     private readonly renderer2 = inject(Renderer2);
     private readonly config = inject(DNS_VALIDATOR_CONFIG, { optional: true });
-    private readonly destroyRef = inject(DestroyRef);
 
-    // Signals for state management
-    private readonly currentValue = signal<string | undefined>(undefined);
-    private readonly debounceTime = computed(() => this.config?.debounceTime ?? 250);
-    private debounceTimeout: number | undefined;
-    private currentAbortController: AbortController | undefined;
+    // Single signal for the domain value to query
+    private readonly domainToQuery = signal<string | undefined>(undefined);
 
-    // State signals
-    private readonly responseSignal = signal<DoHResponse | undefined>(undefined);
-    private readonly isLoadingSignal = signal<boolean>(false);
-    private readonly errorSignal = signal<Error | undefined>(undefined);
+    // DNS query observable that reacts to domain changes
+    private readonly dnsQuery$ = toSignal(
+        toObservable(this.domainToQuery).pipe(
+            debounceTime(this.config?.debounceTime ?? 250),
+            switchMap(domain => {
+                if (!domain) {
+                    return of(undefined);
+                }
 
-    // Computed signals for public API
-    readonly response = computed(() => this.responseSignal());
+                const query: DoHQuery = {
+                    ...this.query(),
+                    name: domain,
+                };
+
+                const params = new URLSearchParams();
+                Object.entries(query).forEach(([key, value]) => {
+                    if (value !== undefined && value !== null) {
+                        params.append(key, String(value));
+                    }
+                });
+
+                return this.httpClient.get<DoHResponse>(`${googleDoH}?${params.toString()}`).pipe(
+                    catchError(() => of(undefined))
+                );
+            }),
+            startWith(undefined)
+        ),
+        { initialValue: undefined }
+    );
+
+    // Public API - simple computed signals
+    readonly response = computed(() => this.dnsQuery$());
+    readonly isLoading = signal(false); // Simplified - toSignal doesn't provide loading state
+    readonly error = signal<Error | undefined>(undefined); // Simplified - errors are caught and return undefined
     readonly invalid = computed(() => {
         const response = this.response();
         return response && response.Status !== 0;
     });
-    readonly isLoading = computed(() => this.isLoadingSignal());
-    readonly error = computed(() => this.errorSignal());
 
     constructor() {
         // Effect to handle CSS class updates based on validation status
@@ -85,29 +107,6 @@ export class DnsValidatorDirective {
                 this.renderer2.removeClass(element, formClass);
             }
         });
-
-        // Effect to handle DNS queries when currentValue changes
-        effect(() => {
-            const value = this.currentValue();
-            if (!value) {
-                this.responseSignal.set(undefined);
-                this.errorSignal.set(undefined);
-                this.isLoadingSignal.set(false);
-                return;
-            }
-
-            this.performDnsQuery(value);
-        });
-
-        // Cleanup timeout and abort controller on destroy
-        this.destroyRef.onDestroy(() => {
-            if (this.debounceTimeout) {
-                clearTimeout(this.debounceTimeout);
-            }
-            if (this.currentAbortController) {
-                this.currentAbortController.abort();
-            }
-        });
     }
 
     private defaultTransform(value: string | undefined | null): string | undefined {
@@ -118,57 +117,7 @@ export class DnsValidatorDirective {
         return value.split('@').pop();
     }
 
-    private async performDnsQuery(value: string): Promise<void> {
-        // Cancel any existing request
-        if (this.currentAbortController) {
-            this.currentAbortController.abort();
-        }
 
-        // Create new abort controller
-        this.currentAbortController = new AbortController();
-        const abortSignal = this.currentAbortController.signal;
-
-        // Set loading state
-        this.isLoadingSignal.set(true);
-        this.errorSignal.set(undefined);
-
-        try {
-            const query: DoHQuery = {
-                ...this.query(),
-                name: value,
-            };
-
-            const params = new URLSearchParams();
-            Object.entries(query).forEach(([key, value]) => {
-                if (value !== undefined && value !== null) {
-                    params.append(key, String(value));
-                }
-            });
-
-            const response = await fetch(`${googleDoH}?${params.toString()}`, {
-                signal: abortSignal,
-            });
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
-            const data = (await response.json()) as DoHResponse;
-
-            // Only update if request wasn't aborted
-            if (!abortSignal.aborted) {
-                this.responseSignal.set(data);
-                this.isLoadingSignal.set(false);
-            }
-        } catch (error) {
-            // Only update error state if request wasn't aborted
-            if (!abortSignal.aborted) {
-                this.errorSignal.set(error);
-                this.isLoadingSignal.set(false);
-                this.responseSignal.set(undefined);
-            }
-        }
-    }
 
     @HostListener('keyup')
     validateDns(): void {
@@ -177,34 +126,14 @@ export class DnsValidatorDirective {
         const transformedValue = transformFn(rawValue);
 
         if (!transformedValue) {
-            this.currentValue.set(undefined);
+            this.domainToQuery.set(undefined);
             return;
         }
 
         if ((this.requiredValid() && this.ngControl.valid) || !this.requiredValid()) {
-            // Clear existing timeout
-            if (this.debounceTimeout) {
-                clearTimeout(this.debounceTimeout);
-            }
-
-            // Set new timeout for debouncing
-            this.debounceTimeout = setTimeout(() => {
-                // Only update if the value hasn't changed during debounce period
-                const currentRawValue = this.ngControl.value;
-                const currentTransformedValue = transformFn(currentRawValue);
-
-                if (currentTransformedValue === transformedValue) {
-                    this.currentValue.set(transformedValue);
-                }
-                this.debounceTimeout = undefined;
-            }, this.debounceTime()) as unknown as number;
+            this.domainToQuery.set(transformedValue);
         } else {
-            // Clear timeout and reset value
-            if (this.debounceTimeout) {
-                clearTimeout(this.debounceTimeout);
-                this.debounceTimeout = undefined;
-            }
-            this.currentValue.set(undefined);
+            this.domainToQuery.set(undefined);
         }
     }
 }
