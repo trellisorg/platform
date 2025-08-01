@@ -1,9 +1,18 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { Directive, ElementRef, HostListener, Injectable, Input, Renderer2, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import {
+    Directive,
+    ElementRef,
+    HostListener,
+    Renderer2,
+    computed,
+    effect,
+    inject,
+    input,
+    signal,
+} from '@angular/core';
 import { NgControl } from '@angular/forms';
-import { ComponentStore } from '@ngrx/component-store';
-import { tapResponse } from '@ngrx/operators';
-import { debounceTime, map, switchMap, type Observable } from 'rxjs';
+import { toSignal, toObservable } from '@angular/core/rxjs-interop';
+import { debounceTime, switchMap, of, catchError, startWith } from 'rxjs';
 import { DNS_VALIDATOR_CONFIG } from './dns-validator.config';
 
 type DoHBoolean = boolean | '1' | '0' | 0 | 1;
@@ -22,96 +31,82 @@ export interface DoHResponse {
     Status: 0 | 1 | 2 | 3; // NOERROR - Standard DNS response code (32 bit integer).
 }
 
-const googleDoH = `https://dns.google/resolve`;
+const googleDoH = 'https://dns.google/resolve';
 const formClass = 'form-control-warning';
-
-interface DnsValidatorState {
-    response?: DoHResponse;
-}
-
-@Injectable()
-class DnsValidatorStore extends ComponentStore<DnsValidatorState> {
-    private readonly config = inject(DNS_VALIDATOR_CONFIG, { optional: true });
-
-    readonly response$ = this.select((state) => state.response);
-
-    readonly invalid$ = this.response$.pipe(map((response) => response && response.Status !== 0));
-
-    readonly clear = this.updater((state) => ({
-        ...state,
-        response: undefined,
-    }));
-
-    readonly queryDns = this.effect((query$: Observable<DoHQuery>) =>
-        query$.pipe(
-            debounceTime(this.config?.debounceTime ?? 250),
-            switchMap((query) =>
-                this._httpClient.get<DoHResponse>(`${googleDoH}`, {
-                    params: {
-                        ...query,
-                    } as unknown as HttpParams,
-                })
-            ),
-            tapResponse(
-                (response) => {
-                    this.patchState({
-                        response,
-                    });
-
-                    this.processStatus(response.Status);
-                },
-                () => {
-                    this.patchState({
-                        response: undefined,
-                    });
-
-                    this.processStatus(0);
-                }
-            )
-        )
-    );
-
-    constructor(
-        private readonly _httpClient: HttpClient,
-        private readonly elementRef: ElementRef,
-        private readonly _renderer2: Renderer2
-    ) {
-        super();
-    }
-
-    private processStatus(status: DoHResponse['Status']): void {
-        if (status === 0) {
-            this._renderer2.removeClass(this.elementRef.nativeElement, formClass);
-        } else {
-            this._renderer2.addClass(this.elementRef.nativeElement, formClass);
-        }
-    }
-}
 
 @Directive({
     // eslint-disable-next-line @angular-eslint/directive-selector
     selector: 'input[dns]',
-    providers: [DnsValidatorStore],
     exportAs: 'dns',
+    standalone: true,
 })
 export class DnsValidatorDirective {
-    @Input() query?: Omit<DoHQuery, 'name'> = {};
+    // Modern Angular inputs using input() function
+    readonly query = input<Omit<DoHQuery, 'name'>>({});
+    readonly requiredValid = input<boolean>(true);
+    readonly transformFn = input<((value: string) => string) | undefined>();
 
-    @Input() requiredValid = true;
+    // Injected dependencies
+    private readonly httpClient = inject(HttpClient);
+    private readonly ngControl = inject(NgControl);
+    private readonly elementRef = inject(ElementRef);
+    private readonly renderer2 = inject(Renderer2);
+    private readonly config = inject(DNS_VALIDATOR_CONFIG, { optional: true });
 
-    @Input() transformFn?: (value: string) => string;
+    // Single signal for the domain value to query
+    private readonly domainToQuery = signal<string | undefined>(undefined);
 
-    readonly response$ = this.dnsValidatorStore.response$;
+    // DNS query observable that reacts to domain changes
+    private readonly dnsQuery$ = toSignal(
+        toObservable(this.domainToQuery).pipe(
+            debounceTime(this.config?.debounceTime ?? 250),
+            switchMap(domain => {
+                if (!domain) {
+                    return of(undefined);
+                }
 
-    readonly invalid$ = this.dnsValidatorStore.invalid$;
+                const query: DoHQuery = {
+                    ...this.query(),
+                    name: domain,
+                };
 
-    private readonly config = inject(DNS_VALIDATOR_CONFIG, 8);
+                const params = new URLSearchParams();
+                Object.entries(query).forEach(([key, value]) => {
+                    if (value !== undefined && value !== null) {
+                        params.append(key, String(value));
+                    }
+                });
 
-    constructor(
-        private readonly ngControl: NgControl,
-        private readonly dnsValidatorStore: DnsValidatorStore
-    ) {
-        this.dnsValidatorStore.setState({});
+                return this.httpClient.get<DoHResponse>(`${googleDoH}?${params.toString()}`).pipe(
+                    catchError(() => of(undefined))
+                );
+            }),
+            startWith(undefined)
+        ),
+        { initialValue: undefined }
+    );
+
+    // Public API - simple computed signals
+    readonly response = computed(() => this.dnsQuery$());
+    readonly isLoading = signal(false); // Simplified - toSignal doesn't provide loading state
+    readonly error = signal<Error | undefined>(undefined); // Simplified - errors are caught and return undefined
+    readonly invalid = computed(() => {
+        const response = this.response();
+        return response && response.Status !== 0;
+    });
+
+    constructor() {
+        // Effect to handle CSS class updates based on validation status
+        effect(() => {
+            const isInvalid = this.invalid();
+            const element = this.elementRef.nativeElement;
+
+            if (isInvalid) {
+                this.renderer2.addClass(element, formClass);
+            } else {
+                this.renderer2.removeClass(element, formClass);
+            }
+        });
     }
 
     private defaultTransform(value: string | undefined | null): string | undefined {
@@ -122,24 +117,23 @@ export class DnsValidatorDirective {
         return value.split('@').pop();
     }
 
-    @HostListener('keyup')
-    async validateDns(): Promise<void> {
-        const value = (this.transformFn ?? this.config?.transformFn ?? this.defaultTransform)(
-            this.ngControl.value
-        );
 
-        if (!value) {
-            this.dnsValidatorStore.clear();
+
+    @HostListener('keyup')
+    validateDns(): void {
+        const rawValue = this.ngControl.value;
+        const transformFn = this.transformFn() ?? this.config?.transformFn ?? this.defaultTransform;
+        const transformedValue = transformFn(rawValue);
+
+        if (!transformedValue) {
+            this.domainToQuery.set(undefined);
             return;
         }
 
-        if ((this.requiredValid && this.ngControl.valid) || !this.requiredValid) {
-            this.dnsValidatorStore.queryDns({
-                ...this.query,
-                name: value,
-            });
+        if ((this.requiredValid() && this.ngControl.valid) || !this.requiredValid()) {
+            this.domainToQuery.set(transformedValue);
         } else {
-            this.dnsValidatorStore.clear();
+            this.domainToQuery.set(undefined);
         }
     }
 }

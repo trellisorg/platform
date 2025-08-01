@@ -1,10 +1,17 @@
 <input
-    placeholder="Enter a domain"
-    dns
-    type="email"
+    #dnsValidator="dns"
     [(ngModel)]="title"
     [query]="{ type: 'mx' }"
-    #dnsValidator="dns"
-/>
+    placeholder="Enter a domain"
+    dns
+    type="email" />
 
-<div>{{ dnsValidator.response$ | async | json }}</div>
+<div>
+    <h3>DNS Validation Status:</h3>
+    <p>Loading: {{ dnsValidator.isLoading() }}</p>
+    <p>Invalid: {{ dnsValidator.invalid() }}</p>
+    <p>Response: {{ dnsValidator.response() | json }}</p>
+    @if (dnsValidator.error()) {
+        <p style="color: red">Error: {{ dnsValidator.error() | json }}</p>
+    }
+</div>
