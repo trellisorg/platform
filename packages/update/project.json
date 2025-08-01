@@ -4,6 +4,7 @@
     "projectType": "library",
     "sourceRoot": "packages/update/src",
     "prefix": "trellisorg",
+    "tags": [],
     "targets": {
         "build": {
             "executor": "@nx/angular:package",
@@ -34,6 +35,5 @@
                 "lintFilePatterns": ["packages/update/**/*.ts", "packages/update/**/*.html"]
             }
         }
-    },
-    "tags": []
+    }
 }

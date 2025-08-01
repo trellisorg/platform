@@ -4,6 +4,7 @@
     "projectType": "library",
     "sourceRoot": "packages/serverless-sharp-loader/src",
     "prefix": "trellisorg",
+    "tags": [],
     "targets": {
         "build": {
             "executor": "@nx/angular:package",
@@ -37,6 +38,5 @@
                 ]
             }
         }
-    },
-    "tags": []
+    }
 }

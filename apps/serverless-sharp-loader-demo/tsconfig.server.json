@@ -4,7 +4,8 @@
         "outDir": "../../out-tsc/server",
         "target": "ES2022",
         "types": ["node"],
-        "useDefineForClassFields": false
+        "useDefineForClassFields": false,
+        "moduleResolution": "bundler"
     },
     "files": ["src/main.server.ts", "server.ts"],
     "angularCompilerOptions": {

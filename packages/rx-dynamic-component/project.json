@@ -4,6 +4,7 @@
     "projectType": "library",
     "sourceRoot": "packages/rx-dynamic-component/src",
     "prefix": "trellisorg",
+    "tags": [],
     "targets": {
         "build": {
             "executor": "@nx/angular:package",
@@ -34,6 +35,5 @@
                 "jestConfig": "packages/rx-dynamic-component/jest.config.ts"
             }
         }
-    },
-    "tags": []
+    }
 }

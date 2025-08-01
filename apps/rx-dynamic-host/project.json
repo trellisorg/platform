@@ -4,6 +4,7 @@
     "projectType": "application",
     "sourceRoot": "apps/rx-dynamic-host/src",
     "prefix": "trellisorg",
+    "tags": [],
     "targets": {
         "build": {
             "executor": "@angular-devkit/build-angular:application",
@@ -28,7 +29,8 @@
                 "port": 4200,
                 "publicHost": "http://localhost:4200",
                 "buildTarget": "rx-dynamic-host:build:development"
-            }
+            },
+            "continuous": true
         },
         "extract-i18n": {
             "executor": "@angular-devkit/build-angular:extract-i18n",
@@ -42,6 +44,5 @@
                 "lintFilePatterns": ["apps/rx-dynamic-host/**/*.ts", "apps/rx-dynamic-host/**/*.html"]
             }
         }
-    },
-    "tags": []
+    }
 }

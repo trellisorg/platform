@@ -3,6 +3,7 @@
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
     "sourceRoot": "packages/graphql-codegen-make-export-as-optional/src",
     "projectType": "library",
+    "tags": [],
     "targets": {
         "build": {
             "executor": "@nx/js:tsc",
@@ -28,6 +29,5 @@
                 "jestConfig": "packages/graphql-codegen-make-export-as-optional/jest.config.ts"
             }
         }
-    },
-    "tags": []
+    }
 }

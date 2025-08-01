@@ -1,9 +1,0 @@
-{
-    "executors": {
-        "ai-readme": {
-            "implementation": "./src/executors/ai-readme/executor",
-            "schema": "./src/executors/ai-readme/schema.json",
-            "description": "Generate a README using AI"
-        }
-    }
-}

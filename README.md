@@ -13,37 +13,34 @@ Trellis uses internally but has opened sourced for the community to use.**
 
 ## Projects available
 
--   [make-buildable](https://github.com/trellisorg/platform/tree/master/packages/make-buildable)
-    -   `yarn add -D @trellisorg/make-buildable`
-    -   [npm](https://www.npmjs.com/package/@trellisorg/make-buildable)
--   [ngrx-data-websocket](https://github.com/trellisorg/platform/tree/master/packages/ngrx-data-websocket)
-    -   [client](https://github.com/trellisorg/platform/tree/master/packages/ngrx-data-websocket/client)
-        -   `yarn add @trellisorg/ngx-data-websocket-client`
-        -   [npm](https://www.npmjs.com/package/@trellisorg/ngrx-data-websocket-client)
-    -   [server](https://github.com/trellisorg/platform/tree/master/packages/ngrx-data-websocket/server)
-        -   `yarn add @trellisorg/ngx-data-websocket-server`
-        -   [npm](https://www.npmjs.com/package/@trellisorg/ngrx-data-websocket-server)
-    -   [core](https://github.com/trellisorg/platform/tree/master/packages/ngrx-data-websocket/core)
-        -   `yarn add @trellisorg/ngx-data-websocket-core`
-        -   [npm](https://www.npmjs.com/package/@trellisorg/ngrx-data-websocket-core)
--   [ngrx-universal-rehydrate](https://github.com/trellisorg/platform/tree/master/packages/ngrx-universal-rehydrate)
-    -   `yarn add @trellisorg/ngrx-universal-rehydrate`
-    -   [npm](https://www.npmjs.com/package/@trellisorg/ngrx-universal-rehydrate)
--   [nxls](https://github.com/trellisorg/platform/tree/master/packages/nxls)
-    -   `yarn global add nxls`
-    -   [npm](https://www.npmjs.com/package/@trellisorg/nxls)
--   [nx-betterer](https://github.com/trellisorg/platform/tree/master/packages/nx-betterer)
-    -   `yarn add -D @trellisorg/nx-betterer`
-    -   [npm](https://www.npmjs.com/package/@trellisorg/nx-betterer)
--   [nx-jest](https://github.com/trellisorg/platform/tree/master/packages/nx-jest)
-    -   `yarn add -D nx-jest`
-    -   [npm](https://www.npmjs.com/package/@trellisorg/nx-jest)
--   [rx-dynamic-component](https://github.com/trellisorg/platform/tree/master/packages/rx-dynamic-component)
-    -   `yarn add @trellisorg/rx-dynamic-component`
-    -   [npm](https://www.npmjs.com/package/@trellisorg/rx-dynamic-component)
--   [nest-spectator](https://github.com/trellisorg/platform/tree/master/packages/nest-spectator)
-    -   `yarn add -D @trellisorg/nest-spectator`
-    -   [npm](https://www.npmjs.com/package/@trellisorg/nest-spectator)
+- [make-buildable](https://github.com/trellisorg/platform/tree/master/packages/make-buildable)
+  - `yarn add -D @trellisorg/make-buildable`
+  - [npm](https://www.npmjs.com/package/@trellisorg/make-buildable)
+- [ngrx-data-websocket](https://github.com/trellisorg/platform/tree/master/packages/ngrx-data-websocket)
+  - [client](https://github.com/trellisorg/platform/tree/master/packages/ngrx-data-websocket/client)
+    - `yarn add @trellisorg/ngx-data-websocket-client`
+    - [npm](https://www.npmjs.com/package/@trellisorg/ngrx-data-websocket-client)
+  - [server](https://github.com/trellisorg/platform/tree/master/packages/ngrx-data-websocket/server)
+    - `yarn add @trellisorg/ngx-data-websocket-server`
+    - [npm](https://www.npmjs.com/package/@trellisorg/ngrx-data-websocket-server)
+  - [core](https://github.com/trellisorg/platform/tree/master/packages/ngrx-data-websocket/core)
+    - `yarn add @trellisorg/ngx-data-websocket-core`
+    - [npm](https://www.npmjs.com/package/@trellisorg/ngrx-data-websocket-core)
+- [ngrx-universal-rehydrate](https://github.com/trellisorg/platform/tree/master/packages/ngrx-universal-rehydrate)
+  - `yarn add @trellisorg/ngrx-universal-rehydrate`
+  - [npm](https://www.npmjs.com/package/@trellisorg/ngrx-universal-rehydrate)
+- [nxls](https://github.com/trellisorg/platform/tree/master/packages/nxls)
+  - `yarn global add nxls`
+  - [npm](https://www.npmjs.com/package/@trellisorg/nxls)
+- [nx-jest](https://github.com/trellisorg/platform/tree/master/packages/nx-jest)
+  - `yarn add -D nx-jest`
+  - [npm](https://www.npmjs.com/package/@trellisorg/nx-jest)
+- [rx-dynamic-component](https://github.com/trellisorg/platform/tree/master/packages/rx-dynamic-component)
+  - `yarn add @trellisorg/rx-dynamic-component`
+  - [npm](https://www.npmjs.com/package/@trellisorg/rx-dynamic-component)
+- [nest-spectator](https://github.com/trellisorg/platform/tree/master/packages/nest-spectator)
+  - `yarn add -D @trellisorg/nest-spectator`
+  - [npm](https://www.npmjs.com/package/@trellisorg/nest-spectator)
 
 ## Build
 

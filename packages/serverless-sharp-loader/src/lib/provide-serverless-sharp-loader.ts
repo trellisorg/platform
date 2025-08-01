@@ -1,15 +1,15 @@
-import { DOCUMENT, ImageLoader, ImageLoaderConfig, IMAGE_LOADER, isPlatformServer } from '@angular/common';
+import { IMAGE_LOADER, type ImageLoader, type ImageLoaderConfig, isPlatformServer } from '@angular/common';
 import type { Provider } from '@angular/core';
-import { inject, InjectionToken, PLATFORM_ID } from '@angular/core';
+import { DOCUMENT, inject, InjectionToken, PLATFORM_ID } from '@angular/core';
 
 /**
- * @description A hashFn that can be used for configuring security.
+ * A hashFn that can be used for configuring security.
  */
 export type HashFn = (value: string) => string;
 
 /**
- * Configuration token for the library so that the config can be stored in the injector and merged throughout the tree
- * to support using different values in different parts of your application.
+ * Configuration token for the library so that the config can be stored in the injector and merged throughout the
+ * tree to support using different values in different parts of your application.
  */
 export const SERVERLESS_SHARP_LOADER_CONFIG = new InjectionToken<ServerlessSharpLoaderConfig>(
     'serverless-sharp-loader-config'
@@ -34,17 +34,18 @@ export interface ServerlessSharpLoaderConfig {
         blur?: number;
     };
     /**
-     * The Cloudfront Distribution URL
+     * The Cloudfront Distribution URL.
      */
     baseUrl: string;
     /**
-     * @description Hashing function for security. Required is `#parameters.s` is set.
+     * Hashing function for security. Required is `#parameters.s` is set.
      */
     hashFn?: HashFn;
 }
 
 /**
- * Will hash and configure the security parameter if enabled within your distribution
+ * Will hash and configure the security parameter if enabled within your distribution.
+ *
  * @param assetUrl
  * @param securityKey
  * @param hashFn
@@ -99,7 +100,8 @@ function mergeConfigs(
 
 /**
  * Construct the `<link>` tag that will be added to the `<head>` while rendering in the server. This will add the
- * necessary properties to the link tag so that the images are preloaded
+ * necessary properties to the link tag so that the images are preloaded.
+ *
  * @param url
  * @param document
  */

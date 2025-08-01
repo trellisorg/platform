@@ -4,6 +4,7 @@
     "projectType": "library",
     "sourceRoot": "packages/dns-validator/src",
     "prefix": "trellisorg",
+    "tags": [],
     "targets": {
         "build": {
             "executor": "@nx/angular:package",
@@ -34,6 +35,5 @@
                 "lintFilePatterns": ["packages/dns-validator/**/*.ts", "packages/dns-validator/**/*.html"]
             }
         }
-    },
-    "tags": []
+    }
 }

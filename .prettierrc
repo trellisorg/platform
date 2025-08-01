@@ -5,11 +5,49 @@
     "bracketSameLine": true,
     "trailingComma": "es5",
     "jsdocPrintWidth": 115,
-    "jsdocCommentLineStrategy": "multiline",
     "jsdocCapitalizeDescription": true,
+    "jsdocCommentLineStrategy": "multiline",
     "jsdocSeparateReturnsFromParam": true,
     "jsdocPreferCodeFences": true,
     "jsdocSeparateTagGroups": true,
     "jsdocDescriptionWithDot": true,
-    "plugins": ["prettier-plugin-organize-attributes", "prettier-plugin-organize-imports", "prettier-plugin-jsdoc"]
+    "overrides": [
+        {
+            "files": ["*.swcrc", "*.graphqlconfig", "*.prettierrc"],
+            "options": {
+                "parser": "json",
+                "tabWidth": 4
+            }
+        },
+        {
+            "files": ["*.prisma"],
+            "options": {
+                "tabWidth": 2
+            }
+        },
+        {
+            "files": ["*.yml"],
+            "options": {
+                "tabWidth": 4
+            }
+        },
+        {
+            "files": ["*.sql"],
+            "options": {
+                "language": "postgresql",
+                "keywordCase": "upper"
+            }
+        },
+        {
+            "files": ["*.md"],
+            "options": {
+                "tabWidth": 2
+            }
+        }
+    ],
+    "plugins": [
+        "prettier-plugin-organize-attributes",
+        "prettier-plugin-organize-imports",
+        "prettier-plugin-jsdoc"
+    ]
 }

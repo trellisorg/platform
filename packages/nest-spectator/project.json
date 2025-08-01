@@ -3,6 +3,7 @@
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
     "sourceRoot": "packages/nest-spectator/src",
     "projectType": "library",
+    "tags": [],
     "targets": {
         "lint": {
             "executor": "@nrwl/linter:eslint",
@@ -28,6 +29,5 @@
                 "assets": ["packages/nest-spectator/*.md"]
             }
         }
-    },
-    "tags": []
+    }
 }

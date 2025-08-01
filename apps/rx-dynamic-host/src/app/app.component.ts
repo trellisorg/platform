@@ -8,24 +8,24 @@ import { DialogComponent } from './dialog/dialog.component';
 @Component({
     selector: 'trellisorg-root',
     template: `
-        <div *ngIf="show$ | async" style="border: blue dashed 5px; margin-top: 5px">
-            <div>I will remove myself in 5 seconds to demonstrate unsubscribing outputs.</div>
-            <div
-                [name]="randomNameEverySecond$ | async"
-                (myName)="nameStreamFromOutput$.next($event.value.data)"
-                load="dynamic-standalone"
-                rxDynamic
-                inputOutputAdapter
-            ></div>
-            <div>I said my name was: {{ nameStreamFromOutput$ | async }}</div>
-        </div>
+        @if (show$ | async) {
+            <div style="border: blue dashed 5px; margin-top: 5px">
+                <div>I will remove myself in 5 seconds to demonstrate unsubscribing outputs.</div>
+                <div
+                    [name]="randomNameEverySecond$ | async"
+                    (myName)="nameStreamFromOutput$.next($event.value.data)"
+                    load="dynamic-standalone"
+                    rxDynamic
+                    inputOutputAdapter></div>
+                <div>I said my name was: {{ nameStreamFromOutput$ | async }}</div>
+            </div>
+        }
         <div
             [name]="randomDogEverySecond$ | async"
             (myName)="nameStreamFromOutput2$.next($event.value.data)"
             load="dynamic-standalone2"
             rxDynamic
-            inputOutputAdapter
-        ></div>
+            inputOutputAdapter></div>
         <div style="border: orange dashed 5px; margin-top: 5px">
             <div [load]="dynamicModule$ | async" rxDynamic></div>
         </div>
@@ -56,7 +56,10 @@ export class AppComponent {
         startWith(true)
     );
 
-    constructor(private rxDynamicComponentService: RxDynamicComponentService, private matDialog: MatDialog) {}
+    constructor(
+        private rxDynamicComponentService: RxDynamicComponentService,
+        private matDialog: MatDialog
+    ) {}
 
     open() {
         this.matDialog.open(DialogComponent);

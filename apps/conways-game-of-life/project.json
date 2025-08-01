@@ -4,6 +4,7 @@
     "projectType": "application",
     "sourceRoot": "apps/conways-game-of-life/src",
     "prefix": "trellisorg",
+    "tags": [],
     "targets": {
         "build": {
             "executor": "@angular-devkit/build-angular:application",
@@ -26,7 +27,8 @@
             "executor": "@angular-devkit/build-angular:dev-server",
             "options": {
                 "buildTarget": "conways-game-of-life:build"
-            }
+            },
+            "continuous": true
         },
         "extract-i18n": {
             "executor": "@angular-devkit/build-angular:extract-i18n",
@@ -37,7 +39,10 @@
         "lint": {
             "executor": "@nrwl/linter:eslint",
             "options": {
-                "lintFilePatterns": ["apps/conways-game-of-life/src/**/*.ts", "apps/conways-game-of-life/src/**/*.html"]
+                "lintFilePatterns": [
+                    "apps/conways-game-of-life/src/**/*.ts",
+                    "apps/conways-game-of-life/src/**/*.html"
+                ]
             }
         },
         "test": {
@@ -47,6 +52,5 @@
                 "jestConfig": "apps/conways-game-of-life/jest.config.ts"
             }
         }
-    },
-    "tags": []
+    }
 }
