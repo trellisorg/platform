@@ -1,0 +1,13 @@
+{
+    "extends": "./tsconfig.lib.json",
+    "compilerOptions": {
+        "declarationMap": false,
+        "target": "ES2022",
+        "useDefineForClassFields": false,
+        "moduleResolution": "bundler"
+    },
+    "angularCompilerOptions": {
+        "compilationMode": "partial"
+    },
+    "exclude": ["jest.config.ts"]
+}

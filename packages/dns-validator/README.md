@@ -23,10 +23,11 @@ npm
     #dnsValidator="dns"
 />
 
-<div>{{ dnsValidator.response$ | async | json }}</div>
+<div>{{ dnsValidator.response() | json }}</div>
 ```
 
-The `response$` observable will contain a `Status` property on it that correlates to if the DNS query is valid or not.
+The `response` Signal will contain a `Status` property on it that correlates to if the DNS query is valid or not.
+The `invalid` Signal will contain a boolean that indicates if the DNS query is invalid.
 
 More info here:
 

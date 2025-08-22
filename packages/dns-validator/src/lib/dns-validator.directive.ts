@@ -1,9 +1,18 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Directive, ElementRef, HostListener, Injectable, Input, Renderer2, inject } from '@angular/core';
+import {
+    Directive,
+    ElementRef,
+    HostListener,
+    Injectable,
+    Renderer2,
+    computed,
+    inject,
+    input,
+} from '@angular/core';
 import { NgControl } from '@angular/forms';
-import { ComponentStore } from '@ngrx/component-store';
+import { ComponentStore, provideComponentStore } from '@ngrx/component-store';
 import { tapResponse } from '@ngrx/operators';
-import { debounceTime, map, switchMap, type Observable } from 'rxjs';
+import { debounceTime, switchMap, type Observable } from 'rxjs';
 import { DNS_VALIDATOR_CONFIG } from './dns-validator.config';
 
 type DoHBoolean = boolean | '1' | '0' | 0 | 1;
@@ -26,64 +35,72 @@ const googleDoH = `https://dns.google/resolve`;
 const formClass = 'form-control-warning';
 
 interface DnsValidatorState {
-    response?: DoHResponse;
+    response: DoHResponse | null;
 }
 
 @Injectable()
 class DnsValidatorStore extends ComponentStore<DnsValidatorState> {
     private readonly config = inject(DNS_VALIDATOR_CONFIG, { optional: true });
 
-    readonly response$ = this.select((state) => state.response);
+    private readonly httpClient = inject(HttpClient);
 
-    readonly invalid$ = this.response$.pipe(map((response) => response && response.Status !== 0));
+    private readonly elementRef = inject(ElementRef);
+
+    private readonly renderer2 = inject(Renderer2);
+
+    readonly response = this.selectSignal((state) => state.response);
+
+    readonly invalid = computed(() => {
+        const response = this.response();
+
+        return response && response.Status !== 0;
+    });
 
     readonly clear = this.updater((state) => ({
         ...state,
-        response: undefined,
+        response: null,
     }));
 
     readonly queryDns = this.effect((query$: Observable<DoHQuery>) =>
         query$.pipe(
             debounceTime(this.config?.debounceTime ?? 250),
             switchMap((query) =>
-                this._httpClient.get<DoHResponse>(`${googleDoH}`, {
+                this.httpClient.get<DoHResponse>(`${googleDoH}`, {
                     params: {
                         ...query,
                     } as unknown as HttpParams,
                 })
             ),
-            tapResponse(
-                (response) => {
+            tapResponse({
+                error: () => {
+                    this.patchState({
+                        response: undefined,
+                    });
+
+                    this.processStatus(0);
+                },
+                next: (response) => {
                     this.patchState({
                         response,
                     });
 
                     this.processStatus(response.Status);
                 },
-                () => {
-                    this.patchState({
-                        response: undefined,
-                    });
-
-                    this.processStatus(0);
-                }
-            )
+            })
         )
     );
 
-    constructor(
-        private readonly _httpClient: HttpClient,
-        private readonly elementRef: ElementRef,
-        private readonly _renderer2: Renderer2
-    ) {
-        super();
+    constructor() {
+        super({
+            response: null,
+        });
     }
 
     private processStatus(status: DoHResponse['Status']): void {
         if (status === 0) {
-            this._renderer2.removeClass(this.elementRef.nativeElement, formClass);
+            this.renderer2.removeClass(this.elementRef.nativeElement, formClass);
         } else {
-            this._renderer2.addClass(this.elementRef.nativeElement, formClass);
+            this.renderer2.addClass(this.elementRef.nativeElement, formClass);
         }
     }
 }
@@ -91,28 +108,28 @@ class DnsValidatorStore extends ComponentStore<DnsValidatorState> {
 @Directive({
     // eslint-disable-next-line @angular-eslint/directive-selector
     selector: 'input[dns]',
-    providers: [DnsValidatorStore],
+    providers: [provideComponentStore(DnsValidatorStore)],
     exportAs: 'dns',
+    standalone: true,
 })
 export class DnsValidatorDirective {
-    @Input() query?: Omit<DoHQuery, 'name'> = {};
+    private readonly ngControl = inject(NgControl);
 
-    @Input() requiredValid = true;
+    private readonly dnsValidatorStore = inject(DnsValidatorStore);
 
-    @Input() transformFn?: (value: string) => string;
+    private readonly config = inject(DNS_VALIDATOR_CONFIG, {
+        optional: true,
+    });
 
-    readonly response$ = this.dnsValidatorStore.response$;
+    readonly query = input<Omit<DoHQuery, 'name'>>({});
 
-    readonly invalid$ = this.dnsValidatorStore.invalid$;
+    readonly requiredValid = input(true);
 
-    private readonly config = inject(DNS_VALIDATOR_CONFIG, 8);
+    readonly transformFn = input<(value: string) => string>();
 
-    constructor(
-        private readonly ngControl: NgControl,
-        private readonly dnsValidatorStore: DnsValidatorStore
-    ) {
-        this.dnsValidatorStore.setState({});
-    }
+    readonly response = this.dnsValidatorStore.response;
+
+    readonly invalid = this.dnsValidatorStore.invalid;
 
     private defaultTransform(value: string | undefined | null): string | undefined {
         if (!value) {
@@ -124,7 +141,7 @@ export class DnsValidatorDirective {
 
     @HostListener('keyup')
     async validateDns(): Promise<void> {
-        const value = (this.transformFn ?? this.config?.transformFn ?? this.defaultTransform)(
+        const value = (this.transformFn() ?? this.config?.transformFn ?? this.defaultTransform)(
             this.ngControl.value
         );
 
@@ -133,9 +150,9 @@ export class DnsValidatorDirective {
             return;
         }
 
-        if ((this.requiredValid && this.ngControl.valid) || !this.requiredValid) {
+        if ((this.requiredValid() && this.ngControl.valid) || !this.requiredValid()) {
             this.dnsValidatorStore.queryDns({
-                ...this.query,
+                ...this.query(),
                 name: value,
             });
         } else {
